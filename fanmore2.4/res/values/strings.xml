@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_version">1.0.1</string>
+     <string name="app_code_version">2</string>
+
+
+
+    <string name="app_name">万事利爱分享</string>
+    <string name="app_title_name">粉猫</string>
+    <string name="img">imageView</string>
+    <string name="update_msg">更新内容:</string>
+    <string name="txt_reminder_reg">您还未注册，赶快注册吧</string>
+    <string name="txt_reminder_login">您还未登录，赶快登录吧</string>
+    <string name="txt_reminder_bind">获取验证码，绑定支付宝账号</string>
+    <string name="txt_reminder_tocrash">获取验证码，积分兑现</string>
+    <string name="txt_clause">协议</string>
+    <string name="txt_checkin_title">在首页\"摇一摇\"也可快速签到</string>
+    <string name="version_tip">&#169; 2013 FANMORE ALL RIGHTS RESRVED</string>
+    <!-- task time des -->
+     <string-array name="task_time_des">
+        <item>休息一下,%1$d分钟后再来分享吧!~</item>
+        <item>啊!~卡壳了,没%1$d分钟恢复不过来。。。</item>
+        <item>罢工,罢工,再罢%1$d分钟</item>
+        <item>来,来,课间休息,跟我一起做，伸展运动,1234,2234&#8230; 还有%1$d分钟</item>
+        <item>嘘!小粉出去溜弯了,%1$d分钟后回来</item>
+    </string-array>
+    <!-- home tab -->
+    <string name="tab_task">首页</string>
+    <string name="tab_goods">商品城</string>
+    <string name="tab_my">我的</string>
+    <string name="tab_more">更多</string>
+
+    <!-- task detail -->
+    <string name="btn_attention">关注</string>
+    <string name="btn_fav">收藏</string>
+    <string name="btn_share">立即转发</string>
+    <string name="btn_back">返回</string>
+    <string name="btn_next">下一步</string>
+    <string name="btn_cancel">取消</string>
+    <string name="btn_complete">完成</string>
+    <string name="detail_more">查看更多</string>
+
+    <!-- my tab -->
+     <string name="btn_reg">注册</string>
+    <string name="txt_score">我的参与</string>
+    <string name="txt_send">我的转发</string>
+    <string name="txt_fav">我的收藏</string>
+    <string name="txt_goods">我的兑换</string>
+     <string name="txt_mysafe">帐户安全</string>
+     <string name="txt_baseInfo">基本信息</string>
+    <string name="txt_logout">注销登录</string>
+     <string name="btn_tocrash">提现</string>
+    <!--  -->
+
+
+    <!-- more tab -->
+    <string name="more_attention">关注我们</string>
+    <string name="more_update">检查新版本</string>
+    <string name="more_clear">清理图片缓存</string>
+    <string name="more_about">关于我们</string>
+     <string name="more_partin">投放指南</string>
+    <string name="more_feedback">意见反馈</string>
+    <string name="more_guide">新手教程</string>
+    <!-- title -->
+    <string name="title_code">输入验证码</string>
+    <string name="title_reg">用户注册</string>
+    <string name="title_login">用户登录</string>
+    <string name="title_money">积分兑换明细</string>
+    <string name="title_tocash">积分提现</string>
+    <string name="title_bind">支付宝账号绑定</string>
+    <string name="title_moneychange">积分兑换</string>
+    <string name="title_mysend">我的收藏</string>
+    <!--  -->
+    <string name="errcode_success">发送成功</string>
+    <string name="errcode_cancel">发送取消</string>
+    <string name="errcode_deny">发送被拒绝</string>
+    <string name="errcode_unknown">发送返回</string>
+    <!-- hint -->
+    <string name="hint_phone">请输入手机号</string>
+     <string name="hint_username">请输入用户名(字母开头，3－20位)</string>
+      <string name="hint_username2">用户名</string>
+     <string name="hint_pwd">请输入密码(6－12位)</string>
+     <string name="hint_Invitationcode">邀请码</string>
+     <string name="hint_pwd2">密码</string>
+    <string name="hint_code">请输入验证码</string>
+    <string name="hint_payaccount">请输入您的支付宝账号</string>
+    <string name="hint_realname">请输入您的真实姓名</string>
+    <string name="hint_count">请输入兑换金额</string>
+    <string name="hint_old_pwd">请输入旧密码</string>
+    <string name="hint_new_pwd">请输入新密码</string>
+    <string name="hint_new_pwd_re">请再次输入新密码</string>
+
+
+
+
+</resources>

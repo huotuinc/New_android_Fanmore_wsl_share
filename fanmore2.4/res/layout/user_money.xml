@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lay"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:background="@color/gray_list_bg"
+    android:orientation="vertical" >
+
+    <FrameLayout style="@style/TitleStyle" >
+
+        <cy.com.morefan.view.CyButton
+            android:contentDescription="@string/img"
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/title_back_normal"
+            android:onClick="onClickButton" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/title_money"
+            android:textSize="18dp"
+            android:textColor="@color/white" />
+    </FrameLayout>
+
+   <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <cy.com.morefan.view.exlist.ExListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:divider="@null"
+            android:fadingEdge="none"
+            android:text="task" />
+
+         <cy.com.morefan.view.EmptyView
+            android:id="@+id/layEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            android:src="@anim/anim_empty"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</LinearLayout>

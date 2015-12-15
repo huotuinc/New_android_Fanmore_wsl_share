@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="请选择提醒时间:"
+        android:textColor="@color/black"
+        android:textIsSelectable="false"
+        android:textSize="14dp" />
+
+    <TextView
+        android:id="@+id/txtTime1"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/green"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="12:00"
+        android:textColor="@color/white"
+        android:textIsSelectable="false"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/txtTime2"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@color/gray"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="11:50"
+        android:textColor="@color/white"
+        android:textIsSelectable="false"
+        android:textSize="18dp" />
+
+</LinearLayout>

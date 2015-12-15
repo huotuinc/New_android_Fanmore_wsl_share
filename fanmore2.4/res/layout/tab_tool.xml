@@ -1,0 +1,93 @@
+<cy.com.morefan.view.ElasticScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layScroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        tools:context=".AllScoreActivity" >
+
+        <LinearLayout
+            android:id="@+id/layExp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FF4201"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:onClick="onClick"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp" >
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" >
+
+                <ImageView
+                    android:id="@+id/imgPhoto"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/user_icon" />
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/photo_circle_pre_red" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/txtExp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Exp.未知"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/arrows_right_white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layMyTool"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="道具库"
+                android:textColor="@color/black"
+                android:textSize="13dp" />
+
+            <cy.com.morefan.view.HorizontalListView
+                android:id="@+id/hListView"
+                android:layout_width="match_parent"
+                android:layout_height="140dp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="道具市场"
+            android:textColor="@color/black"
+            android:textSize="13dp" />
+
+        <LinearLayout
+            android:id="@+id/layTool"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
+    </LinearLayout>
+
+</cy.com.morefan.view.ElasticScrollView>

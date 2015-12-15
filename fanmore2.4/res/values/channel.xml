@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- &channel=**,(渠道类型微信：1；新浪微博：2;qq空间：3)  &为&amp;-->
+    
+    
+    
+    
+    <string name="channel_weixin">&amp;channel=1</string>
+    <string name="channel_sina">&amp;channel=2</string>
+    <string name="channel_qzone">&amp;channel=3</string>
+
+
+
+
+
+</resources>

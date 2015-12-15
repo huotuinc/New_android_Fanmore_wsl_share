@@ -1,0 +1,102 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/layAll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_e"
+    android:gravity="center"
+
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-75dp" >
+
+
+        <FrameLayout
+            android:id="@+id/img_fl"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/imgPhoto"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:background="@drawable/user_icon"
+                android:clickable="true"
+                android:onClick="onClick" />
+
+            <ImageView
+                android:id="@+id/imgPhotocircle"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:background="@drawable/photo_circle_gray" />
+        </FrameLayout>
+      
+
+    </FrameLayout>
+      <TextView
+          android:layout_marginTop="20dp"
+          android:layout_marginBottom="20dp"
+          android:id="@+id/txtName"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="大苏打撒旦撒打算大苏打大苏打实打实打算大苏打似的大苏打撒旦撒的"
+          android:maxLength="16"
+          android:layout_gravity="center_horizontal"
+          android:textColor="@color/theme_blue" />
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/btn_red_sel"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="onClickButton"
+        android:text="下一步"
+        android:textColor="@color/white"
+        android:textSize="18dp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp" >
+
+        <TextView
+            android:id="@+id/btnForget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="1.微信授权登陆"
+            android:textColor="@color/gray"
+            android:textSize="12sp" />
+
+        <TextView 
+              android:textColor="@color/gray"
+            android:textSize="12sp"
+                android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="2.输入邀请码"
+            />
+        <TextView
+            android:id="@+id/btnReg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:padding="10dp"
+            android:text="3.注册成功"
+            android:textColor="@color/gray"
+            android:textSize="12sp" />
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,119 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray_list_bg"
+    tools:context=".AllScoreActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".AllScoreActivity" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/white"
+            android:orientation="vertical" >
+
+            <!-- 任务描述 -->
+
+            <include layout="@layout/include_task_des" />
+
+            <!-- 总浏览量 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical"
+                android:padding="5dp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="今日浏览量:"
+                        android:textColor="@color/gray4"
+                        android:textIsSelectable="false"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/txtDayScanCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="0"
+                        android:textColor="@color/red"
+                        android:textIsSelectable="false"
+                        android:textSize="13dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="历史浏览量:"
+                        android:textColor="@color/gray4"
+                        android:textIsSelectable="false"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/txtTotalScanCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="0"
+                        android:textColor="@color/red"
+                        android:textIsSelectable="false"
+                        android:textSize="13dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/line_gray_bg_h" />
+            <!-- 总浏览量 end -->
+
+            <include layout="@layout/include_task_des_bottom" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="3dp"
+            android:text="date"
+            android:textColor="@color/gray5"
+            android:textIsSelectable="false"
+            android:textSize="11dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgStatusTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="0dp"
+        android:contentDescription="@string/img" />
+
+</FrameLayout>

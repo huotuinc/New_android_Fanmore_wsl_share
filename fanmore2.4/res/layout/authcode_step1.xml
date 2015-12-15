@@ -1,0 +1,129 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".AllScoreActivity" >
+
+    <FrameLayout style="@style/TitleStyle" >
+
+        <cy.com.morefan.view.CyButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/title_back_normal"
+            android:contentDescription="@string/img"
+            android:layout_marginLeft="5dp"
+            android:onClick="onClickButton" />
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="绑定手机号"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/btnNext"
+            android:layout_width="70dp"
+            android:clickable="true"
+            android:layout_height="32dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:onClick="onClickButton"
+            android:text="@string/btn_next"
+            android:textColor="@color/white" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/txtReminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_reminder_bind"
+            android:textColor="@color/black"
+            android:textIsSelectable="false" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" >
+
+            <cy.lib.edittext.CyEditText
+                android:id="@+id/edtPhone"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/hint_phone"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/btnGet"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="@drawable/btn_enable"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onClickButton"
+                android:text="获取验证码"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="粉猫不会在任何地方泄露您的号码"
+            android:textColor="@color/gray" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:checked="true"
+                android:text="已阅读并同意"
+                android:textColor="@color/gray" />
+
+            <TextView
+                android:id="@+id/txtYinSi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:clickable="true"
+                android:onClick="onClickButton"
+                android:text="使用条款和隐私政策"
+                android:textColor="@color/gray" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

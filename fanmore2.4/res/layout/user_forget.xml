@@ -1,0 +1,73 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".AllScoreActivity" >
+
+    <FrameLayout style="@style/TitleStyle" >
+
+        <cy.com.morefan.view.CyButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/title_back_normal"
+            android:contentDescription="@string/img"
+            android:onClick="onClickButton" />
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="忘记密码"
+            android:textColor="@color/white"
+            android:textIsSelectable="false"
+            android:textSize="18dp" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        android:background="@color/white"
+        android:gravity="left"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/txtReminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="请输入登录密码，进行提现密码重置"
+            android:textColor="@color/black"
+            android:textIsSelectable="false"
+            android:textSize="16dp" />
+
+        <cy.lib.edittext.CyEditText
+            android:id="@+id/edtPwd"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="请输入登录密码"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:maxLength="10"
+            android:singleLine="true"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btnCommit"
+            style="@style/BottomTabStyle"
+            android:layout_weight="0"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_red_sel"
+            android:text="提交" />
+    </LinearLayout>
+
+</merge>

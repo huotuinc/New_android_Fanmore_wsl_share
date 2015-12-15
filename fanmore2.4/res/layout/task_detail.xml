@@ -1,0 +1,100 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AllScoreActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <FrameLayout style="@style/TitleStyle" >
+
+            <cy.com.morefan.view.CyButton
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/title_back_normal"
+                android:clickable="true"
+                android:onClick="onClickButton" />
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:maxWidth="300dp"
+                android:singleLine="true"
+                android:text="任务概况"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/btnBuySend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/mall_send"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="立即转发"
+                android:visibility="gone"
+                android:onClick="onClickBottomTab"
+                android:textColor="@color/white"
+                 />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white" >
+
+            <include layout="@layout/task_detail_content" />
+            <!--
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" >
+            </android.support.v4.view.ViewPager>
+            -->
+
+            <cy.com.morefan.view.CyLoadingProgress
+                android:id="@+id/layProgress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </cy.com.morefan.view.CyLoadingProgress>
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:padding="10dp" >
+
+        <Button
+            android:id="@+id/btnShare"
+            style="@style/BottomTabStyle"
+            android:background="@drawable/btn_green_sel"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/btn_share"
+            android:textSize="18dp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgMoney"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+</merge>

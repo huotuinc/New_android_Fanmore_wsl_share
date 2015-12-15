@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="header_background_start">#3fbbad</color>
+    <color name="header_background_end">#2ca498</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="red">#FFFE0103</color>
+    <color name="btn_red">#ffFF4143</color>
+    <color name="bnt_red_down">#ff9F1819</color>
+     <color name="gray1">#ffeaeaea</color>
+    <color name="gray2">#ffc9cbca</color>
+    <color name="gray3">#ffe8e8e8</color>
+    <color name="gray4">#ff758086</color>
+    <color name="gray5">#ff989898</color>
+     <color name="gray_e">#ffeeeeee</color>
+    <color name="gray_my">#ff616467</color>
+    <color name="gray_list_bg">#ffdbdbdb</color>
+     <color name="yellow_my">#fffe8706</color>
+
+     <color name="yellow_send">#FFAE02</color>
+    <color name="blue">#ff15c2d2</color>
+    <color name="gray">#ff808080</color>
+    <color name="gold">#b89766</color>
+    <color name="gray_pop">#ffdedede</color>
+    <color name="circle_color">#323a45</color>
+    <color name="ring_color">#14b9d6</color>
+    <color name="green">#32CD32</color>
+
+	<color name="bg_gray">#f6f6f6</color>
+    <color name="transparent">#5000</color>
+    <color name="theme_blue">#ec8624</color>
+    <color name="dialog_bg">#ffe9e9e9</color>
+     <color name="dialog_press_bg">#ffd2d2d2</color>
+     <color name="yellow_check">#ffffad03</color>
+
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CyEditText">
+        <attr name="style">
+            <enum name="orange" value="0" />
+            <enum name="blue" value="1" />
+            <enum name="transparent" value="2" />
+        </attr>
+    </declare-styleable>
+
+</resources>

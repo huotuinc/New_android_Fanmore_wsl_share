@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lay"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <FrameLayout style="@style/TitleStyle" >
+
+        <cy.com.morefan.view.CyButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/title_back_normal"
+            android:contentDescription="@string/img"
+            android:onClick="onClickButton" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/txt_mysafe"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/txtUserName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffff292a"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
+
+        <LinearLayout
+            android:id="@+id/layAli"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:onClick="onClick"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/txtAli"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="15dp"
+                android:text="修改支付宝帐号"
+                android:textColor="@color/gray_my"
+                android:textSize="16dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/arrows_right" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/line_gray_bg_h" />
+
+        <LinearLayout
+            android:id="@+id/layPhone"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:onClick="onClick"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/txtPhone"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="15dp"
+                android:text="修改手机号"
+                android:textColor="@color/gray_my"
+                android:textSize="16dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/arrows_right" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/line_gray_bg_h" />
+
+        <LinearLayout
+            android:id="@+id/layLoginPwd"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:onClick="onClick"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/txtPwd"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="15dp"
+                android:text="修改登录密码"
+                android:textColor="@color/gray_my"
+                android:textSize="16dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/arrows_right" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/line_gray_bg_h" />
+
+        <RelativeLayout
+            android:id="@+id/layCrashPwd"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:onClick="onClick"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/txtCashPwd"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="修改提现密码"
+                android:textColor="@color/gray_my"
+                android:textSize="16dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/arrows_right" />
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtCashPwd"
+                android:background="@drawable/line_gray_bg_h" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

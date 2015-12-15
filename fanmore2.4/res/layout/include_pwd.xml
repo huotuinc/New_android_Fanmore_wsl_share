@@ -1,0 +1,120 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:cy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+
+    <!-- 手机号 -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@drawable/line_gray_bg_h" />
+
+        <TextView
+            android:id="@+id/txtPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="手机号"
+            android:textColor="@color/black" />
+
+        <cy.lib.edittext.CyEditText
+            android:id="@+id/edtPhone"
+            style="@style/CyEditTextStyle"
+            cy:style="transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="13dp"
+            android:layout_toRightOf="@+id/txtPhone"
+            android:layout_weight="1"
+            android:hint="请输入手机号"
+            android:imeOptions="actionNext"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:id="@+id/imgPhoneLine"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/edtPhone"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/line_gray_bg_h" />
+    </RelativeLayout>
+    <!-- 手机号end -->
+
+
+    <!-- 验证码 -->
+
+    <RelativeLayout
+        android:id="@+id/layCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
+
+        <TextView
+            android:id="@+id/txtCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="验证码"
+            android:textColor="@color/black" />
+
+        <cy.lib.edittext.CyEditText
+            android:id="@+id/edtCode"
+            style="@style/CyEditTextStyle"
+            cy:style="transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="13dp"
+            android:layout_toLeftOf="@+id/btnGet"
+            android:layout_toRightOf="@+id/txtCode"
+            android:hint="请输入验证码"
+            android:imeOptions="actionNext"
+            android:inputType="phone"
+            android:maxLength="20"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/edtCode"
+            android:background="@drawable/line_gray_bg_h" />
+
+        <TextView
+            android:id="@+id/btnGet"
+            android:layout_width="120dp"
+            android:layout_height="33dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/btn_red_sel"
+            android:clickable="true"
+            android:gravity="center"
+            android:minWidth="120dp"
+            android:onClick="onClickButton"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="获取验证码"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+    <!-- 验证码end -->
+
+
+
+
+
+
+</LinearLayout>

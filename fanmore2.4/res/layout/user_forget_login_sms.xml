@@ -1,0 +1,38 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".AllScoreActivity" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <include
+                layout="@layout/include_pwd" />
+
+            <Button
+                android:id="@+id/btnComplete"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_red_sel"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="找回"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

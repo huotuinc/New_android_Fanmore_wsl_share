@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="70.0dip"
+    android:background="@drawable/item"
+    android:drawingCacheQuality="high"
+    android:minHeight="70.0dip"
+    android:orientation="horizontal" >
+
+    <FrameLayout
+        android:id="@+id/sItemIcon"
+        android:layout_width="42.0dip"
+        android:layout_height="54.0dip"
+        android:layout_margin="10.0dip"
+        android:padding="2.0dip" >
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="42.0dip"
+            android:layout_height="54.0dip"
+            android:background="@drawable/rc_item_bg"
+            android:scaleType="fitXY" />
+
+        <ProgressBar
+            android:id="@+id/load_pb"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="42.0dip"
+            android:layout_height="54.0dip"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:background="@drawable/picreviewre_fresh_bg"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/loading_pb_drawable" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/sItemTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="30.0dip"
+        android:layout_alignTop="@+id/sItemIcon"
+        android:layout_toRightOf="@+id/sItemIcon"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:text="斗破苍穹"
+        android:textColor="@color/listTitle"
+        android:textSize="18.0sp" />
+
+    <TextView
+        android:id="@+id/sItemInfo"
+        android:layout_width="fill_parent"
+        android:layout_height="22.0dip"
+        android:layout_below="@id/sItemTitle"
+        android:layout_toRightOf="@id/sItemIcon"
+        android:ellipsize="marquee"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:text="www.baidu.com"
+        android:textColor="@color/text"
+        android:textSize="13.0sp" />
+
+</RelativeLayout>

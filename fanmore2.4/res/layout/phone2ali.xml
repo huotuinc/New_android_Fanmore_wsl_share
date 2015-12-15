@@ -1,0 +1,59 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+     android:background="@color/white"
+    tools:context=".AllScoreActivity" >
+
+    <FrameLayout style="@style/TitleStyle" >
+
+        <cy.com.morefan.view.CyButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/title_back_normal"
+            android:contentDescription="@string/img"
+            android:onClick="onClickButton" />
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="绑定成功"
+            android:textColor="@color/white"
+            android:textIsSelectable="false"
+            android:textSize="18dp" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="left"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/txtReminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="123"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:textIsSelectable="false" />
+
+        <Button
+            android:id="@+id/btnCommit"
+            style="@style/BottomTabStyle"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_red_sel"
+            android:text="绑定支付宝" />
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cy="http://schemas.android.com/apk/res/cy.com.morefan"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:id="@+id/lay"
+    android:background="#000000"
+    android:orientation="vertical" >
+
+
+    <cy.com.morefan.view.TasksCompletedView
+        android:id="@+id/tasks_view"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_gravity="center"
+        cy:circleColor="@color/circle_color"
+        cy:radius="100dip"
+        cy:ringColor="@color/ring_color"
+        cy:strokeWidth="20dip" />
+
+    <TextView
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:text="@string/update_msg" />
+    <TextView
+        android:padding="10dp"
+        android:id="@+id/txtTips"
+        android:gravity="left"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/update_msg" />
+
+
+</LinearLayout>

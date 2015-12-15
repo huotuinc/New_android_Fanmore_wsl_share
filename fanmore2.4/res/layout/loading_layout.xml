@@ -1,0 +1,49 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+     android:background="@drawable/bg"
+    tools:context=".AllScoreActivity" >
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+        tools:context=".AllScoreActivity" >
+
+        <ImageView
+            android:id="@+id/textView1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/loading_large"
+            />
+
+        <ImageView
+            android:id="@+id/textView2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/loading_middle"
+             />
+
+        <ImageView
+            android:id="@+id/textView3"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="87dp"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/loading_small"
+             />
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/imgBg"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:background="@drawable/loading_preview"
+        />
+
+</FrameLayout>

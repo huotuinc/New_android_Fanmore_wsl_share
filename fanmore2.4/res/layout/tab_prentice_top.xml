@@ -1,0 +1,279 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_gray"
+    android:orientation="vertical"
+    tools:context=".AllScoreActivity" >
+<LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/theme_blue"
+                android:orientation="vertical"
+                android:paddingTop="15dp" >
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" 
+                    android:layout_gravity="center_horizontal">
+
+                    <ImageView
+                        android:id="@+id/imgPhoto"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:background="@drawable/user_icon"
+                        android:clickable="true"
+                        android:onClick="onClick" />
+
+                    <ImageView
+                        android:id="@+id/imgPhotocircle"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:background="@drawable/photo_circle_pre" />
+                </FrameLayout>
+                 <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="邀请码"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/txtCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="123456"
+                android:textColor="@color/white" />
+
+            <cy.com.morefan.view.CyLinearLayout
+                android:id="@+id/btnCopy"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/prentice_bg_copy"
+                android:onClick="onClick" />
+        </LinearLayout>
+
+                
+            </LinearLayout>
+            <RelativeLayout 
+                android:id="@+id/apprentice"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                >
+                <ImageView 
+                    android:id="@+id/apprenticeicon"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shitutubiao"
+                    />
+                <TextView 
+                    android:id="@+id/tvapprentice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="师徒总数"
+                     android:layout_centerInParent="true"
+                    android:layout_toRightOf="@+id/apprenticeicon"
+                    android:layout_margin="10dp"
+                    />
+                <TextView 
+                    android:id="@+id/prenticeAmount"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="371"
+                     android:layout_centerInParent="true"
+                    android:layout_toRightOf="@+id/tvapprentice"
+                    android:textColor="@color/theme_blue"/>
+                <ImageView
+                     android:layout_margin="10dp"
+            	     android:layout_width="wrap_content"
+           			 android:layout_height="wrap_content"
+           			 android:layout_alignParentRight="true"
+           			 android:layout_centerInParent="true"
+            		 android:background="@drawable/arrows_right" />
+            </RelativeLayout>
+
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+      >
+
+        <LinearLayout
+              android:padding="5dp" 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+           
+
+            <TextView
+                android:id="@+id/txtTotalContri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="500积分"
+                android:textColor="@color/red"
+                android:textSize="15dp" />
+             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="徒弟总贡献"
+                android:textColor="@color/black"
+                android:textSize="13dp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/line_gray_bg_v" />
+
+        <LinearLayout
+               android:padding="5dp" 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+          
+
+            <TextView
+                android:id="@+id/txtLastContri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100积分"
+                android:textColor="@color/red"
+                android:textSize="15dp" />
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="昨日总贡献"
+                android:textColor="@color/black"
+                android:textSize="13dp" />
+        </LinearLayout>
+    </LinearLayout>
+     <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/line_gray_bg_v" />
+    <LinearLayout
+        android:layout_marginTop="-5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+       >
+
+        <LinearLayout
+               android:padding="5dp" 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            
+
+            <TextView
+                android:id="@+id/BrowseAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="500积分"
+                android:textColor="@color/red"
+                android:textSize="15dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="昨日/历史浏览量"
+                android:textColor="@color/black"
+                android:textSize="13dp" />
+        </LinearLayout>
+        
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/line_gray_bg_v" />
+
+        <LinearLayout
+               android:padding="5dp" 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/TurnAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100积分"
+                android:textColor="@color/red"
+                android:textSize="15dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="昨日/历史转发量"
+                android:textColor="@color/black"
+                android:textSize="13dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
+     <FrameLayout
+        android:id="@+id/layRuleFrag"
+        android:layout_width="match_parent"
+        android:onClick="onClick"
+        android:clickable="true"
+        android:background="@color/white"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/txtDes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/prentice_bg_des"
+            android:layout_margin="10dp"
+            android:paddingLeft="10dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="24dp"
+            android:text="将此拜(邀)师(请)令(码)分享给好友，让其注册时输入，即可收入师门。徒弟每次提现成功后，都会贡献提现金额的10%(暂时由粉猫补贴)给师傅哦~"
+            android:textColor="@color/black" />
+
+        <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="right|bottom"
+                    android:background="@drawable/img_help"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    />
+    </FrameLayout>
+
+   
+
+</LinearLayout>

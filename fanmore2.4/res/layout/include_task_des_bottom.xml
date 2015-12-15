@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dp" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/time_bg"
+            android:contentDescription="@string/img" />
+
+        <TextView
+            android:id="@+id/txtTimeDis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="timeDis"
+            android:textColor="@color/gray4"
+            android:textIsSelectable="false"
+            android:textSize="12dp" />
+    </LinearLayout>
+    <!-- 渠道 -->
+
+    <LinearLayout
+        android:id="@+id/layChannel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:baselineAligned="false"
+        android:gravity="right"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/imgTagWeiXin"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/share_ico_weixin" />
+
+        <ImageView
+            android:id="@+id/imgTagSina"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/share_ico_sina" />
+
+        <ImageView
+            android:id="@+id/imgTagQzone"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/share_ico_qzone" />
+    </LinearLayout>
+
+    <!-- 渠道end -->
+
+    <LinearLayout
+        android:id="@+id/laySendCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/send_bg"
+            android:contentDescription="@string/img" />
+
+        <TextView
+            android:id="@+id/txtSendCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="sendCount"
+            android:textColor="@color/gray4"
+            android:textIsSelectable="false"
+            android:textSize="12dp" />
+    </LinearLayout>
+
+</LinearLayout>

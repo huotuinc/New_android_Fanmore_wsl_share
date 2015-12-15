@@ -1,0 +1,105 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".AllScoreActivity" >
+
+    <FrameLayout style="@style/TitleStyle" >
+
+        <cy.com.morefan.view.CyButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/title_back_normal"
+            android:contentDescription="@string/img"
+            android:onClick="onClickButton" />
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="修改登录密码"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/btnComplete"
+            android:layout_width="70dp"
+            android:layout_height="32dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="5dp"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="onClickButton"
+            android:text="@string/btn_complete"
+            android:textColor="@color/white" />
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" >
+
+            <TextView
+                android:id="@+id/txtForget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:clickable="true"
+                android:onClick="onClickButton"
+                android:padding="10dp"
+                android:text="忘记密码?"
+                android:textColor="@color/gray_my"
+                android:textSize="12dp" />
+
+            <cy.lib.edittext.CyEditText
+                android:id="@+id/edtOld"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_old_pwd"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword"
+                android:maxLength="12"
+                android:textColor="@color/black" />
+
+            <cy.lib.edittext.CyEditText
+                android:id="@+id/edtNew"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/hint_new_pwd"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword"
+                android:maxLength="12"
+                android:textColor="@color/black" />
+
+            <cy.lib.edittext.CyEditText
+                android:id="@+id/edtNewRe"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/hint_new_pwd_re"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:maxLength="12"
+                android:textColor="@color/black" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

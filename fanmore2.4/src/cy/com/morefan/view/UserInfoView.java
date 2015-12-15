@@ -11,7 +11,7 @@ import cy.com.morefan.bean.UserData;
 import cy.com.morefan.bean.UserSelectData;
 import cy.com.morefan.util.DensityUtil;
 import cy.com.morefan.util.L;
-import cy.com.morefan.view.PopCheckIn.OnPopCheckListener;
+//import cy.com.morefan.view.PopCheckIn.OnPopCheckListener;
 import android.R.integer;
 import android.app.Dialog;
 import android.content.Context;

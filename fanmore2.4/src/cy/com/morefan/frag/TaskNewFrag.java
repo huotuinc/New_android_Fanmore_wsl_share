@@ -25,16 +25,7 @@ import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.TaskService;
 import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.DensityUtil;
-import cy.com.morefan.util.L;
-import cy.com.morefan.util.SPUtil;
-import cy.com.morefan.util.Shake;
-import cy.com.morefan.util.Shake.ShakeListener;
-import cy.com.morefan.view.CustomDialog;
-import cy.com.morefan.view.EmptyView;
-import cy.com.morefan.view.PullDownUpListView;
-import cy.com.morefan.view.PullDownUpListView.OnRefreshOrLoadListener;
-import android.content.DialogInterface;
-import android.content.Intent;
+
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -63,7 +54,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.PopupWindow.OnDismissListener;
 
-public class TaskNewFrag extends BaseFragment implements ShakeListener {
+public class TaskNewFrag extends BaseFragment   {
 	private static TaskNewFrag frag;
 	private View mRootView;
 	private int taskType;
@@ -77,7 +68,7 @@ public class TaskNewFrag extends BaseFragment implements ShakeListener {
 	private ImageView imgTag;
 	private TaskFrag taskFrag;
 	private TaskFrag mallFrag;
-	private Shake mShake;
+	//private Shake mShake;
 	private UserService mUserService;
 	public static TaskNewFrag newInstance(){
 		if(frag == null)
@@ -89,7 +80,7 @@ public class TaskNewFrag extends BaseFragment implements ShakeListener {
 		super.onCreate(savedInstanceState);
 		//frag.setRetainInstance(true);
 		//mUserService = new UserService(this);
-		mShake = new Shake(getActivity(), this);
+		//mShake = new Shake(getActivity(), this);
 
 		int raduis = DensityUtil.dip2px(getActivity(), 8);
 		 GradientDrawable gdLeft = new GradientDrawable();
@@ -108,7 +99,7 @@ public class TaskNewFrag extends BaseFragment implements ShakeListener {
 		// setTab(tabs.get(0).getId());
 	}
 	public void initData(){
-		shakeStart();
+		//shakeStart();
 		taskFrag.initData();
 		mallFrag.initData();
 	}
@@ -116,31 +107,31 @@ public class TaskNewFrag extends BaseFragment implements ShakeListener {
 
 	@Override
 	public void onResume() {
-		shakeStart();
+		//shakeStart();
 		super.onResume();
 	}
 	@Override
 	public void onReshow() {
 		//initData();
-		shakeStart();
+		//shakeStart();
 
 	}
-	private void shakeStart(){
-		if(UserData.getUserData().isLogin && !UserData.getUserData().dayCheckIn && getActivity() != null && ((HomeActivity)getActivity()).getCurrentFragType() == FragType.Task)
-			mShake.start();
-	}
+//	private void shakeStart(){
+//		if(UserData.getUserData().isLogin && !UserData.getUserData().dayCheckIn && getActivity() != null && ((HomeActivity)getActivity()).getCurrentFragType() == FragType.Task)
+//			mShake.start();
+//	}
 	@Override
 	public void onFragPasue() {
-		mShake.stop();
+		//mShake.stop();
 	}
 	@Override
 	public void onPause() {
-		mShake.stop();
+		//mShake.stop();
 		super.onPause();
 	}
 	@Override
 	public void onDetach() {
-		mShake.stop();
+		//mShake.stop();
 		super.onDetach();
 	}
 
@@ -280,11 +271,11 @@ public class TaskNewFrag extends BaseFragment implements ShakeListener {
 		return currentTitle;
 
 	}
-	@Override
-	public void onShake() {
-		if(null != getActivity())
-			((HomeActivity)getActivity()).checkIn();
-	}
+//	@Override
+//	public void onShake() {
+//		if(null != getActivity())
+//			((HomeActivity)getActivity()).checkIn();
+//	}
 
 	private void showProgress(){
 		if(null != getActivity())

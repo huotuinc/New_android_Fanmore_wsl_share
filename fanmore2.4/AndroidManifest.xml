@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="cy.com.morefan"
     android:versionCode="21"
-    android:versionName="2.4.1" >
+    android:versionName="2.4.1">
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -13,8 +13,7 @@
         android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
-        android:smallScreens="true" >
-    </supports-screens>
+        android:smallScreens="true"></supports-screens>
 
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -49,13 +48,15 @@
         android:label="Test for my app"
         android:targetPackage="cy.com.morefan" />
 
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
-        tools:replace="android:icon,android:name"
         android:name=".MainApplication"
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon,android:name">
 
         <!-- 用于引入测试库 -->
         <uses-library android:name="android.test.runner" />
@@ -75,7 +76,7 @@
         <activity
             android:name=".LoadingActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
 
             <!--
             <activity
@@ -90,21 +91,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-         <!-- 微信分享回调 -->
-        <!--<activity-->
-            <!--android:name=".WXEntryActivity"-->
-            <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
-            <!--android:exported="true"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" >-->
-        <!--</activity>-->
+        <!-- 微信分享回调 -->
+        <!-- <activity -->
+        <!-- android:name=".WXEntryActivity" -->
+        <!-- android:configChanges="keyboardHidden|orientation|screenSize" -->
+        <!-- android:exported="true" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" > -->
+        <!-- </activity> -->
         <!-- ShareSDK分享 -->
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <data android:scheme="tencent1101260450" />
 
@@ -189,7 +190,6 @@
             android:name=".MySafeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeActivity" />
-
         <activity
             android:name=".ToCrashActivity"
             android:screenOrientation="portrait"
@@ -207,7 +207,6 @@
             android:name=".UserGuideActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeActivity" />
-
         <activity
             android:name=".AppUpdateActivity"
             android:screenOrientation="portrait"
@@ -255,7 +254,7 @@
             android:name=".ForgetLoginPwdActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeActivity" />
-         <activity
+        <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeActivity" />
@@ -274,8 +273,7 @@
 
         <receiver
             android:name=".listener.AlamrReceiver"
-            android:process=":remote" >
-        </receiver>
+            android:process=":remote"></receiver>
         <!-- QZone -->
 
         <activity
@@ -289,7 +287,7 @@
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
-            android:noHistory="true" >
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -306,7 +304,7 @@
             android:name=".wxapi.SinaShareActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/Transparent" >
+            android:theme="@style/Transparent">
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
 
@@ -319,8 +317,7 @@
         <!-- umeng -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5347747a56240b32f5032962" >
-        </meta-data>
+            android:value="5347747a56240b32f5032962"></meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="Channel ID" />
@@ -330,9 +327,8 @@
 
         <receiver
             android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
-            android:exported="false" >
-        </receiver>
-        <receiver android:name="com.umeng.message.RegistrationReceiver" >
+            android:exported="false"></receiver>
+        <receiver android:name="com.umeng.message.RegistrationReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
@@ -342,7 +338,7 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.umeng.message.UmengBroadcastReceiver" >
+        <receiver android:name="com.umeng.message.UmengBroadcastReceiver">
             <intent-filter>
                 <action android:name="org.agoo.android.intent.action.RECEIVE" />
             </intent-filter>
@@ -357,7 +353,7 @@
         <service
             android:name="com.umeng.message.UmengService"
             android:exported="true"
-            android:process=":umengService_v1" >
+            android:process=":umengService_v1">
             <intent-filter>
                 <action android:name="cy.com.morefan.intent.action.START" />
             </intent-filter>
@@ -371,12 +367,16 @@
         <service
             android:name="org.android.agoo.service.ElectionService"
             android:exported="true"
-            android:process=":umengService_v1" >
+            android:process=":umengService_v1">
             <intent-filter>
                 <action android:name="org.agoo.android.intent.action.ELECTION_V2" />
             </intent-filter>
         </service>
         <service android:name="com.umeng.message.UmengIntentService" />
+
+        <activity
+            android:name=".UserExchangeActivity"
+            android:label="@string/title_activity_user_exchange"></activity>
     </application>
 
 </manifest>

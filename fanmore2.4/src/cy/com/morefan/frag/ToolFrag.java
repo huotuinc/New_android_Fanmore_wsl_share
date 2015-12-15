@@ -18,7 +18,6 @@ import cy.com.morefan.DataListActivity;
 import cy.com.morefan.PushMsgActivity;
 import cy.com.morefan.R;
 import cy.com.morefan.ScratchTicketActivity;
-import cy.com.morefan.ShakePrenticeActivity;
 import cy.com.morefan.TaskActivity;
 import cy.com.morefan.UserGuideActivity;
 import cy.com.morefan.AppUpdateActivity.UpdateType;
@@ -161,8 +160,8 @@ public class ToolFrag extends BaseFragment implements OnClickListener, Callback,
 					long arg3) {
 				ToolData item = myTools.get(position);
 				if(item.type == 1){//摇徒弟
-					Intent intentP = new Intent(getActivity(), ShakePrenticeActivity.class);
-					startActivity(intentP);
+//					Intent intentP = new Intent(getActivity(), ShakePrenticeActivity.class);
+//					startActivity(intentP);
 				}else if(item.type == 3){//任务转发提限
 					CustomDialog.showChooiceDialg(getActivity(), item.name, item.desc + ";转发任务时直接使用!", "朕知道了", null, null, null, null);
 				}else if(item.type == 4){//任务提前预览

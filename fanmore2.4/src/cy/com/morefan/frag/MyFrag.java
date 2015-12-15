@@ -4,6 +4,7 @@ import cindy.android.test.synclistview.SyncImageLoaderHelper;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.wechat.friends.Wechat;
 import cy.com.morefan.AuthCodeSendActivity.AuthType;
+import cy.com.morefan.DataListActivity;
 import cy.com.morefan.HomeActivity;
 import cy.com.morefan.MyBaseInfoActivity;
 import cy.com.morefan.MySafeActivity;
@@ -38,16 +39,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MyFrag extends BaseFragment implements OnClickListener, BusinessDataListener, BroadcastListener, Callback{
 	private static MyFrag frag;
 	private View mRootView;
 	private TextView txtScore;
-	private TextView txtTotalScore;
+	//private TextView txtTotalScore;
 	private UserService userService;
-	private TextView txtLeastTaskCount;
-	private TextView txtToCash;
+	//private TextView txtLeastTaskCount;
+	//private LinearLayout layShop;
 	private MyBroadcastReceiver myBroadcastReceiver;
 	private ImageView img;
 	private SyncImageLoaderHelper helper;
@@ -100,14 +102,13 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 		mRootView.findViewById(R.id.btnLogOut).setOnClickListener(this);
 		mRootView.findViewById(R.id.layBaseInfo).setOnClickListener(this);
 		mRootView.findViewById(R.id.laySafe).setOnClickListener(this);
+		mRootView.findViewById(R.id.layShop).setOnClickListener(this);
+		mRootView.findViewById(R.id.layExchange).setOnClickListener(this);
 		img = (ImageView) mRootView.findViewById(R.id.imgPhoto);
 		imgTag = (ImageView) mRootView.findViewById(R.id.imgTag);
 		txtName = (TextView) mRootView.findViewById(R.id.txtName);
-		txtToCash = (TextView) mRootView.findViewById(R.id.btnToCash);
-		txtToCash.setOnClickListener(this);
-		txtToCash.setText("进入商城");
 		txtScore = (TextView) mRootView.findViewById(R.id.txtScore);
-		txtTotalScore = (TextView) mRootView.findViewById(R.id.txtTotalScore);
+		//txtTotalScore = (TextView) mRootView.findViewById(R.id.txtTotalScore);
 		//txtLeastTaskCount = (TextView) mRootView.findViewById(R.id.txtLeastTaskCount);
 
 
@@ -143,8 +144,8 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 	imgTag.setVisibility(userData.completeInfo ? View.GONE : View.VISIBLE);
 		txtName.setText(userData.userName);
 		txtScore.setText(userData.score);
-		txtTotalScore.setText(userData.totalScore);
-	txtLeastTaskCount.setText(String.format("%d/%d", userData.completeTaskCount, userData.totalTaskCount));
+		//txtTotalScore.setText(userData.totalScore);
+	//txtLeastTaskCount.setText(String.format("%d/%d", userData.completeTaskCount, userData.totalTaskCount));
 		if(TextUtils.isEmpty(userData.picUrl)){
 			img.setImageResource(R.drawable.user_icon);
 		}else{
@@ -184,15 +185,23 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 			Intent intentBaseInfo = new Intent(getActivity(),MyBaseInfoActivity.class);
 			startActivity(intentBaseInfo);
 			break;
-		case R.id.btnToCash://提现
-			if(BusinessStatic.getInstance().CRASH_TYPE == 0 && !UserData.getUserData().lockScore.equals("0")){
-				toast("您的提现申请正在受理中...");
-				return;
-			}
-			if(getActivity() != null)
-				((HomeActivity) getActivity()).toCrash();
+		case R.id.layExchange://小金库
+			Intent intentGoods = new Intent(getActivity(), DataListActivity.class);
+			intentGoods.putExtra(DataListActivity.ACTVITY_TYPE, DataListActivity.ActivityType.MonenyChange);
+			startActivity(intentGoods);
+//			if(BusinessStatic.getInstance().CRASH_TYPE == 0 && !UserData.getUserData().lockScore.equals("0")){
+//				toast("您的提现申请正在受理中...");
+//				return;
+//			}
+//			if(getActivity() != null)
+//				((HomeActivity) getActivity()).toCrash();
 
 
+			break;
+		case R.id.layShop:
+//			Intent intentGoods = new Intent(getActivity(), DataListActivity.class);
+//			intentGoods.putExtra(DataListActivity.ACTVITY_TYPE, DataListActivity.ActivityType.MonenyChange);
+//			startActivity(intentGoods);
 			break;
 		case R.id.btnLogOut:
 			CustomDialog.showChooiceDialg(getActivity(), null, "确定要注销吗？", "注销", "取消", null, new DialogInterface.OnClickListener() {

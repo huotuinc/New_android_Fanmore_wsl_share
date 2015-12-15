@@ -25,17 +25,15 @@ import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.DensityUtil;
 import cy.com.morefan.util.L;
-import cy.com.morefan.util.NumberAnimUtil;
-import cy.com.morefan.util.SPUtil;
-import cy.com.morefan.util.Shake;
+
 import cy.com.morefan.util.Util;
 import cy.com.morefan.view.CustomDialog;
 import cy.com.morefan.view.CyButton;
 import cy.com.morefan.view.DragLayout;
 import cy.com.morefan.view.PopExpUp;
 import cy.com.morefan.view.DragLayout.DragListener;
-import cy.com.morefan.view.PopCheckIn;
-import cy.com.morefan.view.PopCheckIn.OnPopCheckListener;
+//import cy.com.morefan.view.PopCheckIn;
+//import cy.com.morefan.view.PopCheckIn.OnPopCheckListener;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -86,7 +84,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	private ImageView img;
 	private TextView txtCheckDes;
 
-	private PopCheckIn popCheckIn;
+	//private PopCheckIn popCheckIn;
 	private SyncImageLoaderHelper helper;
 
 
@@ -325,22 +323,22 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			setTitleButton(FragType.More);
 			openOrCloseMenu();
 			break;
-		case R.id.layCheckIn:
-			if (UserData.getUserData().isLogin) { 
-				if(null == popCheckIn){
-					popCheckIn = new PopCheckIn(this);
-					popCheckIn.setOnPopCheckListener(new OnPopCheckListener() {
-						@Override
-						public void onPopCheck() {
-							checkIn();
-						}
-					});
-				}
-				popCheckIn.show(UserData.getUserData().checkInDays);
-			} else {
-				userLogin(1);
-			}
-			break;
+//		case R.id.layCheckIn:
+//			if (UserData.getUserData().isLogin) {
+//				if(null == popCheckIn){
+//					popCheckIn = new PopCheckIn(this);
+//					popCheckIn.setOnPopCheckListener(new OnPopCheckListener() {
+//						@Override
+//						public void onPopCheck() {
+//							checkIn();
+//						}
+//					});
+//				}
+//				popCheckIn.show(UserData.getUserData().checkInDays);
+//			} else {
+//				userLogin(1);
+//			}
+//			break;
 		case R.id.layTodayScan:
 			 if(UserData.getUserData().isLogin){
   	        	Intent intent = new Intent(HomeActivity.this, TaskActivity.class);
@@ -593,44 +591,45 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 
 
 	private boolean checking;
-	public void checkIn(){
-		if(!checking){
-			checking = true;
-			userService.CheckIn(UserData.getUserData().loginCode);
-			showProgress();
-		}
-
-	}
+//	public void checkIn(){
+//		if(!checking){
+//			checking = true;
+//			userService.CheckIn(UserData.getUserData().loginCode);
+//			showProgress();
+//		}
+//
+//	}
 	private Handler mHandler = new Handler(this);
-	@Override
-	public boolean handleMessage(Message msg) {
-		if(msg.what == BusinessDataListener.DONE_CHECK_IN){
-			if(null != popCheckIn)
-				popCheckIn.doneCheckIn();
-			checking = false;
-			dismissProgress();
-			//int exp = ((Bundle)msg.obj).getInt("exp");
-			setScores();
-			//expUp(exp);
-			//toast("Done check In!exp:" + exp);
-		}else if(msg.what == BusinessDataListener.ERROR_CHECK_IN){
-			checking = false;
-			dismissProgress();
-			CustomDialog.showChooiceDialg(HomeActivity.this, "签到失败", msg.obj.toString(), "重签", "取消", null,
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							checkIn();
+//	@Override
+//	public boolean handleMessage(Message msg) {
+//		if(msg.what == BusinessDataListener.DONE_CHECK_IN){
+//			if(null != popCheckIn)
+//				popCheckIn.doneCheckIn();
+//			checking = false;
+//			dismissProgress();
+//			//int exp = ((Bundle)msg.obj).getInt("exp");
+//			setScores();
+//			//expUp(exp);
+//			//toast("Done check In!exp:" + exp);
+//		}else if(msg.what == BusinessDataListener.ERROR_CHECK_IN){
+//			checking = false;
+//			dismissProgress();
+//			CustomDialog.showChooiceDialg(HomeActivity.this, "签到失败", msg.obj.toString(), "重签", "取消", null,
+//					new DialogInterface.OnClickListener() {
+//						@Override
+//						public void onClick(DialogInterface dialog, int which) {
+//							checkIn();
+//
+//						}
+//					}, null);
+//		}else if(msg.what == BusinessDataListener.ERROR_ALREADY_CHECK_IN){
+//			checking = false;
+//			dismissProgress();
+//			CustomDialog.showChooiceDialg(HomeActivity.this, "签到失败", msg.obj.toString(), "朕知道了", null, null,null, null);
+//		}
+//		return false;
+//	}
 
-						}
-					}, null);
-		}else if(msg.what == BusinessDataListener.ERROR_ALREADY_CHECK_IN){
-			checking = false;
-			dismissProgress();
-			CustomDialog.showChooiceDialg(HomeActivity.this, "签到失败", msg.obj.toString(), "朕知道了", null, null,null, null);
-		}
-		return false;
-	}
 	@Override
 	public void onDataFinish(int type, String des, BaseData[] datas,
 			Bundle extra) {
@@ -699,4 +698,9 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public boolean handleMessage(Message msg) {
+		return false;
 	}
+}

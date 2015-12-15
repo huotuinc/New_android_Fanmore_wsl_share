@@ -1,7 +1,7 @@
 package cy.com.morefan.view;
 
 import cy.com.morefan.R;
-import cy.com.morefan.util.Shake;
+//import cy.com.morefan.util.Shake;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
@@ -22,7 +22,7 @@ public class PopExpUp{
 		initView(context);
 	}
 	private Dialog dialog;
-	private Shake shake;
+//	private Shake shake;
 	private void initView(Context context) {
 		if(dialog == null){
 			mainView = LayoutInflater.from(context).inflate(R.layout.pop_exp_up, null);
@@ -39,7 +39,7 @@ public class PopExpUp{
 		}
 
 		txtExp = (TextView) mainView.findViewById(R.id.txtExp);
-		shake = new Shake(context, null);
+//		shake = new Shake(context, null);
 		mainView.setFocusableInTouchMode(true);
 		mainView.setOnKeyListener(new View.OnKeyListener() {
 			@Override
@@ -60,7 +60,7 @@ public class PopExpUp{
 			return;
 		txtExp.setText("+" + exp);
 		dialog.show();
-		shake.shakeSound(R.raw.exp_up);
+//		shake.shakeSound(R.raw.exp_up);
 		mHandler.postDelayed(new Runnable() {
 
 			@Override

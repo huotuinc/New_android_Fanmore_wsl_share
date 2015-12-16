@@ -103,7 +103,7 @@ public class MyBaseInfoActivity extends BaseActivity implements OnUserInfoBackLi
 					}, null);
 			break;
 		case BusinessDataListener.DONE_USER_INFO:
-			checkDialog();
+			//checkDialog();
 			dismissProgress();
 			Bundle extra = (Bundle) msg.obj;
 			updateView(extra);

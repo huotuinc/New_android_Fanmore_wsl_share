@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/lay"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/white"
     android:orientation="vertical" >
 
-    <FrameLayout style="@style/TitleStyle" >
+    <FrameLayout style="@style/TitleStyle"
+        android:id="@+id/titleexchange">
 
         <cy.com.morefan.view.CyButton
             android:id="@+id/btnBack"
@@ -25,21 +26,23 @@
             android:text="小金库"
             android:textColor="@color/white"
             android:textSize="18dp" />
-        <TextView
-            android:id="@+id/history"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical||right"
-            android:layout_marginRight="10dp"
-            android:textColor="@color/white"
-            android:text="历史"/>
+        <!--<TextView-->
+            <!--android:id="@+id/history"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical|right"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:text="历史"/>-->
     </FrameLayout>
 
     <ScrollView
+        android:layout_below="@+id/titleexchange"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content" >
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" >
@@ -218,4 +221,18 @@
 
         </LinearLayout>
     </ScrollView>
-   </LinearLayout>
+    <Button
+        android:id="@+id/btnexchange"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_red_sel"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="onClickButton"
+        android:text="兑换"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/white"
+        android:textSize="18dp" />
+
+</RelativeLayout>

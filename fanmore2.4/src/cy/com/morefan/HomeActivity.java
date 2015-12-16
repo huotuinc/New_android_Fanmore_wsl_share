@@ -289,7 +289,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 				openOrCloseMenu();
 			}else{
 				trendToMy = true;
-				userLogin(1);
+				Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
+				startActivity(intentlogin);
 			}
 
 			break;
@@ -305,7 +306,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			
 				openOrCloseMenu();
 			} else {
-				userLogin(1);
+				Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
+				startActivity(intentlogin);
 			}
 			break;
 //		case R.id.layTool:
@@ -346,7 +348,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
   	        	startActivity(intent);
 
   	        }else{
-  	        	userLogin(1);
+				 Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
+				 startActivity(intentlogin);
   	        }
 			break;
 		case R.id.layYesScore:
@@ -361,7 +364,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	        	startActivity(intent);
 
 	        }else{
-	        	userLogin(1);
+				Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
+				startActivity(intentlogin);
 	        }
 			break;
 		
@@ -370,7 +374,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
     			 Intent intent = new Intent(HomeActivity.this, AllScoreActivity.class);
      	         startActivity(intent);
  	        }else{
- 	        	userLogin(1);
+				 Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
+				 startActivity(intentlogin);
  	        }
 			break;
 
@@ -458,7 +463,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	public void toCrash(){
 		//钱包不要求登录
 	if(BusinessStatic.getInstance().CRASH_TYPE != 1 && !UserData.getUserData().isLogin){
-		userLogin(1);
+		Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
+		startActivity(intentlogin);
 
 		return;
 	}

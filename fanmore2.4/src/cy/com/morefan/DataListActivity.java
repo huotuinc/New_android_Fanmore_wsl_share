@@ -137,10 +137,10 @@ public class DataListActivity extends BaseActivity implements BusinessDataListen
 			setContentView(R.layout.mall_list);
 			break;
 		case MonenyChange:
-		case ExpHistory:
-			setContentView(R.layout.user_money_change);
-			((TextView) findViewById(R.id.txtTitle)).setText(curActivityType == ActivityType.ExpHistory ? "经验明细" : "积分兑换");
-			break;
+//		case ExpHistory:
+//			setContentView(R.layout.user_money_change);
+//			((TextView) findViewById(R.id.txtTitle)).setText(curActivityType == ActivityType.ExpHistory ? "经验明细" : "积分兑换");
+//			break;
 		case PrenticeList:
 			setContentView(R.layout.prentice_list);
 			break;
@@ -245,10 +245,10 @@ public class DataListActivity extends BaseActivity implements BusinessDataListen
 			userService.userCashHistory(UserData.getUserData().loginCode, pageTag, Constant.PAGESIZE);
 			showProgress();
 			break;
-		case ExpHistory:
-			userService.getExpHistory(UserData.getUserData().loginCode, pageTag, Constant.PAGESIZE);
-			showProgress();
-			break;
+//		case ExpHistory:
+//			userService.getExpHistory(UserData.getUserData().loginCode, pageTag, Constant.PAGESIZE);
+//			showProgress();
+//			break;
 		case PrenticeList:
 			userService.getPrenticeList(UserData.getUserData().loginCode, orderType, pageTag, Constant.PAGESIZE);
 			showProgress();

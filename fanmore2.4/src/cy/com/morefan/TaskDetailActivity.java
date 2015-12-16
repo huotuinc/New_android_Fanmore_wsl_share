@@ -740,7 +740,8 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 
 
 			if(!UserData.getUserData().isLogin){
-				userLogin(1);
+				Intent intentlogin = new Intent(TaskDetailActivity.this, LoginActivity.class);
+				startActivity(intentlogin);
 			}else{
 				if( !UserData.getUserData().ignoreJudgeEmulator && BusinessStatic.getInstance().ISEMULATOR){
 					toast("模拟器不支持该操作!");

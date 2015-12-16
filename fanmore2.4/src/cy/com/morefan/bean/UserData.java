@@ -11,6 +11,8 @@ public class UserData implements BaseData, Serializable{
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
+	public String mallUserId;
+
 	public static void restore(Bundle in){
 		userData = (UserData) in.getSerializable("userData");
 

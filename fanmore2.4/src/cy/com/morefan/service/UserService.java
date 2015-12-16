@@ -178,16 +178,17 @@ public class UserService extends BaseService{
 
 
 	}
-	public void getWallet(final String loginCode){
+	public void intGoldInfo(final String loginCode,final String score){
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
 
 			@Override
 			public void run() {
 				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=MyWallet" + CONSTANT_URL();
+					String url = Constant.IP_URL + "/Api.ashx?req=IntegralGoldInfo" + CONSTANT_URL();
 					JSONObject jsonUrl = new JSONObject();
 					//System.out.println(loginCode);
 					jsonUrl.put("loginCode",loginCode );
+					jsonUrl.put("score",score);
 					try {
 						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 					} catch (UnsupportedEncodingException e) {
@@ -2513,6 +2514,7 @@ public class UserService extends BaseService{
 
 	}
 
+
 	/**
 	 * 我的兑换
 	 * @param loginCode
@@ -2752,6 +2754,117 @@ public class UserService extends BaseService{
 							}else{
 								listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, data.getString("description"), null);
 							}
+
+					}else{
+						listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, ERROR_NET, null);
+					}
+				} catch (Exception e) {
+					listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, ERROR_DATA, null);
+					e.printStackTrace();
+				}
+
+
+			}
+		});
+	}
+	public void GetUserList(final String loginCode,final String unionId ){
+		ThreadPoolManager.getInstance().addTask(new Runnable() {
+
+			@Override
+			public void run() {
+
+				try {
+					String url = Constant.IP_URL + "/Api.ashx?req=GetUserList" + CONSTANT_URL();
+					JSONObject jsonUrl = new JSONObject();
+					//System.out.println(loginCode);
+					jsonUrl.put("loginCode",loginCode );
+					jsonUrl.put("unionId",unionId);
+
+
+					try {
+						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}
+					MyJSONObject data = getDataFromSer(url);
+					if(data != null){
+						int resultCode = data.getInt("resultCode");
+						if (resultCode == 1) {
+							int status = data.getInt("status");
+							if (status == 1) {
+								//设置内存量
+								UserData userData = UserData.getUserData();
+//								userData.lockScore = userData.score;
+//								userData.score = "0";
+								double total = Double.parseDouble(userData.score);
+								int useScore = ((int)total/10)*10;
+								userData.lockScore = String.valueOf(useScore);
+								userData.score = Util.opeDouble(total - useScore);
+
+
+								listener.onDataFinish(BusinessDataListener.DONE_TO_CRASH, data.getString("tip"), null, null);
+							}else{
+								listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, data.getString("tip"), null);
+							}
+						}else{
+							listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, data.getString("description"), null);
+						}
+
+					}else{
+						listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, ERROR_NET, null);
+					}
+				} catch (Exception e) {
+					listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, ERROR_DATA, null);
+					e.printStackTrace();
+				}
+
+
+			}
+		});
+	}
+	public void userchange(final String loginCode,final String mallUserId  ,final String score, final String crashPwd){
+		ThreadPoolManager.getInstance().addTask(new Runnable() {
+
+			@Override
+			public void run() {
+
+				try {
+					String url = Constant.IP_URL + "/Api.ashx?req=Recharge" + CONSTANT_URL();
+					JSONObject jsonUrl = new JSONObject();
+					//System.out.println(loginCode);
+					jsonUrl.put("loginCode",loginCode );
+					jsonUrl.put("mallUserId",mallUserId);
+					jsonUrl.put("score",score);
+					jsonUrl.put("pwd", crashPwd);
+
+					try {
+						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}
+					MyJSONObject data = getDataFromSer(url);
+					if(data != null){
+						int resultCode = data.getInt("resultCode");
+						if (resultCode == 1) {
+							int status = data.getInt("status");
+							if (status == 1) {
+								//设置内存量
+								UserData userData = UserData.getUserData();
+//								userData.lockScore = userData.score;
+//								userData.score = "0";
+								double total = Double.parseDouble(userData.score);
+								int useScore = ((int)total/10)*10;
+								userData.lockScore = String.valueOf(useScore);
+								userData.score = Util.opeDouble(total - useScore);
+
+
+								listener.onDataFinish(BusinessDataListener.DONE_TO_CRASH, data.getString("tip"), null, null);
+							}else{
+								listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, data.getString("tip"), null);
+							}
+						}else{
+							listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, data.getString("description"), null);
+						}
 
 					}else{
 						listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, ERROR_NET, null);
@@ -3115,6 +3228,7 @@ public class UserService extends BaseService{
 								setUserData(userName, pwd, data.getJSONObject("resultData"));
 								//本地保存
 								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME, userName);
+								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, pwd);
 								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, pwd);
 								if(needCallBack)
 									listener.onDataFinish(BusinessDataListener.DONE_USER_LOGIN, null, null, null);

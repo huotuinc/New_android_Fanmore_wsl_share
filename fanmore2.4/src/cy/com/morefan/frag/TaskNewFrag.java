@@ -242,7 +242,7 @@ public class TaskNewFrag extends BaseFragment   {
 			break;
 		case R.id.txtTask:
 			if(mViewPager.getCurrentItem() == 0)
-				taskFrag.onClickTitleMiddle();
+				//taskFrag.onClickTitleMiddle();
 			mViewPager.setCurrentItem(0);
 			//setTab(v.getId());
 			setTitle(0);

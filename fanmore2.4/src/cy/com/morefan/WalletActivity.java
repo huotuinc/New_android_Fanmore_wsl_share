@@ -96,7 +96,7 @@ public class WalletActivity extends BaseActivity implements Callback{
 	}
 
 	private void refresh() {
-		mUserService.getWallet(UserData.getUserData().loginCode);
+		//mUserService.getWallet(UserData.getUserData().loginCode);
 		showProgress();
 
 	}
@@ -140,7 +140,8 @@ public class WalletActivity extends BaseActivity implements Callback{
 			break;
 		case R.id.btnHistory:
 			if(!UserData.getUserData().isLogin){
-				userLogin(1);
+				Intent intentlogin = new Intent(WalletActivity.this, LoginActivity.class);
+				startActivity(intentlogin);
 				return ;
 			}
 			Intent intentHistory = new Intent(this, DataListActivity.class);
@@ -172,7 +173,8 @@ public class WalletActivity extends BaseActivity implements Callback{
 			break;
 		case R.id.btnDuiBa:
 			if(!UserData.getUserData().isLogin){
-				userLogin(1);
+				Intent intentlogin = new Intent(WalletActivity.this, LoginActivity.class);
+				startActivity(intentlogin);
 				return;
 			}
 			mUserService.getDuiBaUrl(UserData.getUserData().loginCode);
@@ -186,7 +188,8 @@ public class WalletActivity extends BaseActivity implements Callback{
 	}
 	public boolean checkStatus(){
 		if(!UserData.getUserData().isLogin){
-			userLogin(1);
+			Intent intentlogin = new Intent(WalletActivity.this, LoginActivity.class);
+			startActivity(intentlogin);
 			return false;
 		}
 		//积分是否已达标准下限

@@ -401,6 +401,7 @@
             android:text="@string/txt_logout"
             android:textColor="@color/white"
             android:textSize="20sp" />
+
     </LinearLayout>
 
 </cy.com.morefan.view.ElasticScrollView>

@@ -15,6 +15,7 @@ import cy.com.morefan.FeedBackActivity;
 import cy.com.morefan.DataListActivity.ActivityType;
 import cy.com.morefan.HomeActivity;
 import cy.com.morefan.DataListActivity;
+import cy.com.morefan.LoginActivity;
 import cy.com.morefan.PushMsgActivity;
 import cy.com.morefan.R;
 import cy.com.morefan.ScratchTicketActivity;
@@ -314,21 +315,21 @@ public class ToolFrag extends BaseFragment implements OnClickListener, Callback,
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.layExp:
-			if(!UserData.getUserData().isLogin){
-				if(null != getActivity())
-					((HomeActivity)getActivity()).userLogin(1);
-				return;
-			}else{
-//				Intent intentExp = new Intent(getActivity(), HistoryMoneyChangeActivity.class);
-//				intentExp.putExtra("actionType", ActionType.Exp);
+//		case R.id.layExp:
+//			if(!UserData.getUserData().isLogin){
+//				Intent intentlogin = new Intent(getActivity(), LoginActivity.class);
+//				startActivity(intentlogin);
+//				return;
+//			}else{
+////				Intent intentExp = new Intent(getActivity(), HistoryMoneyChangeActivity.class);
+////				intentExp.putExtra("actionType", ActionType.Exp);
+////				startActivity(intentExp);
+//				Intent intentExp = new Intent(getActivity(), DataListActivity.class);
+//				intentExp.putExtra(DataListActivity.ACTVITY_TYPE, ActivityType.ExpHistory);
 //				startActivity(intentExp);
-				Intent intentExp = new Intent(getActivity(), DataListActivity.class);
-				intentExp.putExtra(DataListActivity.ACTVITY_TYPE, ActivityType.ExpHistory);
-				startActivity(intentExp);
-			}
-
-			break;
+//			}
+//
+//			break;
 		case R.id.btnRight:
 			Intent intentRule = new Intent(getActivity(), WebViewActivity.class);
 			intentRule.putExtra("url", BusinessStatic.getInstance().URL_TOOL);

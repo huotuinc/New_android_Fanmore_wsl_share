@@ -369,7 +369,7 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 		if(tabType == TabType.Task){
 			taskService.getTaskList(UserData.getUserData().loginCode, taskType,Constant.PAGESIZE, oldTaskId);
 		}else{
-			taskService.getFlashMallList(UserData.getUserData().loginCode, taskType,Constant.PAGESIZE, oldTaskId);
+			//taskService.getFlashMallList(UserData.getUserData().loginCode, taskType,Constant.PAGESIZE, oldTaskId);
 		}
 		showProgress();
 	}

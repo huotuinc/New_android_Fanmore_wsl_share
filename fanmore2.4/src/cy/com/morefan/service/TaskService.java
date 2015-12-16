@@ -203,67 +203,67 @@ public class TaskService extends BaseService {
 			}
 		});
 	}
-	public void getFlashMallList(final String loginCode, final int screenType, final int pageSize, final int oldTaskId){
-
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=FlashMallTask" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					jsonUrl.put("loginCode", loginCode == null ? "" : loginCode);
-					jsonUrl.put("screenType", screenType);
-					jsonUrl.put("pageSize", pageSize);
-					jsonUrl.put("oldTaskId", oldTaskId);
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					L.i("getTaskList:" + url);
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								MyJSONObject myJSONObject = data.getJSONObject("resultData");
-								BusinessStatic.getInstance().TODAY_TOTAL_SCORE = myJSONObject.getInt("todayTotalScore");
-								String[] topIds = myJSONObject.getString("topIds").split(",");
-								List<String> tops = Arrays.asList(topIds);
-								JSONArray jArray = myJSONObject.getJSONArray("taskData");
-								int length = jArray.length();
-								TaskData[] results = new TaskData[length];
-								for (int i = 0; i < length; i++) {
-									MyJSONObject tip = (MyJSONObject) jArray.get(i);
-									TaskData taskData = setTaskData(tip);
-									//标记top任务
-									if(tops.contains(taskData.id + ""))
-										taskData.isTop = true;
-									results[i] = taskData;
-								}
-								listener.onDataFinish(BusinessDataListener.DONE_GET_TASK_LIST, null, results, null);
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, data.getString("tip"), null);
-							}
-						}else{
-							String description = data.getString("description");
-							listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, description, null);
-						}
-					}else
-						listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, ERROR_NET, null);
-
-				} catch (JSONException e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-			}
-		});
-
-
-
-
-	}
+//	public void getFlashMallList(final String loginCode, final int screenType, final int pageSize, final int oldTaskId){
+//
+//		ThreadPoolManager.getInstance().addTask(new Runnable() {
+//			@Override
+//			public void run() {
+//				try {
+//					String url = Constant.IP_URL + "/Api.ashx?req=FlashMallTask" + CONSTANT_URL();
+//					JSONObject jsonUrl = new JSONObject();
+//					jsonUrl.put("loginCode", loginCode == null ? "" : loginCode);
+//					jsonUrl.put("screenType", screenType);
+//					jsonUrl.put("pageSize", pageSize);
+//					jsonUrl.put("oldTaskId", oldTaskId);
+//					try {
+//						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
+//					} catch (UnsupportedEncodingException e) {
+//						e.printStackTrace();
+//					}
+//					L.i("getTaskList:" + url);
+//					MyJSONObject data = getDataFromSer(url);
+//					if(data != null){
+//						int resultCode = data.getInt("resultCode");
+//						if (resultCode == 1) {
+//							int status = data.getInt("status");
+//							if (status == 1) {
+//								MyJSONObject myJSONObject = data.getJSONObject("resultData");
+//								BusinessStatic.getInstance().TODAY_TOTAL_SCORE = myJSONObject.getInt("todayTotalScore");
+//								String[] topIds = myJSONObject.getString("topIds").split(",");
+//								List<String> tops = Arrays.asList(topIds);
+//								JSONArray jArray = myJSONObject.getJSONArray("taskData");
+//								int length = jArray.length();
+//								TaskData[] results = new TaskData[length];
+//								for (int i = 0; i < length; i++) {
+//									MyJSONObject tip = (MyJSONObject) jArray.get(i);
+//									TaskData taskData = setTaskData(tip);
+//									//标记top任务
+//									if(tops.contains(taskData.id + ""))
+//										taskData.isTop = true;
+//									results[i] = taskData;
+//								}
+//								listener.onDataFinish(BusinessDataListener.DONE_GET_TASK_LIST, null, results, null);
+//							}else{
+//								listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, data.getString("tip"), null);
+//							}
+//						}else{
+//							String description = data.getString("description");
+//							listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, description, null);
+//						}
+//					}else
+//						listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, ERROR_NET, null);
+//
+//				} catch (JSONException e) {
+//					listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, ERROR_DATA, null);
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//
+//
+//
+//
+//	}
 	/**
 	 * 获取任务列表
 	 * @param loginCode

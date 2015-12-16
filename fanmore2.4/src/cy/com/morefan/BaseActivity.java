@@ -443,7 +443,7 @@ public class BaseActivity extends SwipeBackActivity implements BusinessDataListe
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					expUp(exp);
+					//expUp(exp);
 				}
 			});
 		}

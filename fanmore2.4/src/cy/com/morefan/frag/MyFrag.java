@@ -10,6 +10,7 @@ import cy.com.morefan.MyBaseInfoActivity;
 import cy.com.morefan.MySafeActivity;
 import cy.com.morefan.R;
 import cy.com.morefan.AuthCodeSendActivity;
+import cy.com.morefan.UserExchangeActivity;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.constant.BusinessStatic;
@@ -48,6 +49,7 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 	private TextView txtScore;
 	//private TextView txtTotalScore;
 	private UserService userService;
+	private UserData userData;
 	//private TextView txtLeastTaskCount;
 	//private LinearLayout layShop;
 	private MyBroadcastReceiver myBroadcastReceiver;
@@ -186,16 +188,9 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 			startActivity(intentBaseInfo);
 			break;
 		case R.id.layExchange://小金库
-			Intent intentGoods = new Intent(getActivity(), DataListActivity.class);
-			intentGoods.putExtra(DataListActivity.ACTVITY_TYPE, DataListActivity.ActivityType.MonenyChange);
+			//userService.intGoldInfo(userData.loginCode,userData.score);
+			Intent intentGoods = new Intent(getActivity(), UserExchangeActivity.class);
 			startActivity(intentGoods);
-//			if(BusinessStatic.getInstance().CRASH_TYPE == 0 && !UserData.getUserData().lockScore.equals("0")){
-//				toast("您的提现申请正在受理中...");
-//				return;
-//			}
-//			if(getActivity() != null)
-//				((HomeActivity) getActivity()).toCrash();
-
 
 			break;
 		case R.id.layShop:

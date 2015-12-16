@@ -72,6 +72,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/txtExp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -321,6 +322,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/layRule"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

@@ -13,7 +13,7 @@
         android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
-        android:smallScreens="true"></supports-screens>
+        android:smallScreens="true" />
 
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -273,7 +273,7 @@
 
         <receiver
             android:name=".listener.AlamrReceiver"
-            android:process=":remote"></receiver>
+            android:process=":remote" />
         <!-- QZone -->
 
         <activity
@@ -317,7 +317,7 @@
         <!-- umeng -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5347747a56240b32f5032962"></meta-data>
+            android:value="5347747a56240b32f5032962" />
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="Channel ID" />
@@ -327,7 +327,7 @@
 
         <receiver
             android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
-            android:exported="false"></receiver>
+            android:exported="false" />
         <receiver android:name="com.umeng.message.RegistrationReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
@@ -376,7 +376,8 @@
 
         <activity
             android:name=".UserExchangeActivity"
-            android:label="@string/title_activity_user_exchange"></activity>
+            android:label="@string/title_activity_user_exchange" />
+        <activity android:name=".WebShopActivity"></activity>
     </application>
 
 </manifest>

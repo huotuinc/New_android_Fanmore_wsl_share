@@ -11,5 +11,6 @@ public class UserBaseInfoList implements Serializable{
 	public List<UserSelectData> industryList;
 	public List<UserSelectData> favoriteList;
 	public List<UserSelectData> incomeList;
+	public List<UserSelectData> malluserlist;
 
 }

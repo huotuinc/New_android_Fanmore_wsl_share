@@ -6,11 +6,14 @@ import cn.sharesdk.wechat.friends.Wechat;
 import cy.com.morefan.AuthCodeSendActivity.AuthType;
 import cy.com.morefan.DataListActivity;
 import cy.com.morefan.HomeActivity;
+import cy.com.morefan.MainApplication;
 import cy.com.morefan.MyBaseInfoActivity;
 import cy.com.morefan.MySafeActivity;
 import cy.com.morefan.R;
 import cy.com.morefan.AuthCodeSendActivity;
 import cy.com.morefan.UserExchangeActivity;
+import cy.com.morefan.WebShopActivity;
+import cy.com.morefan.WebViewActivity;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.constant.BusinessStatic;
@@ -21,6 +24,7 @@ import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
 import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.UserService;
+import cy.com.morefan.util.AuthParamUtils;
 import cy.com.morefan.util.L;
 import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.view.CustomDialog;
@@ -60,6 +64,8 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 	private HeadView head;
 	private ElasticScrollView scrollView;
 	private Handler mHandler = new Handler(this);
+	public
+	MainApplication application;
 
 	@Override
 	public boolean handleMessage(Message msg) {
@@ -75,9 +81,19 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 			head.onRefreshComplete();
 			dismissProgress();
 			toast(msg.obj.toString());
+		}else if (msg.what== BusinessDataListener.DONE_TO_GETUSERLIST){
+
+			Intent intentshop = new Intent(getActivity(), WebShopActivity.class);
+			AuthParamUtils paramUtils = new AuthParamUtils ( application, System.currentTimeMillis(),BusinessStatic.getInstance().URL_WEBSITE, getActivity() );
+			String url = paramUtils.obtainUrl();
+			intentshop.putExtra("url", url);
+			intentshop.putExtra("title", "商城");
+			startActivity(intentshop);
+			dismissProgress();
+
 		}
 		return false;
-	};
+	}
 	public static MyFrag newInstance(){
 		if(frag == null)
 			frag = new MyFrag();
@@ -88,6 +104,7 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 		L.i("MyFrag onCreate");
 		super.onCreate(savedInstanceState);
 		userService = new UserService(this);
+		application = (MainApplication) this.getActivity().getApplication ();
 		myBroadcastReceiver = new MyBroadcastReceiver(getActivity(), this, MyBroadcastReceiver.ACTION_USER_MAINDATA_UPDATE, MyBroadcastReceiver.ACTION_USER_LOGOUT);
 		helper = new SyncImageLoaderHelper(getActivity());
 	}
@@ -143,9 +160,9 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 	private void initData() {
 
 	UserData userData = UserData.getUserData();
-	imgTag.setVisibility(userData.completeInfo ? View.GONE : View.VISIBLE);
+	imgTag.setVisibility(userData.completeInfo ? View.GONE :View.GONE);
 		txtName.setText(userData.userName);
-		txtScore.setText(userData.score);
+		txtScore.setText("我的积分："+userData.score);
 		//txtTotalScore.setText(userData.totalScore);
 	//txtLeastTaskCount.setText(String.format("%d/%d", userData.completeTaskCount, userData.totalTaskCount));
 		if(TextUtils.isEmpty(userData.picUrl)){
@@ -194,10 +211,10 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 
 			break;
 		case R.id.layShop:
-//			Intent intentGoods = new Intent(getActivity(), DataListActivity.class);
-//			intentGoods.putExtra(DataListActivity.ACTVITY_TYPE, DataListActivity.ActivityType.MonenyChange);
-//			startActivity(intentGoods);
-			break;
+			showProgress();
+			userService.GetUserList(getActivity(), UserData.getUserData().loginCode, SPUtil.getStringToSpByName(getActivity(), Constant.SP_NAME_NORMAL, Constant.SP_NAME_UnionId));
+
+             break;
 		case R.id.btnLogOut:
 			CustomDialog.showChooiceDialg(getActivity(), null, "确定要注销吗？", "注销", "取消", null, new DialogInterface.OnClickListener() {
 
@@ -235,6 +252,11 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 	@Override
 	public void onDataFailed(int type, String des, Bundle extra) {
 		mHandler.obtainMessage(type, des).sendToTarget();
+	}
+
+	@Override
+	public void onDataFail(int type, String des, Bundle extra) {
+
 	}
 
 	private void showProgress(){

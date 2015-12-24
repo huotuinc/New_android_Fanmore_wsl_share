@@ -75,6 +75,7 @@
                     android:id="@+id/apprenticeicon"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="5dp"
+                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/shitutubiao"
@@ -120,7 +121,8 @@
       >
 
         <LinearLayout
-              android:padding="5dp" 
+              android:padding="15dp"
+
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -151,7 +153,7 @@
             android:background="@drawable/line_gray_bg_v" />
 
         <LinearLayout
-               android:padding="5dp" 
+               android:padding="15dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -188,7 +190,7 @@
        >
 
         <LinearLayout
-               android:padding="5dp" 
+               android:padding="15dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -219,7 +221,7 @@
             android:background="@drawable/line_gray_bg_v" />
 
         <LinearLayout
-               android:padding="5dp" 
+               android:padding="15dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -246,6 +248,7 @@
      <FrameLayout
         android:id="@+id/layRuleFrag"
         android:layout_width="match_parent"
+         android:layout_marginTop="15dp"
         android:onClick="onClick"
         android:clickable="true"
         android:background="@color/white"
@@ -261,7 +264,7 @@
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:paddingRight="24dp"
-            android:text="将此拜(邀)师(请)令(码)分享给好友，让其注册时输入，即可收入师门。徒弟每次提现成功后，都会贡献提现金额的10%(暂时由粉猫补贴)给师傅哦~"
+            android:text="将此拜(邀)师(请)令(码)分享给好友，让其注册时输入，即可收入师门。徒弟每次提现成功后，都会贡献提现金额的10%(由商家补贴)给师傅哦~"
             android:textColor="@color/black" />
 
         <ImageView

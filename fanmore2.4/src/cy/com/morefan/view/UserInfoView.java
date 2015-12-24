@@ -40,7 +40,7 @@ import android.widget.TextView;
 
 public class UserInfoView {
 	public enum Type{
-		Name, Sex, Age, Job, Income, Fav
+		Name, Sex, Age, Job, Income, Fav,malluser
 	}
 	public HashMap<Type, String> titleNames = new HashMap<UserInfoView.Type, String>();
 	public interface OnUserInfoBackListener{
@@ -87,6 +87,7 @@ public class UserInfoView {
 		titleNames.put(Type.Job, "职业");
 		titleNames.put(Type.Income, "收入");
 		titleNames.put(Type.Fav, "爱好");
+		titleNames.put(Type.malluser,"用户列表");
 		edtName = (EditText) mainView.findViewById(R.id.edtName);
 		txtTitle = (TextView) mainView.findViewById(R.id.txtTitle);
 		listView = (ListView) mainView.findViewById(R.id.listView);
@@ -191,7 +192,7 @@ public class UserInfoView {
 				@Override
 				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 						long arg3) {
-					if(type == Type.Sex || type == Type.Job || type == Type.Income){
+					if(type == Type.Sex || type == Type.Job || type == Type.Income || type == Type.malluser ){
 						if(listener != null){
 							listener.onUserInfoBack(type, datas.get(arg2));
 						}

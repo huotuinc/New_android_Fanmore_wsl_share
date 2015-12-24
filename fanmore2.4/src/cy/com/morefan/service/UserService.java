@@ -18,6 +18,8 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+
+import cy.com.morefan.MainApplication;
 import cy.com.morefan.bean.AllScoreData;
 import cy.com.morefan.bean.AwardData;
 import cy.com.morefan.bean.BuyData;
@@ -43,6 +45,7 @@ import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.util.L;
+import cy.com.morefan.util.PreferenceHelper;
 import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.util.TimeUtil;
 import cy.com.morefan.util.Util;
@@ -178,63 +181,7 @@ public class UserService extends BaseService{
 
 
 	}
-	public void intGoldInfo(final String loginCode,final String score){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
 
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=IntegralGoldInfo" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					//System.out.println(loginCode);
-					jsonUrl.put("loginCode",loginCode );
-					jsonUrl.put("score",score);
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					System.out.println("MyWallet:"+url);
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								MyJSONObject json = data.getJSONObject("resultData");
-								UserData.getUserData().score = Util.opeDouble(json.getDouble("scoreLast"));
-								UserData.getUserData().wallet = Util.opeDouble(json.getDouble("walletLast"));
-								Bundle extra = new Bundle();
-								extra.putString("des", json.getString("des"));
-								extra.putString("recordTime", json.getString("recordTime"));
-								extra.putString("recordDes", json.getString("recordDes"));
-								extra.putInt("recordResult", json.getInt("recordResult"));
-								extra.putString("recordResultDes", json.getString("recordResultDes"));
-								listener.onDataFinish(BusinessDataListener.DONE_GET_WALLET, null, null, extra);
-								}else{
-									listener.onDataFailed(BusinessDataListener.ERROR_GET_WALLET, data.getString("tip"), null);
-								}
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_GET_WALLET, data.getString("description"), null);
-							}
-
-					}else{
-						listener.onDataFailed(BusinessDataListener.ERROR_GET_WALLET, ERROR_NET, null);
-					}
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_GET_WALLET, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-
-			}
-		});
-
-
-
-
-
-
-	}
 	public void getDuiBaUrl(final String loginCode){
 
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
@@ -2706,6 +2653,64 @@ public class UserService extends BaseService{
 		});
 
 	}
+	public void intGoldInfo(final String loginCode,final String score){
+		ThreadPoolManager.getInstance().addTask(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					String url = Constant.IP_URL + "/Api.ashx?req=IntegralGoldInfo" + CONSTANT_URL();
+					JSONObject jsonUrl = new JSONObject();
+					//System.out.println(loginCode);
+					jsonUrl.put("loginCode",loginCode );
+					jsonUrl.put("score",score);
+					try {
+						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}
+					System.out.println("MyWallet:"+url);
+					MyJSONObject data = getDataFromSer(url);
+					if(data != null){
+						int resultCode = data.getInt("resultCode");
+						if (resultCode == 1) {
+							int status = data.getInt("status");
+							if (status == 1) {
+								MyJSONObject json = data.getJSONObject("resultData");
+								//UserData.getUserData().score = Util.opeDouble(json.getDouble("ApplyScore"));
+								UserData.getUserData().wallet = Util.opeDouble(json.getDouble("money"));
+								Bundle extra = new Bundle();
+								extra.putString("des", json.getString("desc"));
+								MyJSONObject ajson = json.getJSONObject("lastApply");
+								extra.putString("recordTime", ajson.getString("ApplyTime"));
+								extra.putString("recordDes", ajson.getString("ApplyMoney"));
+								extra.putInt("recordResult", ajson.getInt("ApplyScore"));
+								extra.putString("recordResultDes", json.getString("recordResultDes"));
+								listener.onDataFinish(BusinessDataListener.DONE_GET_WALLET, null, null, extra);
+							}else{
+								listener.onDataFailed(BusinessDataListener.ERROR_GET_WALLET, data.getString("tip"), null);
+							}
+						}else{
+							listener.onDataFailed(BusinessDataListener.ERROR_GET_WALLET, data.getString("description"), null);
+						}
+
+					}else{
+						listener.onDataFailed(BusinessDataListener.ERROR_GET_WALLET, ERROR_NET, null);
+					}
+				} catch (Exception e) {
+					listener.onDataFailed(BusinessDataListener.ERROR_GET_WALLET, ERROR_DATA, null);
+					e.printStackTrace();
+				}
+
+			}
+		});
+
+
+
+
+
+
+	}
 
 
 	/**
@@ -2767,7 +2772,7 @@ public class UserService extends BaseService{
 			}
 		});
 	}
-	public void GetUserList(final String loginCode,final String unionId ){
+	public void GetUserList(final Context mContext,final String loginCode,final String unionId ){
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
 
 			@Override
@@ -2792,29 +2797,35 @@ public class UserService extends BaseService{
 						if (resultCode == 1) {
 							int status = data.getInt("status");
 							if (status == 1) {
-								//设置内存量
-								UserData userData = UserData.getUserData();
-//								userData.lockScore = userData.score;
-//								userData.score = "0";
-								double total = Double.parseDouble(userData.score);
-								int useScore = ((int)total/10)*10;
-								userData.lockScore = String.valueOf(useScore);
-								userData.score = Util.opeDouble(total - useScore);
+
+								Bundle extra = new Bundle();
+								UserBaseInfoList userBaseInfoList = new UserBaseInfoList();
+								JSONArray jarray = data.getJSONArray("resultData");
+								Integer buserId = ((MyJSONObject)jarray.get(0)).getInt("userid");
+								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_BuserId, buserId.toString());
+								int indLength = jarray.length();
+								List<UserSelectData> indList = new ArrayList<UserSelectData>();
+								for(int i = 0; i < indLength; i ++){
+									MyJSONObject tip = (MyJSONObject) jarray.get(i);
+									indList.add(new UserSelectData(tip.getString("wxNickName"), tip.getString("userid")));
+								}
+								userBaseInfoList.malluserlist = indList;
+								extra.putSerializable("list", userBaseInfoList);
 
 
-								listener.onDataFinish(BusinessDataListener.DONE_TO_CRASH, data.getString("tip"), null, null);
+								listener.onDataFinish(BusinessDataListener.DONE_TO_GETUSERLIST, data.getString("tip"), null, extra);
 							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, data.getString("tip"), null);
+								listener.onDataFailed(BusinessDataListener.ERROR_TO_GETUSERLIST, data.getString("tip"), null);
 							}
 						}else{
-							listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, data.getString("description"), null);
+							listener.onDataFailed(BusinessDataListener.ERROR_TO_GETUSERLIST, data.getString("description"), null);
 						}
 
 					}else{
-						listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, ERROR_NET, null);
+						listener.onDataFailed(BusinessDataListener.ERROR_TO_GETUSERLIST, ERROR_NET, null);
 					}
 				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, ERROR_DATA, null);
+					listener.onDataFailed(BusinessDataListener.ERROR_TO_GETUSERLIST, ERROR_DATA, null);
 					e.printStackTrace();
 				}
 
@@ -2835,7 +2846,7 @@ public class UserService extends BaseService{
 					jsonUrl.put("loginCode",loginCode );
 					jsonUrl.put("mallUserId",mallUserId);
 					jsonUrl.put("score",score);
-					jsonUrl.put("pwd", crashPwd);
+					jsonUrl.put("cashpassword", crashPwd);
 
 					try {
 						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
@@ -3119,13 +3130,18 @@ public class UserService extends BaseService{
 							if (status == 1) {
 								String loginCode= data.getJSONObject("resultData").getString("loginCode");
 								String loginUsername = data.getJSONObject("resultData").getString("userName");
+								String unionId = data.getJSONObject("resultData").getString("unionId");
 								loginCode = loginCode.split("\\^")[1];
 								setUserData(loginUsername, loginCode, data.getJSONObject("resultData"));
 								//本地保存
 								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME, loginUsername);
 								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, loginCode);
+								SPUtil.saveStringToSpByName(mContext,Constant.SP_NAME_NORMAL,Constant.SP_NAME_UnionId,unionId);
 								listener.onDataFinish(BusinessDataListener.DONE_USER_REG, null, null, null);
-								}else{
+								}else if (status==56000){
+								listener.onDataFail(BusinessDataListener.NOT_USER_REG,null,null);
+							}
+							else{
 									L.i(">>>tip:" + data.getString("tip"));
 									listener.onDataFailed(BusinessDataListener.ERROR_USER_REG, data.getString("tip"), null);
 								}
@@ -3178,11 +3194,13 @@ public class UserService extends BaseService{
 							if (status == 1) {
 								String loginCode= data.getJSONObject("resultData").getString("loginCode");
 								String loginUsername = data.getJSONObject("resultData").getString("userName");
+
 								loginCode = loginCode.split("\\^")[1];
 								setUserData(loginUsername, loginCode, data.getJSONObject("resultData"));
 								//本地保存
 								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME, loginUsername);
 								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, loginCode);
+
 								listener.onDataFinish(BusinessDataListener.DONE_USER_REG, null, null, null);
 							}else{
 								L.i(">>>tip:" + data.getString("tip"));

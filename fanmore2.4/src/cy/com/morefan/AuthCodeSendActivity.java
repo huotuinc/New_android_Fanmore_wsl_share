@@ -71,11 +71,15 @@ public class AuthCodeSendActivity extends BaseActivity implements OnEditorAction
 		currentType = (AuthType) getIntent().getExtras().getSerializable(Constant.AuthCodeType);
 		switch (currentType) {
 		case UnBindPhone:
-			edtPhone.setText(UserData.getUserData().phone);
-			edtPhone.setTextColor(Color.GRAY);
-			txtReminder.setText("修改手机号,您需要先解除旧手机号的绑定!");
-			edtPhone.setFocusable(false);
+			txtReminder.setText("修改手机号,您需要输入手机号,获取验证码");
+			edtPhone.requestFocus();
+			edtPhone.requestFocusFromTouch();
 			txtTitle.setText("修改手机号");
+//			edtPhone.setText(UserData.getUserData().phone);
+//			edtPhone.setTextColor(Color.GRAY);
+//			txtReminder.setText("修改手机号,您需要输入手机号,获取验证码");
+//			edtPhone.setFocusable(false);
+//			txtTitle.setText("修改手机号");
 			break;
 		case Phone:
 			txtReminder.setText("获取验证码，绑定手机号");

@@ -105,6 +105,7 @@
             android:background="@drawable/line_gray_bg_h" />
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/layLoginPwd"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

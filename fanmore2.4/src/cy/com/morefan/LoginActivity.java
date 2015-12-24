@@ -120,6 +120,7 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
 
         switch ( msg.what )
         {
+
             //授权登录
             case Constant.MSG_AUTH_COMPLETE:
             {
@@ -208,10 +209,15 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
             {
                 dismissProgress();
                 BusinessStatic.getInstance().accountModel  = ( AccountModel ) msg.obj;
-                AuthParamUtils paramUtils = new AuthParamUtils ( application, System.currentTimeMillis (), "", LoginActivity.this );
-                paramUtils.obtainParams ( BusinessStatic.getInstance().accountModel );
+                userService.userReg(LoginActivity.this,
+                        BusinessStatic.getInstance().accountModel.getAccountName(), null,
+                        BusinessStatic.getInstance().accountModel.getAccountId(), "LOGINOAUTHOR",
+                        BusinessStatic.getInstance().accountModel.getAccountUnionId(), BusinessStatic.getInstance().accountModel.getOpenid(),
+                        BusinessStatic.getInstance().accountModel.getAccountIcon(), BusinessStatic.getInstance().accountModel.getNickname());
+                //AuthParamUtils paramUtils = new AuthParamUtils ( application, System.currentTimeMillis (), "", LoginActivity.this );
+                //paramUtils.obtainParams ( BusinessStatic.getInstance().accountModel );
 
-                userLogin(1);
+                //userLogin(1);
 
 
             }
@@ -257,7 +263,7 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
             finish();
         }
         else if( type == BusinessDataListener.DONE_USER_REG){
-            popreg.hide();
+            //popreg.hide();
             String loginCode= SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD);
             String username= SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME);
 
@@ -265,6 +271,15 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
 
         }
     }
+
+    @Override
+    public void onDataFail(int type, String des, Bundle extra) {
+        if(type == BusinessDataListener.NOT_USER_REG){
+            userLogin(1);
+        }
+    }
+
+
 
 
 }

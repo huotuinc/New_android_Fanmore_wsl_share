@@ -17,6 +17,7 @@ import com.umeng.message.entity.UMessage;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.TaskData;
 import cy.com.morefan.bean.TempPushMsgData;
+import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.listener.MyBroadcastReceiver;
@@ -278,20 +279,32 @@ public class MainApplication extends Application implements BroadcastListener{
 	    //获取用户unionId
 	    public String readUserUnionId()
 	    {
-	        return PreferenceHelper.readString ( getApplicationContext (), Constant.MEMBER_INFO, Constant.MEMBER_UNIONID );
+	        return PreferenceHelper.readString ( getApplicationContext (), Constant.SP_NAME_NORMAL, Constant.SP_NAME_UnionId );
 	    }
 
+	public String readMemberId()
+	{
+		return PreferenceHelper.readString (
+				getApplicationContext ( ), Constant.SP_NAME_NORMAL,
+				Constant.SP_NAME_BuserId
+		);
+	}
+	public void writeMemberId(String userId)
+	{
+		PreferenceHelper.writeString ( getApplicationContext (), Constant.SP_NAME_NORMAL, Constant.SP_NAME_BuserId, userId );
+	}
 	    //获取用户编号
 	    public String readUserId()
 	    {
-	        return PreferenceHelper.readString ( getApplicationContext (), Constant.MEMBER_INFO, Constant.MEMBER_ID );
+	        return PreferenceHelper.readString ( getApplicationContext (), Constant.SP_NAME_NORMAL, Constant.SP_NAME_BuserId );
 	    }
 
 	    //获取商户ID
 	    public String readMerchantId()
 	    {
-	        return PreferenceHelper.readString ( getApplicationContext ( ), Constant.MERCHANT_INFO,
-	                                             Constant.MERCHANT_INFO_ID );
+			return  BusinessStatic.getInstance().customerId.toString();
+//	        return PreferenceHelper.readString ( getApplicationContext ( ), Constant.SP_NAME_NORMAL,
+//	                                             Constant.MERCHANT_INFO_ID );
 	    }
 
 	    /**
@@ -310,6 +323,10 @@ public class MainApplication extends Application implements BroadcastListener{
 	        }
 	        return version;
 	    }
+	public void writeDomain(String domain)
+	{
+		PreferenceHelper.writeString ( getApplicationContext (), Constant.MERCHANT_INFO,  Constant.PREFIX, domain);
+	}
 	    public String obtainMerchantUrl()
 	    {
 	        return PreferenceHelper.readString ( getApplicationContext (), Constant.MERCHANT_INFO,  Constant.PREFIX );
@@ -350,7 +367,21 @@ public class MainApplication extends Application implements BroadcastListener{
             activity.startActivity(intent);
             //activity.finish();
 	    }
-		@Override
+	public void writeMemberLevel(String level)
+	{
+		PreferenceHelper.writeString ( getApplicationContext (), Constant.SP_NAME_NORMAL, Constant.MEMBER_level, level );
+	}
+
+	public void writeMemberInfo(String userName, String userId, String userIcon, String userToken, String unionid)
+	{
+		PreferenceHelper.writeString ( getApplicationContext (), Constant.SP_NAME_NORMAL, Constant.SP_NAME_BuserId, userId );
+		PreferenceHelper.writeString ( getApplicationContext (), Constant.SP_NAME_NORMAL, Constant.MEMBER_NAME, userName );
+		PreferenceHelper.writeString(getApplicationContext(), Constant.SP_NAME_NORMAL, Constant.MEMBER_ICON, userIcon);
+		PreferenceHelper.writeString(getApplicationContext(), Constant.SP_NAME_NORMAL, Constant.MEMBER_TOKEN, userToken);
+		PreferenceHelper.writeString(getApplicationContext(), Constant.SP_NAME_NORMAL, Constant.MEMBER_UNIONID, unionid);
+	}
+
+	@Override
 		public void onFinishReceiver(ReceiverType type, Object msg) {
 			if(type == ReceiverType.AlarmUp){
 				if(null != msg){

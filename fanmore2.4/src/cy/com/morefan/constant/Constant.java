@@ -55,6 +55,8 @@ public class Constant {
 	public final static String SP_NAME_LOCATION_COUNT = "MFSP_LOCATION_COUNT";
 	public final static String SP_NAME_PRENTICE_COUNT = "MFSP_PRENTICE_COUNT ";//sp内容不会被清理
 	public final static String SP_NAME_CITY_CODE = "MFSP_CITYCODE";
+	public final static String SP_NAME_UnionId = "MFSP_UnionId";
+	public final static String SP_NAME_BuserId="MFSP_BuserId";
 	public final static String SP_NAME_USERNAME = "MFSP_USERNAME";
 	public final static String SP_NAME_PRE_USERNAME = "MFSP_PRE_USERNAME";
 	public final static String SP_NAME_USERPWD = "MFSP_USERPWD";

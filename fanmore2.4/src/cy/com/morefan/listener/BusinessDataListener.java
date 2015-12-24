@@ -5,9 +5,11 @@ import cy.com.morefan.bean.BaseData;
 
 public interface BusinessDataListener {
 	public void onDataFinish(int type, String des, BaseData[] datas,
-			Bundle extra);
+							 Bundle extra);
 
 	public void onDataFailed(int type, String des, Bundle extra);
+
+	public void onDataFail(int type, String des, Bundle extra);
 
 	public static final int DONE_EXP_UP = 5999;//获得经验
 	public static final int DONE_GET_TASK_LIST = 6000;// 获取任务列表
@@ -31,6 +33,8 @@ public interface BusinessDataListener {
 	public static final int DONE_UNBIND_PHONE = 6018;
 	public static final int DONE_MODIFY_PWD = 6019;
 	public static final int DONE_TO_CRASH = 6020;
+	public static final int DONE_TO_GETUSERLIST = 7000;
+	public static final int ERROR_TO_GETUSERLIST = -7000;
 	public static final int DONE_CANCEL_FAV = 6021;
 	public static final int DONE_USER_INFO = 6023;
 	public static final int DONE_MODIFY_USER_INFO = 6024;
@@ -69,6 +73,7 @@ public interface BusinessDataListener {
 	public static final int ERROR_GET_CODE = -6002;
 	public static final int ERROR_USER_LOGIN = -6003;// 获取验证码
 	public static final int ERROR_USER_REG = -6004;
+	public static final int NOT_USER_REG = 56000;
 	public static final int ERROR_INIT = -6005;
 	public static final int ERROR_GET_HISTORY_SCORE = -6006;
 	public static final int ERROR_GET_MY_SEND_LIST = -6007;
@@ -119,7 +124,5 @@ public interface BusinessDataListener {
 	public static final int ERROR_GET_DUIBA_URL = -6052;
 	public static final int ERROR_GET_WALLET = -6053;
 	public static final int ERROR_GET_WALLET_HISTORY = -6054;
-
-
-
 }
+

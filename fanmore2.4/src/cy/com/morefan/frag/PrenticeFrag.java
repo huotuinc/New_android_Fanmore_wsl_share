@@ -268,6 +268,12 @@ public class PrenticeFrag extends BaseFragment implements OnClickListener, Busin
 		mHandler.obtainMessage(type, des).sendToTarget();
 
 	}
+
+	@Override
+	public void onDataFail(int type, String des, Bundle extra) {
+
+	}
+
 	@Override
 	public void onRefresh() {
 		initData();

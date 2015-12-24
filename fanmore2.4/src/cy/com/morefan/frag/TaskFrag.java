@@ -387,6 +387,12 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 			((HomeActivity)getActivity()).onDataFailed(type, des, extra);
 		mHandler.obtainMessage(type, des).sendToTarget();
 	}
+
+	@Override
+	public void onDataFail(int type, String des, Bundle extra) {
+
+	}
+
 	@Override
 	public void onRefresh() {
 		initData();

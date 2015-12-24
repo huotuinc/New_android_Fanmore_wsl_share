@@ -518,6 +518,8 @@ public class TaskService extends BaseService {
 								BusinessStatic.getInstance().AWARD_SCAN = myJSONObject.getInt("taskBrowseScore");
 								BusinessStatic.getInstance().AWARD_LINK = myJSONObject.getInt("taskLinkScore");
 								BusinessStatic.getInstance().URL_RULE = myJSONObject.getString("ruleUrl");
+								BusinessStatic.getInstance().URL_WEBSITE= myJSONObject.getString("website");
+								BusinessStatic.getInstance().customerId=myJSONObject.getInt("customerId");
 								BusinessStatic.getInstance().URL_ABOUTUS = myJSONObject.getString("aboutUsUrl");
 								BusinessStatic.getInstance().URL_SERVICE = myJSONObject.getString("serviceUrl");
 								BusinessStatic.getInstance().TASK_TIME_LAG = myJSONObject.getInt("taskTimeLag");

@@ -177,6 +177,11 @@ public class PartInDetailItemFrag extends Fragment implements OnRefreshOrLoadLis
 		mHandler.obtainMessage(type, des).sendToTarget();
 	}
 
+	@Override
+	public void onDataFail(int type, String des, Bundle extra) {
+
+	}
+
 
 	public void initData(){
 		tagId = "0";

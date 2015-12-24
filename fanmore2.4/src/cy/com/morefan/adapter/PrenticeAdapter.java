@@ -110,7 +110,7 @@ public class PrenticeAdapter extends BaseAdapter{
 				helper.loadImage(0, imgPhoto, null, UserData.getUserData().picUrl, Constant.IMAGE_PATH_STORE);
 			}
 			txtTopCode.setText(topData.invitationCode);
-			txtTopDes.setText(topData.prenticeDes);
+			//txtTopDes.setText(topData.prenticeDes);
 			txtTopTotal.setText(topData.totalContri + "积分");
 			txtTopLast.setText(topData.lastContri + "积分");
 			prenticeAmount.setText( String.valueOf( topData.prenticeAmount));

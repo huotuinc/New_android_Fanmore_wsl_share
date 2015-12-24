@@ -666,19 +666,19 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 
 			calCount = true;
 			btnShare.setClickable(true);
-			if(userData.completeTaskCount >= userData.totalTaskCount && taskData.channelIds.size() == 0){
-				btnShare.setBackgroundResource(R.drawable.shape_yellow_sel);
-				//if(!fromPre)
-				btnShare.setText(taskData.sendstatus == 1 || (taskData.sendstatus == 0 && fromPre) ? "火眼金睛" : "再来一发");
-				//不计算转发次数的，显示立即转发
-				if(taskData.type == 1000300 || taskData.type == 1001000){
-					btnShare.setText("立即转发");
-					btnShare.setBackgroundResource(R.drawable.btn_red_sel);
-				}
-//				if(taskData.sendstatus == 1)
-//					btnShare.setText("再来一发");
-				//btnShare.setClickable(false);
-			}
+//			if(userData.completeTaskCount >= userData.totalTaskCount && taskData.channelIds.size() == 0){
+//				btnShare.setBackgroundResource(R.drawable.shape_yellow_sel);
+//				//if(!fromPre)
+//				btnShare.setText(taskData.sendstatus == 1 || (taskData.sendstatus == 0 && fromPre) ? "火眼金睛" : "再来一发");
+//				//不计算转发次数的，显示立即转发
+//				if(taskData.type == 1000300 || taskData.type == 1001000){
+//					btnShare.setText("立即转发");
+//					btnShare.setBackgroundResource(R.drawable.btn_red_sel);
+//				}
+////				if(taskData.sendstatus == 1)
+////					btnShare.setText("再来一发");
+//				//btnShare.setClickable(false);
+//			}
 			if(Double.parseDouble(taskData.lastScore) == 0){
 				btnShare.setBackgroundResource(R.drawable.btn_gray);
 				btnShare.setText("抢光了");
@@ -994,7 +994,7 @@ private void share(){
 			String fullPath = Constant.IMAGE_PATH_TASK + File.separator + taskData.smallImgUrl.substring(taskData.smallImgUrl.lastIndexOf("/") + 1);
 			Platform platform1 = new WechatMoments(this);
 			wx(this,  taskData.taskName, fullPath, taskData.content + getResources().getString(R.string.channel_weixin), platform1);
-			//ShareUtil.share2WeiXin(this, taskData.taskName, fullPath, taskData.content + getResources().getString(R.string.channel_weixin));
+			ShareUtil.share2WeiXin(this, taskData.taskName, fullPath, taskData.content + getResources().getString(R.string.channel_weixin));
 			break;
 		case R.id.layQQ:
 			if(!BusinessStatic.getInstance().CHANNEL_LIST.contains(ShareUtil.CHANNEL_QZONE + "")){
@@ -1028,7 +1028,7 @@ private void share(){
 
 
 	}
-    protected void wx(final Context context , String Title ,String imgUrl,String shareUrl,Platform platform ){
+    protected void wx(final Context context , String Title ,String imgUrl, final String shareUrl,Platform platform ){
         Platform.ShareParams sp = new Platform.ShareParams();
         sp.setShareType(Platform.SHARE_WEBPAGE);
         sp.setTitle(Title);
@@ -1045,7 +1045,9 @@ private void share(){
                     ToastUtil.show(context, "微信分享成功");
                 } else if (platform.getName().equals(WechatMoments.NAME)) {
                     ToastUtil.show(context, "微信朋友圈分享成功");
-                }
+					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
+
+				}
             }
 
             @Override

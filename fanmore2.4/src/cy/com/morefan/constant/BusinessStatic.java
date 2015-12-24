@@ -32,13 +32,15 @@ public class BusinessStatic implements Serializable {
 	public  boolean SMS_ENALBE = true;
 	public  String CITY_CODE = "0";//杭州市
 	public  int CHANGE_BOUNDARY;//提现下限
-
+	public  String LOGINOAUTHOR;
 	public  String IMEI = "";
 	public  int TODAY_TOTAL_SCORE;//今日任务总额
 	public  int AWARD_SEND;
 	public  int AWARD_SCAN;
 	public  int AWARD_LINK;
 	public  String URL_RULE;
+	public  String URL_WEBSITE;
+	public  Integer customerId;
 	public  String URL_ABOUTUS;
 	public  String URL_PUTIN;//投放指南
 	public  String URL_TOOL;//投放指南

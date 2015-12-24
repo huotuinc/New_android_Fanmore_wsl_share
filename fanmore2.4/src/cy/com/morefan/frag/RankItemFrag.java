@@ -164,6 +164,11 @@ public class RankItemFrag extends Fragment implements OnRefreshOrLoadListener, B
 		mHandler.obtainMessage(type, des).sendToTarget();
 	}
 
+	@Override
+	public void onDataFail(int type, String des, Bundle extra) {
+
+	}
+
 
 	public void initData(){
 		if(datas != null)

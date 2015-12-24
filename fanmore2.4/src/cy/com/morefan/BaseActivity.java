@@ -465,6 +465,10 @@ public class BaseActivity extends SwipeBackActivity implements BusinessDataListe
 
 	}
 
+	@Override
+	public void onDataFail(int type, String des, Bundle extra) {
+
+	}
 
 
 	@Override

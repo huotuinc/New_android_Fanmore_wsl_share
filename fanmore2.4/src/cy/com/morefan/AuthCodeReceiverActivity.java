@@ -252,7 +252,7 @@ public class AuthCodeReceiverActivity extends BaseActivity implements BusinessDa
 		showProgress();
 	}
 	public void unBindPhone(String code){
-		userService.userUnBindPhone(UserData.getUserData().loginCode, phone, code);
+		userService.userBindPhone(UserData.getUserData().loginCode, phone, code);
 		showProgress();
 	}
 	public void bindAli(String code){

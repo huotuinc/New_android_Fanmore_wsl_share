@@ -33,7 +33,7 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:onClick="onClick"
-                android:text="推广"
+                android:text="万事利"
                 android:textColor="@color/white" />
 
 

@@ -48,59 +48,12 @@ class AuthParamUtils {
         StringBuilder builder = new StringBuilder (  );
         try {
             Map< String, String > paramMap = new HashMap< String, String > ( );
-            if(!application.obtainMerchantUrl ().equals ( url ))
-            {
-                //获取url中的参数
-                //String params = url.substring ( url.indexOf ( ".aspx?" ) + 6, url.length ( ) );
-                String params  = "";
-                if( url.contains("?") ){
-                    params = url.substring( url.indexOf("?")+1 , url.length() );
-                }
-                String[] str = null;
-                if( !TextUtils.isEmpty( params )) {
-                    str = params.split("&");
-                }
-                if ( null != str && str.length > 0 ) {
-                    for ( String map : str ) {
-                        //获取参数
-                        String[] values = map.split ( "=" );
-                        if ( 2 == values.length ) {
-                            paramMap.put ( values[ 0 ], URLEncoder.encode ( values[ 1 ], "UTF-8" ) );
-                        }
-                        else if ( 1 == values.length ) {
-                            paramMap.put ( values[ 0 ], null );
-                        }
-                    }
-                }
 
-                //添加额外固定参数
-                paramMap.put ( "version", application.getAppVersion ( context ) );
-                paramMap.put ( "operation", Constant.OPERATION_CODE );
-                paramMap.put ( "buserId", application.readUserId ( ) );
-                //1、timestamp
-                paramMap.put ( "timestamp", URLEncoder.encode ( String.valueOf ( timestamp ),
-                                                                "UTF-8" ) );
-                //appid
-                paramMap.put ( "appid", URLEncoder.encode ( Constant.APP_ID , "UTF-8" ));
-                //unionid
-                paramMap.put ( "unionid", URLEncoder.encode ( application.readUserUnionId ( ), "UTF-8" ) );
 
-                //生成sigin
-                paramMap.put ( "sign", getSign ( paramMap ) );
 
-                builder.append ( url );
-                builder.append ( "&timestamp=" + paramMap.get ( "timestamp" ) );
-                builder.append ( "&appid="+paramMap.get ( "appid" ) );
-                builder.append ( "&unionid="+paramMap.get ( "unionid" ) );
-                builder.append ( "&sign="+paramMap.get ( "sign" ) );
-                builder.append ( "&buserId="+application.readUserId ( ) );
-                builder.append ( "&version=" + application.getAppVersion ( context ) );
-                builder.append ( "&operation=" + Constant.OPERATION_CODE );
-            }
-            else
-            {
-                paramMap.put ( "version", application.getAppVersion ( context ) );
-                paramMap.put ( "operation", Constant.OPERATION_CODE );
+
+                //paramMap.put ( "version", application.getAppVersion ( context ) );
+               // paramMap.put ( "operation", Constant.OPERATION_CODE );
                 paramMap.put ( "buserId", application.readUserId() );
                 paramMap.put ( "customerid", application.readMerchantId ( ) );
                 //添加额外固定参数
@@ -123,18 +76,18 @@ class AuthParamUtils {
                 builder.append ( "&unionid="+paramMap.get ( "unionid" ) );
                 builder.append ( "&sign="+paramMap.get ( "sign" ) );
                 builder.append ( "&buserId="+application.readUserId ( ) );
-                builder.append ( "&version=" + application.getAppVersion ( context ) );
-                builder.append ( "&operation=" + Constant.OPERATION_CODE );
-            }
+//                builder.append ( "&version=" + application.getAppVersion ( context ) );
+//                builder.append ( "&operation=" + Constant.OPERATION_CODE );
+
 
             return builder.toString ();
         }
         catch ( UnsupportedEncodingException e)
-            {
-                // TODO Auto-generated catch block
-                L.e ( e.getMessage ( ) );
-                return null;
-            }
+        {
+            // TODO Auto-generated catch blockL
+            L.e ( e.getMessage ( ) );
+            return null;
+        }
 
     }
 

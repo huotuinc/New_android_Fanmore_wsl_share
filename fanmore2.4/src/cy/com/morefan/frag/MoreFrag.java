@@ -240,6 +240,12 @@ public class MoreFrag extends BaseFragment implements OnClickListener, Callback,
 		mHandler.obtainMessage(type, des).sendToTarget();
 
 	}
+
+	@Override
+	public void onDataFail(int type, String des, Bundle extra) {
+
+	}
+
 	private void showProgress(){
 		if(getActivity() != null)
 			((HomeActivity)getActivity()).showProgress();

@@ -4,20 +4,21 @@
     <item android:state_pressed="true"><shape android:shape="rectangle">
 
             <!-- 填充 -->
-            <solid android:color="#ffC9C9C9" /> <!-- 填充的颜色 -->
-
+            <solid android:color="#ffffffff" /> <!-- 填充的颜色 -->
+            <corners android:radius="5dp"/>
             <stroke
                  android:width="0.5dp"
-                android:color="#ffc8c8c8"/>
+                android:color="#ffffffff"/>
 
         </shape></item>
     <item android:state_pressed="false"><shape android:shape="rectangle">
 
             <!-- 填充 -->
             <solid android:color="#ffffffff" /> <!-- 填充的颜色 -->
+        <corners android:radius="5dp"/>
              <stroke
                   android:width="0.5dp"
-                  android:color="#ffc8c8c8"/>
+                  android:color="#ffffffff"/>
 
         </shape></item>
 

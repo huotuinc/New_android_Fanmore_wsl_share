@@ -114,6 +114,7 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
                 android:text="昨日浏览/转发量:"
                 android:textColor="@color/black" />
 
@@ -136,6 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="历史/浏览转发量:"
+                android:layout_marginLeft="45dp"
                 android:textColor="@color/black" />
 
 

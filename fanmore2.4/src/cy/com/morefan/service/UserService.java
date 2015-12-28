@@ -334,7 +334,7 @@ public class UserService extends BaseService{
 	 * 我的兑换
 	 * @param loginCode
 	 * @param pageSize
-	 * @param autoId 提现表自增id（分页用）
+	 * @param  autoId 提现表自增id（分页用）
 	 */
 	public void getExpHistory(final String loginCode, final String pageTag, final int pageSize){
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
@@ -2681,10 +2681,12 @@ public class UserService extends BaseService{
 								UserData.getUserData().wallet = Util.opeDouble(json.getDouble("money"));
 								Bundle extra = new Bundle();
 								extra.putString("des", json.getString("desc"));
-								MyJSONObject ajson = json.getJSONObject("lastApply");
-								extra.putString("recordTime", ajson.getString("ApplyTime"));
-								extra.putString("recordDes", ajson.getString("ApplyMoney"));
-								extra.putInt("recordResult", ajson.getInt("ApplyScore"));
+								try {
+									MyJSONObject ajson = json.getJSONObject("lastApply");
+									extra.putString("recordTime", ajson.getString("ApplyTime"));
+									extra.putString("recordDes", ajson.getString("ApplyMoney"));
+									extra.putInt("recordResult", ajson.getInt("ApplyScore"));
+								}catch (Exception ex){}
 								extra.putString("recordResultDes", json.getString("recordResultDes"));
 								listener.onDataFinish(BusinessDataListener.DONE_GET_WALLET, null, null, extra);
 							}else{
@@ -3194,13 +3196,14 @@ public class UserService extends BaseService{
 							if (status == 1) {
 								String loginCode= data.getJSONObject("resultData").getString("loginCode");
 								String loginUsername = data.getJSONObject("resultData").getString("userName");
+								String unionId=data.getJSONObject("resultData").getString("unionId");
 
 								loginCode = loginCode.split("\\^")[1];
 								setUserData(loginUsername, loginCode, data.getJSONObject("resultData"));
 								//本地保存
 								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME, loginUsername);
 								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, loginCode);
-
+								SPUtil.saveStringToSpByName(mContext,Constant.SP_NAME_NORMAL,Constant.SP_NAME_UnionId,unionId);
 								listener.onDataFinish(BusinessDataListener.DONE_USER_REG, null, null, null);
 							}else{
 								L.i(">>>tip:" + data.getString("tip"));
@@ -3247,7 +3250,7 @@ public class UserService extends BaseService{
 								//本地保存
 								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME, userName);
 								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, pwd);
-								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, pwd);
+
 								if(needCallBack)
 									listener.onDataFinish(BusinessDataListener.DONE_USER_LOGIN, null, null, null);
 								}else{
@@ -3268,6 +3271,54 @@ public class UserService extends BaseService{
 						listener.onDataFailed(BusinessDataListener.ERROR_USER_LOGIN, ERROR_DATA, null);
 				}
 
+			}
+		});
+	}
+
+	public void MobileLogin(final Context mContext, final String mobile, final String verifyCode ){
+		ThreadPoolManager.getInstance().addTask(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					String url = Constant.IP_URL + "/Api.ashx?req=MobileLogin" + CONSTANT_URL();
+					JSONObject jsonUrl = new JSONObject();
+					jsonUrl.put("mobile",mobile );
+					jsonUrl.put("verifyCode", verifyCode);
+
+					try {
+						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}
+					L.i(">>>>>>>MobileLogin:" + url);
+					MyJSONObject data = getDataFromSer(url);
+					if(data != null){
+						int resultCode = data.getInt("resultCode");
+						if (resultCode == 1) {
+							int status = data.getInt("status");
+							if (status == 1) {
+								String loginCode= data.getJSONObject("resultData").getString("loginCode");
+								loginCode = loginCode.split("\\^")[1];
+								setUserData(mobile,loginCode, data.getJSONObject("resultData"));
+								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME, mobile);
+								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, loginCode);
+
+								listener.onDataFinish(BusinessDataListener.DONE_TO_MOBLIELOGIN, null, null, null);
+							}else{
+								listener.onDataFailed(BusinessDataListener.ERROR_TO_MOBLIELOGIN, data.getString("tip"), null);
+							}
+						}else{
+							listener.onDataFailed(BusinessDataListener.ERROR_TO_MOBLIELOGIN, data.getString("description"), null);
+						}
+
+					}else{
+						listener.onDataFailed(BusinessDataListener.ERROR_TO_MOBLIELOGIN, ERROR_NET, null);
+					}
+				} catch (Exception e) {
+					listener.onDataFailed(BusinessDataListener.ERROR_TO_MOBLIELOGIN, ERROR_DATA, null);
+					e.printStackTrace();
+				}
 			}
 		});
 	}

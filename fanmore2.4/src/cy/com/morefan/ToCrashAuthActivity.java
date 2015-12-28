@@ -47,7 +47,7 @@ public class ToCrashAuthActivity extends BaseActivity implements OnSecretFinishL
 		return false;
 	}
 	private void toCrash() {
-		Intent intent = new Intent(this, ToCrashActivity.class);
+		Intent intent = new Intent(this, UserExchangeActivity.class);
 		startActivity(intent);
 		finish();
 

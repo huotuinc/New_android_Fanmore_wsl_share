@@ -64,10 +64,14 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import cy.com.morefan.MainApplication;
+import cy.com.morefan.OrderInfo;
+import cy.com.morefan.OrderModel;
+import cy.com.morefan.PayModel;
 import cy.com.morefan.bean.AccountModel;
 import cy.com.morefan.util.KJJsonObjectRequest;
 import cy.com.morefan.util.L;
 import cy.com.morefan.util.SystemTools;
+import cy.com.morefan.view.PayPopWindow;
 
 public class HttpUtil
 {
@@ -86,6 +90,80 @@ public class HttpUtil
     {
         return Holder.instance;
     }
+    public void doVolleyPay(final Activity aty, final Context context, final Handler mHandler, final MainApplication application, String url, final PayModel payModel, final WindowProgress payProgress, final TextView titleView, final WindowManager wManager ){
+        final KJJsonObjectRequest re = new KJJsonObjectRequest (Request.Method.GET, url, null, new Response.Listener<JSONObject >(){
+
+
+            @Override
+            public void onResponse(JSONObject response) {
+
+                JJSONUtil<OrderInfo> jsonUtil = new JJSONUtil<OrderInfo>();
+                OrderInfo orderInfo = new OrderInfo();
+                orderInfo = jsonUtil.toBean(response.toString (), orderInfo);
+                if(1 == orderInfo.getResultCode ()) {
+
+                        OrderInfo.innerClas order = orderInfo.getResultData ( );
+                        if ( null == order)
+                        {
+                            //支付信息获取错误
+                            payProgress.dismissProgress();
+                           ToastUtil.show(aty,"获取订单信息失败。");
+                        }
+                        else
+                        {
+                            payModel.setAmount ( ( int ) ( 100 * format2Decimal ( order.getFinal_Amount ( ) ) ) );
+                            payModel.setDetail ( order.getToStr ( ) );
+
+
+                            if ( null != order ) {
+                                payProgress.dismissProgress();
+                                PayPopWindow payPopWindow = new PayPopWindow( aty, context, mHandler, application, payModel );
+                                payPopWindow.showAtLocation (
+                                        titleView,
+                                        Gravity.BOTTOM, 0, 0
+                                );
+                                //支付
+                        /*if("1".equals ( payModel.getPaymentType () ) || "7".equals ( payModel.getPaymentType () ))
+                        {
+                            //添加支付宝回调路径
+                            payModel.setNotifyurl ( application.obtainMerchantUrl () + application.readAlipayNotify ( ) );
+                            //alipay
+                            PayFunc payFunc = new PayFunc ( context, payModel, application, mHandler, aty, payProgress );
+                            payFunc.aliPay ( );
+
+                        }
+                        else if("2".equals ( payModel.getPaymentType () ) || "9".equals ( payModel.getPaymentType () ))
+                        {
+                            payModel.setAttach ( payModel.getCustomId ()+"_0" );
+                            //添加微信回调路径
+                            payModel.setNotifyurl ( application.obtainMerchantUrl ( ) + application.readWeixinNotify() );
+                            PayFunc payFunc = new PayFunc ( context, payModel, application, mHandler, aty, payProgress );
+                            payFunc.wxPay ( );
+
+                        }*/
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        payProgress.dismissProgress();
+                      ToastUtil.show(aty,"获取订单信息失败");
+
+                    }
+                }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                payProgress.dismissProgress();
+            }
+
+
+        });
+        Volley.newRequestQueue ( context ).add( re);
+    }
+
 
     /**
      *

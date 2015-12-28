@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/title_reg"
+            android:text="用户登录"
             android:textColor="@color/white"
             android:textIsSelectable="false"
             android:textSize="18dp" />
@@ -65,20 +65,9 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:onClick="onClickButton"
-                android:text="下一步"
+                android:text="提交"
                 android:textColor="@color/white"
                 android:textSize="18dp" />
-            <TextView
-                android:id="@+id/txtYinSi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:clickable="true"
-                android:onClick="onClickButton"
-                android:layout_gravity="right"
-                android:text="重新授权"
-                android:textColor="@color/theme_blue" />
 
 
         </LinearLayout>

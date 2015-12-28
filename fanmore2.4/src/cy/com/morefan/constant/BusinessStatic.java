@@ -78,4 +78,8 @@ public class BusinessStatic implements Serializable {
 	//微信用户信息
 	public AccountModel accountModel;
 
+
+
+
+
 }

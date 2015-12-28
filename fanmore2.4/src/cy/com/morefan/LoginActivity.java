@@ -275,7 +275,12 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
     @Override
     public void onDataFail(int type, String des, Bundle extra) {
         if(type == BusinessDataListener.NOT_USER_REG){
-            userLogin(1);
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    userLogin(1);
+                }
+            });
         }
     }
 

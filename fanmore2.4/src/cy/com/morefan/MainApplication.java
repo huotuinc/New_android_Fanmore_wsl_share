@@ -276,7 +276,62 @@ public class MainApplication extends Application implements BroadcastListener{
 			}
 
 	    }
-	    //获取用户unionId
+	public String readAlipayAppKey()
+	{
+		return PreferenceHelper.readString (
+				getApplicationContext ( ), Constant.MERCHANT_INFO,
+				Constant.ALIPAY_KEY
+		);
+	}
+	public void writeWx(String parentId, String appId, String appKey, String notify, boolean isWebPay)
+	{
+		PreferenceHelper.writeString ( getApplicationContext (), Constant.MERCHANT_INFO, Constant.WEIXIN_MERCHANT_ID,  parentId);
+		PreferenceHelper.writeString ( getApplicationContext (), Constant.MERCHANT_INFO, Constant.MERCHANT_WEIXIN_ID, appId );
+		PreferenceHelper.writeString (
+				getApplicationContext ( ), Constant.MERCHANT_INFO,
+				Constant.WEIXIN_KEY, appKey
+		);
+		PreferenceHelper.writeString (
+				getApplicationContext ( ), Constant.MERCHANT_INFO,
+				Constant.WEIXIN_NOTIFY, notify
+		);
+		PreferenceHelper.writeBoolean (
+				getApplicationContext ( ), Constant.MERCHANT_INFO,
+				Constant.IS_WEB_WEIXINPAY, isWebPay
+		);
+	}
+	public void writeUserIcon(String userIcon)
+	{
+		PreferenceHelper.writeString ( getApplicationContext (), Constant.MEMBER_INFO, Constant.MEMBER_ICON, userIcon );
+	}
+	public void writeUserName(String userName)
+	{
+		PreferenceHelper.writeString ( getApplicationContext (), Constant.MEMBER_INFO, Constant.MEMBER_NAME, userName );
+	}
+	public String readAlipayParentId()
+	{
+		return PreferenceHelper.readString ( getApplicationContext (), Constant.MERCHANT_INFO, Constant.ALIPAY_MERCHANT_ID );
+	}
+
+	public String readWxpayAppKey()
+	{
+		return PreferenceHelper.readString ( getApplicationContext ( ), Constant.MERCHANT_INFO,
+				Constant.WEIXIN_KEY );
+	}
+	public String getUserName()
+	{
+		return PreferenceHelper.readString ( getApplicationContext (), Constant.MEMBER_INFO, Constant.MEMBER_NAME );
+	}
+	public String readWxpayParentId()
+	{
+		return PreferenceHelper.readString ( getApplicationContext ( ), Constant.MERCHANT_INFO, Constant.WEIXIN_MERCHANT_ID );
+	}
+	public String readWxpayAppId()
+	{
+		return PreferenceHelper.readString ( getApplicationContext (), Constant.MERCHANT_INFO, Constant.MERCHANT_WEIXIN_ID );
+	}
+
+	//获取用户unionId
 	    public String readUserUnionId()
 	    {
 	        return PreferenceHelper.readString ( getApplicationContext (), Constant.SP_NAME_NORMAL, Constant.SP_NAME_UnionId );
@@ -289,15 +344,46 @@ public class MainApplication extends Application implements BroadcastListener{
 				Constant.SP_NAME_BuserId
 		);
 	}
+	public String obtainMainColor()
+	{
+		return PreferenceHelper.readString ( getApplicationContext (), Constant.COLOR_INFO, Constant.COLOR_MAIN );
+	}
 	public void writeMemberId(String userId)
 	{
 		PreferenceHelper.writeString ( getApplicationContext (), Constant.SP_NAME_NORMAL, Constant.SP_NAME_BuserId, userId );
+	}
+	public String readWeixinNotify()
+	{
+		return PreferenceHelper.readString ( getApplicationContext (), Constant.MERCHANT_INFO, Constant.WEIXIN_NOTIFY );
 	}
 	    //获取用户编号
 	    public String readUserId()
 	    {
 	        return PreferenceHelper.readString ( getApplicationContext (), Constant.SP_NAME_NORMAL, Constant.SP_NAME_BuserId );
 	    }
+	public boolean scanWx()
+	{
+		String parentId = PreferenceHelper.readString ( getApplicationContext (), Constant.MERCHANT_INFO, Constant.WEIXIN_MERCHANT_ID);
+		String appid =  PreferenceHelper.readString ( getApplicationContext ( ), Constant
+				.MERCHANT_INFO, Constant
+				.MERCHANT_WEIXIN_ID );
+		String appKey = PreferenceHelper.readString (
+				getApplicationContext ( ), Constant.MERCHANT_INFO,
+				Constant.WEIXIN_KEY
+		);
+		String notify = PreferenceHelper.readString (
+				getApplicationContext ( ), Constant.MERCHANT_INFO,
+				Constant.WEIXIN_NOTIFY );
+
+		if(!TextUtils.isEmpty ( parentId ) && !TextUtils.isEmpty ( appid ) && !TextUtils.isEmpty ( appKey ) && !TextUtils.isEmpty ( notify ))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 	    //获取商户ID
 	    public String readMerchantId()
@@ -371,7 +457,15 @@ public class MainApplication extends Application implements BroadcastListener{
 	{
 		PreferenceHelper.writeString ( getApplicationContext (), Constant.SP_NAME_NORMAL, Constant.MEMBER_level, level );
 	}
-
+	public void logout()
+	{
+		//取消授权
+		if(null != plat)
+		{
+			plat.removeAccount ();
+		}
+		PreferenceHelper.clean(getApplicationContext(), Constant.MEMBER_INFO);
+	}
 	public void writeMemberInfo(String userName, String userId, String userIcon, String userToken, String unionid)
 	{
 		PreferenceHelper.writeString ( getApplicationContext (), Constant.SP_NAME_NORMAL, Constant.SP_NAME_BuserId, userId );

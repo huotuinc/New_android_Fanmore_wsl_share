@@ -6,6 +6,7 @@ import cn.sharesdk.wechat.friends.Wechat;
 import cy.com.morefan.AuthCodeSendActivity.AuthType;
 import cy.com.morefan.DataListActivity;
 import cy.com.morefan.HomeActivity;
+import cy.com.morefan.LoginActivity;
 import cy.com.morefan.MainApplication;
 import cy.com.morefan.MyBaseInfoActivity;
 import cy.com.morefan.MySafeActivity;
@@ -221,6 +222,9 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					logout();
+					Intent intentlogin	 = new Intent(getActivity(),LoginActivity.class);
+					startActivity(intentlogin);
+					getActivity().finish();
 
 				}
 			}, null);

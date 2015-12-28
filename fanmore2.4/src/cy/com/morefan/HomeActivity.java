@@ -291,6 +291,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 				trendToMy = true;
 				Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
 				startActivity(intentlogin);
+				openOrCloseMenu();
 			}
 
 			break;
@@ -308,6 +309,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			} else {
 				Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
 				startActivity(intentlogin);
+				finish();
 			}
 			break;
 //		case R.id.layTool:
@@ -350,6 +352,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
   	        }else{
 				 Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
 				 startActivity(intentlogin);
+				 openOrCloseMenu();
   	        }
 			break;
 		case R.id.layYesScore:
@@ -366,6 +369,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	        }else{
 				Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
 				startActivity(intentlogin);
+				openOrCloseMenu();
 	        }
 			break;
 		
@@ -376,6 +380,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
  	        }else{
 				 Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
 				 startActivity(intentlogin);
+				 openOrCloseMenu();
  	        }
 			break;
 

@@ -124,5 +124,7 @@ public interface BusinessDataListener {
 	public static final int ERROR_GET_DUIBA_URL = -6052;
 	public static final int ERROR_GET_WALLET = -6053;
 	public static final int ERROR_GET_WALLET_HISTORY = -6054;
+	public static final int DONE_TO_MOBLIELOGIN=6666;
+	public static final int ERROR_TO_MOBLIELOGIN=-6666;
 }
 

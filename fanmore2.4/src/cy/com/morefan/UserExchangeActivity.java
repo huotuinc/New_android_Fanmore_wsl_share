@@ -34,6 +34,7 @@ public class UserExchangeActivity extends BaseActivity implements UserInfoView.O
     public TextView txtLastScore;
     public TextView txtDes;
     public LinearLayout layRecord;
+    public LinearLayout laymoney;
     private Handler mHandler = new Handler(this);
     private UserInfoView userInfoView;
 
@@ -42,6 +43,11 @@ public class UserExchangeActivity extends BaseActivity implements UserInfoView.O
     public void onUserInfoBack(UserInfoView.Type type, UserSelectData data) {
         if(data == null)
             return;
+        Intent intentcrashpsd = new Intent(UserExchangeActivity.this, ToCrashAuthActivity.class);
+        intentcrashpsd.putExtra("type", ToCrashAuthActivity.CrashAuthType.Auth);
+        startActivity(intentcrashpsd);
+
+
         userService.userchange(UserData.getUserData().loginCode,data.id,UserData.getUserData().score,UserData.getUserData().toCrashPwd);
     }
 
@@ -108,6 +114,7 @@ public class UserExchangeActivity extends BaseActivity implements UserInfoView.O
         txtLastWallet=(TextView)findViewById(R.id.txtLastWallet);
         txtDes=(TextView)findViewById(R.id.txtDes);
         layRecord=(LinearLayout)findViewById(R.id.layRecord);
+        laymoney= (LinearLayout) findViewById(R.id.layMoney);
         userService = new UserService(this);
         btnBack= (CyButton) findViewById(R.id.btnBack);
         btnexchange= (Button) findViewById(R.id.btnexchange);
@@ -142,17 +149,25 @@ public class UserExchangeActivity extends BaseActivity implements UserInfoView.O
         }
         if(null == obj)
             return;
-        txtDes.setText(obj.getString("des"));
-
-        String record = obj.getString("recordDes");
+        //txtDes.setText(obj.getString("des"));
 
 
+
+        if(obj.containsKey("recordTime")&&obj.containsKey("recordDes")&&obj.containsKey("recordResultDes")){
+
+            laymoney.setVisibility(View.VISIBLE);
+            //String record = obj.getString("recordDes");
             TextView txtTime = (TextView) findViewById(R.id.txtTime);
             TextView txtRecordDes = (TextView) findViewById(R.id.txtRecordDes);
             TextView txtStatus = (TextView) findViewById(R.id.txtStatus);
             txtTime.setText((obj.getString("recordTime")));
-            txtRecordDes.setText("转入钱包" + obj.getString("recordDes")+"元");
+            txtRecordDes.setText("转入钱包" + obj.getString("recordDes") + "元");
             txtStatus.setText(String.format(obj.getString("recordResultDes")));
+
+        }else {
+            laymoney.setVisibility(View.GONE);
+        }
+
 
 
     }

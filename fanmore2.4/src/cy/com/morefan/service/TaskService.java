@@ -19,6 +19,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+
+import cy.com.morefan.MainApplication;
 import cy.com.morefan.bean.MyJSONObject;
 import cy.com.morefan.bean.PreTaskStatusData;
 import cy.com.morefan.bean.SendData;
@@ -439,6 +441,68 @@ public class TaskService extends BaseService {
 	/**
 	 * 初始化
 	 */
+	public void PayConfig   (final Context mContext){
+		ThreadPoolManager.getInstance().addTask(new Runnable() {
+			@Override
+			public void run() {
+				try {
+
+					String url = Constant.IP_URL + "/Api.ashx?req=PayConfig" + CONSTANT_URL();
+
+
+
+					L.i(">>>>>>>>>>PayConfig:" + url);
+					MyJSONObject data = getDataFromSer(url);
+					if(data != null){
+						int resultCode = data.getInt("resultCode");
+						if (resultCode == 1) {
+							int status = data.getInt("status");
+							if (status == 1) {
+								Bundle extra = new Bundle();
+								//MyJSONObject myJSONObject = data.getJSONObject("resultData");
+								JSONArray groups = data.getJSONArray("resultData");
+
+								String partnerid = "";
+								String appid = null;
+								String notify=null;
+								String appkey=null;
+								Boolean webpagepay=null;
+								for(int i = 0, length = groups.length(); i < length; i++){
+									MyJSONObject tip = (MyJSONObject) groups.get(i);
+									int paytype = tip.getInt("payType");
+									if( paytype == 300){
+
+										partnerid = tip.getString("partnerId");
+										appid     =	tip.getString("appId");
+										notify    =	tip.getString("notify");
+										appkey    = tip.getString("appKey");
+										webpagepay= tip.getBoolean("webPagePay");
+										((MainApplication)mContext.getApplicationContext()).writeWx(partnerid,appid,appkey,notify,webpagepay);
+									}else {
+
+									}
+								}
+
+
+								//listener.onDataFinish(BusinessDataListener.DONE_INIT, null, null, extra);
+
+								}else{
+									listener.onDataFailed(BusinessDataListener.ERROR_INIT, data.getString("tip"), null);
+								}
+							}else{
+								listener.onDataFailed(BusinessDataListener.ERROR_INIT, data.getString("description"), null);
+							}
+					}else{
+						listener.onDataFailed(BusinessDataListener.ERROR_INIT, ERROR_NET, null);
+					}
+				} catch (Exception e) {
+					listener.onDataFailed(BusinessDataListener.ERROR_INIT, ERROR_DATA, null);
+					e.printStackTrace();
+				}
+
+			}
+		});
+	}
 	public void init(final Context mContext, final String userName, final String pwd, final int width, final int height, final SyncImageLoaderHelper loader){
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
 			@Override
@@ -566,12 +630,12 @@ public class TaskService extends BaseService {
 //								}
 								listener.onDataFinish(BusinessDataListener.DONE_INIT, null, null, extra);
 
-								}else{
-									listener.onDataFailed(BusinessDataListener.ERROR_INIT, data.getString("tip"), null);
-								}
 							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_INIT, data.getString("description"), null);
+								listener.onDataFailed(BusinessDataListener.ERROR_INIT, data.getString("tip"), null);
 							}
+						}else{
+							listener.onDataFailed(BusinessDataListener.ERROR_INIT, data.getString("description"), null);
+						}
 					}else{
 						listener.onDataFailed(BusinessDataListener.ERROR_INIT, ERROR_NET, null);
 					}
@@ -584,7 +648,8 @@ public class TaskService extends BaseService {
 			}
 		});
 	}
-	 public static void deleteSDCardFolder(File dir) {
+
+	public static void deleteSDCardFolder(File dir) {
 	       File to = new File(dir.getAbsolutePath() + System.currentTimeMillis());
 	       dir.renameTo(to);
 	       if (to.isDirectory()) {

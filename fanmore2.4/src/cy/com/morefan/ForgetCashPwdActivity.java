@@ -3,12 +3,16 @@ package cy.com.morefan;
 import cy.com.morefan.ToCrashAuthActivity.CrashAuthType;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.UserData;
+import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
 import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.SecurityUtil;
+import cy.com.morefan.util.Util;
+import cy.lib.edittext.CyEditText;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,9 +29,11 @@ import android.widget.TextView.OnEditorActionListener;
 public class ForgetCashPwdActivity extends BaseActivity implements Callback, BroadcastListener{
 	private UserService userService;
 	private Handler mHandler = new Handler(this);
-	private EditText edtPwd;
+	//private EditText edtPwd;
 	private MyBroadcastReceiver myBroadcastReceiver;
-
+	private CyEditText edtPhone;
+	private CyEditText edtCode;
+	private TextView btnGet;
 	@Override
 	public boolean handleMessage(Message msg) {
 		if(msg.what == BusinessDataListener.DONE_COMMIT_TOCRASHPWD){
@@ -59,23 +65,81 @@ public class ForgetCashPwdActivity extends BaseActivity implements Callback, Bro
 			setContentView(R.layout.user_forget_login);
 		}else{
 			setContentView(R.layout.user_forget);
-			edtPwd = (EditText) findViewById(R.id.edtPwd);
-			edtPwd.setOnEditorActionListener(new OnEditorActionListener() {
-
-				@Override
-				public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-					if(actionId == EditorInfo.IME_ACTION_DONE){
-						commit();
-					}
-					return false;
-				}
-			});
+			edtPhone = (CyEditText) findViewById(R.id.edtPhone);
+			edtCode = (CyEditText) findViewById(R.id.edtCode);
+			btnGet = (TextView) findViewById(R.id.btnGet);
 		}
 		userService = new UserService(this);
 		myBroadcastReceiver = new MyBroadcastReceiver(this, this, MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE);
 	}
+	OnEditorActionListener actionClickListener = new OnEditorActionListener() {
+		@Override
+		public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+			if(actionId == EditorInfo.IME_ACTION_DONE){
+				userReg();
+				return true;
+			}
+			return false;
+		}
+	};
+	private int recLen;
+	Runnable runnable = new Runnable() {
+		@Override
+		public void run() {
+			recLen--;
+			if(recLen > 0){
+				btnGet.setText(String.format("%d秒后重新获取", recLen));
+				handler.postDelayed(this, 1000);
+			}else if(recLen == 0){
+				btnGet.setText("重新获取");
+				btnGet.setBackgroundResource(R.drawable.shape_red);
+				btnGet.setClickable(true);
+			}
+
+		}
+	};
+
+	public void userReg() {
+		edtPhone.setError(null);
+		edtCode.setError(null);
+		String phone = edtPhone.getText().toString();
+		//String userPwd = edtPwd.getText().toString();
+		String code = edtCode.getText().toString().trim();
+		//String userRePwd = edtRePwd.getText().toString();
+		if(!Util.isPhoneNum(phone)){
+			edtPhone.requestFocus();
+			edtPhone.setError("手机号不能为空");
+			return;
+		}
+		if(BusinessStatic.getInstance().SMS_ENALBE && edtCode.getVisibility() == View.VISIBLE && TextUtils.isEmpty(code)){
+			edtCode.setError("验证码不能为空");
+			edtCode.requestFocus();
+			edtCode.requestFocusFromTouch();
+			return;
+		}
+
+		showProgress();
+
+	}
 	public void onClickBottomTab(View v){
 		switch (v.getId()) {
+			case R.id.btnGet:
+				String phone = edtPhone.getText().toString().trim();
+				if(!Util.isPhoneNum(phone)){
+					edtPhone.requestFocus();
+					edtPhone.setError("手机号错误");
+					return;
+				}
+				//test logincode,正式不需要logincode
+				//String logincode = "test01^" + SecurityUtil.MD5Encryption("123456");
+				userService.getAuthCode("",phone,3);
+				showProgress();
+
+				recLen = 90;
+				handler.postDelayed(runnable, 1000);
+				btnGet.setClickable(false);
+				btnGet.setBackgroundResource(R.drawable.shape_gray);
+				break;
 		case R.id.btnCommit:
 			commit();
 			break;
@@ -86,23 +150,12 @@ public class ForgetCashPwdActivity extends BaseActivity implements Callback, Bro
 
 	}
 	public void commit(){
-		String pwd = edtPwd.getText().toString().trim();
-		if(TextUtils.isEmpty(pwd)){
-			edtPwd.setError("密码不能为空");
-			edtPwd.requestFocus();
-			edtPwd.requestFocusFromTouch();
-			return;
-		}
-		String locPwd = UserData.getUserData().pwd;
-		if(!locPwd.equals(SecurityUtil.MD5Encryption(pwd))){
-			edtPwd.setError("登录密码错误!");
-			edtPwd.requestFocus();
-			edtPwd.requestFocusFromTouch();
-			return;
-		}
-		//加密上传提现密码
-		userService.userCommitToCrashPwd(UserData.getUserData().loginCode, SecurityUtil.MD5Encryption(""), UserData.getUserData().toCrashPwd);
-		showProgress();
+
+		userReg();
+
+//		//加密上传提现密码
+//		userService.userCommitToCrashPwd(UserData.getUserData().loginCode, SecurityUtil.MD5Encryption(""), UserData.getUserData().toCrashPwd);
+//		showProgress();
 	}
 	@Override
 	public void onDataFinish(int type, String des, BaseData[] datas,

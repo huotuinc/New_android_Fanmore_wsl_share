@@ -32,6 +32,16 @@ public class Constant {
 
 	//使用mainfest中的version_name
 	public static final String APP_VERSION = "2.4.1";
+	//标准时间
+	public final static String TIME_FORMAT   = "yyyy-MM-dd HH:mm:ss";
+	//标准时间01
+	public static final String DATE_FORMAT   = "yyyy-MM-dd";
+	//商家支付宝编号
+	public static final String MERCHANT_ALIPAY_ID = "merchant_alipay_id";
+	//商户支付宝KEY信息
+	public static final String ALIPAY_KEY         = "alipay_key";
+	//支付宝商家编号
+	public static final String ALIPAY_MERCHANT_ID = "alipay_merchant_id";
 	//public static final int APP_VERSION_NO = 1;
 
 	/**
@@ -262,8 +272,7 @@ public class Constant {
 		//微信parterKey
 		public static final String wxpayParterkey = "1251040401";
 
-		//微信支付
-		public static final String WX_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+
 
 
 	
@@ -310,7 +319,8 @@ public class Constant {
 		//正式
 		//public static final String APP_SECRET = "0ad8abe244331aacf89c9231848c9f49";
 
-
+	//微信支付
+	public static final String WX_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 		public static final String ALIPAY_NOTIFY = "alipay_notify";
 		public static final String WEIXIN_NOTIFY = "weixin_notify";
 		public static final String IS_WEB_WEIXINPAY = "is_web_weixinpay";
@@ -322,6 +332,12 @@ public class Constant {
 		public static final String DATA_INIT            = "data_init";
 		//会员信息
 		public static final String PACKAGE_VERSION              = "package_version";
+	//微信商家编号
+	public static final String WEIXIN_MERCHANT_ID = "weixin_merchant_id";
+	//商户微信支付KEY信息
+	public static final String WEIXIN_KEY         = "weixin_key";
+	//商家微信编号
+	public static final String MERCHANT_WEIXIN_ID = "merchant_weixin_id";
 
 		
 

@@ -37,12 +37,22 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 //	private EditText edtRePwd;
 	private TextView btnGet;
 	private TextView txtDes;
-	private View layCode;
+	private RelativeLayout layCode;
 	private ImageView imgPhoneLine;
 	private MyBroadcastReceiver myBroadcastReceiver;
 	private Handler mHandler = new Handler(this);
 	@Override
 	public boolean handleMessage(Message msg) {
+		if (msg.what==BusinessDataListener.DONE_TO_MOBLIELOGIN){
+			dismissProgress();
+			Intent intenthome = new Intent(UserRegActivity.this, HomeActivity.class);
+			startActivity(intenthome);
+			finish();
+		}else if (msg.what==BusinessDataListener.ERROR_TO_MOBLIELOGIN){
+			String usephone = edtPhone.getText().toString();
+			String usecode=edtCode.getText().toString().trim();
+			popReg(2, usephone, usecode);
+		}
 		if(msg.what == BusinessDataListener.DONE_USER_REG){
 			dismissProgress();
 			toast("注册成功!");
@@ -76,36 +86,34 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 //		edtRePwd = (EditText) findViewById(R.id.edtRePwd);
 		btnGet = (TextView) findViewById(R.id.btnGet);
 		txtDes = (TextView) findViewById(R.id.txtDes);
-		layCode = findViewById(R.id.layCode);
+		layCode = (RelativeLayout) findViewById(R.id.layCode);
 		imgPhoneLine = (ImageView) findViewById(R.id.imgPhoneLine);
 		//((EditText)findViewById(R.id.edtInvitationCode)).setOnEditorActionListener(actionClickListener);
-		TextView txtYinSi = (TextView) findViewById(R.id.txtYinSi);
-		txtYinSi.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
 
-		layCode.setVisibility(!BusinessStatic.getInstance().SMS_ENALBE ? View.GONE : View.VISIBLE);
+		layCode.setVisibility(View.VISIBLE);
 		RelativeLayout.LayoutParams params = (LayoutParams) imgPhoneLine.getLayoutParams();
 		int left = BusinessStatic.getInstance().SMS_ENALBE ? DensityUtil.dip2px(this,	10f) : 0;
 		params.setMargins(left, 0, 0, 0);
 		imgPhoneLine.setLayoutParams(params);
 //		edtCode.setVisibility(!BusinessStatic.SMS_ENALBE ? View.GONE : View.VISIBLE);
 //		btnGet.setVisibility(!BusinessStatic.SMS_ENALBE ? View.GONE : View.VISIBLE);
-		txtDes.setVisibility(TextUtils.isEmpty(BusinessStatic.getInstance().grenadeRewardInfo) ? View.GONE : View.VISIBLE);
+		txtDes.setVisibility(TextUtils.isEmpty(BusinessStatic.getInstance().grenadeRewardInfo) ? View.GONE : View.GONE);
 		txtDes.setText(BusinessStatic.getInstance().grenadeRewardInfo);
 
 		userService = new UserService(this);
 		myBroadcastReceiver = new MyBroadcastReceiver(this, this, MyBroadcastReceiver.ACTION_SMS_RECEIVED, MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE);
 
 	}
-	OnEditorActionListener actionClickListener = new OnEditorActionListener() {
-		@Override
-		public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-			if(actionId == EditorInfo.IME_ACTION_DONE){
-				userReg();
-				return true;
-			}
-			return false;
-		}
-	};
+//	OnEditorActionListener actionClickListener = new OnEditorActionListener() {
+//		@Override
+//		public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//			if(actionId == EditorInfo.IME_ACTION_DONE){
+//				userReg();
+//				return true;
+//			}
+//			return false;
+//		}
+//	};
 	public void onClickButton(View v){
 		super.onClickButton(v);
 		switch (v.getId()) {
@@ -133,9 +141,9 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 			btnGet.setBackgroundResource(R.drawable.shape_gray);
 			break;
 		case R.id.btnReg:
-			String usephone = edtPhone.getText().toString();
-			String usecode=edtCode.getText().toString().trim();
-			popReg(2,usephone,usecode );
+			userReg();
+
+
 			break;
 		case R.id.txtYinSi:
 			Intent intentlogin = new Intent(UserRegActivity.this, LoginActivity.class);
@@ -185,6 +193,10 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 			edtCode.requestFocusFromTouch();
 			return;
 		}
+		String usephone = edtPhone.getText().toString();
+		String usecode=edtCode.getText().toString().trim();
+		userService.MobileLogin(UserRegActivity.this,usephone,usecode);
+		showProgress();
 //		if(!Util.userPwdIsLegal(userPwd).equals("success")){
 //			edtPwd.setError(Util.userPwdIsLegal(userPwd));
 //			edtPwd.requestFocus();
@@ -206,7 +218,7 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 //		}
 		//String invitationCode = ((EditText)findViewById(R.id.edtInvitationCode)).getText().toString().trim();
 		//userService.userReg(this, userName,null, code, null,null,null );
-		showProgress();
+		//showProgress();
 
 	}
 

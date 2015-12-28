@@ -179,15 +179,8 @@ public class LoadingActivity extends BaseActivity implements
 
 	private void toHome() { 
 
-		if (!SPUtil.getBooleanFromSpByName(this, Constant.SP_NAME_NORMAL,
-				Constant.SP_NAME_NOT_SHOW_USER_GUIDE, false)) {
-			Intent intentGuide = new Intent(LoadingActivity.this, UserGuideActivity.class);
-			intentGuide.putExtra("isCompleteUserInfo", isCompleteUserInfo);
-			intentGuide.putExtra("alarmId", alarmId);
-			startActivity(intentGuide);
-			finish();
-		}
-		else if (
+
+		 if (
 				!TextUtils.isEmpty( SPUtil.getStringToSpByName(LoadingActivity.this,Constant.SP_NAME_NORMAL,Constant.SP_NAME_USERNAME)) &&
 				!TextUtils.isEmpty( SPUtil.getStringToSpByName(LoadingActivity.this,Constant.SP_NAME_NORMAL,Constant.SP_NAME_USERPWD) ) ) {
 			Intent intent = new Intent(LoadingActivity.this, HomeActivity.class);
@@ -355,6 +348,8 @@ public static String getDeviceInfo(Context context) {
 		if(loader == null)
 			loader = new SyncImageLoaderHelper(this);
 		taskService.init(this, userName, pwd,size[0], size[1], loader);
+
+		taskService.PayConfig(this);
 	}
 
 	private Bitmap checkLoadingImage() {

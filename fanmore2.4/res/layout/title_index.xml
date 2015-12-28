@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/homeTitle">
+
+        <ImageView
+            android:id="@+id/titleLeftImage"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:onClick="onClickButton" />
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:maxEms="10"
+            android:singleLine="true"
+            android:ellipsize="end"/>
+        <ImageView
+            android:id="@+id/titleRightLeftImage"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_toLeftOf="@+id/titleRightImage"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:onClick="onClickButton"/>
+
+        <ImageView
+            android:id="@+id/titleRightImage"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:onClick="onClickButton"/>
+    </RelativeLayout>
+
+</merge>

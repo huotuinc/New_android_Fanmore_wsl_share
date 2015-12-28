@@ -12,6 +12,9 @@ dependencies {
     compile project(':lib:WeiboSDK')
     compile project(':lib:main')
     compile files('libs/gson-2.2.4.jar')
+    compile 'com.handmark.library:pulltorefresh:1.1'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile files('libs/alipaySDK-20150818.jar')
 }
 
 

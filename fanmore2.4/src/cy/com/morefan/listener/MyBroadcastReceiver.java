@@ -20,12 +20,14 @@ public class MyBroadcastReceiver extends BroadcastReceiver{
 	public static String ACTION_SHARE_TO_WEIXIN_SUCCESS = "cy.com.morefan.SHARE_TO_WEIXIN_SUCCESS" ;
 	public static String ACTION_SHARE_TO_SINA_SUCCESS = "cy.com.morefan.SHARE_TO_SINA_SUCCESS" ;
 	public static String ACTION_SHARE_TO_QZONE_SUCCESS = "cy.com.morefan.SHARE_TO_QZONE_SUCCESS" ;
+	public static String ACTION_PAY_SUCCESS = "com.huotu.partner.ACTION_PAY_SUCCESS";
 	public static String ACTION_REFRESH_TASK_LIST = "cy.com.morefan.REFRESH_TASK_LIST" ;
 	public static String ACTION_ALARM_UP = "cy.com.morefan.ACTION_ALARM_UP" ;
 	//分享成功后微信没有回调
 	public static String ACTION_WX_NOT_BACK = "cy.com.morefan.ACTION_WX_NOT_BACK" ;
 	public enum ReceiverType{
-		WXNotBack,AlarmUp, RefreshTaskList,UserMainDataUpdate, Sms, Login, Logout, ShareToWeixinSuccess, ShareToSinaSuccess, ShareToQzoneSuccess, BackgroundBackToUpdate
+		WXNotBack,AlarmUp, RefreshTaskList,UserMainDataUpdate, Sms, Login, Logout, ShareToWeixinSuccess, ShareToSinaSuccess,
+		ShareToQzoneSuccess, BackgroundBackToUpdate,wxPaySuccess
 	}
 	public interface BroadcastListener{
 		void onFinishReceiver(ReceiverType type, Object msg);

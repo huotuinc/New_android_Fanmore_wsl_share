@@ -1,47 +1,43 @@
 package cy.com.morefan;
 
 
+
 import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.wechat.friends.Wechat;
-import cn.sharesdk.wechat.moments.WechatMoments;
-import cy.com.morefan.R;
-import cy.com.morefan.bean.TaskData;
-import cy.com.morefan.bean.TempPushMsgData;
-import cy.com.morefan.bean.UserData;
 import cy.com.morefan.constant.BusinessStatic;
+
 import cy.com.morefan.constant.Constant;
-import cy.com.morefan.listener.MyBroadcastReceiver;
-import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
-import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
-import cy.com.morefan.util.AuthParamUtils;
 import cy.com.morefan.util.L;
-import cy.com.morefan.util.ShareUtil;
-import cy.com.morefan.util.ToastUtil;
-import cy.com.morefan.view.CyButton;
+import cy.com.morefan.util.UrlFilterUtils;
+
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
+
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
+
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.util.HashMap;
+
 
 @SuppressLint("SetJavaScriptEnabled")
-public class WebShopActivity extends BaseActivity  {
+public class WebShopActivity extends BaseActivity implements Handler.Callback  {
 
     private WebView webView;
     private WebView underwebView;
     private ProgressBar bar;
     private TextView txtTitle;
     public MainApplication application;
+    //handler对象
+    public Handler mHandler;
+    //windows类
+    WindowManager wManager;
     //private MyBroadcastReceiver myBroadcastReceiver;
     //private String imgPath;
    // private String imgUrl = "http://task.fanmore.cn/images/28def407415841a7ada5a0b0377895e7_104X104.jpg";
@@ -50,7 +46,8 @@ public class WebShopActivity extends BaseActivity  {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        mHandler = new Handler( this );
+        wManager = this.getWindowManager();
         L.i("webview onCreateView");
 
         application = (MainApplication)getApplication();
@@ -156,38 +153,55 @@ public class WebShopActivity extends BaseActivity  {
             }
         });
 
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        webView.setWebViewClient(
+                new WebViewClient() {
 
-//                if(Constant.PRE_JUMP_FLAG.startsWith(url)){
-//                    Intent intentDetail = new Intent(WebShopActivity.this, TaskDetailActivity.class);
-//                    intentDetail.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    TaskData taskData = new TaskData();
-//                    taskData.id = TempPushMsgData.getIns().taskId;
-//                    intentDetail.putExtra("taskData", taskData);
-//                    intentDetail.putExtra("refreshList", true);
-//                    startActivity(intentDetail);
-//                    finish();
-//                    return;
-//                }
-                L.i(">>>>>>>>>start:" + url);
-                super.onPageStarted(view, url, favicon);
-            }
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-            }
+                    //重写此方法，浏览器内部跳转
+                    public boolean shouldOverrideUrlLoading(
+                            WebView view, String
+                            url
+                    ) {
+                        UrlFilterUtils filter = new UrlFilterUtils(
+                                WebShopActivity.this,
+                                WebShopActivity.this,
+                                txtTitle, mHandler,
+                                application,
+                                wManager
+                        );
+                        return filter.shouldOverrideUrlBySFriend(webView, url);
+                    }
 
-            public void onReceivedError(WebView view, int errorCode,String description, String failingUrl) {
-                //CommonUtil.toast(BusinessWebviewActivity.this,"Oh no!" + description);
-            }
-        });
+                    @Override
+                    public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                        super.onPageStarted(view, url, favicon);
+                    }
+
+                    @Override
+                    public void onPageFinished(WebView view, String url) {
+                        //页面加载完成后,读取菜单项
+                        super.onPageFinished(view, url);
+                        txtTitle.setText(view.getTitle());
+
+
+                    }
+
+                    @Override
+                    public void onReceivedError(
+                            WebView view, int errorCode, String description,
+                            String failingUrl
+                    )
+                    {
+                        super.onReceivedError(view, errorCode, description, failingUrl);
+                    }
+
+                }
+        );
 
 
 
 
     }
+
     public void onResume() {
         super.onResume();
         dismissProgress();
@@ -276,12 +290,55 @@ public class WebShopActivity extends BaseActivity  {
         //myBroadcastReceiver.unregisterReceiver();
         super.onDestroy();
     }
- //   @Override
-//    public void onFinishReceiver(ReceiverType type, Object msg) {
-//        if(type == ReceiverType.BackgroundBackToUpdate){
-//            finish();
-//
-//        }
-//
-//    }
+
+    public boolean handleMessage(Message msg) {
+
+        switch ( msg.what )
+        {
+            //加载页面
+
+            case Constant.FRESHEN_PAGE_MESSAGE_TAG:
+            {
+                //刷新界面
+                String url = msg.obj.toString ();
+                webView.loadUrl(url);
+            }
+            break;
+
+
+
+
+            case Constant.SWITCH_USER_NOTIFY:
+            {
+                SwitchUserModel.SwitchUser user = ( SwitchUserModel.SwitchUser ) msg.obj;
+                //更新userId
+                application.writeMemberId ( String.valueOf ( user.getUserid ( ) ) );
+                //更新昵称
+                application.writeUserName ( user.getWxNickName () );
+                application.writeUserIcon ( user.getWxHeadImg ( ) );
+
+                application.writeMemberLevel(user.getLevelName());
+
+
+            }
+            break;
+            case Constant.LOAD_SWITCH_USER_OVER:
+            {
+                progress.dismissProgress();
+            }
+            break;
+            case Constant.PAY_NET:
+            {
+                PayModel payModel = ( PayModel ) msg.obj;
+                //调用JS
+                webView.loadUrl("javascript:utils.Go2Payment(" + payModel.getCustomId() + "," + payModel.getTradeNo() + "," + payModel.getPaymentType() + ", "
+                        + "false);\n");
+            }
+            break;
+            default:
+                break;
+        }
+        return false;
+    }
+
 }

@@ -712,6 +712,7 @@ public class Util {
 		bfOptions.inPurgeable = true;
 		bfOptions.inInputShareable = true;
 		bfOptions.inTempStorage = new byte[32 * 1024];
+		bfOptions.inSampleSize = 4;
 
 		File file = new File(path);
 		FileInputStream fs = null;

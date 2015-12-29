@@ -26,6 +26,7 @@ import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.Base64;
 import cy.com.morefan.util.L;
+import cy.com.morefan.util.ToastUtil;
 import cy.com.morefan.util.Util;
 import cy.com.morefan.view.CropperView;
 import cy.com.morefan.view.CustomDialog;
@@ -418,38 +419,56 @@ public class MyBaseInfoActivity extends BaseActivity implements OnUserInfoBackLi
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if(resultCode != Activity.RESULT_OK)
+		if (resultCode != Activity.RESULT_OK)
 			return;
 		if (requestCode == 0) {// camera back
-			Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-			if(bitmap == null){
-				toast("未获取到图片!");
+			Bitmap bitmap = Util.readBitmapByPath(imgPath);
+			if (bitmap == null) {
+				ToastUtil.show(MyBaseInfoActivity.this, "未获取到图片!");
 				return;
 			}
-			if(null == cropperView)
+			if (null == cropperView)
 				cropperView = new CropperView(this, this);
 			cropperView.cropper(bitmap);
-		} else if (requestCode == 1) {//file back
+		} else if (requestCode == 1) {// file back
 			if (data != null) {
+				Bitmap bitmap = null;
 				Uri uri = data.getData();
-				String path = null;
-				String[] pojo = { MediaStore.Images.Media.DATA };
-				Cursor cursor = getContentResolver().query(uri, pojo, null, null, null);
-			   // managedQuery(uri, pojo, null, null, null);
-				if (cursor != null) {
-					//ContentResolver cr = this.getContentResolver();
-					int colunm_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-					cursor.moveToFirst();
-					path = cursor.getString(colunm_index);
+				// url是content开头的格式
+				if (uri.toString().startsWith("content://")) {
+					String path = null;
+					String[] pojo = { MediaStore.Images.Media.DATA };
+					Cursor cursor = getContentResolver().query(uri, pojo, null,
+							null, null);
+					// managedQuery(uri, pojo, null, null, null);
 
+					if (cursor != null) {
+						// ContentResolver cr = this.getContentResolver();
+						int colunm_index = cursor
+								.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+						cursor.moveToFirst();
+						path = cursor.getString(colunm_index);
+
+						bitmap = Util.readBitmapByPath(path);
+					}
+
+					if (bitmap == null) {
+						ToastUtil.show(MyBaseInfoActivity.this,
+								"未获取到图片!");
+						return;
+					}
+				} else if (uri.toString().startsWith("file:///")) {
+					String path = uri.toString().substring(8,
+							uri.toString().length());
+					bitmap = Util.readBitmapByPath(path);
+					if (bitmap == null) {
+						ToastUtil.show(MyBaseInfoActivity.this,
+								"未获取到图片!");
+						return;
+					}
 
 				}
-				Bitmap bitmap = Util.readBitmapByPath(path);
-				if(bitmap == null){
-					toast("未获取到图片!");
-					return;
-				}
-				if(null == cropperView)
+				if (null == cropperView)
 					cropperView = new CropperView(this, this);
 				cropperView.cropper(bitmap);
 			}

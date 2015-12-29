@@ -2341,19 +2341,6 @@ public class UserService extends BaseService{
 				} catch (Exception e) {
 					listener.onDataFailed(BusinessDataListener.ERROR_GET_MY_FAV_DETAIL, ERROR_DATA, null);
 				}
-//				MySendData[] results = new MySendData[10];
-//				for (int i = 0; i < results.length; i++) {
-//					MySendData item = new MySendData();
-//					item.taskId = i;
-//					item.name ="任务" +i;
-//					item.time ="2013-12-05 15:00:00";
-//					item.url = ImageUrls[i];
-//					results[i] = item;
-//				}
-//				listener.onDataFinish(BusinessDataListener.DONE_GET_MY_SEND_LIST, null, results, null);
-
-
-
 			}
 		});
 	}

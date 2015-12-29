@@ -2,6 +2,7 @@ package cy.com.morefan;
 
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.UserData;
+import cy.com.morefan.bean.UserSelectData;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
@@ -26,9 +27,18 @@ public class ToCrashAuthActivity extends BaseActivity implements OnSecretFinishL
 	public enum CrashAuthType{
 		ToCrash, Creat, Auth, Modify
 	}
+	public UserSelectData data;
 
 	@Override
 	public boolean handleMessage(Message msg) {
+		if (msg.what ==BusinessDataListener.DONE_TO_CRASH){
+			dismissProgress();
+			toast("兑换成功");
+
+		}else if (msg.what ==BusinessDataListener.ERROR_TO_CRASH){
+			dismissProgress();
+			toast("兑换失败");
+		}
 		if(msg.what == BusinessDataListener.DONE_COMMIT_TOCRASHPWD){
 			dismissProgress();
 			toast("设置成功");
@@ -47,9 +57,8 @@ public class ToCrashAuthActivity extends BaseActivity implements OnSecretFinishL
 		return false;
 	}
 	private void toCrash() {
-		Intent intent = new Intent(this, UserExchangeActivity.class);
-		startActivity(intent);
-		finish();
+
+		userService.userchange(UserData.getUserData().loginCode, data.id, UserData.getUserData().score, UserData.getUserData().toCrashPwd);
 
 	}
 	@Override
@@ -96,6 +105,7 @@ public class ToCrashAuthActivity extends BaseActivity implements OnSecretFinishL
 			showProgress();
 
 		}else if(type == NiePointActionType.Auth){
+			showProgress();
 			toCrash();
 		}
 
@@ -106,17 +116,22 @@ public class ToCrashAuthActivity extends BaseActivity implements OnSecretFinishL
 		finish();
 
 	}
+
 	@Override
 	public void onClick() {
-		Intent intentForget = new Intent(this, ForgetCashPwdActivity.class);
-		startActivity(intentForget);
-		finish();
-//		//加密上传提现密码
-//		userService.userCommitToCrashPwd(UserData.getUserData().loginCode, SecurityUtil.MD5Encryption(""));
-//		System.out.println("key:" + SecurityUtil.MD5Encryption(""));
-//		showProgress();
 
 	}
+//	@Override
+//	public void onClick() {
+//		Intent intentForget = new Intent(this, ForgetCashPwdActivity.class);
+//		startActivity(intentForget);
+//		finish();
+////		//加密上传提现密码
+////		userService.userCommitToCrashPwd(UserData.getUserData().loginCode, SecurityUtil.MD5Encryption(""));
+////		System.out.println("key:" + SecurityUtil.MD5Encryption(""));
+////		showProgress();
+//
+//	}
 
 	@Override
 	public void onDataFinish(int type, String des, BaseData[] datas,

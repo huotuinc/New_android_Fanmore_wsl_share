@@ -138,9 +138,9 @@ public class UserData implements BaseData, Serializable{
 
 	private static UserData userData;
 	public static UserData getUserData(){
-		if(userData == null)
-			userData = new UserData();
-		return userData;
+			if(userData == null)
+				userData = new UserData();
+			return userData;
 	}
 	public static void clear(){
 		userData = null;

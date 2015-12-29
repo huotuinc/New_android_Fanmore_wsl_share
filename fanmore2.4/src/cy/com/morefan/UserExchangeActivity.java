@@ -48,7 +48,7 @@ public class UserExchangeActivity extends BaseActivity implements UserInfoView.O
         startActivity(intentcrashpsd);
 
 
-        userService.userchange(UserData.getUserData().loginCode,data.id,UserData.getUserData().score,UserData.getUserData().toCrashPwd);
+       // userService.userchange(UserData.getUserData().loginCode,data.id,UserData.getUserData().score,UserData.getUserData().toCrashPwd);
     }
 
     public boolean handleMessage(Message msg) {

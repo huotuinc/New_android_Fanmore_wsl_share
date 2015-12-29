@@ -134,6 +134,8 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
             {
             	btn_wxlogin.setClickable ( true );
             dismissProgress();
+                startActivity(new Intent(LoginActivity.this, UserRegActivity.class));
+                finish();
 //                //successProgress.dismissView ();
 //                //提示授权失败
 //                String notice = ( String ) msg.obj;

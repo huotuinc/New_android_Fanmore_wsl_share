@@ -170,7 +170,7 @@ public class NinePointLineView extends View {
 			// 绘制当前活动的线段
 			drawLine(canvas, startX, startY, moveX, moveY);
 		}
-		canvas.drawText("忘记密码", width - textSize * 5 , height - dip2px(mContext, 20), textPaint);
+		//canvas.drawText("忘记密码", width - textSize * 5 , height - dip2px(mContext, 20), textPaint);
 
 		drawNinePoint(canvas);
 

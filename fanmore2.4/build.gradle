@@ -59,7 +59,7 @@ android {
 
     productFlavors {
         fanmore {
-            applicationId 'cy.com.morefan'
+            applicationId 'com.wensli.fanmore'
             signingConfig signingConfigs.huotu
         }
     }

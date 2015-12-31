@@ -239,6 +239,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/ThemeActivity" />
         <activity
+            android:name=".WebActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ThemeActivity" />
+        <activity
             android:name=".FeedBackActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeActivity" />

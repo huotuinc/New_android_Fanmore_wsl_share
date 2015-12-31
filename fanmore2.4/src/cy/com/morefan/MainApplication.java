@@ -24,6 +24,7 @@ import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
 import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.TaskService;
+import cy.com.morefan.util.CrashHandler;
 import cy.com.morefan.util.L;
 import cy.com.morefan.util.PreferenceHelper;
 import cy.com.morefan.util.SPUtil;
@@ -53,10 +54,12 @@ public class MainApplication extends Application implements BroadcastListener{
 	    @Override
 	    public void onCreate() {
 	    	super.onCreate();
-	    	new CrashHandler();
 	    	ShareSDK.initSDK ( getApplicationContext ( ) );
-	    	PushAgent.getInstance(this).setNotificationClickHandler(notificationClickHandler);
+			CrashHandler crashHandler = CrashHandler.getInstance ();
+			crashHandler.init(getApplicationContext());
+			PushAgent.getInstance(this).setNotificationClickHandler(notificationClickHandler);
 	    	myBroadcastReceiver = new MyBroadcastReceiver(this.getApplicationContext(), this, MyBroadcastReceiver.ACTION_ALARM_UP);
+
 	    }
 
 
@@ -250,7 +253,7 @@ public class MainApplication extends Application implements BroadcastListener{
 	    	}
 	    }
 
-	    class CrashHandler implements UncaughtExceptionHandler{
+	   /* class CrashHandler implements UncaughtExceptionHandler{
 	    	public CrashHandler(){
 	    		Thread.setDefaultUncaughtExceptionHandler(this);// 设置该CrashHandler为程序的默认处理器
 	    	}
@@ -275,7 +278,7 @@ public class MainApplication extends Application implements BroadcastListener{
 
 			}
 
-	    }
+	    }*/
 	public String readAlipayAppKey()
 	{
 		return PreferenceHelper.readString (

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -100,8 +101,9 @@ class WebActivity extends BaseActivity implements Handler.Callback, MyBroadcastR
     protected
     void initView ( ) {
 
+        Drawable drawable = resources.getDrawable(R.color.theme_blue);
         //设置title背景
-        newtitleLayout.setBackgroundColor(SystemTools.obtainColor(application.obtainMainColor()));
+        SystemTools.loadBackground(newtitleLayout, drawable);
         //设置左侧图标
 //        Drawable leftDraw = resources.getDrawable ( R.drawable.main_title_left_back );
 //        SystemTools.loadBackground(titleLeftImage, leftDraw);

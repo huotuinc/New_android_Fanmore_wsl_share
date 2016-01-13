@@ -1,4 +1,4 @@
-package cy.com.morefan.wxapi;
+package com.wensli.fanmore.wxapi;
 
 import android.content.Intent;
 

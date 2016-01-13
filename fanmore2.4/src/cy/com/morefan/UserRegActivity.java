@@ -49,6 +49,8 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 			startActivity(intenthome);
 			finish();
 		}else if (msg.what==BusinessDataListener.ERROR_TO_MOBLIELOGIN){
+			toast(msg.obj.toString());
+		}else if (msg.what==BusinessDataListener.NULL_USER){
 			String usephone = edtPhone.getText().toString();
 			String usecode=edtCode.getText().toString().trim();
 			popReg(2, usephone, usecode);

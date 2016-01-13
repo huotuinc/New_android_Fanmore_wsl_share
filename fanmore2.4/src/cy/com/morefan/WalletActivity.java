@@ -39,7 +39,7 @@ public class WalletActivity extends BaseActivity implements Callback{
 		case BusinessDataListener.ERROR_USER_LOGIN:
 		case BusinessDataListener.ERROR_GET_DUIBA_URL:
 		case BusinessDataListener.ERROR_GET_WALLET:
-		case BusinessDataListener.ERROR_TO_CRASH:
+		case BusinessDataListener.ERROR_TO_RECHANGE:
 			toast(msg.obj.toString());
 
 			break;
@@ -47,7 +47,7 @@ public class WalletActivity extends BaseActivity implements Callback{
 			MyBroadcastReceiver.sendBroadcast(this, MyBroadcastReceiver.ACTION_USER_LOGIN);
 			refresh();
 			break;
-		case BusinessDataListener.DONE_TO_CRASH:
+		case BusinessDataListener.DONE_TO_RECHANGE:
 			toast(msg.obj.toString());
 			refresh();
 			break;
@@ -164,7 +164,7 @@ public class WalletActivity extends BaseActivity implements Callback{
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							mUserService.cashToWallet(UserData.getUserData().loginCode);
+							//mUserService.cashToWallet(UserData.getUserData().loginCode);
 							showProgress();
 
 						}
@@ -206,7 +206,7 @@ public class WalletActivity extends BaseActivity implements Callback{
 		if(type == BusinessDataListener.DONE_GET_DUIBA_URL
 		|| type == BusinessDataListener.DONE_GET_WALLET){
 			mHandler.obtainMessage(type, extra).sendToTarget();
-		}else if(type == BusinessDataListener.DONE_TO_CRASH){
+		}else if(type == BusinessDataListener.DONE_TO_RECHANGE){
 			mHandler.obtainMessage(type, des).sendToTarget();
 		}else{
 			mHandler.obtainMessage(type).sendToTarget();

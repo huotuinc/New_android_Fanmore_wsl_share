@@ -185,6 +185,7 @@
             android:background="@drawable/line_gray_bg_h"
             android:contentDescription="@string/img" />
          <ImageView
+             android:visibility="gone"
              android:layout_marginTop="13dp"
             android:layout_width="match_parent"
             android:layout_height="1px"
@@ -210,6 +211,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/lay_bg"
+            android:visibility="gone"
             android:padding="12dp" >
 
             <ImageView

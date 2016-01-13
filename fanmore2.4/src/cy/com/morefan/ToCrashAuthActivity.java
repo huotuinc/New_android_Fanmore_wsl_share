@@ -3,11 +3,13 @@ package cy.com.morefan;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.bean.UserSelectData;
+import cy.com.morefan.constant.Constant;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
 import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.UserService;
+import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.util.SecurityUtil;
 import cy.com.morefan.view.NinePointLineView;
 import cy.com.morefan.view.NinePointLineView.NiePointActionType;
@@ -31,13 +33,18 @@ public class ToCrashAuthActivity extends BaseActivity implements OnSecretFinishL
 
 	@Override
 	public boolean handleMessage(Message msg) {
-		if (msg.what ==BusinessDataListener.DONE_TO_CRASH){
+		if (msg.what ==BusinessDataListener.DONE_TO_RECHANGE){
 			dismissProgress();
 			toast("兑换成功");
+			finish();
 
-		}else if (msg.what ==BusinessDataListener.ERROR_TO_CRASH){
+
+		}else if (msg.what ==BusinessDataListener.ERROR_TO_RECHANGE){
 			dismissProgress();
-			toast("兑换失败");
+			toast(msg.obj.toString());
+			finish();
+
+
 		}
 		if(msg.what == BusinessDataListener.DONE_COMMIT_TOCRASHPWD){
 			dismissProgress();
@@ -57,8 +64,10 @@ public class ToCrashAuthActivity extends BaseActivity implements OnSecretFinishL
 		return false;
 	}
 	private void toCrash() {
+	String	buserId =
+		SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_BuserId);
 
-		userService.userchange(UserData.getUserData().loginCode, data.id, UserData.getUserData().score, UserData.getUserData().toCrashPwd);
+		userService.userchange(UserData.getUserData().loginCode, buserId, UserData.getUserData().score, UserData.getUserData().toCrashPwd);
 
 	}
 	@Override

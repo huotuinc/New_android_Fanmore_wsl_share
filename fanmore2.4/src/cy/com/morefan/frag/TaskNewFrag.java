@@ -160,16 +160,17 @@ public class TaskNewFrag extends BaseFragment   {
 		extraPerday.putSerializable("tabType", TaskFrag.TabType.Task);
 		taskFrag.setArguments(extraPerday);
 
-		mallFrag = new TaskFrag();
-		Bundle extraPretice = new Bundle();
-		extraPretice.putSerializable("tabType", TaskFrag.TabType.Mall);
-		mallFrag.setArguments(extraPretice);
+//		mallFrag = new TaskFrag();
+//		Bundle extraPretice = new Bundle();
+//		extraPretice.putSerializable("tabType", TaskFrag.TabType.Mall);
+//		mallFrag.setArguments(extraPretice);
 
 		List<Fragment> fragments = new ArrayList<Fragment>();
 		fragments.add(taskFrag);
-		fragments.add(mallFrag);
+		//fragments.add(mallFrag);
 		final FragAdapter adapter = new FragAdapter(getActivity().getSupportFragmentManager(), fragments);
 		mViewPager.setAdapter(adapter);
+
 		setTab(tabs.get(mViewPager.getCurrentItem()).getId());
 		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
 			@Override

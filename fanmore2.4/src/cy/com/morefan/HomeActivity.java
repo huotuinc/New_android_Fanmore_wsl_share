@@ -564,7 +564,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		if(TextUtils.isEmpty(userData.picUrl)){
 			img.setImageResource(R.drawable.user_icon);
 		}else{
-			helper.loadImage(-1, img, null, userData.picUrl, Constant.IMAGE_PATH_STORE);
+			helper.loadImage(-1, img, null, userData.picUrl, Constant.BASE_IMAGE_PATH);
 		}
 
 	}

@@ -10,14 +10,13 @@ import com.tencent.connect.share.QzoneShare;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
+import com.wensli.fanmore.wxapi.QzoneActivity;
+import com.wensli.fanmore.wxapi.SinaShareActivity;
+import com.wensli.fanmore.wxapi.WXEntryActivity;
 
 import cy.com.morefan.TaskDetailActivity;
 import cy.com.morefan.constant.Constant;
-import cy.com.morefan.wxapi.QzoneActivity;
-import cy.com.morefan.wxapi.SinaShareActivity;
-import cy.com.morefan.wxapi.WXEntryActivity;
-import cy.com.morefan.wxapi.QzoneActivity.Qtype;
-import cy.com.morefan.wxapi.WXEntryActivity.WXtype;
+
 import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
@@ -47,7 +46,7 @@ public class ShareUtil {
 		intentShare.putExtra("name", des);
 		intentShare.putExtra("path", imgPath);
 		intentShare.putExtra("url", content);
-		intentShare.putExtra("type", WXtype.Moments);
+		intentShare.putExtra("type", WXEntryActivity.WXtype.Moments);
 		activity.startActivityForResult(intentShare, 0);
 		L.i("shareUrl:" + content);
 	}
@@ -64,7 +63,7 @@ public class ShareUtil {
 		intentShare.putExtra("name", des);
 		intentShare.putExtra("path", imgPath);
 		intentShare.putExtra("url", content);
-		intentShare.putExtra("type", WXtype.Conversation);
+		intentShare.putExtra("type", WXEntryActivity.WXtype.Conversation);
 		activity.startActivityForResult(intentShare, 0);
 	}
 	/**
@@ -87,7 +86,7 @@ public class ShareUtil {
 		intentShare.putExtra("des", des);
 		intentShare.putExtra("imgUrl", serviceImgUrl);
 		intentShare.putExtra("contentUrl", content);
-		intentShare.putExtra("type", Qtype.Qzone);
+		intentShare.putExtra("type", QzoneActivity.Qtype.Qzone);
 		context.startActivity(intentShare);
 	}
 	public static void share2QQ( Context context, String des, String serviceImgUrl, String content){
@@ -95,7 +94,7 @@ public class ShareUtil {
 		intentShare.putExtra("des", des);
 		intentShare.putExtra("imgUrl", serviceImgUrl);
 		intentShare.putExtra("contentUrl", content);
-		intentShare.putExtra("type", Qtype.QQ);
+		intentShare.putExtra("type", QzoneActivity.Qtype.QQ);
 		context.startActivity(intentShare);
 
 

@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import cindy.android.test.synclistview.SyncImageLoaderHelper;
 
 import com.lib.cylibimagedownload.ImageUtil;
+import com.wensli.fanmore.wxapi.WXEntryActivity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -31,7 +32,7 @@ import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.util.L;
 import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.util.Util;
-import cy.com.morefan.wxapi.WXEntryActivity;
+
 
 public class TaskService extends BaseService {
 

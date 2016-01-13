@@ -48,7 +48,7 @@ import cy.com.morefan.view.HorizontalListView;
 import cy.com.morefan.view.ElasticScrollView.ScrollType;
 import cy.com.morefan.view.HorizontalListView.HscrollLister;
 import cy.com.morefan.view.PullDownUpListView;
-import cy.com.morefan.wxapi.SinaShareActivity;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;

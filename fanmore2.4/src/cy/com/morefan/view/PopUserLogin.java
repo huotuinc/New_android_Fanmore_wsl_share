@@ -79,7 +79,7 @@ public class PopUserLogin extends BaseActivity implements OnClickListener{
 		if(TextUtils.isEmpty(BusinessStatic.getInstance().accountModel.getAccountIcon())){
 			imgPhoto.setImageResource(R.drawable.user_icon);
 		}else{
-			helper.loadImage(-1, imgPhoto, null,BusinessStatic.getInstance().accountModel.getAccountIcon(), Constant.IMAGE_PATH_STORE);
+			helper.loadImage(-1, imgPhoto, null,BusinessStatic.getInstance().accountModel.getAccountIcon(), Constant.BASE_IMAGE_PATH);
 		}
 		txtName.setText(BusinessStatic.getInstance().accountModel.getAccountName());
 

@@ -1,32 +1,4 @@
-package cy.com.morefan.wxapi;
-
-import java.text.SimpleDateFormat;
-
-import cindy.android.test.synclistview.ImageUtil;
-
-import com.sina.weibo.sdk.api.ImageObject;
-import com.sina.weibo.sdk.api.TextObject;
-import com.sina.weibo.sdk.api.WebpageObject;
-import com.sina.weibo.sdk.api.WeiboMultiMessage;
-import com.sina.weibo.sdk.api.share.BaseResponse;
-import com.sina.weibo.sdk.api.share.IWeiboHandler.Response;
-import com.sina.weibo.sdk.api.share.IWeiboShareAPI;
-import com.sina.weibo.sdk.api.share.SendMultiMessageToWeiboRequest;
-import com.sina.weibo.sdk.api.share.WeiboShareSDK;
-import com.sina.weibo.sdk.auth.Oauth2AccessToken;
-import com.sina.weibo.sdk.auth.WeiboAuth;
-import com.sina.weibo.sdk.auth.WeiboAuthListener;
-import com.sina.weibo.sdk.auth.sso.SsoHandler;
-import com.sina.weibo.sdk.constant.WBConstants;
-import com.sina.weibo.sdk.exception.WeiboException;
-import com.sina.weibo.sdk.net.AsyncWeiboRunner;
-import com.sina.weibo.sdk.net.RequestListener;
-import com.sina.weibo.sdk.net.WeiboParameters;
-import com.sina.weibo.sdk.openapi.StatusesAPI;
-import com.sina.weibo.sdk.openapi.models.ErrorInfo;
-import com.sina.weibo.sdk.openapi.models.Status;
-import com.sina.weibo.sdk.openapi.models.StatusList;
-import com.sina.weibo.sdk.utils.Utility;
+package com.wensli.fanmore.wxapi;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,13 +12,25 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.sina.weibo.sdk.api.share.IWeiboShareAPI;
+import com.sina.weibo.sdk.auth.Oauth2AccessToken;
+import com.sina.weibo.sdk.auth.WeiboAuth;
+import com.sina.weibo.sdk.auth.WeiboAuthListener;
+import com.sina.weibo.sdk.auth.sso.SsoHandler;
+import com.sina.weibo.sdk.constant.WBConstants;
+import com.sina.weibo.sdk.exception.WeiboException;
+import com.sina.weibo.sdk.net.AsyncWeiboRunner;
+import com.sina.weibo.sdk.net.RequestListener;
+import com.sina.weibo.sdk.net.WeiboParameters;
+import com.sina.weibo.sdk.openapi.StatusesAPI;
+
+import cindy.android.test.synclistview.ImageUtil;
 import cy.com.morefan.BaseActivity;
 import cy.com.morefan.R;
 import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.listener.MyBroadcastReceiver;
-import cy.com.morefan.util.L;
 import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.view.CustomDialog;
 import cy.com.morefan.view.CustomDialog.OnkeyBackListener;
@@ -257,7 +241,7 @@ public class SinaShareActivity extends BaseActivity implements OnkeyBackListener
         }
     };
     @Override
-    public boolean onKeyDown(int keyCode, android.view.KeyEvent event) {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
     	if(keyCode == KeyEvent.KEYCODE_BACK)
     		return true;
 		return super.onKeyDown(keyCode, event);

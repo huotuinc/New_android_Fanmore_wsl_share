@@ -1,19 +1,16 @@
-package cy.com.morefan.wxapi;
+package com.wensli.fanmore.wxapi;
 
-import java.util.ArrayList;
+import android.os.Bundle;
 
 import com.tencent.connect.share.QzoneShare;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
-import android.os.Bundle;
+import java.util.ArrayList;
+
 import cy.com.morefan.BaseActivity;
-import cy.com.morefan.bean.UserData;
-import cy.com.morefan.constant.Constant;
 import cy.com.morefan.listener.MyBroadcastReceiver;
-import cy.com.morefan.util.SPUtil;
-import cy.com.morefan.util.ShareUtil;
 
 public class QzoneActivity extends BaseActivity{
 	/**

@@ -57,7 +57,7 @@ public class UserExchangeActivity extends BaseActivity implements UserInfoView.O
             case BusinessDataListener.ERROR_USER_LOGIN:
             case BusinessDataListener.ERROR_GET_DUIBA_URL:
             case BusinessDataListener.ERROR_GET_WALLET:
-            case BusinessDataListener.ERROR_TO_CRASH:
+            case BusinessDataListener.ERROR_TO_RECHANGE:
             case BusinessDataListener.ERROR_TO_GETUSERLIST:
 
                 toast(msg.obj.toString());
@@ -67,7 +67,7 @@ public class UserExchangeActivity extends BaseActivity implements UserInfoView.O
                 MyBroadcastReceiver.sendBroadcast(this, MyBroadcastReceiver.ACTION_USER_LOGIN);
                 refresh();
                 break;
-            case BusinessDataListener.DONE_TO_CRASH:
+            case BusinessDataListener.DONE_TO_RECHANGE:
                 toast(msg.obj.toString());
                 refresh();
 
@@ -147,6 +147,7 @@ public class UserExchangeActivity extends BaseActivity implements UserInfoView.O
             txtLastScore.setText(userData.score);
             txtLastWallet.setText(userData.wallet);
         }
+        txtDes.setText(obj.getString("des"));
         if(null == obj)
             return;
         //txtDes.setText(obj.getString("des"));
@@ -213,7 +214,7 @@ public class UserExchangeActivity extends BaseActivity implements UserInfoView.O
                 || type == BusinessDataListener.DONE_TO_GETUSERLIST
                 ){
             mHandler.obtainMessage(type, extra).sendToTarget();
-        }else if(type == BusinessDataListener.DONE_TO_CRASH){
+        }else if(type == BusinessDataListener.DONE_TO_RECHANGE){
             mHandler.obtainMessage(type, des).sendToTarget();
         }else{
             mHandler.obtainMessage(type).sendToTarget();

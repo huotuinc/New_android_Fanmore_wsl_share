@@ -48,55 +48,47 @@ public class PartInDetailItemFrag extends Fragment implements OnRefreshOrLoadLis
 	private Handler mHandler = new Handler(this);
 
 
-//	public boolean handleMessage(Message msg) {
-//		if(msg.what == BusinessDataListener.DONE_GET_MY_PARTIN_DETAIL){
-//			if(showMoneyAnim){
-//				showMoneyAnim = false;
-//				if(getActivity() != null){
-//					ImageView imgMoney = (ImageView) getActivity().findViewById(R.id.imgMoney);
-//					((AwardDetailActivity)getActivity()).showMoneyAnim(imgMoney);
-//				}
-//
-//
-//			}
-//			dismissProgress();
-//			Bundle extra = (Bundle) msg.obj;
-//
-//
-//
-//			if(tagId.equals("0")){
-//				datas.clear();
-//				setTotalScore(extra.getString("totalScore"));
-//				txtScan.setText(extra.getInt("scanCount") + "");
-//				txtLink.setText(extra.getInt("linkCount") +"");
-//				txtScore.setText(extra.getString("scoreCount"));
-//			}
-//
-//			PartInItemData[] results = (PartInItemData[]) extra.getSerializable("datas");
-//			int length = results.length;
-//			for (int i = 0; i < length; i++) {
-////				if(pageIndex == 1)
-////					results[i].score = "";
-//				datas.add(results[i]);
-//				if(i== length -1){
-//					tagId = results[i].pageTag;
-//				}
-//			}
-//			layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
-//			//listView.setPullUpToLoadEnable(datas.size() >= Constant.PAGESIZE);
-//			listView.onFinishLoad();
-//			listView.onFinishRefresh();
-//			adapter.notifyDataSetChanged();
-//
-//		}else if(msg.what == BusinessDataListener.ERROR_GET_MY_PARTIN_DETAIL){
-//			layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
-//			dismissProgress();
-//			toast(msg.obj.toString());
-//			listView.onFinishLoad();
-//			listView.onFinishRefresh();
-//		}
-//		return false;
-//	}
+	public boolean handleMessage(Message msg) {
+		if(msg.what == BusinessDataListener.DONE_GET_MY_PARTIN_DETAIL){
+
+			dismissProgress();
+			Bundle extra = (Bundle) msg.obj;
+
+
+
+			if(tagId.equals("0")){
+				datas.clear();
+				setTotalScore(extra.getString("totalScore"));
+				txtScan.setText(extra.getInt("scanCount") + "");
+				txtLink.setText(extra.getInt("linkCount") +"");
+				txtScore.setText(extra.getString("scoreCount"));
+			}
+
+			PartInItemData[] results = (PartInItemData[]) extra.getSerializable("datas");
+			int length = results.length;
+			for (int i = 0; i < length; i++) {
+//				if(pageIndex == 1)
+//					results[i].score = "";
+				datas.add(results[i]);
+				if(i== length -1){
+					tagId = results[i].pageTag;
+				}
+			}
+			layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
+			//listView.setPullUpToLoadEnable(datas.size() >= Constant.PAGESIZE);
+			listView.onFinishLoad();
+			listView.onFinishRefresh();
+			adapter.notifyDataSetChanged();
+
+		}else if(msg.what == BusinessDataListener.ERROR_GET_MY_PARTIN_DETAIL){
+			layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
+			dismissProgress();
+			toast(msg.obj.toString());
+			listView.onFinishLoad();
+			listView.onFinishRefresh();
+		}
+		return false;
+	}
 
 
 	private void setTotalScore(String totalScore) {
@@ -232,8 +224,8 @@ public class PartInDetailItemFrag extends Fragment implements OnRefreshOrLoadLis
 
 	}
 
-	@Override
-	public boolean handleMessage(Message msg) {
-		return false;
-	}
+//	@Override
+//	public boolean handleMessage(Message msg) {
+//		return false;
+//	}
 }

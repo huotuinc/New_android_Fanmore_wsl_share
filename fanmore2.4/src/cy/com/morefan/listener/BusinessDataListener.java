@@ -32,7 +32,7 @@ public interface BusinessDataListener {
 	public static final int DONE_BIND_PHONE = 6017;
 	public static final int DONE_UNBIND_PHONE = 6018;
 	public static final int DONE_MODIFY_PWD = 6019;
-	public static final int DONE_TO_CRASH = 6020;
+	public static final int DONE_TO_RECHANGE = 6020;
 	public static final int DONE_TO_GETUSERLIST = 7000;
 	public static final int ERROR_TO_GETUSERLIST = -7000;
 	public static final int DONE_CANCEL_FAV = 6021;
@@ -89,7 +89,7 @@ public interface BusinessDataListener {
 	public static final int ERROR_BIND_PHONE = -6017;
 	public static final int ERROR_UNBIND_PHONE = -6018;
 	public static final int ERROR_MODIFY_PWD = -6019;
-	public static final int ERROR_TO_CRASH = -6020;
+	public static final int ERROR_TO_RECHANGE = -6020;
 	public static final int ERROR_CANCEL_FAV = -6021;
 	public static final int ERROR_RE_COMMIT_SEND = -6022;// 需要重新提交
 	public static final int ERROR_USER_INFO = -6023;
@@ -125,6 +125,7 @@ public interface BusinessDataListener {
 	public static final int ERROR_GET_WALLET = -6053;
 	public static final int ERROR_GET_WALLET_HISTORY = -6054;
 	public static final int DONE_TO_MOBLIELOGIN=6666;
+	public static final int NULL_USER=8888;
 	public static final int ERROR_TO_MOBLIELOGIN=-6666;
 }
 

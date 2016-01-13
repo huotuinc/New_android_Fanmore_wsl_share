@@ -30,9 +30,10 @@ import javax.crypto.spec.SecretKeySpec;
 
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.wensli.fanmore.wxapi.WXEntryActivity;
 
 import cy.com.morefan.listener.AlamrReceiver;
-import cy.com.morefan.wxapi.WXEntryActivity;
+
 import android.R.integer;
 import android.app.Activity;
 import android.app.ActivityManager;

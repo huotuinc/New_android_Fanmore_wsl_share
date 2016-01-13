@@ -30,7 +30,7 @@
             android:id="@+id/txtVersion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="V2.4.0 Beta"
+            android:text="V1.0.0 Beta"
             android:textSize="10sp"
             android:textColor="@color/white" />
          <TextView

@@ -24,7 +24,7 @@ import cy.com.morefan.util.L;
 import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.util.Util;
 import cy.com.morefan.view.CustomDialog;
-import cy.com.morefan.wxapi.SinaShareActivity;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;

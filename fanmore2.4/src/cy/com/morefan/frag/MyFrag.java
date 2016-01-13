@@ -4,7 +4,6 @@ import cindy.android.test.synclistview.SyncImageLoaderHelper;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.wechat.friends.Wechat;
 import cy.com.morefan.AuthCodeSendActivity.AuthType;
-import cy.com.morefan.DataListActivity;
 import cy.com.morefan.HomeActivity;
 import cy.com.morefan.LoginActivity;
 import cy.com.morefan.MainApplication;
@@ -14,7 +13,6 @@ import cy.com.morefan.R;
 import cy.com.morefan.AuthCodeSendActivity;
 import cy.com.morefan.UserExchangeActivity;
 import cy.com.morefan.WebShopActivity;
-import cy.com.morefan.WebViewActivity;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.constant.BusinessStatic;
@@ -45,7 +43,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MyFrag extends BaseFragment implements OnClickListener, BusinessDataListener, BroadcastListener, Callback{
@@ -92,6 +89,12 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 			startActivity(intentshop);
 			dismissProgress();
 
+		}else if(msg.what == BusinessDataListener.ERROR_TO_GETUSERLIST){
+			dismissProgress();
+			scrollView.onRefreshComplete();
+			head.onRefreshComplete();
+			dismissProgress();
+			toast(msg.obj.toString());
 		}
 		return false;
 	}
@@ -169,7 +172,7 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 		if(TextUtils.isEmpty(userData.picUrl)){
 			img.setImageResource(R.drawable.user_icon);
 		}else{
-			helper.loadImage(0, img, null, UserData.getUserData().picUrl, Constant.IMAGE_PATH_STORE);
+			helper.loadImage(0, img, null, UserData.getUserData().picUrl, Constant.BASE_IMAGE_PATH);
 		}
 	}
 	@Override
@@ -243,8 +246,7 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 		ShareSDK.getPlatform(Wechat.NAME).removeAccount();
 
 
-		if(getActivity() != null)
-			((HomeActivity)getActivity()).userLoginOut2ShowTaskFrag();
+
 		SPUtil.saveStringToSpByName(getActivity(), Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, "");
 	}
 	@Override

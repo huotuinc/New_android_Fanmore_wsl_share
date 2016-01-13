@@ -26,29 +26,29 @@ public class ToCrashActivity extends BaseActivity implements  BusinessDataListen
 	private Handler mHandler = new Handler(this);
 	@Override
 	public boolean handleMessage(Message msg) {
-		if(msg.what == BusinessDataListener.DONE_TO_CRASH){
-			dismissProgress();
-			//toast("提现申请成功!");
-			//
-			MyBroadcastReceiver.sendBroadcast(this, MyBroadcastReceiver.ACTION_USER_MAINDATA_UPDATE);
-			//to share activity
-			Intent intent = new Intent(ToCrashActivity.this, WebViewActivity.class);
-			intent.putExtra("url", UserData.getUserData().shareContent);
-			intent.putExtra("title", "提现申请成功");
-			intent.putExtra("isShare", true);
-			startActivity(intent);
-			finish();
-
-
-
-		}else if(msg.what == BusinessDataListener.ERROR_TO_CRASH){
-			dismissProgress();
-			toast(msg.obj.toString());
-			if(!UserData.getUserData().score.equals("0")){
-				btnGet.setClickable(true);
-				btnGet.setBackgroundResource(R.drawable.btn_enable);
-			}
-		}
+//		if(msg.what == BusinessDataListener.DONE_TO_CRASH){
+//			dismissProgress();
+//			//toast("提现申请成功!");
+//			//
+//			MyBroadcastReceiver.sendBroadcast(this, MyBroadcastReceiver.ACTION_USER_MAINDATA_UPDATE);
+//			//to share activity
+//			Intent intent = new Intent(ToCrashActivity.this, WebViewActivity.class);
+//			intent.putExtra("url", UserData.getUserData().shareContent);
+//			intent.putExtra("title", "提现申请成功");
+//			intent.putExtra("isShare", true);
+//			startActivity(intent);
+//			finish();
+//
+//
+//
+//		}else if(msg.what == BusinessDataListener.ERROR_TO_CRASH){
+//			dismissProgress();
+//			toast(msg.obj.toString());
+//			if(!UserData.getUserData().score.equals("0")){
+//				btnGet.setClickable(true);
+//				btnGet.setBackgroundResource(R.drawable.btn_enable);
+//			}
+	//	}
 		return false;
 	}
 	@Override
@@ -77,7 +77,7 @@ public class ToCrashActivity extends BaseActivity implements  BusinessDataListen
 		case R.id.btnGet:
 			btnGet.setClickable(false);
 			btnGet.setBackgroundResource(R.drawable.btn_disable);
-			userService.userToCrash(UserData.getUserData().loginCode, UserData.getUserData().toCrashPwd);
+			//userService.userToCrash(UserData.getUserData().loginCode, UserData.getUserData().toCrashPwd);
 			showProgress();
 			break;
 		case R.id.btnBack:

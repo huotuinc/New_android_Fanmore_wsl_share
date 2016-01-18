@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
-    compile project(':lib:CyLibEditText')
+    //compile project(':lib:CyLibEditText')
     compile project(':lib:CyLibApkPatch')
     compile project(':lib:CyLibImageDownload')
     compile project(':lib:CyLibLocation')
@@ -15,6 +15,7 @@ dependencies {
     compile 'com.handmark.library:pulltorefresh:1.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile files('libs/alipaySDK-20150818.jar')
+    compile 'com.huotu.android.library:libedittext:1.6'
 }
 
 

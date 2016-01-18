@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.wechat.friends.Wechat;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.UserBaseInfoList;
 import cy.com.morefan.bean.UserData;
@@ -22,10 +24,11 @@ import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.util.TimeUtil;
+import cy.com.morefan.util.ToastUtil;
 import cy.com.morefan.view.CyButton;
 import cy.com.morefan.view.UserInfoView;
 
-public class UserExchangeActivity extends BaseActivity implements UserInfoView.OnUserInfoBackListener , View.OnClickListener,Handler.Callback {
+public class UserExchangeActivity extends BaseActivity implements UserInfoView.OnUserInfoBackListener , View.OnClickListener,Handler.Callback,MyBroadcastReceiver.BroadcastListener {
     public CyButton btnBack;
     public TextView txtLastWallet;
     public Button btnexchange;
@@ -37,16 +40,25 @@ public class UserExchangeActivity extends BaseActivity implements UserInfoView.O
     public LinearLayout laymoney;
     private Handler mHandler = new Handler(this);
     private UserInfoView userInfoView;
+    private MyBroadcastReceiver myBroadcastReceiver;
+
+
 
 
     @Override
     public void onUserInfoBack(UserInfoView.Type type, UserSelectData data) {
         if(data == null)
             return;
-        Intent intentcrashpsd = new Intent(UserExchangeActivity.this, ToCrashAuthActivity.class);
-        intentcrashpsd.putExtra("type", ToCrashAuthActivity.CrashAuthType.Auth);
-        startActivity(intentcrashpsd);
-
+        if (UserData.getUserData().toCrashPwd==null||TextUtils.isEmpty(UserData.getUserData().toCrashPwd)) {
+            ToastUtil.show(this,"请先设置密码。");
+            Intent intentcreatpsd = new Intent(UserExchangeActivity.this, ToCrashAuthActivity.class);
+            intentcreatpsd.putExtra("type", ToCrashAuthActivity.CrashAuthType.Creat);
+            startActivity(intentcreatpsd);
+        }else {
+            Intent intentcrashpsd = new Intent(UserExchangeActivity.this, ToCrashAuthActivity.class);
+            intentcrashpsd.putExtra("type", ToCrashAuthActivity.CrashAuthType.Auth);
+            startActivity(intentcrashpsd);
+        }
 
        // userService.userchange(UserData.getUserData().loginCode,data.id,UserData.getUserData().score,UserData.getUserData().toCrashPwd);
     }
@@ -122,12 +134,19 @@ public class UserExchangeActivity extends BaseActivity implements UserInfoView.O
         btnBack.setOnClickListener(this);
 
         //history= (TextView) findViewById(R.id.history);
+        myBroadcastReceiver = new MyBroadcastReceiver(this, this, MyBroadcastReceiver.ACTION_USER_LOGOUT);
 
     }
     protected void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
         refresh();
+    }
+
+    @Override
+    protected void onDestroy() {
+        myBroadcastReceiver.unregisterReceiver();
+        super.onDestroy();
     }
 
     private void refresh() {
@@ -226,4 +245,26 @@ public class UserExchangeActivity extends BaseActivity implements UserInfoView.O
         mHandler.obtainMessage(type, des).sendToTarget();
     }
 
+    @Override
+    public void onFinishReceiver(MyBroadcastReceiver.ReceiverType type, Object msg) {
+        if(type == MyBroadcastReceiver.ReceiverType.Logout){
+            logout();
+            Intent intentlogin	 = new Intent(this,LoginActivity.class);
+            startActivity(intentlogin);
+            finish();
+
+        }
+    }
+
+    public void logout(){
+        SPUtil.saveStringToSpByName( this , Constant.SP_NAME_NORMAL, Constant.SP_NAME_PRE_USERNAME, UserData.getUserData().userName);
+        UserData.clear();
+
+        //清除微信授权信息
+        ShareSDK.getPlatform(Wechat.NAME).removeAccount();
+
+
+
+        SPUtil.saveStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, "");
+    }
 }

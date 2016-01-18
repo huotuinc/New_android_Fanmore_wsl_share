@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -157,7 +158,7 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
                     //手机没有安装微信客户端
                 	ToastUtil.show(this, "手机没有安装微信客户端");
                     startActivity(new Intent(LoginActivity.this, UserRegActivity.class));
-                    finish();
+
 //                    noticePop = new NoticePopWindow ( LoginActivity.this, LoginActivity.this, wManager, "手机没有安装微信客户端");
 //                    noticePop.showNotice ();
 //                    noticePop.showAtLocation (
@@ -172,7 +173,7 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
 //                    //提示授权失败
                ToastUtil.show(this, "微信授权失败");
                     startActivity(new Intent(LoginActivity.this, UserRegActivity.class));
-                    finish();
+
 //                    noticePop = new NoticePopWindow ( LoginActivity.this, LoginActivity.this, wManager, "微信授权失败");
 //                    noticePop.showNotice ();
 //                    noticePop.showAtLocation (
@@ -190,7 +191,7 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
                 dismissProgress();
                 ToastUtil.show(this, "微信授权被取消");
                 startActivity(new Intent(LoginActivity.this, UserRegActivity.class));
-                finish();
+
 //                noticePop = new NoticePopWindow ( LoginActivity.this, LoginActivity.this, wManager, "微信授权被取消");
 //                noticePop.showNotice ( );
 //                noticePop.showAtLocation (
@@ -253,6 +254,15 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
         }
         return false;
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+
+            MainApplication.finshApp();
+        }
+        return true;
+        }
 
 
     @Override

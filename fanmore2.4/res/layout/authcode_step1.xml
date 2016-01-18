@@ -5,7 +5,8 @@
     android:background="#ffffff"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".AllScoreActivity" >
+    tools:context=".AllScoreActivity"
+    xmlns:cy="http://schemas.android.com/apk/res-auto">
 
     <FrameLayout style="@style/TitleStyle" >
 
@@ -64,9 +65,9 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal" >
 
-            <cy.lib.edittext.CyEditText
+            <com.huotu.android.library.libedittext.EditText
                 android:id="@+id/edtPhone"
-                style="@style/EditTextStyle"
+                style="@style/CyEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -92,12 +93,6 @@
                 android:textColor="@color/white" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="粉猫不会在任何地方泄露您的号码"
-            android:textColor="@color/gray" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -105,24 +100,9 @@
             android:gravity="center"
             android:orientation="horizontal" >
 
-            <CheckBox
-                android:id="@+id/checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/checkbox_selector"
-                android:checked="true"
-                android:text="已阅读并同意"
-                android:textColor="@color/gray" />
 
-            <TextView
-                android:id="@+id/txtYinSi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:clickable="true"
-                android:onClick="onClickButton"
-                android:text="使用条款和隐私政策"
-                android:textColor="@color/gray" />
+
+
         </LinearLayout>
     </LinearLayout>
 

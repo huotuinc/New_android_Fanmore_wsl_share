@@ -44,7 +44,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/ic_login_username" />
 
-        <cy.lib.edittext.CyEditText
+        <com.huotu.android.library.libedittext.EditText
             android:id="@+id/edtUserName"
             style="@style/CyEditTextStyle"
             cy:style="transparent"
@@ -65,7 +65,7 @@
             android:layout_marginLeft="50dp"
             android:background="@drawable/line_gray_bg_h" />
 
-        <cy.lib.edittext.CyEditText
+        <com.huotu.android.library.libedittext.EditText
             android:id="@+id/edtPwd"
             style="@style/CyEditTextStyle"
             cy:style="transparent"

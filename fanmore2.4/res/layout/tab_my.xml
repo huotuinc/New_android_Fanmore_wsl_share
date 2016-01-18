@@ -52,7 +52,7 @@
                         android:id="@+id/txtName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="大苏打撒旦撒打算大苏打大苏打实打实打算大苏打似的大苏打撒旦撒的"
+                        android:text=""
                         android:maxLength="16"
                         android:layout_gravity="center_horizontal"
                         android:textColor="@color/white" />
@@ -63,7 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="99999.99"
+                    android:text=""
                     android:background="@drawable/btn_white_sel"
                     android:layout_gravity="center_horizontal"
                     android:textColor="@color/theme_blue"

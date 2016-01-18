@@ -24,7 +24,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.EditText;
+import com.huotu.android.library.libedittext.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -121,25 +121,25 @@ public class AuthCodeSendActivity extends BaseActivity implements OnEditorAction
 		}
 
 
-		TextView txtYinSi = (TextView) findViewById(R.id.txtYinSi);
-		txtYinSi.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+		//TextView txtYinSi = (TextView) findViewById(R.id.txtYinSi);
+		//txtYinSi.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
 		btnNext = (TextView) findViewById(R.id.btnNext);
 		//txtYinSi.setOnClickListener(this);
-		CheckBox checkBox = (CheckBox) findViewById(R.id.checkbox);
-		checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if(isChecked){
-					btnNext.setClickable(true);
-					btnNext.setBackgroundResource(R.drawable.title_right_sel);
-				}else{
-					btnNext.setClickable(false);
-					btnNext.setBackgroundResource(R.drawable.btn_disable);
-				}
-
-			}
-		});
+		//CheckBox checkBox = (CheckBox) findViewById(R.id.checkbox);
+//		checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+//
+//			@Override
+//			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//				if(isChecked){
+//					btnNext.setClickable(true);
+//					btnNext.setBackgroundResource(R.drawable.title_right_sel);
+//				}else{
+//					btnNext.setClickable(false);
+//					btnNext.setBackgroundResource(R.drawable.btn_disable);
+//				}
+//
+//			}
+//		});
 
 
 
@@ -159,12 +159,12 @@ public class AuthCodeSendActivity extends BaseActivity implements OnEditorAction
 	public void onClickButton(View v){
 		super.onClickButton(v);
 		switch (v.getId()) {
-		case R.id.txtYinSi:
-			Intent intentAbout = new Intent(this, WebViewActivity.class);
-			intentAbout.putExtra("url", BusinessStatic.getInstance().URL_SERVICE);
-			intentAbout.putExtra("title", "服务条款");
-			startActivity(intentAbout);
-			break;
+//		case R.id.txtYinSi:
+//			Intent intentAbout = new Intent(this, WebViewActivity.class);
+//			intentAbout.putExtra("url", BusinessStatic.getInstance().URL_SERVICE);
+//			intentAbout.putExtra("title", "服务条款");
+//			startActivity(intentAbout);
+//			break;
 		case R.id.btnNext:
 			getCode();
 			break;

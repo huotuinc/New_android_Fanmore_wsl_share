@@ -110,7 +110,7 @@ class PayPopWindow extends PopupWindow {
         this.setHeight ( LinearLayout.LayoutParams.WRAP_CONTENT );
         //设置SelectPicPopupWindow弹出窗体可点击
         this.setFocusable(true);
-        WindowUtils.backgroundAlpha(aty, 0.4f);
+        //WindowUtils.backgroundAlpha(aty, 0.4f);
 
         //mMenuView添加OnTouchListener监听判断获取触屏位置如果在选择框外面则销毁弹出框
 

@@ -1,5 +1,7 @@
 package cy.com.morefan;
 
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.wechat.friends.Wechat;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.bean.UserSelectData;
@@ -168,6 +170,11 @@ public class ToCrashAuthActivity extends BaseActivity implements OnSecretFinishL
 
 		}
 
+
+
+
 	}
+
+
 
 }

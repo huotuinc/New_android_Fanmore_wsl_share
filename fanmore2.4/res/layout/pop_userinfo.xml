@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/solid_line" />
 
-        <cy.lib.edittext.CyEditText
+        <com.huotu.android.library.libedittext.EditText
             android:id="@+id/edtName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -11,6 +11,8 @@ import cy.com.morefan.bean.PrenticeTopData;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.util.ViewHolderUtil;
+import cy.com.morefan.view.ImageLoad;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -107,7 +109,8 @@ public class PrenticeAdapter extends BaseAdapter{
 			if(TextUtils.isEmpty(userData.picUrl)){
 				imgPhoto.setImageResource(R.drawable.user_icon);
 			}else{
-				helper.loadImage(0, imgPhoto, null, UserData.getUserData().picUrl, Constant.IMAGE_PATH_STORE);
+				//helper.loadImage(0, imgPhoto, null, UserData.getUserData().picUrl, Constant.IMAGE_PATH_STORE);
+				ImageLoad.loadLogo(UserData.getUserData().picUrl,imgPhoto,mContext);
 			}
 			txtTopCode.setText(topData.invitationCode);
 			//txtTopDes.setText(topData.prenticeDes);

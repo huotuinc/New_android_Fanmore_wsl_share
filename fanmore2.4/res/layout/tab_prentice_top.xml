@@ -49,7 +49,7 @@
                 android:id="@+id/txtCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="123456"
+                android:text=""
                 android:textColor="@color/white" />
 
             <cy.com.morefan.view.CyLinearLayout
@@ -94,7 +94,7 @@
                     android:layout_margin="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="371"
+                    android:text=""
                      android:layout_centerInParent="true"
                     android:layout_toRightOf="@+id/tvapprentice"
                     android:textColor="@color/theme_blue"/>
@@ -135,7 +135,7 @@
                 android:id="@+id/txtTotalContri"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="500积分"
+                android:text=""
                 android:textColor="@color/red"
                 android:textSize="15dp" />
              <TextView
@@ -166,7 +166,7 @@
                 android:id="@+id/txtLastContri"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="100积分"
+                android:text=""
                 android:textColor="@color/red"
                 android:textSize="15dp" />
               <TextView
@@ -203,7 +203,7 @@
                 android:id="@+id/BrowseAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="500积分"
+                android:text=""
                 android:textColor="@color/red"
                 android:textSize="15dp" />
             <TextView
@@ -232,7 +232,7 @@
                 android:id="@+id/TurnAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="100积分"
+                android:text=""
                 android:textColor="@color/red"
                 android:textSize="15dp" />
             <TextView
@@ -255,6 +255,7 @@
         android:layout_height="wrap_content" >
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/txtDes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -268,6 +269,7 @@
             android:textColor="@color/black" />
 
         <ImageView
+            android:visibility="gone"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="right|bottom"

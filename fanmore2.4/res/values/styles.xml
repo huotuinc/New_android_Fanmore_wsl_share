@@ -122,9 +122,9 @@
     </style>
 
     <style name="EditTextStyle" parent="android:Theme.Light"> <!-- parent="android:Theme.Light"解决自定义style，光标变白问题 -->
-        <item name="android:background">@drawable/edittext_selector</item>
-        <item name="android:paddingLeft">5dp</item>
-        <item name="android:paddingRight">5dp</item>
+        <!--<item name="android:background">@drawable/edittext_selector</item>-->
+        <!--<item name="android:paddingLeft">5dp</item>-->
+        <!--<item name="android:paddingRight">5dp</item>-->
     </style>
 
     <style name="CyEditTextStyle" parent="android:Theme.Light"> <!-- parent="android:Theme.Light"解决自定义style，光标变白问题 -->

@@ -30,6 +30,7 @@ import cy.com.morefan.util.Util;
 import cy.com.morefan.view.CustomDialog;
 import cy.com.morefan.view.CyButton;
 import cy.com.morefan.view.DragLayout;
+import cy.com.morefan.view.ImageLoad;
 import cy.com.morefan.view.PopExpUp;
 import cy.com.morefan.view.DragLayout.DragListener;
 //import cy.com.morefan.view.PopCheckIn;
@@ -250,6 +251,9 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		}else if(type == ReceiverType.BackgroundBackToUpdate){
 			//showTaskFrag();
 			MainApplication.restartApp(this);
+		}
+		else if( type == ReceiverType.Logout){
+			//this.finish();
 		}
 
 	}
@@ -564,7 +568,9 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		if(TextUtils.isEmpty(userData.picUrl)){
 			img.setImageResource(R.drawable.user_icon);
 		}else{
-			helper.loadImage(-1, img, null, userData.picUrl, Constant.BASE_IMAGE_PATH);
+			//helper.loadImage(-1, img, null, userData.picUrl, Constant.BASE_IMAGE_PATH);
+			ImageLoad.loadLogo(userData.picUrl, img, this);
+
 		}
 
 	}

@@ -65,7 +65,7 @@
                 android:textColor="@color/gray_my"
                 android:textSize="12dp" />
 
-            <cy.lib.edittext.CyEditText
+            <com.huotu.android.library.libedittext.EditText
                 android:id="@+id/edtOld"
                 style="@style/EditTextStyle"
                 android:layout_width="match_parent"
@@ -76,7 +76,7 @@
                 android:maxLength="12"
                 android:textColor="@color/black" />
 
-            <cy.lib.edittext.CyEditText
+            <com.huotu.android.library.libedittext.EditText
                 android:id="@+id/edtNew"
                 style="@style/EditTextStyle"
                 android:layout_width="match_parent"
@@ -88,7 +88,7 @@
                 android:maxLength="12"
                 android:textColor="@color/black" />
 
-            <cy.lib.edittext.CyEditText
+            <com.huotu.android.library.libedittext.EditText
                 android:id="@+id/edtNewRe"
                 style="@style/EditTextStyle"
                 android:layout_width="match_parent"

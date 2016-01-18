@@ -11,7 +11,7 @@ import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.SecurityUtil;
 import cy.com.morefan.util.Util;
-import cy.lib.edittext.CyEditText;
+
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,8 +31,8 @@ public class ForgetCashPwdActivity extends BaseActivity implements Callback, Bro
 	private Handler mHandler = new Handler(this);
 	//private EditText edtPwd;
 	private MyBroadcastReceiver myBroadcastReceiver;
-	private CyEditText edtPhone;
-	private CyEditText edtCode;
+	private EditText edtPhone;
+	private EditText edtCode;
 	private TextView btnGet;
 	@Override
 	public boolean handleMessage(Message msg) {
@@ -65,8 +65,8 @@ public class ForgetCashPwdActivity extends BaseActivity implements Callback, Bro
 			setContentView(R.layout.user_forget_login);
 		}else{
 			setContentView(R.layout.user_forget);
-			edtPhone = (CyEditText) findViewById(R.id.edtPhone);
-			edtCode = (CyEditText) findViewById(R.id.edtCode);
+			edtPhone = (EditText) findViewById(R.id.edtPhone);
+			edtCode = (EditText) findViewById(R.id.edtCode);
 			btnGet = (TextView) findViewById(R.id.btnGet);
 		}
 		userService = new UserService(this);

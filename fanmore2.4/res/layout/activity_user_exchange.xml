@@ -65,7 +65,6 @@
                         android:id="@+id/txtLastScore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
                         android:textColor="@color/theme_blue"
                         android:textSize="25sp" />
 
@@ -116,7 +115,6 @@
                         android:id="@+id/txtLastWallet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
                         android:textColor="@color/theme_blue"
                         android:textSize="25sp" />
 
@@ -153,7 +151,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="说明：10个积分兑换人民币1元，累计达100个积分即可将积分转入钱包，钱包内的金额可立刻兑换到支付宝，Q币，话费等。"
                 android:textColor="@color/gray_my"
                 android:textSize="12sp" />
 
@@ -168,7 +165,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="最近一条转入钱包申请记录:"
                     android:textColor="@color/gray_my"
                     android:textSize="12sp" />
 
@@ -190,7 +186,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="left"
-                        android:text="2014-11-11 11：11"
                         android:textColor="@color/gray_my"
                         android:textSize="12sp" />
 
@@ -198,7 +193,6 @@
                         android:id="@+id/txtRecordDes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="转入钱包10元"
                         android:textColor="@color/gray_my"
                         android:textSize="12sp" />
 
@@ -207,7 +201,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="2dp"
-                        android:text="(失败)"
                         android:textColor="@color/red"
                         android:textSize="12sp" />
                 </LinearLayout>

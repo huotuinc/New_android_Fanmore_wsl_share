@@ -69,7 +69,7 @@
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal" >
 
-                <cy.lib.edittext.CyEditText
+                <com.huotu.android.library.libedittext.EditText
                     android:id="@+id/edtCode"
                     style="@style/EditTextStyle"
                     android:layout_width="0dp"
@@ -95,7 +95,7 @@
                     android:textColor="@color/white" />
             </LinearLayout>
 
-            <cy.lib.edittext.CyEditText
+            <com.huotu.android.library.libedittext.EditText
                 android:id="@+id/edtRealName"
                 style="@style/EditTextStyle"
                 android:layout_width="match_parent"
@@ -115,7 +115,7 @@
         android:textColor="@color/red"
         android:textSize="11dp" />
 
-            <cy.lib.edittext.CyEditText
+            <com.huotu.android.library.libedittext.EditText
                 android:id="@+id/edtAccount"
                 style="@style/EditTextStyle"
                 android:layout_width="match_parent"

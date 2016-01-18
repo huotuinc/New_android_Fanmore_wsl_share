@@ -31,6 +31,7 @@ import cy.com.morefan.util.Util;
 import cy.com.morefan.view.CropperView;
 import cy.com.morefan.view.CustomDialog;
 import cy.com.morefan.view.CropperView.OnCropperBackListener;
+import cy.com.morefan.view.ImageLoad;
 import cy.com.morefan.view.PhotoSelectView;
 import cy.com.morefan.view.PhotoSelectView.OnPhotoSelectBackListener;
 import cy.com.morefan.view.PhotoSelectView.SelectType;
@@ -206,7 +207,8 @@ public class MyBaseInfoActivity extends BaseActivity implements OnUserInfoBackLi
 		if(TextUtils.isEmpty(UserData.getUserData().picUrl)){
 			img.setImageResource(R.drawable.user_icon);
 		}else{
-			helper.loadImage(0, img, null, UserData.getUserData().picUrl, Constant.IMAGE_PATH_STORE);
+			//helper.loadImage(0, img, null, UserData.getUserData().picUrl, Constant.IMAGE_PATH_STORE);
+			ImageLoad.loadLogo(UserData.getUserData().picUrl,img,this);
 		}
 
 

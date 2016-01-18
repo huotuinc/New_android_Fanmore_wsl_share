@@ -1,11 +1,13 @@
 package cy.com.morefan.view;
 
+import cy.com.morefan.LoginActivity;
 import cy.com.morefan.R;
 import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.util.DensityUtil;
 import cy.com.morefan.util.SecurityUtil;
 import cy.com.morefan.util.ToastUtil;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -332,6 +334,8 @@ public class NinePointLineView extends View {
 					//logout
 					ToastUtil.show(getContext(), "提现密码输入错误!帐号被注销，请重新登录!");
 					MyBroadcastReceiver.sendBroadcast(getContext(), MyBroadcastReceiver.ACTION_USER_LOGOUT);
+
+
 				}
 				msg = String.format("原手势密码错误!还可以再输入%d次", 5 - tryTime);
 

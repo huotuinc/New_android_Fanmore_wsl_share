@@ -9,11 +9,20 @@ import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.security.Key;
+
 import cy.com.morefan.LoginActivity;
 import cy.com.morefan.MainApplication;
 import cy.com.morefan.PayModel;
 import cy.com.morefan.WebActivity;
+import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
+import cy.com.morefan.listener.BusinessDataListener;
 
 /**
  * 过滤UI类
@@ -128,8 +137,19 @@ class SubUrlFilterUtils {
             }
             //获取用户等级
             StringBuilder builder = new StringBuilder(  );
-            builder.append ( Constant.INTERFACE_PREFIX + "order/GetOrderInfo" );
-            builder.append ( "?orderid="+tradeNo );
+            builder.append ( Constant.IP_URL + "/Api.ashx?req=OrderInfo"+ CONSTANT_URL() );
+
+           try {
+               JSONObject jsonUrl = new JSONObject();
+               jsonUrl.put("orderNo", tradeNo);
+               builder.append(URLEncoder.encode(jsonUrl.toString(), "UTF-8"));
+           }catch (UnsupportedEncodingException e) {
+               e.printStackTrace();
+           }catch (Exception e) {
+              // listener.onDataFailed(BusinessDataListener.ERROR_TO_RECHANGE, ERROR_DATA, null);
+               e.printStackTrace();
+           }
+
             AuthParamUtils param = new AuthParamUtils ( application, System.currentTimeMillis(), builder.toString (), context );
             String orderUrl = param.obtainUrlOrder ( );
             HttpUtil.getInstance ( ).doVolleyPay ( aty, context, mHandler, application, orderUrl, payModel, payProgress, titleView, wManager );
@@ -152,4 +172,30 @@ class SubUrlFilterUtils {
         }
         return false;
     }
+    protected String CONSTANT_URL() {
+        //operation=HuoTu2013AD/HuoTu2013IP&version=appVersion&imei=*****
+        //BusinessStatic.IMEI = BusinessStatic.IMEI + 2;
+        String url = "&operation=" + Constant.OPERATION + "&qd=" + Constant.QD +"&version="
+                + Constant.APP_VERSION + "&citycode=" + BusinessStatic.getInstance().CITY_CODE
+                + "&imei=" + BusinessStatic.getInstance().IMEI + "&lat=" + BusinessStatic.getInstance().USER_LAT + "&lng=" + BusinessStatic.getInstance().USER_LNG
+                + "&sign="+ getSign() + "&p=";
+        return url;
+    }
+    private String getSign(){
+        JSONObject sign = new JSONObject();
+        try {
+            sign.put("serial", System.currentTimeMillis());
+            sign.put("imei6", BusinessStatic.getInstance().IMEI.substring(BusinessStatic.getInstance().IMEI.length() - 6));
+            sign.put("key", "caonimei");
+            Key publicKey = RSAUtil.getPublicKeyByModuleAndExponent(RSAUtil.module, RSAUtil.exponentString);
+            String result = RSAUtil.encrypt(sign.toString(), publicKey);
+            return URLEncoder.encode(result, "utf-8");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 }

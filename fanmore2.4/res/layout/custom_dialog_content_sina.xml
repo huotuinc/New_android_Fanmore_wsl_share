@@ -28,7 +28,7 @@
             android:textSize="16dp" />
     </LinearLayout>
 
-    <cy.lib.edittext.CyEditText
+    <com.huotu.android.library.libedittext.EditText
         android:id="@+id/edtExtra"
         style="@style/EditTextStyle"
         android:layout_width="match_parent"

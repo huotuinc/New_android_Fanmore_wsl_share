@@ -276,17 +276,23 @@ public class TrendView extends View implements android.view.View.OnTouchListener
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
 		if(adapter != null && positionDats != null && trendDatas != null && trendDatas.size() != 0){
-			String date = adapter.getDate(firstVisibleItem);
-			if(!TextUtils.isEmpty(date)){
-				try {
-					int position = positionDats.get(date);
-					L.i(">>>date:" + date + ",positon:" + position);
-					setPosition(position);
-					selectPosition = positionDats.get(adapter.getDate(firstVisibleItem));
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
+			if (firstVisibleItem<adapter.getCount()) {
 
+				try{
+
+				String date = adapter.getDate(firstVisibleItem);
+				if (!TextUtils.isEmpty(date)) {
+					try {
+						int position = positionDats.get(date);
+						L.i(">>>date:" + date + ",positon:" + position);
+						setPosition(position);
+						selectPosition = positionDats.get(adapter.getDate(firstVisibleItem));
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+
+				}
+				}catch (Exception  ex){}
 			}
 
 		}

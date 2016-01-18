@@ -12,14 +12,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+
+import com.huotu.android.library.libedittext.EditText;
+
 import cy.com.morefan.BaseActivity;
 import cy.com.morefan.R;
-import cy.com.morefan.constant.BusinessStatic;
-import cy.com.morefan.constant.Constant;
-import cy.com.morefan.service.UserService;
+
 import cy.com.morefan.util.DensityUtil;
-import cy.com.morefan.util.SPUtil;
-import cy.lib.edittext.CyEditText;
+
 
 /**
  * Created by Administrator on 2015/12/3.
@@ -37,7 +37,7 @@ public class PopReg extends BaseActivity implements  View.OnClickListener {
     private OnPopRegListener listener;
     private View mainView;
     private Context mContext;
-    private CyEditText edtUserReg;
+    private EditText edtUserReg;
     private Button btnReg;
     private  int logintype;
     private String phone;
@@ -69,7 +69,7 @@ public class PopReg extends BaseActivity implements  View.OnClickListener {
             lp.height= (int)(DensityUtil.getSize(mContext)[1]);//设置高度
             window.setAttributes(lp);
         }
-        edtUserReg= (CyEditText) mainView.findViewById(R.id.edtUserReg);
+        edtUserReg= (EditText) mainView.findViewById(R.id.edtUserReg);
         edtUserReg.setText("WSL0LOVE");
         btnReg= (Button) mainView.findViewById(R.id.btnReg);
 

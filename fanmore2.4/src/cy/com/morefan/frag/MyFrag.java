@@ -31,6 +31,8 @@ import cy.com.morefan.view.ElasticScrollView;
 import cy.com.morefan.view.ElasticScrollView.OnRefreshListener;
 import cy.com.morefan.view.HeadView;
 import cy.com.morefan.view.ElasticScrollView.ScrollType;
+import cy.com.morefan.view.ImageLoad;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -172,7 +174,8 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 		if(TextUtils.isEmpty(userData.picUrl)){
 			img.setImageResource(R.drawable.user_icon);
 		}else{
-			helper.loadImage(0, img, null, UserData.getUserData().picUrl, Constant.BASE_IMAGE_PATH);
+			//helper.loadImage(0, img, null, UserData.getUserData().picUrl, Constant.BASE_IMAGE_PATH);
+			ImageLoad.loadLogo(UserData.getUserData().picUrl, img, getActivity());
 		}
 	}
 	@Override
@@ -238,7 +241,7 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 		}
 
 	}
-	private void logout(){
+	public void logout(){
 		SPUtil.saveStringToSpByName(getActivity(), Constant.SP_NAME_NORMAL, Constant.SP_NAME_PRE_USERNAME, UserData.getUserData().userName);
 		UserData.clear();
 

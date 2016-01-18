@@ -20,7 +20,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
+import com.huotu.android.library.libedittext.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
@@ -147,11 +147,11 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 
 
 			break;
-		case R.id.txtYinSi:
-			Intent intentlogin = new Intent(UserRegActivity.this, LoginActivity.class);
-			startActivity(intentlogin);
-			finish();
-			break;
+//		case R.id.txtYinSi:
+//			Intent intentlogin = new Intent(UserRegActivity.this, LoginActivity.class);
+//			startActivity(intentlogin);
+//			finish();
+//			break;
 
 		default:
 			break;
@@ -242,6 +242,15 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 		myBroadcastReceiver.unregisterReceiver();
 		super.onDestroy();
 	}
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK ) {
+
+			finish();
+		}
+		return true;
+	}
+
 	@Override
 	public void onFinishReceiver(ReceiverType type, Object msg) {
 		if(type == ReceiverType.BackgroundBackToUpdate){

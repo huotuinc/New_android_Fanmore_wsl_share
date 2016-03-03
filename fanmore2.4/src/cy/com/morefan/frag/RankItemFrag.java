@@ -3,7 +3,7 @@ package cy.com.morefan.frag;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sina.weibo.sdk.openapi.models.User;
+
 
 import cy.com.morefan.AwardDetailActivity;
 import cy.com.morefan.HomeActivity;

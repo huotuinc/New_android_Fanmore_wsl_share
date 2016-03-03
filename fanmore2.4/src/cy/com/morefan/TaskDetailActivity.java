@@ -3,11 +3,13 @@ package cy.com.morefan;
 import java.io.File;
 import java.util.HashMap;
 
-import com.sina.weibo.sdk.openapi.models.User;
+
 
 import cindy.android.test.synclistview.SyncImageLoaderHelper;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 import cy.com.morefan.AppUpdateActivity.UpdateType;
@@ -539,9 +541,9 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
     	popupWindow.showAtLocation(btnShare, Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM,0,DensityUtil.dip2px(this, 66)); //设置在屏幕中的显示位置
     }
     private void updatePopView() {
-    	imgWeiXin.setBackgroundResource(taskData.channelIds.contains(ShareUtil.CHANNEL_WEIXIN + "") ? R.drawable.share_ico_weixin_off : R.drawable.share_ico_weixin);
-    	imgSina.setBackgroundResource(taskData.channelIds.contains(ShareUtil.CHANNEL_SINA + "") ? R.drawable.share_ico_sina_off : R.drawable.share_ico_sina);
-    	imgQzone.setBackgroundResource(taskData.channelIds.contains(ShareUtil.CHANNEL_QZONE + "") ? R.drawable.share_ico_qzone_off : R.drawable.share_ico_qzone);
+    	imgWeiXin.setBackgroundResource(taskData.channelIds.contains(ShareUtil.CHANNEL_WEIXIN + "") ? R.drawable.share_ico_weixin : R.drawable.share_ico_weixin);
+    	imgSina.setBackgroundResource(taskData.channelIds.contains(ShareUtil.CHANNEL_SINA + "") ? R.drawable.share_ico_sina : R.drawable.share_ico_sina);
+    	imgQzone.setBackgroundResource(taskData.channelIds.contains(ShareUtil.CHANNEL_QZONE + "") ? R.drawable.share_ico_qzone : R.drawable.share_ico_qzone);
 
     	//判断渠道是否支持
     	if(!BusinessStatic.getInstance().CHANNEL_LIST.contains(ShareUtil.CHANNEL_WEIXIN + ""))
@@ -994,7 +996,7 @@ private void share(){
 			String fullPath = Constant.IMAGE_PATH_TASK + File.separator + taskData.smallImgUrl.substring(taskData.smallImgUrl.lastIndexOf("/") + 1);
 			Platform platform1 = new WechatMoments(this);
 			wx(this,  taskData.taskName, fullPath, taskData.content + getResources().getString(R.string.channel_weixin), platform1);
-			ShareUtil.share2WeiXin(this, taskData.taskName, fullPath, taskData.content + getResources().getString(R.string.channel_weixin));
+			//ShareUtil.share2WeiXin(this, taskData.taskName, fullPath, taskData.content + getResources().getString(R.string.channel_weixin));
 			break;
 		case R.id.layQQ:
 			if(!BusinessStatic.getInstance().CHANNEL_LIST.contains(ShareUtil.CHANNEL_QZONE + "")){
@@ -1009,6 +1011,7 @@ private void share(){
 			ShareUtil.share2Qzone(this, taskData.taskName, taskData.smallImgUrl, taskData.content + getResources().getString(R.string.channel_qzone));
 			break;
 		case R.id.layXinLang:
+			popupWindow.dismiss();
 			if(!BusinessStatic.getInstance().CHANNEL_LIST.contains(ShareUtil.CHANNEL_SINA + "")){
 				toast("Sorry!新浪微博暂不支持转发!");
 				return;
@@ -1018,8 +1021,13 @@ private void share(){
 				return;
 			}
 			showProgress();
-			String fullPath2 = Constant.IMAGE_PATH_TASK + File.separator + taskData.smallImgUrl.substring(taskData.smallImgUrl.lastIndexOf("/") + 1);
-			ShareUtil.share2Sina(this, taskData.taskName, fullPath2, taskData.content + getResources().getString(R.string.channel_sina));
+
+			String fullPath2 = taskData.smallImgUrl;
+			//ShareUtil.share2Sina(this, taskData.taskName, fullPath2, taskData.content + getResources().getString(R.string.channel_sina));
+			Platform platform2 = new SinaWeibo(this);
+			platform2.SSOSetting(true);
+			sinaWeibo(this, taskData.taskName, fullPath2, taskData.content + getResources().getString(R.string.channel_sina), platform2);
+
 			break;
 
 		default:
@@ -1027,6 +1035,39 @@ private void share(){
 		}
 
 
+	}
+	private void sinaWeibo(final Context context , String Title ,String imgUrl,String shareUrl,Platform platform)
+	{
+		Platform.ShareParams sp = new Platform.ShareParams ( );
+		sp.setShareType(Platform.SHARE_WEBPAGE);
+		sp.setText(Title + shareUrl);
+		sp.setImageUrl(imgUrl);
+
+		platform.setPlatformActionListener ( new PlatformActionListener() {
+			@Override
+			public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+				if (platform.getName().equals(SinaWeibo.NAME)) {
+
+					ToastUtil.show(context, "微博分享成功");
+				}
+			}
+
+			@Override
+			public void onError(Platform platform, int i, Throwable throwable) {
+
+				ToastUtil.show(context, "微博分享失败");
+
+			}
+
+			@Override
+			public void onCancel(Platform platform, int i) {
+
+				ToastUtil.show(context, "取消微博分享");
+
+			}
+		});
+		//执行分享
+		platform.share ( sp );
 	}
     protected void wx(final Context context , String Title ,String imgUrl, final String shareUrl,Platform platform ){
         Platform.ShareParams sp = new Platform.ShareParams();

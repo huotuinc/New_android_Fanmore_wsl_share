@@ -96,6 +96,17 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 
 
 	}
+	public static class Utils {
+		private static long lastClickTime;
+		public synchronized static boolean isFastClick() {
+			long time = System.currentTimeMillis();
+			if ( time - lastClickTime < 500) {
+				return true;
+			}
+			lastClickTime = time;
+			return false;
+		}
+	}
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
@@ -257,10 +268,18 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		}
 
 	}
+
 	public void onClick(View v){
+		if (Utils.isFastClick()) {
+			return ;
+		}
 		switch (v.getId()) {
+
 		case R.id.btnLeft:
-			mDragLayout.openOrClose();
+
+				mDragLayout.openOrClose();
+
+
 			break;
 		case R.id.layHome:
 			fragManager.setCurrentFrag(FragType.Task);
@@ -553,13 +572,17 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			yes = userData.yesScore;//Util.MoneyFormat(userData.yesScore);
 			total = userData.score;//Util.MoneyFormat(userData.totalScore);
 			scanCount = Util.MoneyFormat(userData.todayScanCount);
-			userName = userData.userName;
+			userName = userData.RealName;
 			if (TextUtils.isEmpty(userName))
-				userName = userData.phone;
+				userName = userData.UserNickName;
+			else if (TextUtils.isEmpty(userName)){
+				userName =userData.userName;
+			}
 		}
 
+
 		txtName.setText(userName);
-		txtScore.setText("积分余额." + total);
+		txtScore.setText("可用分红." + total);
 		txtExp.setText("Exp." + exp);
 		txtTodayScan.setText(scanCount);
 		txtYesScore.setText(yes);
@@ -697,7 +720,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	}
 	@Override
 	public void onOpen() {
-		setSwipeBackEnable(true);
+		//setSwipeBackEnable(true);
 		if(UserData.getUserData().isLogin){
 			userService.getScanCount(UserData.getUserData().loginCode);
     		//是否有意见反馈

@@ -126,7 +126,7 @@ public class TaskActivity extends BaseActivity implements BusinessDataListener, 
 		case PreTask:
 			taskDatas = new ArrayList<TaskData>();
 			adapter = new PreTaskAdapter(listView.getImageLoader(), this, taskDatas);
-			txtTitle.setText("今日预告");
+			txtTitle.setText("最新预告");
 			break;
 		case TodayScan:
 			taskDatas = new ArrayList<TaskData>();
@@ -143,7 +143,7 @@ public class TaskActivity extends BaseActivity implements BusinessDataListener, 
 			awardDatas = new ArrayList<AwardData>();
 			adapter = new AwardAdapter(listView.getImageLoader(), this, awardDatas);
 			((AwardAdapter) adapter).setChangeDes(true);
-			txtTitle.setText("昨日收益");
+			txtTitle.setText("昨日分红");
 			listView.setPullUpToLoadEnable(false);
 			break;
 		case TotalScore:

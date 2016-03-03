@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.Key;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -82,6 +83,8 @@ public class BaseService {
 		userData.pwd = pwd;
 		userData.totalScore = Util.opeDouble(myUserData.getDouble("totalScore"));//myUserData.getInt("totalScore");
 		userData.shareDes = myUserData.getString("shareDes");
+		userData.UserNickName=myUserData.getString("UserNickName");
+		userData.RealName=myUserData.getString("RealName");
 		userData.shareContent = myUserData.getString("shareContent");
 		userData.lockScore = Util.opeDouble(myUserData.getDouble("lockScore"));//myUserData.getInt("lockScore");
 		userData.completeTaskCount = myUserData.getInt("completeTaskCount");
@@ -116,8 +119,10 @@ public class BaseService {
 		item.id = tip.getInt("taskId");
 		item.taskName = tip.getString("taskName");
 		item.smallImgUrl = tip.getString("taskSmallImgUrl");
-		item.totalScore = Util.opeDouble(tip.getDouble("totalScore"));//tip.getInt("totalScore");
-		item.lastScore = Util.opeDouble(tip.getDouble("lastScore"));//tip.getInt("lastScore");
+		NumberFormat nf=NumberFormat.getInstance();
+		nf.setGroupingUsed(false);
+		item.totalScore = nf.format(tip.getDouble("totalScore"));//tip.getInt("totalScore");
+		item.lastScore = nf.format(tip.getDouble("lastScore"));//tip.getInt("lastScore");
 		item.lastScore = Double.parseDouble(item.lastScore) < 0 ? "0" : item.lastScore;
 		String sendList = tip.getString("sendList");
 		if(TextUtils.isEmpty(sendList)){

@@ -32,7 +32,7 @@ public class Constant {
 	//public static final String QD = "dm";
 
 	//使用mainfest中的version_name
-	public static final String APP_VERSION = "1.0.0";
+	public static final String APP_VERSION = "1.1.0";
 	//标准时间
 	public final static String TIME_FORMAT   = "yyyy-MM-dd HH:mm:ss";
 	//标准时间01
@@ -252,8 +252,8 @@ public class Constant {
 		/**
 		 * 微信支付appID
 		 */
-		public static final String WXPAY_ID    = "wx2f2604e380cf6be1";
-		public static final String WXPAY_SECRT = "ae3a7d851f24bfc97047954fa3975cec";
+		public static final String WXPAY_ID    = "wx369cdeb338051de5";
+		public static final String WXPAY_SECRT = "0dcbc62b9a4724e89097bb00a0bd0ae2";
 		public static final String PAY_URL     = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
 
 		// 商户PID

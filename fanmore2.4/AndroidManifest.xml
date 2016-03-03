@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="cy.com.morefan"
-    android:versionCode="1"
-    android:versionName="1.0.0">
+    android:versionCode="2"
+    android:versionName="1.1.0">
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -100,6 +100,8 @@
         <!-- android:screenOrientation="portrait" -->
         <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" > -->
         <!-- </activity> -->
+
+
         <!-- ShareSDK分享 -->
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -108,11 +110,17 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
-                <data android:scheme="tencent1101260450" />
+                <data android:scheme="tencent1105113260" />
 
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <!-- 调用新浪原生SDK，需要注册的回调activity -->
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -303,20 +311,6 @@
             </intent-filter>
         </activity>
         <!-- Qzone end -->
-        <!-- sina -->
-        ￼
-        <activity
-            android:name="com.wensli.fanmore.wxapi.SinaShareActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/Transparent">
-            <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <!-- sina end -->
 
 
         <!-- umeng -->
@@ -382,7 +376,8 @@
         <activity
             android:name=".UserExchangeActivity"
             android:label="@string/title_activity_user_exchange" />
-        <activity android:name=".WebShopActivity"></activity>
+        <activity android:name=".WebShopActivity" />
+        <activity android:name=".PaySucceedActivity"></activity>
     </application>
 
 </manifest>

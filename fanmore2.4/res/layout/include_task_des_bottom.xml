@@ -47,6 +47,7 @@
             android:background="@drawable/share_ico_weixin" />
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/imgTagSina"
             android:layout_width="20dp"
             android:layout_height="20dp"

@@ -217,10 +217,10 @@ public class PrenticeFrag extends BaseFragment implements OnClickListener, Busin
 //			startActivity(intentShare);
 //			break;
 		case R.id.layRuleFrag:
-			Intent intentRule = new Intent(getActivity(), WebViewActivity.class);
-			intentRule.putExtra("url", BusinessStatic.getInstance().URL_RULE + "#shoutumimi");
-			intentRule.putExtra("title", "规则说明");
-			startActivity(intentRule);
+//			Intent intentRule = new Intent(getActivity(), WebViewActivity.class);
+//			intentRule.putExtra("url", BusinessStatic.getInstance().URL_RULE + "#shoutumimi");
+//			intentRule.putExtra("title", "规则说明");
+//			startActivity(intentRule);
 
 			break;
 
@@ -257,6 +257,10 @@ public class PrenticeFrag extends BaseFragment implements OnClickListener, Busin
 			topData.prenticeAmount = extra.getInt("prenticeAmount");
 			topData.lastContri = extra.getString("lastContri");
 			topData.totalContri = extra.getString("totalContri");
+			topData.yesterdayBrowseAmount =extra.getString("yesterdayBrowseAmount");
+			topData.historyTotalBrowseAmount=extra.getString("historyTotalBrowseAmount");
+			topData.yesterdayTurnAmount=extra.getString("yesterdayTurnAmount");
+			topData.historyTotalTurnAmount=extra.getString("historyTotalTurnAmount");
 		}
 		mHandler.obtainMessage(type, datas).sendToTarget();
 

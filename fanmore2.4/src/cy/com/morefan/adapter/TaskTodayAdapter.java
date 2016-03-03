@@ -78,9 +78,9 @@ public class TaskTodayAdapter extends BaseAdapter{
 
         	imgTask.setBackgroundResource(R.drawable.picreviewre_fresh_bg);
         	mImageLoader.loadImage(position, imgTask, bar, data.smallImgUrl, Constant.IMAGE_PATH_TASK);
-        	imgTagWeiXin.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_WEIXIN + "") ? R.drawable.share_ico_weixin_off : R.drawable.share_ico_weixin);
-        	imgTagSina.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_SINA + "") ? R.drawable.share_ico_sina_off : R.drawable.share_ico_sina);
-        	imgTagQzone.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_QZONE + "") ? R.drawable.share_ico_qzone_off : R.drawable.share_ico_qzone);
+        	imgTagWeiXin.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_WEIXIN + "") ? R.drawable.share_ico_weixin : R.drawable.share_ico_weixin);
+        	imgTagSina.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_SINA + "") ? R.drawable.share_ico_sina : R.drawable.share_ico_sina);
+        	imgTagQzone.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_QZONE + "") ? R.drawable.share_ico_qzone : R.drawable.share_ico_qzone);
 
         	//bar.setProgress(position *10);
         	txtTaskName.setText(data.taskName);

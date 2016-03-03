@@ -19,7 +19,7 @@
     </style>
 
     <style name="ThemeActivity" parent="AppBaseTheme">
-        <item name="android:windowAnimationStyle">@style/Animation.Activity.Translucent.Style</item>
+        <!--<item name="android:windowAnimationStyle">@style/Animation.Activity.Translucent.Style</item>-->
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
@@ -55,10 +55,10 @@
     <style name="Animation.Activity.Translucent.Style" parent="@android:style/Animation.Translucent">
        <!--  <item name="android:windowEnterAnimation">@anim/push_left_in</item>
         <item name="android:windowExitAnimation">@anim/push_left_out</item> -->
-          <item name="android:activityOpenEnterAnimation">@anim/push_left_in</item>
-        <item name="android:activityOpenExitAnimation">@anim/push_left_out</item>
-        <item name="android:activityCloseEnterAnimation">@anim/push_right_in</item>
-        <item name="android:activityCloseExitAnimation">@anim/push_right_out</item>
+          <!--<item name="android:activityOpenEnterAnimation">@anim/push_left_in</item>-->
+       <!--&lt;!&ndash;<item name="android:activityOpenExitAnimation">@anim/push_left_out</item>&ndash;&gt;-->
+        <!--<item name="android:activityCloseEnterAnimation">@anim/push_right_in</item>-->
+        <!--<item name="android:activityCloseExitAnimation">@anim/push_right_out</item>-->
     </style>
 
     <style name="AnimationActivity" mce_bogus="1" parent="@android:style/Animation.Activity">

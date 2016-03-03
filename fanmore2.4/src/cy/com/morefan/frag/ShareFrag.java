@@ -12,6 +12,8 @@ import com.tencent.tauth.UiError;
 
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 import cy.com.morefan.HomeActivity;
@@ -63,9 +65,9 @@ public class ShareFrag extends BaseFragment implements OnClickListener{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		InputStream in  = this.getResources().openRawResource(R.raw.share_ico);
+		//InputStream in  = this.getResources().openRawResource(R.raw.share_ico);
 		imgPath = Constant.IMAGE_PATH_STORE + "/share_ico.png";
-		ImageUtil.saveInputStreanToFile(in, imgPath);
+		//ImageUtil.saveInputStreanToFile(in, imgPath);
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -181,7 +183,7 @@ public class ShareFrag extends BaseFragment implements OnClickListener{
 		case R.id.layWeiXin:
 			showProgress();
 			Platform platform1 = new WechatMoments(getActivity());
-			wx( getActivity(), UserData.getUserData().shareDes, imgPath,UserData.getUserData().shareContent,platform1);
+			wx( getActivity(), UserData.getUserData().shareDes, imgUrl,UserData.getUserData().shareContent,platform1);
 			break;
 		case R.id.layQQ:
 			//只能分享网络图片
@@ -190,7 +192,8 @@ public class ShareFrag extends BaseFragment implements OnClickListener{
 			break;
 		case R.id.layXinLang:
 			showProgress();
-			ShareUtil.share2Sina(getActivity(), UserData.getUserData().shareDes, imgPath, UserData.getUserData().shareContent);
+			Platform platform2 = new SinaWeibo(getActivity());
+			sinaWeibo(getActivity(), UserData.getUserData().shareDes, imgUrl,UserData.getUserData().shareContent,platform2);
 			break;
 
 
@@ -201,7 +204,39 @@ public class ShareFrag extends BaseFragment implements OnClickListener{
 	}
 
 
+	private void sinaWeibo(final Context context , String Title ,String imgUrl,String shareUrl,Platform platform)
+	{
+		Platform.ShareParams sp = new Platform.ShareParams ( );
+		sp.setShareType(Platform.SHARE_WEBPAGE);
+		sp.setText(Title +shareUrl);
+		sp.setImageUrl(imgUrl);
+		Platform sinaWeibo = ShareSDK.getPlatform(context, SinaWeibo.NAME);
+		sinaWeibo.setPlatformActionListener ( new PlatformActionListener() {
+			@Override
+			public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+				String msg = "";
 
+				ToastUtil.show(context, "微博分享成功");
+
+			}
+
+			@Override
+			public void onError(Platform platform, int i, Throwable throwable) {
+
+				ToastUtil.show(context, "微博分享失败");
+
+			}
+
+			@Override
+			public void onCancel(Platform platform, int i) {
+
+				ToastUtil.show(context, "取消微博分享");
+
+			}
+		});
+		//执行分享
+		sinaWeibo.share ( sp );
+	}
 	protected void wx(final Context context , String Title ,String imgUrl,String shareUrl,Platform platform ){
 		Platform.ShareParams sp = new Platform.ShareParams();
 		sp.setShareType(Platform.SHARE_WEBPAGE);

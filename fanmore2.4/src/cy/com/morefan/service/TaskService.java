@@ -504,6 +504,7 @@ public class TaskService extends BaseService {
 			}
 		});
 	}
+
 	public void init(final Context mContext, final String userName, final String pwd, final int width, final int height, final SyncImageLoaderHelper loader){
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
 			@Override

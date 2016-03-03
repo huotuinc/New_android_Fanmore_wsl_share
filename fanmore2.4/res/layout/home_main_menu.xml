@@ -153,7 +153,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
-                android:text="昨日收益"
+                android:text="昨日分红"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
@@ -213,7 +213,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="首页"
+                        android:text="领取任务"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -260,7 +260,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="今日预告"
+                        android:text="最新预告"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
                 </LinearLayout>

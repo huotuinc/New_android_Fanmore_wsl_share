@@ -101,7 +101,7 @@ public class PreTaskAdapter extends BaseAdapter{
 		TextView txtOrderTime		= ViewHolderUtil.get(convertView, R.id.txtOrderTime);
 		TextView txtPreTime			= ViewHolderUtil.get(convertView, R.id.txtPreTime);
 
-		TextView tagType			= ViewHolderUtil.get(convertView, R.id.tagType);//活动标识，活动，新手，公告
+//		TextView tagType			= ViewHolderUtil.get(convertView, R.id.tagType);//活动标识，活动，新手，公告
 		ImageView imgStatusTag		= ViewHolderUtil.get(convertView, R.id.imgStatusTag);//首页状态
 		ImageView imgTagTop			= ViewHolderUtil.get(convertView, R.id.imgTagTop);
 		LinearLayout layShopDes		= ViewHolderUtil.get(convertView, R.id.layShopDes);
@@ -150,14 +150,14 @@ public class PreTaskAdapter extends BaseAdapter{
 			txtPreTime.setText("拥有火眼金睛 可以提前转发");
 
 			//总积分<=1时，隐藏积分描述
-			layScore.setVisibility(Double.parseDouble(data.totalScore) <= 1 ? View.GONE : View.VISIBLE);
+			layScore.setVisibility(Double.parseDouble(data.totalScore) <= 1 ? View.VISIBLE : View.VISIBLE);
 
 			layShopDes.setVisibility(data.type == 1000300 && !TextUtils.isEmpty(data.rebate) ? View.VISIBLE : View.GONE);
 			txtShopDes.setText(data.rebate);
 
 			//活动标识
-			tagType.setVisibility(data.type == 999999 ? View.GONE : View.VISIBLE);
-			tagType.setText(getTypeName(data.type));
+//			tagType.setVisibility(data.type == 999999 ? View.GONE : View.VISIBLE);
+//			tagType.setText(getTypeName(data.type));
 
 			//状态标记设置
 			setStatus(imgStatusTag, data);

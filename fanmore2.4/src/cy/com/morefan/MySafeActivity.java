@@ -37,12 +37,19 @@ public class MySafeActivity extends BaseActivity implements BroadcastListener{
 		super.onResume();
 	}
 	private void initView() {
+
 		layCrashPwd = (RelativeLayout) findViewById(R.id.layCrashPwd);
 		txtAli = (TextView) findViewById(R.id.txtAli);
 		txtPhone = (TextView) findViewById(R.id.txtPhone);
 		txtCashPwd = (TextView) findViewById(R.id.txtCashPwd);
 		txtUserName = (TextView) findViewById(R.id.txtUserName);
-		txtUserName.setText(UserData.getUserData().userName + ":");
+		String userName = UserData.getUserData().RealName;
+		if (TextUtils.isEmpty(userName))
+			userName = UserData.getUserData().UserNickName;
+		else if (TextUtils.isEmpty(userName)){
+			userName =UserData.getUserData().userName;
+		}
+		txtUserName.setText(userName + ":");
 
 	}
 	private void refreshView() {

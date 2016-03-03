@@ -28,7 +28,7 @@ public class ImageLoad {
 
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        ToastUtil.show(context, "加载图片失败");
+                        //ToastUtil.show(context, "加载图片失败");
                     }
                 });
     }

@@ -13,12 +13,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp" >
 
-        <ImageView
-            android:id="@+id/imgUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/ic_logo" />
+        <!--<ImageView-->
+            <!--android:id="@+id/imgUser"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:background="@drawable/ic_logo" />-->
 
         <cy.com.morefan.view.CyButton
             android:id="@+id/imgClose"

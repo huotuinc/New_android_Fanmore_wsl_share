@@ -55,6 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:text="v1.0.0"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/black"
                 android:textIsSelectable="false"
@@ -153,6 +154,7 @@
         <!-- 3 add -->
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/layClearSina"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

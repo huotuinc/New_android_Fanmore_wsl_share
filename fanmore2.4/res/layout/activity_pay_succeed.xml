@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cy.com.morefan.PaySucceedActivity">
+    <FrameLayout style="@style/TitleStyle"
+        android:id="@+id/titlepay">
+    <cy.com.morefan.view.CyButton
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/title_back_normal"
+        android:contentDescription="@string/img"
+        android:onClick="onClickButton" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="兑换结果"
+        android:textColor="@color/white"
+        android:textSize="18dp" />
+    </FrameLayout>
+    <LinearLayout
+        android:layout_marginTop="100dp"
+        android:layout_below="@+id/titlepay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <ImageView
+        android:id="@+id/img_succeed"
+        android:layout_gravity="center"
+        android:layout_below="@+id/titlepay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icon_succeed"/>
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="恭喜你，兑换成功。"
+        android:textSize="25sp"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btntoshop"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_red_sel"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="onClickButton"
+        android:text="进入商城"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/white"
+        android:textSize="18dp" />
+</RelativeLayout>

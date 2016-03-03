@@ -79,6 +79,7 @@ public class Util {
 	}
 
 	public static String opeDouble(double num){
+		//DecimalFormat df = new DecimalFormat("0");
 		String num2 = String.valueOf(num);
 		int last =  num2.lastIndexOf(".") + 3;
 		last = last > num2.length() ?  num2.length() : last;

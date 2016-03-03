@@ -207,8 +207,8 @@ public class MoreFrag extends BaseFragment implements OnClickListener, Callback,
 			break;
 
 		case R.id.layUpdate:
-			taskService.checkUpdate();
-			showProgress();
+//			taskService.checkUpdate();
+//			showProgress();
 			break;
 	
 		case R.id.layAbout:

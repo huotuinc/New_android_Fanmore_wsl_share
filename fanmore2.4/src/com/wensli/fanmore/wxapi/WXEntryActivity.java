@@ -19,7 +19,7 @@ import cn.sharesdk.wechat.utils.WechatHandlerActivity;
 public
 class WXEntryActivity extends WechatHandlerActivity {
 
-	public static String WX_APP_ID = "wx8ba33b7341047b58";
+	public static String WX_APP_ID = "wx369cdeb338051de5";
     /**
      * 处理微信发出的向第三方应用请求app message
      * <p>

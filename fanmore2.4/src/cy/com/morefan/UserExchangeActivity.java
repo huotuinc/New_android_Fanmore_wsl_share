@@ -48,6 +48,7 @@ public class UserExchangeActivity extends BaseActivity implements UserInfoView.O
     @Override
     public void onUserInfoBack(UserInfoView.Type type, UserSelectData data) {
         if(data == null)
+
             return;
         if (UserData.getUserData().toCrashPwd==null||TextUtils.isEmpty(UserData.getUserData().toCrashPwd)) {
             ToastUtil.show(this,"请先设置密码。");
@@ -60,7 +61,7 @@ public class UserExchangeActivity extends BaseActivity implements UserInfoView.O
             startActivity(intentcrashpsd);
         }
 
-       // userService.userchange(UserData.getUserData().loginCode,data.id,UserData.getUserData().score,UserData.getUserData().toCrashPwd);
+      // userService.userchange(UserData.getUserData().loginCode,data.id,UserData.getUserData().score,UserData.getUserData().toCrashPwd);
     }
 
     public boolean handleMessage(Message msg) {
@@ -202,9 +203,21 @@ public class UserExchangeActivity extends BaseActivity implements UserInfoView.O
 //                break;
             case R.id.btnexchange:
                 showProgress();
+                if (TextUtils.isEmpty(SPUtil.getStringToSpByName(this,Constant.SP_NAME_NORMAL,Constant.SP_NAME_BuserId))) {
 
-                userService.GetUserList(UserExchangeActivity.this,UserData.getUserData().loginCode,SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_UnionId));
-                //userService.userchange();
+                    userService.GetUserList(UserExchangeActivity.this, UserData.getUserData().loginCode, SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_UnionId));
+                }else {
+                    if (UserData.getUserData().toCrashPwd==null||TextUtils.isEmpty(UserData.getUserData().toCrashPwd)) {
+                        ToastUtil.show(this,"请先设置密码。");
+                        Intent intentcreatpsd = new Intent(UserExchangeActivity.this, ToCrashAuthActivity.class);
+                        intentcreatpsd.putExtra("type", ToCrashAuthActivity.CrashAuthType.Creat);
+                        startActivity(intentcreatpsd);
+                    }else {
+                        Intent intentcrashpsd = new Intent(UserExchangeActivity.this, ToCrashAuthActivity.class);
+                        intentcrashpsd.putExtra("type", ToCrashAuthActivity.CrashAuthType.Auth);
+                        startActivity(intentcrashpsd);
+                    }
+                }
                 break;
             default:
                 break;

@@ -75,6 +75,8 @@ public class UserData implements BaseData, Serializable{
 	 */
 	public int id;
 	public String userName;
+	public String UserNickName;
+	public String RealName;
 	public String pwd;
 	public String shareDes;
 	public String shareContent;
@@ -134,6 +136,10 @@ public class UserData implements BaseData, Serializable{
 	 * 是否有火眼金眼
 	 */
 	public boolean hasPreTool;
+	/**
+	 * 积分汇率
+	 */
+	public double scorerate;
 
 
 	private static UserData userData;

@@ -33,7 +33,8 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:onClick="onClick"
-                android:text="万事利"
+                android:text="领取任务"
+                android:textSize="18sp"
                 android:textColor="@color/white" />
 
 

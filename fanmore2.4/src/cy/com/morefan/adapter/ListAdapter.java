@@ -175,20 +175,9 @@ public class ListAdapter extends BaseAdapter{
 					txtIndex.setText((position + 1) + "");
 					txtName.setText(data.name);
 					tvContri.setText(data.lastContri+"/"+data.totalContri+"积分");
-				if( data.yesterdayBrowseAmount ==null) {
-					data.yesterdayBrowseAmount =0.0;
-				}
-					if( data.historyTotalBrowseAmount ==null) {
-						data.historyTotalBrowseAmount = 0.0;
-					}
-						if( data.yesterdayTurnAmount ==null) {
-							data.yesterdayTurnAmount = 0.0;
-						}
-							if( data.historyTotalTurnAmount ==null) {
-								data.historyTotalTurnAmount = 0.0;
-							}
-					yesterdayBrowseAmount.setText(data.yesterdayBrowseAmount+"/"+data.historyTotalBrowseAmount+"积分");
-					historyTotalBrowseAmount.setText(data.yesterdayTurnAmount+"/"+data.historyTotalTurnAmount+"积分");
+
+					yesterdayBrowseAmount.setText(data.yesterdayBrowseAmount+"/"+data.yesterdayTurnAmount+"积分");
+					historyTotalBrowseAmount.setText(data.historyTotalBrowseAmount+"/"+data.historyTotalTurnAmount+"积分");
 				//imgPhoto
 //					convertView.setOnClickListener(new View.OnClickListener() {
 //						@Override

@@ -82,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="10/102积分"
+                    android:text=""
                     android:textColor="@color/black" />
 
 
@@ -124,7 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="10/102次"
+                android:text=""
                 android:textColor="@color/black" />
         </LinearLayout>
         <LinearLayout
@@ -136,7 +136,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="历史/浏览转发量:"
+                android:text="历史浏览/转发量:"
                 android:layout_marginLeft="45dp"
                 android:textColor="@color/black" />
 
@@ -146,7 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="1022/10111次"
+                android:text=""
                 android:textColor="@color/black" />
         </LinearLayout>
         <ImageView

@@ -132,6 +132,7 @@ public class WebShopActivity extends BaseActivity implements Handler.Callback  {
         //if(isShare)
 //         findViewById(R.id.layAll).setVisibility(View.VISIBLE);
         txtTitle.setText(title);
+        txtTitle.setVisibility(View.GONE);
         //首页鉴权
         //AuthParamUtils paramUtils = new AuthParamUtils ( application, System.currentTimeMillis (), application.obtainMerchantUrl ( ), WebShopActivity.this );
 

@@ -12,6 +12,7 @@ import cy.com.morefan.MySafeActivity;
 import cy.com.morefan.R;
 import cy.com.morefan.AuthCodeSendActivity;
 import cy.com.morefan.UserExchangeActivity;
+import cy.com.morefan.UserRegActivity;
 import cy.com.morefan.WebShopActivity;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.UserData;
@@ -166,8 +167,15 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 	private void initData() {
 
 	UserData userData = UserData.getUserData();
-	imgTag.setVisibility(userData.completeInfo ? View.GONE :View.GONE);
-		txtName.setText(userData.userName);
+	imgTag.setVisibility(userData.completeInfo ? View.GONE : View.GONE);
+		//txtName.setText(userData.userName);
+		String	usename = userData.RealName;
+		if (TextUtils.isEmpty(usename))
+			usename = userData.UserNickName;
+		else if (TextUtils.isEmpty(usename)){
+			usename =userData.userName;
+		}
+		txtName.setText(usename);
 		txtScore.setText("我的积分："+userData.score);
 		//txtTotalScore.setText(userData.totalScore);
 	//txtLeastTaskCount.setText(String.format("%d/%d", userData.completeTaskCount, userData.totalTaskCount));
@@ -175,7 +183,7 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 			img.setImageResource(R.drawable.user_icon);
 		}else{
 			//helper.loadImage(0, img, null, UserData.getUserData().picUrl, Constant.BASE_IMAGE_PATH);
-			ImageLoad.loadLogo(UserData.getUserData().picUrl, img, getActivity());
+			ImageLoad.loadLogo(userData.picUrl, img, getActivity());
 		}
 	}
 	@Override
@@ -219,8 +227,17 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 			break;
 		case R.id.layShop:
 			showProgress();
-			userService.GetUserList(getActivity(), UserData.getUserData().loginCode, SPUtil.getStringToSpByName(getActivity(), Constant.SP_NAME_NORMAL, Constant.SP_NAME_UnionId));
-
+			if (TextUtils.isEmpty( SPUtil.getStringToSpByName(getActivity(), Constant.SP_NAME_NORMAL, Constant.SP_NAME_BuserId))) {
+				userService.GetUserList(getActivity(), UserData.getUserData().loginCode, SPUtil.getStringToSpByName(getActivity(), Constant.SP_NAME_NORMAL, Constant.SP_NAME_UnionId));
+			}else{
+				Intent intentshop = new Intent(getActivity(), WebShopActivity.class);
+				AuthParamUtils paramUtils = new AuthParamUtils ( application, System.currentTimeMillis(),BusinessStatic.getInstance().URL_WEBSITE, getActivity() );
+				String url = paramUtils.obtainUrl();
+				intentshop.putExtra("url", url);
+				intentshop.putExtra("title", "商城");
+				startActivity(intentshop);
+				dismissProgress();
+			}
              break;
 		case R.id.btnLogOut:
 			CustomDialog.showChooiceDialg(getActivity(), null, "确定要注销吗？", "注销", "取消", null, new DialogInterface.OnClickListener() {
@@ -244,7 +261,8 @@ public class MyFrag extends BaseFragment implements OnClickListener, BusinessDat
 	public void logout(){
 		SPUtil.saveStringToSpByName(getActivity(), Constant.SP_NAME_NORMAL, Constant.SP_NAME_PRE_USERNAME, UserData.getUserData().userName);
 		UserData.clear();
-
+		SPUtil.saveStringToSpByName(getActivity(), Constant.SP_NAME_NORMAL, Constant.SP_NAME_BuserId, "");
+		SPUtil.saveStringToSpByName(getActivity(), Constant.SP_NAME_NORMAL, Constant.SP_NAME_UnionId, "");
 		//清除微信授权信息
 		ShareSDK.getPlatform(Wechat.NAME).removeAccount();
 

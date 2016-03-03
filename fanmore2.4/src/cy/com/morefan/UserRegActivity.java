@@ -49,8 +49,10 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 			startActivity(intenthome);
 			finish();
 		}else if (msg.what==BusinessDataListener.ERROR_TO_MOBLIELOGIN){
+			dismissProgress();
 			toast(msg.obj.toString());
 		}else if (msg.what==BusinessDataListener.NULL_USER){
+			dismissProgress();
 			String usephone = edtPhone.getText().toString();
 			String usecode=edtCode.getText().toString().trim();
 			popReg(2, usephone, usecode);
@@ -69,6 +71,7 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 			dismissProgress();
 			toast(msg.obj.toString());
 			if(msg.what == BusinessDataListener.ERROR_GET_CODE){
+				dismissProgress();
 				recLen = 1;
 				handler.postAtTime(runnable, 0);
 			}

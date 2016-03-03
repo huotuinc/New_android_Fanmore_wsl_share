@@ -113,27 +113,12 @@ public class PrenticeAdapter extends BaseAdapter{
 				ImageLoad.loadLogo(UserData.getUserData().picUrl,imgPhoto,mContext);
 			}
 			txtTopCode.setText(topData.invitationCode);
-			//txtTopDes.setText(topData.prenticeDes);
+			txtTopDes.setText(topData.prenticeDes);
 			txtTopTotal.setText(topData.totalContri + "积分");
 			txtTopLast.setText(topData.lastContri + "积分");
 			prenticeAmount.setText( String.valueOf( topData.prenticeAmount));
-
-			if( topData.yesterdayBrowseAmount ==null){
-				topData.yesterdayBrowseAmount = "0";
-			}
-			if (topData.historyTotalBrowseAmount==null)
-			{
-				topData.historyTotalBrowseAmount="0";
-			}
-			if (topData.yesterdayTurnAmount==null){
-				topData.yesterdayTurnAmount="0";
-			}
-			if (topData.historyTotalTurnAmount==null){
-				topData.historyTotalTurnAmount="0";
-			}
-
-			BrowseAmount.setText( String.valueOf(topData.yesterdayBrowseAmount)+"/"+ String.valueOf(topData.historyTotalBrowseAmount)+"次");
-			TurnAmount.setText( String.valueOf(topData.yesterdayTurnAmount)+"/"+ String.valueOf(topData.historyTotalTurnAmount)+"次");
+			BrowseAmount.setText( topData.yesterdayBrowseAmount+"/"+ topData.historyTotalBrowseAmount+"次");
+			TurnAmount.setText(topData.yesterdayTurnAmount+"/"+topData.historyTotalTurnAmount+"次");
 		}else{
 			if(convertView == null){
 				convertView = LayoutInflater.from(mContext).inflate(R.layout.tab_prentice_item, null);

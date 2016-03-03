@@ -296,6 +296,8 @@ public class DragLayout extends FrameLayout{
 		}
 	}
 	public void open() {
+
+
 		open(true);
 	}
 

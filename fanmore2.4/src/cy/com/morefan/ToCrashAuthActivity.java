@@ -38,6 +38,8 @@ public class ToCrashAuthActivity extends BaseActivity implements OnSecretFinishL
 		if (msg.what ==BusinessDataListener.DONE_TO_RECHANGE){
 			dismissProgress();
 			toast("兑换成功");
+			Intent intent = new Intent(this, PaySucceedActivity.class);
+			startActivity(intent);
 			finish();
 
 

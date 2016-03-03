@@ -11,7 +11,7 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 import com.wensli.fanmore.wxapi.QzoneActivity;
-import com.wensli.fanmore.wxapi.SinaShareActivity;
+
 import com.wensli.fanmore.wxapi.WXEntryActivity;
 
 import cy.com.morefan.TaskDetailActivity;
@@ -75,11 +75,11 @@ public class ShareUtil {
 	 * @param content
 	 */
 	public static void share2Sina(Context context, String des, String imgPath, String content){
-		Intent intentShare = new Intent(context, SinaShareActivity.class);
-		intentShare.putExtra("des", des);
-		intentShare.putExtra("path", imgPath);
-		intentShare.putExtra("url", content);
-		context.startActivity(intentShare);
+//		Intent intentShare = new Intent(context, SinaShareActivity.class);
+//		intentShare.putExtra("des", des);
+//		intentShare.putExtra("path", imgPath);
+//		intentShare.putExtra("url", content);
+//		context.startActivity(intentShare);
 	}
 	public static void share2Qzone( Context context, String des, String serviceImgUrl, String content){
 		Intent intentShare = new Intent(context, QzoneActivity.class);

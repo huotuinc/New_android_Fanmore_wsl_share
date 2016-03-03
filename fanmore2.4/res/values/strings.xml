@@ -14,7 +14,7 @@
     <string name="txt_reminder_tocrash">获取验证码，积分兑现</string>
     <string name="txt_clause">协议</string>
     <string name="txt_checkin_title">在首页\"摇一摇\"也可快速签到</string>
-    <string name="version_tip">&#169; 2013 FANMORE ALL RIGHTS RESRVED</string>
+    <string name="version_tip">&#169; 2016 WENSLI ALL RIGHTS RESRVED</string>
     <!-- task time des -->
     <string-array name="task_time_des">
         <item>休息一下,%1$d分钟后再来分享吧!~</item>
@@ -55,7 +55,7 @@
 
     <!-- more tab -->
     <string name="more_attention">关注我们</string>
-    <string name="more_update">检查新版本</string>
+    <string name="more_update">版本号</string>
     <string name="more_clear">清理图片缓存</string>
     <string name="more_about">关于我们</string>
     <string name="more_partin">投放指南</string>

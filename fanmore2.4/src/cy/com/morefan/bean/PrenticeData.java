@@ -8,13 +8,18 @@ public class PrenticeData implements BaseData{
 	/**
 	 * 上次贡献时间/拜师时间
 	 */
+	public String invitationCode;
+	public String prenticeDes;
+	public String prenticeShareDes;
+	public String prenticeShareUrl;
+	public int 	prenticeAmount;
 	public String time;
 	public String lastContri;
 	public String totalContri;
-	public Double yesterdayBrowseAmount;
-	public Double historyTotalBrowseAmount;
-	public Double yesterdayTurnAmount;
-	public Double historyTotalTurnAmount;
+	public String yesterdayBrowseAmount;
+	public String historyTotalBrowseAmount;
+	public String yesterdayTurnAmount;
+	public String historyTotalTurnAmount;
 
 
 	@Override

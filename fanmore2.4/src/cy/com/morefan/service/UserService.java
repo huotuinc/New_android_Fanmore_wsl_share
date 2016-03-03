@@ -30,6 +30,7 @@ import cy.com.morefan.bean.MyJSONObject;
 import cy.com.morefan.bean.PartInItemData;
 import cy.com.morefan.bean.PrenticeContriData;
 import cy.com.morefan.bean.PrenticeData;
+import cy.com.morefan.bean.PrenticeTopData;
 import cy.com.morefan.bean.PushMsgData;
 import cy.com.morefan.bean.RankData;
 import cy.com.morefan.bean.ShakePrenticeData;
@@ -1248,6 +1249,11 @@ public class UserService extends BaseService{
 									item.lastContri =  Util.opeDouble(tip.getDouble("recentScore"));
 									item.totalContri = Util.opeDouble(tip.getDouble("totalScore"));
 									item.time = TimeUtil.FormatterTimeToDay(tip.getString("time"));
+									item.yesterdayBrowseAmount=Util.opeDouble(tip.getDouble("yesterdayBrowseAmount"));
+									item.historyTotalBrowseAmount=Util.opeDouble(tip.getDouble("historyTotalBrowseAmount"));
+									item.yesterdayTurnAmount=Util.opeDouble(tip.getDouble("yesterdayTurnAmount"));
+									item.historyTotalTurnAmount=Util.opeDouble(tip.getDouble("historyTotalTurnAmount"));
+
 									testResults[i] = item;
 								}
 								listener.onDataFinish(BusinessDataListener.DONE_GET_PRENTICE_LIST, null, testResults, extra);
@@ -1305,7 +1311,10 @@ public class UserService extends BaseService{
 									extra.putInt("prenticeAmount", json.getInt("prenticeAmount"));
 									extra.putString("lastContri", Util.opeDouble(json.getDouble("yesterdayTotalScore")));
 									extra.putString("totalContri", Util.opeDouble(json.getDouble("totalScore")));
-
+									extra.putString("yesterdayBrowseAmount",Util.opeDouble(json.getDouble("yesterdayBrowseAmount")));
+									extra.putString("historyTotalBrowseAmount",Util.opeDouble(json.getDouble("historyTotalBrowseAmount")));
+									extra.putString("yesterdayTurnAmount",Util.opeDouble(json.getDouble("yesterdayTurnAmount")));
+									extra.putString("historyTotalTurnAmount",Util.opeDouble(json.getDouble("historyTotalTurnAmount")));
 								}
 								JSONArray array = json.getJSONArray("list");
 								int length = array.length();
@@ -1313,12 +1322,18 @@ public class UserService extends BaseService{
 								for(int i = 0; i < length; i++){
 									MyJSONObject tip = (MyJSONObject) array.getJSONObject(i);
 									PrenticeData item = new PrenticeData();
-									item.id = tip.getInt("userId");
-									item.pageTag = tip.getString("flowId");
-									item.name = tip.getString("userName");
-									item.lastContri =  Util.opeDouble(tip.getDouble("score"));//tip.getInt("score");
-									item.totalContri = Util.opeDouble(tip.getDouble("totalScore"));//tip.getInt("totalScore");
-									item.time = TimeUtil.FormatterTimeToDay(tip.getString("time"));
+									item.invitationCode = tip.getString("inviteCode");
+									item.prenticeDes = tip.getString("desc");
+									item.prenticeShareDes = tip.getString("shareDesc");
+									item.prenticeShareUrl = tip.getString("shareUrl");//tip.getInt("score");
+									item.prenticeAmount = tip.getInt("prenticeAmount");//tip.getInt("totalScore");
+									item.lastContri = Util.opeDouble(tip.getDouble("yesterdayTotalScore"));
+									item.totalContri=Util.opeDouble(tip.getDouble("yesterdayTotalScore"));
+									item.yesterdayBrowseAmount=Util.opeDouble(tip.getDouble("yesterdayBrowseAmount"));
+									item.historyTotalBrowseAmount=Util.opeDouble(tip.getDouble("historyTotalBrowseAmount"));
+									item.yesterdayTurnAmount=Util.opeDouble(tip.getDouble("yesterdayTurnAmount"));
+									item.historyTotalTurnAmount=Util.opeDouble(tip.getDouble("historyTotalTurnAmount"));
+
 									results[i] = item;
 								}
 								listener.onDataFinish(BusinessDataListener.DONE_GET_PRENTICE, null, results, extra);
@@ -2666,6 +2681,7 @@ public class UserService extends BaseService{
 								MyJSONObject json = data.getJSONObject("resultData");
 								//UserData.getUserData().score = Util.opeDouble(json.getDouble("ApplyScore"));
 								UserData.getUserData().wallet = Util.opeDouble(json.getDouble("money"));
+								UserData.getUserData().scorerate=json.getDouble("scorerate");
 								Bundle extra = new Bundle();
 								extra.putString("des", json.getString("desc"));
 								try {
@@ -2855,9 +2871,9 @@ public class UserService extends BaseService{
 //								userData.lockScore = userData.score;
 //								userData.score = "0";
 								double total = Double.parseDouble(userData.score);
-								int useScore = ((int)total/10)*10;
+								double useScore = (total%(1/userData.scorerate));
 								userData.lockScore = String.valueOf(useScore);
-								userData.score = Util.opeDouble(total - useScore);
+								userData.score = String.valueOf(useScore);
 
 
 								listener.onDataFinish(BusinessDataListener.DONE_TO_RECHANGE, data.getString("tip"), null, null);
@@ -3290,10 +3306,13 @@ public class UserService extends BaseService{
 							if (status == 1) {
 								String loginCode= data.getJSONObject("resultData").getString("loginCode");
 								loginCode = loginCode.split("\\^")[1];
-								setUserData(mobile,loginCode, data.getJSONObject("resultData"));
+								setUserData(mobile, loginCode, data.getJSONObject("resultData"));
+								String mallUserId=String.valueOf(data.getJSONObject("resultData").getString("mallUserId"));
+								String unionId=data.getJSONObject("resultData").getString("unionId");
 								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME, mobile);
 								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, loginCode);
-
+								SPUtil.saveStringToSpByName(mContext,Constant.SP_NAME_NORMAL,Constant.SP_NAME_BuserId,mallUserId);
+								SPUtil.saveStringToSpByName(mContext,Constant.SP_NAME_NORMAL,Constant.SP_NAME_UnionId,unionId);
 								listener.onDataFinish(BusinessDataListener.DONE_TO_MOBLIELOGIN, null, null, null);
 							}else if (status==54003){
 								listener.onDataFinish(BusinessDataListener.NULL_USER,data.getString("tip"),null,null);

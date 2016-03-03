@@ -6,8 +6,11 @@ import java.util.HashMap;
 import cindy.android.test.synclistview.ImageUtil;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
+import cy.com.morefan.bean.UserData;
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.util.ShareUtil;
 import cy.com.morefan.util.ToastUtil;
@@ -17,16 +20,16 @@ import android.text.TextUtils;
 import android.view.View;
 
 public class ShareActivity extends BaseActivity{
-	private String imgUrl = "http://task.fanmore.cn/images/28def407415841a7ada5a0b0377895e7_104X104.jpg";
+	private String imgUrl = "http://task.silk08.com/images/104X104.jpg";
 	private String imgPath;
 	private String shareDes;
 	private String shareUrl;
 	protected void onCreate(android.os.Bundle arg0) {
 		super.onCreate(arg0);
 		setContentView(R.layout.share);
-		InputStream in  = this.getResources().openRawResource(R.raw.share_ico);
+		//InputStream in  = this.getResources().openRawResource(R.drawable.icon);
 		imgPath = Constant.IMAGE_PATH_STORE + "/share_ico.png";
-		ImageUtil.saveInputStreanToFile(in, imgPath);
+		//ImageUtil.saveInputStreanToFile(in, imgPath);
 		shareDes = getIntent().getExtras().getString("shareDes");
 		shareUrl = getIntent().getExtras().getString("shareUrl");
 		if(TextUtils.isEmpty(shareDes) || TextUtils.isEmpty(shareUrl))
@@ -50,17 +53,18 @@ public class ShareActivity extends BaseActivity{
 			break;
 		case R.id.laySina:
 			showProgress();
-			ShareUtil.share2Sina(this, shareDes, imgPath, shareUrl);
+			Platform platform2 = new SinaWeibo(this);
+			sinaWeibo(this, UserData.getUserData().shareDes, imgUrl, shareUrl, platform2);
 			break;
 		case R.id.layWX:
 			showProgress();
 			Platform platform1 = new WechatMoments(this);
-			wx(this, shareDes, imgPath, shareUrl, platform1);
+			wx(this, shareDes, imgUrl, shareUrl, platform1);
 			break;
 		case R.id.layWechat:
 			showProgress();
 			Platform platform = new Wechat(this);
-			wx(this, shareDes, imgPath, shareUrl,platform);
+			wx(this, shareDes, imgUrl, shareUrl,platform);
 			break;
 
 
@@ -70,14 +74,47 @@ public class ShareActivity extends BaseActivity{
 
 
 	}
+	private void sinaWeibo(final Context context , String Title ,String imgUrl,String shareUrl,Platform platform)
+	{
+		Platform.ShareParams sp = new Platform.ShareParams ( );
+		sp.setShareType(Platform.SHARE_WEBPAGE);
+		sp.setText(Title +shareUrl);
+		sp.setImageUrl(imgUrl);
+		Platform sinaWeibo = ShareSDK.getPlatform(context, SinaWeibo.NAME);
+		sinaWeibo.setPlatformActionListener ( new PlatformActionListener() {
+			@Override
+			public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+				String msg = "";
+
+				ToastUtil.show(context, "微博分享成功");
+
+			}
+
+			@Override
+			public void onError(Platform platform, int i, Throwable throwable) {
+
+				ToastUtil.show(context, "微博分享失败");
+
+			}
+
+			@Override
+			public void onCancel(Platform platform, int i) {
+
+				ToastUtil.show(context, "取消微博分享");
+
+			}
+		});
+		//执行分享
+		sinaWeibo.share ( sp );
+	}
 	protected void wx(final Context context , String Title ,String imgUrl,String shareUrl,Platform platform ){
 		Platform.ShareParams sp = new Platform.ShareParams();
 		sp.setShareType(Platform.SHARE_WEBPAGE);
 		sp.setTitle(Title);
 		sp.setText(Title);
 		sp.setUrl(shareUrl);
-		//sp.setImageUrl(imgUrl);
-		sp.setImagePath(imgUrl);
+		sp.setImageUrl(imgUrl);
+		//sp.setImagePath(imgUrl);
 		// platform = new Wechat(context);
 		platform.setPlatformActionListener(new PlatformActionListener() {
 			@Override

@@ -101,7 +101,7 @@ public class BaseActivity extends SwipeBackActivity implements BusinessDataListe
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
-		setSwipeBackEnable(true);
+		setSwipeBackEnable(false);
 	}
 
 

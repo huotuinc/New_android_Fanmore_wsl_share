@@ -90,7 +90,7 @@ public class TaskAdapter extends BaseAdapter{
 		TextView txtMySend			= ViewHolderUtil.get(convertView, R.id.txtMySend);
 		TextView txtMyScan			= ViewHolderUtil.get(convertView, R.id.txtMyScan);
 		//TextView txtMyLink			= ViewHolderUtil.get(convertView, R.id.txtMyLink);
-		TextView tagType			= ViewHolderUtil.get(convertView, R.id.tagType);//活动标识，活动，新手，公告
+//		TextView tagType			= ViewHolderUtil.get(convertView, R.id.tagType);//活动标识，活动，新手，公告
 		ImageView imgStatusTag		= ViewHolderUtil.get(convertView, R.id.imgStatusTag);//首页状态
 		ImageView imgTagTop			= ViewHolderUtil.get(convertView, R.id.imgTagTop);
 		//LinearLayout layScan		= ViewHolderUtil.get(convertView, R.id.layScan);
@@ -133,9 +133,9 @@ public class TaskAdapter extends BaseAdapter{
         	imgTagTop.setBackgroundResource(data.status == 8 ? R.drawable.tag_over : R.drawable.flag_top);
         	imgTagTop.setVisibility(data.status == 8 ? View.VISIBLE : View.GONE);
 
-        	imgTagWeiXin.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_WEIXIN + "") ? R.drawable.share_ico_weixin_off : R.drawable.share_ico_weixin);
-        	imgTagSina.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_SINA + "") ? R.drawable.share_ico_sina_off : R.drawable.share_ico_sina);
-        	imgTagQzone.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_QZONE + "") ? R.drawable.share_ico_qzone_off : R.drawable.share_ico_qzone);
+        	imgTagWeiXin.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_WEIXIN + "") ? R.drawable.share_ico_weixin : R.drawable.share_ico_weixin);
+        	imgTagSina.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_SINA + "") ? R.drawable.share_ico_sina : R.drawable.share_ico_sina);
+        	imgTagQzone.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_QZONE + "") ? R.drawable.share_ico_qzone : R.drawable.share_ico_qzone);
 
 
         	//layScan.setVisibility(adapterType == TaskAdapterType.Normal ? View.GONE : View.VISIBLE);
@@ -165,7 +165,7 @@ public class TaskAdapter extends BaseAdapter{
 
 			//layScore.setVisibility(data.flagShowSend == 0 ? View.GONE : View.VISIBLE);
 			//总积分<=1时，隐藏积分描述
-			layScore.setVisibility(Double.parseDouble(data.totalScore) <= 1 ? View.GONE : View.VISIBLE);
+			layScore.setVisibility(Double.parseDouble(data.totalScore) <= 1 ? View.VISIBLE : View.VISIBLE);
 			//不可转发的，隐藏积分，渠道，转发人数布局
 			if(data.flagShowSend == 0)
 				layScore.setVisibility( View.GONE );
@@ -183,8 +183,8 @@ public class TaskAdapter extends BaseAdapter{
 			txtMyScan.setText(data.myAwardScan);
 			//txtMyLink.setText(data.myAwardLink);
 			//活动标识
-			tagType.setVisibility(data.type == 999999 ? View.GONE : View.VISIBLE);
-			tagType.setText(getTypeName(data.type));
+//			tagType.setVisibility(data.type == 999999 ? View.GONE : View.VISIBLE);
+//			tagType.setText(getTypeName(data.type));
 
 			//状态标记设置
 			setStatus(imgStatusTag, data);

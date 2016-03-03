@@ -9,7 +9,7 @@ dependencies {
     compile project(':lib:TestSyncListView')
     compile project(':lib:cropper')
     compile project(':lib:CyLibHttpClient')
-    compile project(':lib:WeiboSDK')
+    //compile project(':lib:WeiboSDK')
     compile project(':lib:main')
     compile files('libs/gson-2.2.4.jar')
     compile 'com.handmark.library:pulltorefresh:1.1'

@@ -43,20 +43,7 @@
                 android:scaleType="fitXY" />
         </FrameLayout>
 
-        <TextView
-            android:id="@+id/tagType"
-            android:layout_width="35dp"
-            android:layout_height="20dp"
-            android:layout_gravity="right"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/my_tag"
-            android:gravity="center"
-            android:text="求包养"
-            android:visibility="gone"
-            android:textColor="@color/white"
-            android:textSize="10dp"
-            />
+
     </FrameLayout>
 
     <LinearLayout
@@ -65,6 +52,7 @@
         android:orientation="vertical" >
 
         <FrameLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp" >
@@ -80,19 +68,14 @@
 
         </FrameLayout>
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/line_gray_bg_h"
-            android:contentDescription="@string/img" />
+
 
         <TextView
             android:id="@+id/txtTaskName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:maxLines="2"
             android:text="des\ndes\ndes\ndes"
             android:textColor="@color/blue"

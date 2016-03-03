@@ -47,6 +47,7 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
     MainApplication application;
     public Resources res;
 	private TextView btn_wxlogin;
+    private TextView btn_moblielogin;
 	//private CyLoadingProgress progress;
 
     @Override
@@ -65,6 +66,8 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
 //    
         btn_wxlogin = ( TextView ) this.findViewById ( R.id.btn_wxlogin );
         btn_wxlogin.setOnClickListener ( this );
+        btn_moblielogin=(TextView)this.findViewById(R.id.btn_moblielogin);
+        btn_moblielogin.setOnClickListener(this);
         loginL=(LinearLayout) findViewById(R.id.lay);
         
         //loginText = ( TextView ) this.findViewById ( R.id.loginText );
@@ -110,6 +113,12 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
              
             }
             break;
+            case R.id.btn_moblielogin:{
+                startActivity(new Intent(LoginActivity.this, UserRegActivity.class));
+
+
+            }
+            break;
             default:
                 break;
         }
@@ -135,8 +144,7 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
             {
             	btn_wxlogin.setClickable ( true );
             dismissProgress();
-                startActivity(new Intent(LoginActivity.this, UserRegActivity.class));
-                finish();
+
 //                //successProgress.dismissView ();
 //                //提示授权失败
 //                String notice = ( String ) msg.obj;
@@ -157,7 +165,6 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
                 {
                     //手机没有安装微信客户端
                 	ToastUtil.show(this, "手机没有安装微信客户端");
-                    startActivity(new Intent(LoginActivity.this, UserRegActivity.class));
 
 //                    noticePop = new NoticePopWindow ( LoginActivity.this, LoginActivity.this, wManager, "手机没有安装微信客户端");
 //                    noticePop.showNotice ();
@@ -172,7 +179,7 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
                     dismissProgress();
 //                    //提示授权失败
                ToastUtil.show(this, "微信授权失败");
-                    startActivity(new Intent(LoginActivity.this, UserRegActivity.class));
+
 
 //                    noticePop = new NoticePopWindow ( LoginActivity.this, LoginActivity.this, wManager, "微信授权失败");
 //                    noticePop.showNotice ();
@@ -190,7 +197,6 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
                 //提示取消授权
                 dismissProgress();
                 ToastUtil.show(this, "微信授权被取消");
-                startActivity(new Intent(LoginActivity.this, UserRegActivity.class));
 
 //                noticePop = new NoticePopWindow ( LoginActivity.this, LoginActivity.this, wManager, "微信授权被取消");
 //                noticePop.showNotice ( );

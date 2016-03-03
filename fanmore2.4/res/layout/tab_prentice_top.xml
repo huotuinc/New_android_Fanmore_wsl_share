@@ -84,7 +84,7 @@
                     android:id="@+id/tvapprentice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="师徒总数"
+                    android:text="收徒总数"
                      android:layout_centerInParent="true"
                     android:layout_toRightOf="@+id/apprenticeicon"
                     android:layout_margin="10dp"
@@ -172,7 +172,7 @@
               <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="昨日总贡献"
+                android:text="昨日总分红"
                 android:textColor="@color/black"
                 android:textSize="13dp" />
         </LinearLayout>
@@ -255,7 +255,6 @@
         android:layout_height="wrap_content" >
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/txtDes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

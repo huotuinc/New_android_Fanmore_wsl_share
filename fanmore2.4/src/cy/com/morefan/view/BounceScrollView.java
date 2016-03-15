@@ -1,7 +1,7 @@
 package cy.com.morefan.view;
 
 import cy.com.morefan.util.L;
-import cy.com.morefan.view.DragLayout.YScrollDetector;
+//import cy.com.morefan.view.DragLayout.YScrollDetector;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;

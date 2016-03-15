@@ -68,6 +68,9 @@ public interface BusinessDataListener {
 	public static final int DONE_GET_WALLET = 6053;
 	public static final int DONE_GET_WALLET_HISTORY = 6054;
 
+	public static final int DONE_GET_GROUP_DATA = 7001;
+
+
 	public static final int ERROR_GET_TASK_LIST = -6000;
 	public static final int ERROR_GET_TASK_DETAIL = -6001;
 	public static final int ERROR_GET_CODE = -6002;
@@ -127,5 +130,7 @@ public interface BusinessDataListener {
 	public static final int DONE_TO_MOBLIELOGIN=6666;
 	public static final int NULL_USER=8888;
 	public static final int ERROR_TO_MOBLIELOGIN=-6666;
+
+	public static final int ERROR_GET_GROUP_DATA = -7001;
 }
 

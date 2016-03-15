@@ -26,7 +26,12 @@ public class Constant {
 	//public static final String IP_URL = "http://taskapi.fancat.cn";
 	//public static final String IP_URL = "http://api.fanmore.cn";
 	//public static final String IP_URL ="http://192.168.1.56:8050";
-	public static final String IP_URL ="http://taskapi.silk08.com";
+	public static final String IP_URL ="http://192.168.1.6:8050";
+	/**
+	 * 正式url
+	 */
+	//public static final String IP_URL ="http://taskapi.silk08.com";
+
 	public static final String OPERATION = "HuoTu2013AD";
 	public static final String QD = "huotu";
 	//public static final String QD = "dm";

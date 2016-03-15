@@ -49,7 +49,7 @@ public class ImageDownloadHelper implements IconLoadFinishListener {
     	 boolean set = false;
          set = mIconLoader.loadIcon(imgView, url, filePath);
          if (imgView != null && !set){
-        	 imgView.setBackgroundResource(R.drawable.ic_launcher);
+        	 //imgView.setBackgroundResource(R.drawable.ic_launcher);
          }
         	 
     }

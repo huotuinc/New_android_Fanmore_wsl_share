@@ -1,7 +1,6 @@
 package cy.com.morefan;
 
 
-
 import cindy.android.test.synclistview.SyncImageLoaderHelper;
 import cy.com.morefan.AuthCodeSendActivity.AuthType;
 import cy.com.morefan.ToCrashAuthActivity.CrashAuthType;
@@ -23,16 +22,18 @@ import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
 import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.UserService;
+import cy.com.morefan.supervision.GroupActivity;
+import cy.com.morefan.util.AuthParamUtils;
 import cy.com.morefan.util.DensityUtil;
 import cy.com.morefan.util.L;
 
+import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.util.Util;
 import cy.com.morefan.view.CustomDialog;
 import cy.com.morefan.view.CyButton;
-import cy.com.morefan.view.DragLayout;
+//import cy.com.morefan.view.DragLayout2;
 import cy.com.morefan.view.ImageLoad;
 import cy.com.morefan.view.PopExpUp;
-import cy.com.morefan.view.DragLayout.DragListener;
 //import cy.com.morefan.view.PopCheckIn;
 //import cy.com.morefan.view.PopCheckIn.OnPopCheckListener;
 import android.app.AlertDialog;
@@ -42,6 +43,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
+import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -53,15 +55,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.security.spec.InvalidKeySpecException;
+
 
 /**
  * stillEmpty
  * @author edushi
  *666
  */
-public class HomeActivity extends BaseActivity implements BroadcastListener, Callback, DragListener{
+public class HomeActivity extends BaseActivity implements BroadcastListener, Callback {
 	private MyBroadcastReceiver myBroadcastReceiver;
-	private DragLayout mDragLayout;
+	private DrawerLayout mDragLayout;
 	private FragManager fragManager;
 	private UserService userService;
 	private TextView txtMine;
@@ -69,8 +73,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	private TextView txtName;
 	private TextView txtScore;
 	private TextView txtExp;
-	private TextView txtTodayScan;
-	private TextView txtYesScore;
+	//private TextView txtTodayScan;
+	//private TextView txtYesScore;
 	private PrenticeTopData topData;
 
 	private boolean trendToMy = false;
@@ -164,15 +168,15 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		txtTitle = (TextView) findViewById(R.id.txtTitle);
 		layTab = (LinearLayout) findViewById(R.id.layTab);
 		layMiddle = (LinearLayout) findViewById(R.id.layMiddle);
-		mDragLayout	 = (DragLayout) findViewById(R.id.dragLayout);
-		mDragLayout.setDragListener(this);
+		mDragLayout	 = (DrawerLayout) findViewById(R.id.dragLayout);
+		//mDragLayout.setDragListener(this);
 		txtMine 	 = (TextView) findViewById(R.id.txtMine);
 		imgPhoto 	 = (ImageView) findViewById(R.id.imgPhoto);
 		txtName		 = (TextView) findViewById(R.id.txtName);
 		txtScore	 = (TextView) findViewById(R.id.txtScore);
 		txtExp		 = (TextView) findViewById(R.id.txtExp);
-		txtTodayScan = (TextView) findViewById(R.id.txtTodayScan);
-		txtYesScore	 = (TextView) findViewById(R.id.txtYesScore);
+//		txtTodayScan = (TextView) findViewById(R.id.txtTodayScan);
+//		txtYesScore	 = (TextView) findViewById(R.id.txtYesScore);
 		//userLogin();
 
 	}
@@ -277,11 +281,11 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 
 		case R.id.btnLeft:
 
-				mDragLayout.openOrClose();
-
+				//mDragLayout.openOrClose();
+			openOrCloseMenu();
 
 			break;
-		case R.id.layHome:
+		case R.id.layHome://领取任务
 			fragManager.setCurrentFrag(FragType.Task);
 			setTitleButton(FragType.Task);
 			openOrCloseMenu();
@@ -299,7 +303,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 //			startActivity(intentPutIn);
 //			break;
 		case R.id.layMine:
-		case R.id.img:
+		case R.id.img://头像
+		case R.id.layScore:
 			trendToMy = false;
 			if(UserData.getUserData().isLogin){
 				//是否为模拟器
@@ -345,7 +350,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			setTitleButton(FragType.Rule);
 			openOrCloseMenu();
 			break;
-		case R.id.layMore:
+		case R.id.layMore://更多选项
 			fragManager.setCurrentFrag(FragType.More);
 			setTitleButton(FragType.More);
 			openOrCloseMenu();
@@ -366,47 +371,67 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 //				userLogin(1);
 //			}
 //			break;
-		case R.id.layTodayScan:
-			 if(UserData.getUserData().isLogin){
-  	        	Intent intent = new Intent(HomeActivity.this, TaskActivity.class);
-  	        	intent.putExtra(Constant.TYPE_FROM, FromType.TodayScan);
-  	        	startActivity(intent);
-
-  	        }else{
-				 Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
-				 startActivity(intentlogin);
-				 openOrCloseMenu();
-  	        }
-			break;
-		case R.id.layYesScore:
-			if(UserData.getUserData().isLogin){
-//	        	Intent intent = new Intent(HomeActivity.this, MyPartInActivity.class);
-//	        	intent.putExtra("PartInType", TaskAdapterType.Yes);
+//		case R.id.layTodayScan:
+//			 if(UserData.getUserData().isLogin){
+//  	        	Intent intent = new Intent(HomeActivity.this, TaskActivity.class);
+//  	        	intent.putExtra(Constant.TYPE_FROM, FromType.TodayScan);
+//  	        	startActivity(intent);
+//
+//  	        }else{
+//				 Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
+//				 startActivity(intentlogin);
+//				 openOrCloseMenu();
+//  	        }
+//			break;
+//		case R.id.layYesScore:
+//			if(UserData.getUserData().isLogin){
+////	        	Intent intent = new Intent(HomeActivity.this, MyPartInActivity.class);
+////	        	intent.putExtra("PartInType", TaskAdapterType.Yes);
+////	        	startActivity(intent);
+//
+//
+//	        	Intent intent = new Intent(HomeActivity.this, TaskActivity.class);
+//	        	intent.putExtra(Constant.TYPE_FROM, FromType.YesAward);
 //	        	startActivity(intent);
-
-
-	        	Intent intent = new Intent(HomeActivity.this, TaskActivity.class);
-	        	intent.putExtra(Constant.TYPE_FROM, FromType.YesAward);
-	        	startActivity(intent);
-
-	        }else{
-				Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
-				startActivity(intentlogin);
-				openOrCloseMenu();
-	        }
-			break;
+//
+//	        }else{
+//				Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
+//				startActivity(intentlogin);
+//				openOrCloseMenu();
+//	        }
+//			break;
 		
-		case R.id.layScore:
-			 if(UserData.getUserData().isLogin){
-    			 Intent intent = new Intent(HomeActivity.this, AllScoreActivity.class);
-     	         startActivity(intent);
- 	        }else{
-				 Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
-				 startActivity(intentlogin);
-				 openOrCloseMenu();
- 	        }
+//		case R.id.layScore:
+//			 if(UserData.getUserData().isLogin){
+//    			 Intent intent = new Intent(HomeActivity.this, AllScoreActivity.class);
+//     	         startActivity(intent);
+// 	        }else{
+//				 Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
+//				 startActivity(intentlogin);
+//				 openOrCloseMenu();
+// 	        }
+//			break;
+			case R.id.layHistoryReturn://历史收益
+				if(UserData.getUserData().isLogin){
+					Intent intent = new Intent(HomeActivity.this, AllScoreActivity.class);
+					startActivity(intent);
+				}else{
+					Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
+					startActivity(intentlogin);
+					openOrCloseMenu();
+				}
 			break;
-
+			case R.id.layMall://进入商城
+				inMall();
+				break;
+			case R.id.layExchange://积分兑换
+				Intent intentGoods = new Intent( this , UserExchangeActivity.class);
+				startActivity(intentGoods);
+				break;
+			case R.id.laySupervision://监督管理
+				Intent intent = new Intent(this, GroupActivity.class);
+				startActivity(intent);
+				break;
 		default:
 			break;
 		}
@@ -414,10 +439,31 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			fragManager.getCurrentFrag().onClick(v);
 	}
 
-
+	protected void inMall(){
+		showProgress();
+		if (TextUtils.isEmpty( SPUtil.getStringToSpByName( this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_BuserId))) {
+			userService.GetUserList(this , UserData.getUserData().loginCode, SPUtil.getStringToSpByName(this , Constant.SP_NAME_NORMAL, Constant.SP_NAME_UnionId));
+		}else{
+			Intent intentshop = new Intent( this , WebShopActivity.class);
+			AuthParamUtils paramUtils = new AuthParamUtils ( (MainApplication)this.getApplication() , System.currentTimeMillis(),BusinessStatic.getInstance().URL_WEBSITE, this );
+			String url = paramUtils.obtainUrl();
+			intentshop.putExtra("url", url);
+			intentshop.putExtra("title", "商城");
+			startActivity(intentshop);
+			dismissProgress();
+		}
+	}
 
 	public void openOrCloseMenu(){
-		mDragLayout.openOrClose();
+
+		boolean isOpen = mDragLayout.isDrawerOpen(Gravity.LEFT);
+		if(isOpen){
+			mDragLayout.closeDrawer(Gravity.LEFT);
+		}else{
+			mDragLayout.openDrawer(Gravity.LEFT);
+		}
+
+		//mDragLayout.openOrClose();
 		}
 	public FragType getCurrentFragType(){
 		return fragManager.getCurrentFragType();
@@ -486,7 +532,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	   public void showMyFrag(){
 		   fragManager.setCurrentFrag(FragType.My);
 			setTitleButton(FragType.My);
-			mDragLayout.openOrClose();
+			//mDragLayout.openOrClose();
+		   openOrCloseMenu();
 	   }
 	public void toCrash(){
 		//钱包不要求登录
@@ -584,8 +631,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		txtName.setText(userName);
 		txtScore.setText("可用分红." + total);
 		txtExp.setText("Exp." + exp);
-		txtTodayScan.setText(scanCount);
-		txtYesScore.setText(yes);
+		//txtTodayScan.setText(scanCount);
+		//txtYesScore.setText(yes);
 		imgCheckFlag.setVisibility(userData.dayCheckIn ? View.VISIBLE :View.GONE);
 		L.i(">>>>>>>>>picUrl:" + userData.picUrl);
 		if(TextUtils.isEmpty(userData.picUrl)){
@@ -605,15 +652,20 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	   }
 
 	public void setDragable(boolean dragalbe){
-		mDragLayout.setDragable(dragalbe);
+		//mDragLayout.setDragable(dragalbe);
+
 	}
 	private long exitTime = 0 ;
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			if(mDragLayout.isOpen()){
-				mDragLayout.close();
-			}else{
+			if( mDragLayout.isDrawerOpen(Gravity.LEFT)){
+				mDragLayout.closeDrawer(Gravity.LEFT);
+			}
+//			if(mDragLayout.isOpen()){
+//				mDragLayout.close();
+//			}
+			else{
 				if (System.currentTimeMillis() - exitTime > 2000) {
 					toast("再按一次返回键退出");
 					exitTime = System.currentTimeMillis();
@@ -624,7 +676,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			}
 			return true;
 		}else if(keyCode == KeyEvent.KEYCODE_MENU){
-			mDragLayout.openOrClose();
+			//mDragLayout.openOrClose();
+			openOrCloseMenu();
 			}
 		return super.onKeyDown(keyCode, event);
 	}
@@ -639,7 +692,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 //		}
 //
 //	}
-	private Handler mHandler = new Handler(this);
+	//private Handler mHandler = new Handler(this);
 //	@Override
 //	public boolean handleMessage(Message msg) {
 //		if(msg.what == BusinessDataListener.DONE_CHECK_IN){
@@ -675,7 +728,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			Bundle extra) {
 		super.onDataFinish(type, des, datas, extra);
 		if(type == BusinessDataListener.DONE_CHECK_IN){
-			mHandler.obtainMessage(type, extra).sendToTarget();
+			handler.obtainMessage(type, extra).sendToTarget();
 		}else if(type == BusinessDataListener.DONE_USER_LOGIN ){
 			dismissProgress();
 				handler.post(new Runnable() {
@@ -704,6 +757,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 				}
 			});
 
+		}else if( type == BusinessDataListener.DONE_TO_GETUSERLIST){
+			handler.obtainMessage(type).sendToTarget();
 		}
 
 	}
@@ -711,36 +766,53 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	public void onDataFailed(int type, String des, Bundle extra) {
 		super.onDataFailed(type, des, extra);
 		if(type == BusinessDataListener.ERROR_CHECK_IN || type == BusinessDataListener.ERROR_ALREADY_CHECK_IN){
-			mHandler.obtainMessage(type, des).sendToTarget();
+			handler.obtainMessage(type, des).sendToTarget();
 		}else if(type == BusinessDataListener.ERROR_USER_LOGIN){
 			dismissProgress();
 			toast(des);
+		}else if( type== BusinessDataListener.ERROR_TO_GETUSERLIST){
+			handler.obtainMessage( type , des ).sendToTarget();
 		}
-
 	}
-	@Override
-	public void onOpen() {
-		//setSwipeBackEnable(true);
-		if(UserData.getUserData().isLogin){
-			userService.getScanCount(UserData.getUserData().loginCode);
-    		//是否有意见反馈
-    	}
-		setScores();
-		//showUserGuide(R.drawable.user_guide_task_menu);
-	}
-	@Override
-	public void onClose() {
-		setSwipeBackEnable(false);
-
-	}
-	@Override
-	public void onDrag(float percent) {
-		// TODO Auto-generated method stub
-
-	}
+//	@Override
+//	public void onOpen() {
+//		//setSwipeBackEnable(true);
+//		if(UserData.getUserData().isLogin){
+//			userService.getScanCount(UserData.getUserData().loginCode);
+//    		//是否有意见反馈
+//    	}
+//		setScores();
+//		//showUserGuide(R.drawable.user_guide_task_menu);
+//	}
+//	@Override
+//	public void onClose() {
+//		setSwipeBackEnable(false);
+//
+//	}
+//	@Override
+//	public void onDrag(float percent) {
+//		// TODO Auto-generated method stub
+//
+//	}
 
 	@Override
 	public boolean handleMessage(Message msg) {
+		if( msg.what ==  BusinessDataListener.DONE_TO_GETUSERLIST) {
+//			Intent intentshop = new Intent( this , WebShopActivity.class);
+//			AuthParamUtils paramUtils = new AuthParamUtils( (MainApplication)this.getApplication() , System.currentTimeMillis(), BusinessStatic.getInstance().URL_WEBSITE, this );
+//			String url = paramUtils.obtainUrl();
+//			intentshop.putExtra("url", url);
+//			intentshop.putExtra("title", "商城");
+//			startActivity(intentshop);
+//			dismissProgress();
+			inMall();
+		}else if(msg.what == BusinessDataListener.ERROR_TO_GETUSERLIST){
+			dismissProgress();
+			//scrollView.onRefreshComplete();
+			//head.onRefreshComplete();
+			//dismissProgress();
+			toast(msg.obj.toString());
+		}
 		return false;
 	}
 }

@@ -426,8 +426,8 @@ public class UserService extends BaseService{
 			public void run() {
 
 				try {
-					//String url = Constant.IP_URL + "/Api.ashx?req=PreviewTaskList" + CONSTANT_URL();
-					String url = Constant.IP_URL + "/Api.ashx?req=TodayNotice" + CONSTANT_URL();
+					String url = Constant.IP_URL + "/Api.ashx?req=PreviewTaskList" + CONSTANT_URL();
+					//String url = Constant.IP_URL + "/Api.ashx?req=TodayNotice" + CONSTANT_URL();
 					JSONObject jsonUrl = new JSONObject();
 					jsonUrl.put("loginCode", loginCode == null ? "" : loginCode);
 					jsonUrl.put("screenType", 0);
@@ -1684,47 +1684,39 @@ public class UserService extends BaseService{
 
 
 	}
-	public void getScanCount(final String loginCode) {
+	public void getScanCount() {
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
 
 			@Override
 			public void run() {
 
+				String url = Constant.IP_URL + "/Api.ashx?req=PreviewTaskCount" + CONSTANT_URL();
+				JSONObject jsonUrl = new JSONObject();
 				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=GetUserTodayBrowseCount" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					jsonUrl.put("loginCode", loginCode);
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					L.i("GetUserTodayBrowseCount:" + url);
+                    url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+				L.i("GetUserTodayBrowseCount:" + url);
 
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								//更新内存量
-								UserData.getUserData().todayScanCount = data.getInt("resultData");
-								listener.onDataFinish(BusinessDataListener.DONE_GET_SCANCOUNT, null, null, null);
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK_LIST, data.getString("tip"), null);
-							}
-						}else{
-							String description = data.getString("description");
-							listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK_LIST, description, null);
-						}
-					}else
-						listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK_LIST, ERROR_NET, null);
-
-				} catch (JSONException e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK_LIST, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-
+				MyJSONObject data = getDataFromSer(url);
+				if(data != null){
+                    int resultCode = data.getInt("resultCode");
+                    if (resultCode == 1) {
+                        int status = data.getInt("status");
+                        if (status == 1) {
+                            //更新内存量
+                            UserData.getUserData().todayScanCount = data.getInt("resultData");
+                            listener.onDataFinish(BusinessDataListener.DONE_GET_SCANCOUNT, null, null, null);
+                        }else{
+                            listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK_LIST, data.getString("tip"), null);
+                        }
+                    }else{
+                        String description = data.getString("description");
+                        listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK_LIST, description, null);
+                    }
+                }else
+                    listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK_LIST, ERROR_NET, null);
 
 
 			}

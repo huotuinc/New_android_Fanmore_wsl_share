@@ -31,6 +31,7 @@ import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
 import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.TaskService;
+import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.DensityUtil;
 import cy.com.morefan.util.JsonUtil;
 import cy.com.morefan.util.L;
@@ -207,6 +208,7 @@ public class LoadingActivity extends BaseActivity implements
 	}
 
 	private TaskService taskService;
+	private UserService userService;
 	private SyncImageLoaderHelper loader;
 	private MyBroadcastReceiver broadcastReceiver;
 	
@@ -317,6 +319,7 @@ public static String getDeviceInfo(Context context) {
 //		BusinessStatic.CITY_CODE =  sp.getString(Constant.SP_NAME_CITY_CODE, BusinessStatic.CITY_CODE);
 
 		taskService = new TaskService(this);
+		userService = new UserService(this);
 		/**
 		 * 提交token
 		 * Device Token为友盟生成的用于标识设备的id，长度为44位，不能定制和修改。同一台设备上每个应用对应的Device Token不一样。
@@ -354,6 +357,7 @@ public static String getDeviceInfo(Context context) {
 		taskService.init(this, userName, pwd,size[0], size[1], loader);
 
 		taskService.PayConfig(this);
+		userService.getScanCount();
 	}
 
 	private Bitmap checkLoadingImage() {

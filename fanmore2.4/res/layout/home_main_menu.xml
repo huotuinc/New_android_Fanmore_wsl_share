@@ -385,15 +385,28 @@
 
             <TextView
                 android:layout_toRightOf="@id/layPre_icon"
-                android:layout_toLeftOf="@+id/layPre_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="最新预告"
                 android:layout_marginLeft="10dp"
                 android:layout_centerVertical="true"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:id="@+id/textView" />
 
+            <TextView
+                android:id="@+id/count"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:background="@drawable/red_circle"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:text=""
+                android:textSize="8sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_toRightOf="@+id/textView"
+                android:layout_toEndOf="@+id/textView" />
             <ImageView
                 android:id="@+id/layPre_arrow"
                 android:layout_alignParentRight="true"

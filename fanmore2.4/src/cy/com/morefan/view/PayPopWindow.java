@@ -17,6 +17,7 @@ import android.widget.PopupWindow;
 import cy.com.morefan.MainApplication;
 import cy.com.morefan.PayModel;
 import cy.com.morefan.R;
+import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.listener.PoponDismissListener;
 import cy.com.morefan.util.ToastUtil;
@@ -75,7 +76,7 @@ class PayPopWindow extends PopupWindow {
 
                             payModel.setAttach ( payModel.getCustomId ( ) + "_0" );
                             //添加微信回调路径
-                            payModel.setNotifyurl ( application.obtainMerchantUrl ( ) + application.readWeixinNotify ( ) );
+                            payModel.setNotifyurl ( BusinessStatic.getInstance().URL_WEBSITE + application.readWeixinNotify ( ) );
                             PayFunc payFunc = new PayFunc ( context, payModel, application, mHandler, aty, progress );
                             payFunc.wxPay ( );
                             dismissView ( );

@@ -88,6 +88,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	private ImageView imgCheckFlag;
 	private ImageView img;
 	private TextView txtCheckDes;
+	private TextView count;
 
 	//private PopCheckIn popCheckIn;
 	private SyncImageLoaderHelper helper;
@@ -175,6 +176,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		txtName		 = (TextView) findViewById(R.id.txtName);
 		txtScore	 = (TextView) findViewById(R.id.txtScore);
 		txtExp		 = (TextView) findViewById(R.id.txtExp);
+		count        = (TextView) findViewById(R.id.count);
 //		txtTodayScan = (TextView) findViewById(R.id.txtTodayScan);
 //		txtYesScore	 = (TextView) findViewById(R.id.txtYesScore);
 		//userLogin();
@@ -280,7 +282,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		switch (v.getId()) {
 
 		case R.id.btnLeft:
-
+			userService.getScanCount();
 				//mDragLayout.openOrClose();
 			openOrCloseMenu();
 
@@ -606,7 +608,6 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	    * 更新头像，姓名，总积分，经验值，今日浏览量，昨日收益
 	    */
 	public void setScores() {
-
 		String yes = "未登录";
 		String total = "未登录";
 		String scanCount = "未登录";
@@ -618,7 +619,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			exp = Util.MoneyFormat(userData.exp);
 			yes = userData.yesScore;//Util.MoneyFormat(userData.yesScore);
 			total = userData.score;//Util.MoneyFormat(userData.totalScore);
-			scanCount = Util.MoneyFormat(userData.todayScanCount);
+			count.setText(String.valueOf(userData.todayScanCount));
 			userName = userData.RealName;
 			if (TextUtils.isEmpty(userName))
 				userName = userData.UserNickName;
@@ -812,6 +813,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			//head.onRefreshComplete();
 			//dismissProgress();
 			toast(msg.obj.toString());
+		}else if (msg.what==BusinessDataListener.DONE_GET_SCANCOUNT){
+			setScores();
 		}
 		return false;
 	}

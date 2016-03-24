@@ -39,19 +39,19 @@
         android:baselineAligned="false"
         android:gravity="right"
         android:orientation="horizontal" >
-
+        <ImageView
+            android:visibility="visible"
+            android:id="@+id/imgTagSina"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/share_wechat" />
         <ImageView
             android:id="@+id/imgTagWeiXin"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:background="@drawable/share_ico_weixin" />
 
-        <ImageView
-            android:visibility="gone"
-            android:id="@+id/imgTagSina"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:background="@drawable/share_ico_sina" />
+
 
         <ImageView
             android:id="@+id/imgTagQzone"

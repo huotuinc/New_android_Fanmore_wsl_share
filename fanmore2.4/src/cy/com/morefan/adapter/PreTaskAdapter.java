@@ -162,7 +162,7 @@ public class PreTaskAdapter extends BaseAdapter{
 			//状态标记设置
 			setStatus(imgStatusTag, data);
 			//已上线、已转发不显示设置闹钟
-			btnAlarm.setVisibility(data.online == 2 || data.isSend ? View.GONE : View.VISIBLE);
+			btnAlarm.setVisibility(data.online == 2 || data.isSend ? View.GONE : View.GONE);
 			imgOnline.setVisibility(data.online == 2 ? View.VISIBLE : View.GONE);
 
 			btnAlarm.setBackgroundResource(alarmStatus.get(data.id) ? R.drawable.shape_red_empty_sel : R.drawable.shape_red_sel);

@@ -214,7 +214,7 @@
             android:theme="@style/ThemeActivity"
             android:windowSoftInputMode="stateVisible"/>
         <activity
-            android:name=".UserGuideActivity"
+            android:name=".guide.GuideActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeActivity"/>
         <activity

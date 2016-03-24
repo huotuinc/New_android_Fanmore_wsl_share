@@ -1,7 +1,9 @@
 package cy.com.morefan.service;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -1706,7 +1708,14 @@ public class UserService extends BaseService{
                         int status = data.getInt("status");
                         if (status == 1) {
                             //更新内存量
-                            UserData.getUserData().todayScanCount = data.getInt("resultData");
+							try {
+								JSONObject resultData =data.getJSONObject("resultData");
+								UserData.getUserData().todayScanCount = resultData.getInt("count");
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+
+
                             listener.onDataFinish(BusinessDataListener.DONE_GET_SCANCOUNT, null, null, null);
                         }else{
                             listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK_LIST, data.getString("tip"), null);
@@ -2862,10 +2871,13 @@ public class UserService extends BaseService{
 								UserData userData = UserData.getUserData();
 //								userData.lockScore = userData.score;
 //								userData.score = "0";
-								double total = Double.parseDouble(userData.score);
-								double useScore = (total%(1/userData.scorerate));
+								BigDecimal total =new BigDecimal( userData.score);
+								BigDecimal scorerate=new BigDecimal( userData.scorerate);
+								BigDecimal scorerate1=new BigDecimal(1);
+								BigDecimal useScore = (total.remainder((scorerate1.divide(scorerate))));
 								userData.lockScore = String.valueOf(useScore);
-								userData.score = String.valueOf(useScore);
+								DecimalFormat df = new DecimalFormat("0.00");
+								userData.score = String.valueOf(df.format(useScore));
 
 
 								listener.onDataFinish(BusinessDataListener.DONE_TO_RECHANGE, data.getString("tip"), null, null);

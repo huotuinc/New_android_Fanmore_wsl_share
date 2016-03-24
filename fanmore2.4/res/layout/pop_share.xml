@@ -7,7 +7,32 @@
     android:padding="10dp"
     android:id="@+id/layAll"
     android:orientation="horizontal" >
+    <LinearLayout
+        android:id="@+id/layWeiXin1"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical" >
 
+        <ImageView
+            android:id="@+id/imgWeiXin1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/share_wechat" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="朋友"
+            android:textColor="@color/gray4"
+            android:textSize="16dp" />
+    </LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/line_gray_bg_h" />
     <LinearLayout
         android:id="@+id/layWeiXin"
         android:layout_width="90dp"
@@ -18,8 +43,8 @@
 
         <ImageView
             android:id="@+id/imgWeiXin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="@drawable/share_ico_weixin" />
 
         <TextView
@@ -75,8 +100,8 @@
 
         <ImageView
             android:id="@+id/imgQzone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="@drawable/share_ico_qzone" />
 
         <TextView

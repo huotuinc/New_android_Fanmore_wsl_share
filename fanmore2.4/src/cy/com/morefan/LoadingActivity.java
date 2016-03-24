@@ -26,6 +26,7 @@ import cy.com.morefan.bean.StoreData;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
+import cy.com.morefan.guide.GuideActivity;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
@@ -179,30 +180,30 @@ public class LoadingActivity extends BaseActivity implements
 	}
 
 	private void toHome() {
-		if (!SPUtil.getBooleanFromSpByName(this, Constant.SP_NAME_NORMAL,
-				Constant.SP_NAME_NOT_SHOW_USER_GUIDE, false)) {
-			Intent intentGuide = new Intent(LoadingActivity.this, UserGuideActivity.class);
+//		if (!SPUtil.getBooleanFromSpByName(this, Constant.SP_NAME_NORMAL,
+//				Constant.SP_NAME_NOT_SHOW_USER_GUIDE, false)) {
+			Intent intentGuide = new Intent(LoadingActivity.this, GuideActivity.class);
 			intentGuide.putExtra("isCompleteUserInfo", isCompleteUserInfo);
 			intentGuide.putExtra("alarmId", alarmId);
 			startActivity(intentGuide);
 			finish();
-		}else if (
-				!TextUtils.isEmpty( SPUtil.getStringToSpByName(LoadingActivity.this,Constant.SP_NAME_NORMAL,Constant.SP_NAME_USERNAME)) &&
-				!TextUtils.isEmpty( SPUtil.getStringToSpByName(LoadingActivity.this,Constant.SP_NAME_NORMAL,Constant.SP_NAME_USERPWD) ) ) {
-			Intent intent = new Intent(LoadingActivity.this, HomeActivity.class);
-			intent.putExtra("isCompleteUserInfo", isCompleteUserInfo);
-			intent.putExtra("alarmId", alarmId);
-			//UserData.restore();
-			startActivity(intent);
-			finish();
-		}
- 		else {
-			Intent intent = new Intent(LoadingActivity.this, LoginActivity.class);
-			intent.putExtra("isCompleteUserInfo", isCompleteUserInfo);
-			intent.putExtra("alarmId", alarmId);
-			startActivity(intent);
-			finish();
-		}
+//		}else if (
+//				!TextUtils.isEmpty( SPUtil.getStringToSpByName(LoadingActivity.this,Constant.SP_NAME_NORMAL,Constant.SP_NAME_USERNAME)) &&
+//				!TextUtils.isEmpty( SPUtil.getStringToSpByName(LoadingActivity.this,Constant.SP_NAME_NORMAL,Constant.SP_NAME_USERPWD) ) ) {
+//			Intent intent = new Intent(LoadingActivity.this, HomeActivity.class);
+//			intent.putExtra("isCompleteUserInfo", isCompleteUserInfo);
+//			intent.putExtra("alarmId", alarmId);
+//			//UserData.restore();
+//			startActivity(intent);
+//			finish();
+//		}
+// 		else {
+//			Intent intent = new Intent(LoadingActivity.this, LoginActivity.class);
+//			intent.putExtra("isCompleteUserInfo", isCompleteUserInfo);
+//			intent.putExtra("alarmId", alarmId);
+//			startActivity(intent);
+//			finish();
+//		}
 
 
 	}

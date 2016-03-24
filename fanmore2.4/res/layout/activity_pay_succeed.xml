@@ -52,7 +52,6 @@
         android:background="@drawable/btn_red_sel"
         android:clickable="true"
         android:gravity="center"
-        android:onClick="onClickButton"
         android:text="进入商城"
         android:layout_alignParentBottom="true"
         android:textColor="@color/white"

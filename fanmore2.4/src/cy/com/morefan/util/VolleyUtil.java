@@ -23,7 +23,9 @@ public class VolleyUtil
         requestQueue = Volley.newRequestQueue(context);
         imageLoader = new ImageLoader(requestQueue, LruImageCache.instance() );
     }
-    
+    public static void cancelAllRequest(){
+        getRequestQueue().cancelAll("MT_REQUEST");
+    }
     public static RequestQueue getRequestQueue() {
         if (requestQueue != null) {
             return requestQueue;

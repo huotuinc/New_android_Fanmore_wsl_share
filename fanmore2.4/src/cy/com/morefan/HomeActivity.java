@@ -77,6 +77,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	//private TextView txtYesScore;
 	private PrenticeTopData topData;
 
+
 	private boolean trendToMy = false;
 	private CyButton btnRight;
 	private LinearLayout layTab;
@@ -116,6 +117,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		setContentView(R.layout.home_main);
+		handler = new Handler(this);
 		helper = new SyncImageLoaderHelper(this);
 		initView();
 		operationPushMsg();
@@ -426,7 +428,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			case R.id.layMall://进入商城
 				inMall();
 				break;
-			case R.id.layExchange://积分兑换
+			case R.id.laySorceExchange://积分兑换
 				Intent intentGoods = new Intent( this , UserExchangeActivity.class);
 				startActivity(intentGoods);
 				break;

@@ -26,7 +26,7 @@ public class Constant {
 	//public static final String IP_URL = "http://taskapi.fancat.cn";
 	//public static final String IP_URL = "http://api.fanmore.cn";
 	//public static final String IP_URL ="http://192.168.1.56:8050";
-	//public static final String IP_URL ="http://192.168.1.6:8050";
+	//public static final String IP_URL ="http://192.168.3.2:8050";
 	/**
 	 * 正式url
 	 */
@@ -293,7 +293,7 @@ public class Constant {
 		 * app系统配置
 		 */
 		public static final String SYS_INFO    = "sysInfo";
-		public static final String SYS_PACKAGE = "sysPackage";
+		public static final String SYS_PACKAGE = "com.wensli.fanmore";
 		public static final String FIRST_OPEN  = "firstOpen";
 
 		/**

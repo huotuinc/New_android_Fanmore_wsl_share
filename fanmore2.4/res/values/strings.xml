@@ -23,6 +23,12 @@
         <item>来,来,课间休息,跟我一起做，伸展运动,1234,2234&#8230; 还有%1$d分钟</item>
         <item>嘘!小粉出去溜弯了,%1$d分钟后回来</item>
     </string-array>
+    <!--引导界面图片-->
+    <string-array name="guide_icon">
+        <item>newfeature_0</item>
+        <item>newfeature_1</item>
+        <item>newfeature_2</item>
+    </string-array>
     <!-- home tab -->
     <string name="tab_task">首页</string>
     <string name="tab_goods">商品城</string>

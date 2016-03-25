@@ -11,26 +11,26 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import cy.com.morefan.bean.GroupData;
+import cy.com.morefan.bean.GroupPersonData;
 import cy.com.morefan.supervision.DepartmentActivity;
 
 /**
- * Created by Administrator on 2016/3/10.
+ * Created by 47483 on 2016/3/25.
  */
-public class CompanyPageAdapter extends PagerAdapter implements AdapterView.OnItemClickListener{
-    String[] titles={"默认","转发","浏览"};
+public class GroupPersonPageAdapter extends PagerAdapter implements AdapterView.OnItemClickListener {
+    String[] titles={"默认","转发","浏览","徒弟","积分"};
     List<PullToRefreshListView> listviews;
     View layEmpty;
-    List<GroupData> datas;
+    List<GroupPersonData> datas;
     //CompanyDataAdapter adapter;
     Context mContext;
 
-    public CompanyPageAdapter( Context context, View layEmpty) {
+    public GroupPersonPageAdapter( Context context, View layEmpty) {
         super();
         this.mContext=context;
         this.layEmpty = layEmpty;
@@ -39,39 +39,50 @@ public class CompanyPageAdapter extends PagerAdapter implements AdapterView.OnIt
         listviews.add(new PullToRefreshListView(mContext));
         listviews.add(new PullToRefreshListView(mContext));
         listviews.add(new PullToRefreshListView(mContext));
+        listviews.add(new PullToRefreshListView(mContext));
+        listviews.add(new PullToRefreshListView(mContext));
         listviews.get(0).setMode(PullToRefreshBase.Mode.DISABLED);
         listviews.get(1).setMode(PullToRefreshBase.Mode.DISABLED);
         listviews.get(2).setMode(PullToRefreshBase.Mode.DISABLED);
+        listviews.get(3).setMode(PullToRefreshBase.Mode.DISABLED);
+        listviews.get(4).setMode(PullToRefreshBase.Mode.DISABLED);
     }
 
-    public void setDatas(List<GroupData> datas){
+    public void setDatas(List<GroupPersonData> datas){
         this.datas= datas;
-
-        CompanyDataAdapter dataAdapter0 = new CompanyDataAdapter( mContext , datas);
+        //默认
+        GroupPersonDataAdapter dataAdapter0 = new GroupPersonDataAdapter( mContext , datas);
         listviews.get(0).setAdapter(dataAdapter0);
         listviews.get(0).setOnItemClickListener(this);
-
-        List<GroupData> datas1 = new ArrayList<GroupData>();
+        //转发
+        List<GroupPersonData> datas1 = new ArrayList<GroupPersonData>();
         datas1.addAll(datas);
-        //Collections.copy(datas1,datas);
-        Collections.sort(datas1, new ZFComparar());
-        CompanyDataAdapter dataAdapter1 = new CompanyDataAdapter(mContext, datas1);
+        GroupPersonDataAdapter dataAdapter1 = new GroupPersonDataAdapter(mContext, datas1);
         listviews.get(1).setAdapter(dataAdapter1);
         listviews.get(1).setOnItemClickListener(this);
-
-        List<GroupData> datas2 = new ArrayList<GroupData>();
+        //浏览
+        List<GroupPersonData> datas2 = new ArrayList<GroupPersonData>();
         datas2.addAll(datas);
-        //Collections.copy(datas2, datas);
-        Collections.sort(datas2, new LRComparar());
-        CompanyDataAdapter dataAdapter2 = new CompanyDataAdapter(mContext, datas2);
+        GroupPersonDataAdapter dataAdapter2 = new GroupPersonDataAdapter(mContext, datas2);
         listviews.get(2).setAdapter(dataAdapter2);
         listviews.get(2).setOnItemClickListener(this);
+        //徒弟
+        List<GroupPersonData> datas3 = new ArrayList<GroupPersonData>();
+        datas3.addAll(datas);
+        GroupPersonDataAdapter dataAdapter3 = new GroupPersonDataAdapter(mContext, datas3);
+        listviews.get(3).setAdapter(dataAdapter3);
+        listviews.get(3).setOnItemClickListener(this);
+        //积分
+        List<GroupPersonData> datas4 = new ArrayList<GroupPersonData>();
+        datas4.addAll(datas);
+        GroupPersonDataAdapter dataAdapter4 = new GroupPersonDataAdapter(mContext, datas4);
+        listviews.get(4).setAdapter(dataAdapter4);
+        listviews.get(4).setOnItemClickListener(this);
     }
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        GroupData data = datas.get(position-1);
+        GroupPersonData data = datas.get(position-1);
         Intent intent = new Intent(mContext, DepartmentActivity.class);
         intent.putExtra("name", data.getName());
-        intent.putExtra("pid",data.getId());
         mContext.startActivity(intent);
     }
     @Override
@@ -82,7 +93,7 @@ public class CompanyPageAdapter extends PagerAdapter implements AdapterView.OnIt
 
     @Override
     public int getCount() {
-        return 3;
+        return 5;
     }
 
     @Override
@@ -103,20 +114,5 @@ public class CompanyPageAdapter extends PagerAdapter implements AdapterView.OnIt
         container.removeView( listviews.get(position) );
     }
 
-    class ZFComparar implements Comparator<GroupData> {
-        @Override
-        public int compare(GroupData lhs, GroupData rhs) {
-            Integer c1 = lhs.getPersonCount() ==0 ? 0: lhs.getTotalTurnCount()/lhs.getPersonCount();
-            Integer c2 = rhs.getPersonCount() ==0? 0: rhs.getTotalTurnCount()/rhs.getPersonCount();
-            return c1.compareTo(c2);
-        }
-    }
-    class LRComparar implements Comparator<GroupData> {
-        @Override
-        public int compare(GroupData lhs, GroupData rhs) {
-            Integer c1 =lhs.getPersonCount() ==0 ? 0:  lhs.getTotalBrowseCount()/lhs.getPersonCount();
-            Integer c2 =rhs.getPersonCount() ==0 ? 0:  rhs.getTotalBrowseCount()/rhs.getPersonCount();
-            return c1.compareTo(c2);
-        }
-    }
+
 }

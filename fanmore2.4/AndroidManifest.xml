@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="cy.com.morefan"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          android:versionCode="3"
-          android:versionName="1.2.0">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="cy.com.morefan"
+    android:versionCode="3"
+    android:versionName="1.2.0">
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="17"/>
+        android:targetSdkVersion="17" />
 
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
-        android:smallScreens="true"/>
+        android:smallScreens="true" />
 
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-    <uses-permission android:name="android.permission.RUN_INSTRUMENTATION"/>
-    <uses-permission android:name="android.permission.READ_LOGS"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.RUN_INSTRUMENTATION" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS" />
 
     <!-- V1.2.3新增的权限, GET_TASKS用于检测APP是否处于前台、是否活着；REORDER_TASKS用于将APP切换到前台 -->
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <uses-permission android:name="android.permission.REORDER_TASKS"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
 
     <!-- 表示被测试的目标包与instrumentation的名称。 -->
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"
         android:label="Test for my app"
-        android:targetPackage="cy.com.morefan"/>
+        android:targetPackage="cy.com.morefan" />
 
-    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <!-- <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> -->
     <application
@@ -61,12 +61,12 @@
         tools:replace="android:icon,android:name">
 
         <!-- 用于引入测试库 -->
-        <uses-library android:name="android.test.runner"/>
+        <uses-library android:name="android.test.runner" />
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"/>
+            android:process=":remote" />
         <!--
               <activity
             android:name=".ATestActivity"
@@ -88,9 +88,9 @@
             android:launchMode="singleTop" >
             -->
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <!-- 微信分享回调 -->
@@ -111,57 +111,57 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
-                <data android:scheme="tencent1105113260"/>
+                <data android:scheme="tencent1105113260" />
 
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <!-- 调用新浪原生SDK，需要注册的回调activity -->
             <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY"/>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".TestActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".CreditActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".WalletActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".DataListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".ScratchTicketActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".ShakePrenticeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".PushMsgHandleActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent"/>
+            android:theme="@android:style/Theme.Translucent" />
         <activity
             android:name=".PushMsgActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".RankActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <!--
              <activity
             android:name=".MallListActivity"
@@ -171,107 +171,107 @@
         <activity
             android:name=".MallDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".PrenticDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".ShareActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".AllScoreActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".TaskActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".MyBaseInfoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".MyModifyPwdActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".MySafeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".ToCrashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".ToCrashAuthActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".UserRegActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeActivity"
-            android:windowSoftInputMode="stateVisible"/>
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".guide.GuideActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".AppUpdateActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent"/>
+            android:theme="@android:style/Theme.Translucent" />
         <activity
             android:name=".HomeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".TaskDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".AuthCodeSendActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeActivity"
-            android:windowSoftInputMode="stateAlwaysVisible"/>
+            android:windowSoftInputMode="stateAlwaysVisible" />
         <activity
             android:name=".AuthCodeReceiverActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeActivity"
-            android:windowSoftInputMode="stateAlwaysVisible"/>
+            android:windowSoftInputMode="stateAlwaysVisible" />
         <activity
             android:name=".AwardDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".WebViewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".WebActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".FeedBackActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".Phone2AliActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".ForgetCashPwdActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".ForgetLoginPwdActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
         <!--
              <activity
             android:name=".FeedbackListActivity"
@@ -283,32 +283,32 @@
             android:exported="true"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeActivity"/>
+            android:theme="@style/ThemeActivity" />
 
         <receiver
             android:name=".listener.AlamrReceiver"
-            android:process=":remote"/>
+            android:process=":remote" />
         <!-- QZone -->
 
         <activity
             android:name="com.wensli.fanmore.wxapi.QzoneActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
             android:noHistory="true">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tencent101066268"/>
+                <data android:scheme="tencent101066268" />
             </intent-filter>
         </activity>
         <!-- Qzone end -->
@@ -317,36 +317,36 @@
         <!-- umeng -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5347747a56240b32f5032962"/>
+            android:value="5347747a56240b32f5032962" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="Channel ID"/>
+            android:value="Channel ID" />
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="dd5f13b1de610a1ebac444ceda0d57b6"/>
+            android:value="dd5f13b1de610a1ebac444ceda0d57b6" />
 
         <receiver
             android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
-            android:exported="false"/>
+            android:exported="false" />
         <receiver android:name="com.umeng.message.RegistrationReceiver">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
 
-                <data android:scheme="package"/>
+                <data android:scheme="package" />
             </intent-filter>
         </receiver>
         <receiver android:name="com.umeng.message.UmengBroadcastReceiver">
             <intent-filter>
-                <action android:name="org.agoo.android.intent.action.RECEIVE"/>
+                <action android:name="org.agoo.android.intent.action.RECEIVE" />
             </intent-filter>
             <intent-filter>
-                <action android:name="cy.com.morefan.intent.action.COMMAND"/>
+                <action android:name="cy.com.morefan.intent.action.COMMAND" />
             </intent-filter>
             <intent-filter>
-                <action android:name="org.agoo.android.intent.action.RE_ELECTION_V2"/>
+                <action android:name="org.agoo.android.intent.action.RE_ELECTION_V2" />
             </intent-filter>
         </receiver>
 
@@ -355,13 +355,13 @@
             android:exported="true"
             android:process=":umengService_v1">
             <intent-filter>
-                <action android:name="cy.com.morefan.intent.action.START"/>
+                <action android:name="cy.com.morefan.intent.action.START" />
             </intent-filter>
             <intent-filter>
-                <action android:name="cy.com.morefan.intent.action.COCKROACH"/>
+                <action android:name="cy.com.morefan.intent.action.COCKROACH" />
             </intent-filter>
             <intent-filter>
-                <action android:name="org.agoo.android.intent.action.PING"/>
+                <action android:name="org.agoo.android.intent.action.PING" />
             </intent-filter>
         </service>
         <service
@@ -369,20 +369,19 @@
             android:exported="true"
             android:process=":umengService_v1">
             <intent-filter>
-                <action android:name="org.agoo.android.intent.action.ELECTION_V2"/>
+                <action android:name="org.agoo.android.intent.action.ELECTION_V2" />
             </intent-filter>
         </service>
-        <service android:name="com.umeng.message.UmengIntentService"/>
+        <service android:name="com.umeng.message.UmengIntentService" />
 
         <activity
             android:name=".UserExchangeActivity"
-            android:label="@string/title_activity_user_exchange"/>
-        <activity android:name=".WebShopActivity"/>
-        <activity android:name=".PaySucceedActivity"/>
-        <activity android:name=".supervision.GroupActivity">
-        </activity>
-        <activity android:name=".supervision.CompanyActivity">
-        </activity>
+            android:label="@string/title_activity_user_exchange" />
+        <activity android:name=".WebShopActivity" />
+        <activity android:name=".PaySucceedActivity" />
+        <activity android:name=".supervision.GroupActivity"></activity>
+        <activity android:name=".supervision.CompanyActivity"></activity>
+        <activity android:name=".supervision.DepartmentActivity"></activity>
     </application>
 
 </manifest>

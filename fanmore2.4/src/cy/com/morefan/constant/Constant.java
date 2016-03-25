@@ -25,19 +25,19 @@ public class Constant {
 	 */
 	//public static final String IP_URL = "http://taskapi.fancat.cn";
 	//public static final String IP_URL = "http://api.fanmore.cn";
-	//public static final String IP_URL ="http://192.168.1.56:8050";
+	public static final String IP_URL ="http://192.168.1.6:8050";
 	//public static final String IP_URL ="http://192.168.3.2:8050";
 	/**
 	 * 正式url
 	 */
-	public static final String IP_URL ="http://taskapi.silk08.com";
+	//public static final String IP_URL ="http://taskapi.silk08.com";
 
 	public static final String OPERATION = "HuoTu2013AD";
 	public static final String QD = "huotu";
 	//public static final String QD = "dm";
 
 	//使用mainfest中的version_name
-	public static final String APP_VERSION = "1.1.0";
+	public static final String APP_VERSION = "1.2.0";
 	//标准时间
 	public final static String TIME_FORMAT   = "yyyy-MM-dd HH:mm:ss";
 	//标准时间01

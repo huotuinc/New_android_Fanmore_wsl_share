@@ -106,7 +106,7 @@ public class GroupActivity extends BaseActivity implements Handler.Callback, Ada
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        GroupData data = datas.get(position);
+        GroupData data = datas.get(position-1);
         Intent intent = new Intent(this, CompanyActivity.class);
         intent.putExtra("data", data);
         this.startActivity(intent);

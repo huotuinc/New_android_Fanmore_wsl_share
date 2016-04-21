@@ -39,18 +39,109 @@
             android:onClick="onClick"
             android:layout_height="wrap_content"/>
     </FrameLayout>
+    <LinearLayout
+        android:id="@+id/productSwitch"
+        android:layout_below="@+id/ff1"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:padding="5dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:background="@color/white">
+        <RelativeLayout
+            android:id="@+id/rqL"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <RelativeLayout
+                android:id="@+id/rqInnerL"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_width="70dp"
+                android:layout_height="35dp">
+                <TextView
+                    android:id="@+id/rqLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="默认"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/zxL"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <RelativeLayout
+                android:id="@+id/zxInnerL"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_width="70dp"
+                android:layout_height="35dp">
+                <TextView
+                    android:id="@+id/zxLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="转发"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/jdL"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <RelativeLayout
+                android:id="@+id/jdInnerL"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_width="70dp"
+                android:layout_height="35dp">
+                <TextView
+                    android:id="@+id/jdLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="浏览"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/productsL"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/productSwitch"
+        android:background="@color/white" >
+    </LinearLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/company_viewpager"
-        android:layout_below="@id/ff1"
+        android:layout_below="@id/productSwitch"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v4.view.PagerTabStrip
-            android:id="@+id/company_tab"
-            android:layout_gravity="top"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
         <cy.com.morefan.view.EmptyView
             android:layout_below="@id/company_tab"

@@ -37,7 +37,7 @@ public class Constant {
 	//public static final String QD = "dm";
 
 	//使用mainfest中的version_name
-	public static final String APP_VERSION = "1.2.0";
+	public static final String APP_VERSION = "1.2.1";
 	//标准时间
 	public final static String TIME_FORMAT   = "yyyy-MM-dd HH:mm:ss";
 	//标准时间01

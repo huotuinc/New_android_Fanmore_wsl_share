@@ -29,6 +29,7 @@ import cy.com.morefan.util.L;
 import cy.com.morefan.util.PreferenceHelper;
 import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.util.Util;
+import cy.com.morefan.util.VolleyUtil;
 import cy.com.morefan.view.CustomDialog;
 import android.app.Activity;
 import android.app.Application;
@@ -54,7 +55,8 @@ public class MainApplication extends Application implements BroadcastListener{
 	    @Override
 	    public void onCreate() {
 	    	super.onCreate();
-	    	ShareSDK.initSDK ( getApplicationContext ( ) );
+	    	ShareSDK.initSDK(getApplicationContext());
+			VolleyUtil.init(getApplicationContext());
 			CrashHandler crashHandler = CrashHandler.getInstance ();
 			crashHandler.init(getApplicationContext());
 			PushAgent.getInstance(this).setNotificationClickHandler(notificationClickHandler);

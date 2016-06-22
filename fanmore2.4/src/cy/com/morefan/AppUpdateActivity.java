@@ -10,10 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-
 import com.cy.libapkpatch.PatchUtils;
-import com.lib.cylibimagedownload.ImageUtil;
-
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.service.BaseService;
 import cy.com.morefan.util.L;
@@ -40,7 +37,6 @@ import android.widget.Toast;
 public class AppUpdateActivity extends BaseActivity{
 
 	private TasksCompletedView mTasksView;
-
 	private String softwarePath = null;
 	private ClientDownLoadTask task;
 	private boolean isCancel;

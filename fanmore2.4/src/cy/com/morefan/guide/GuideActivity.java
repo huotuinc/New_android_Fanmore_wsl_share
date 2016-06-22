@@ -25,6 +25,7 @@ import cy.com.morefan.BaseActivity;
 import cy.com.morefan.HomeActivity;
 import cy.com.morefan.LoginActivity;
 import cy.com.morefan.MainApplication;
+import cy.com.morefan.MoblieLoginActivity;
 import cy.com.morefan.R;
 import cy.com.morefan.adapter.ViewPagerAdapter;
 import cy.com.morefan.constant.Constant;
@@ -87,6 +88,7 @@ class GuideActivity extends BaseActivity implements View.OnClickListener, ViewPa
         mVPActivity.setAdapter ( vpAdapter );
         //绑定回调
         mVPActivity.setOnPageChangeListener ( this );
+        SPUtil.saveBooleanToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_NOT_SHOW_USER_GUIDE, true);
     }
 
     private
@@ -112,13 +114,13 @@ class GuideActivity extends BaseActivity implements View.OnClickListener, ViewPa
 
                                 ActivityUtils.getInstance().skipActivity(GuideActivity.this, HomeActivity.class);
                             } else {
-                                ActivityUtils.getInstance().skipActivity(GuideActivity.this, LoginActivity.class);
+                                ActivityUtils.getInstance().skipActivity(GuideActivity.this, MoblieLoginActivity.class);
                             }
                         }
                     });
                 }
                 iv.setLayoutParams ( mParams );
-                int iconId = resources.getIdentifier ( pics[i], "drawable", Constant.SYS_PACKAGE);
+                int iconId = resources.getIdentifier ( pics[i], "drawable",getPackageName(this) );
                 Drawable menuIconDraw = resources.getDrawable ( iconId );
                 SystemTools.loadBackground(iv, menuIconDraw);
                 skipText.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +134,7 @@ class GuideActivity extends BaseActivity implements View.OnClickListener, ViewPa
 
                             ActivityUtils.getInstance().skipActivity(GuideActivity.this, HomeActivity.class);
                         } else {
-                            ActivityUtils.getInstance().skipActivity(GuideActivity.this, LoginActivity.class);
+                            ActivityUtils.getInstance().skipActivity(GuideActivity.this, MoblieLoginActivity.class);
                         }
 
 

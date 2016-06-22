@@ -7,31 +7,19 @@
     android:orientation="vertical"
     tools:context=".AllScoreActivity" >
 
-    <TextView
-        android:id="@+id/txtDes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/theme_blue"
-        android:gravity="center"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:text="desdese"
-        android:textColor="@color/white"
-        android:visibility="gone" />
+
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <cy.com.morefan.view.PullDownUpListView
+        <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:divider="@null"
             android:fadingEdge="none"
-            android:text="task" />
+             />
 
         <cy.com.morefan.view.EmptyView
             android:id="@+id/layEmpty"

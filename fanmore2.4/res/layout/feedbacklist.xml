@@ -30,6 +30,17 @@
             android:textSize="18dp" />
     </FrameLayout>
 
+    <Button
+        android:id="@+id/btnCommit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/btn_red_sel"
+        android:onClick="onClick"
+        android:layout_margin="10dp"
+        android:text="提交新反馈"
+        android:textColor="@color/white" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -51,16 +62,5 @@
             android:src="@anim/anim_empty"
             android:visibility="gone" />
     </FrameLayout>
-
-    <Button
-        android:id="@+id/btnCommit"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:background="@drawable/btn_red_sel"
-        android:onClick="onClick"
-        android:layout_margin="10dp"
-        android:text="提交新反馈"
-        android:textColor="@color/white" />
 
 </FrameLayout>

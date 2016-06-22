@@ -55,7 +55,7 @@ public class RankActivity extends BaseActivity implements BroadcastListener{
 		 gdRight.setCornerRadii(new float[]{0,0,raduis,raduis,raduis,raduis,0,0});
 		 gdRight.setColor(Color.WHITE);
 		 tabDrawables = new Drawable[]{gdLeft, gdMid, gdRight};
-		 setTab(tabs.get(0).getId());
+
 
 //
 
@@ -70,114 +70,69 @@ public class RankActivity extends BaseActivity implements BroadcastListener{
 		tabs = new ArrayList<TextView>();
 		tabBgs = new int[]{R.drawable.rank_tab_left, R.drawable.rank_tab_mid, R.drawable.rank_tab_right};
 		//tabUnBgs = new int[]{R.drawable.rank_tab_left_un, R.drawable.rank_tab_mid_un, R.drawable.rank_tab_right_un};
-		TextView txtPerday = (TextView) findViewById(R.id.txtPerday);
-		TextView txtTotalScore = (TextView) findViewById(R.id.txtTotalScore);
-		TextView txtPretice = (TextView) findViewById(R.id.txtPrentice);
-		tabs.add(txtPerday);
-		tabs.add(txtTotalScore);
-		tabs.add(txtPretice);
 		mViewPager = (ViewPager) findViewById(R.id.viewPager);
 		RankItemFrag fragPerday = new RankItemFrag();
 		Bundle extraPerday = new Bundle();
 		extraPerday.putSerializable(Constant.TYPE_FROM, TabType.Perday);
 		fragPerday.setArguments(extraPerday);
 
-		RankItemFrag fragTotal = new RankItemFrag();
-		Bundle extraTotal = new Bundle();
-		extraTotal.putSerializable(Constant.TYPE_FROM, TabType.Total);
-		fragTotal.setArguments(extraTotal);
+//		RankItemFrag fragTotal = new RankItemFrag();
+//		Bundle extraTotal = new Bundle();
+//		extraTotal.putSerializable(Constant.TYPE_FROM, TabType.Total);
+//		fragTotal.setArguments(extraTotal);
+//
+//		RankItemFrag fragPretice = new RankItemFrag();
+//		Bundle extraPretice = new Bundle();
+//		extraPretice.putSerializable(Constant.TYPE_FROM, TabType.Pretience);
+//		fragPretice.setArguments(extraPretice);
 
-		RankItemFrag fragPretice = new RankItemFrag();
-		Bundle extraPretice = new Bundle();
-		extraPretice.putSerializable(Constant.TYPE_FROM, TabType.Pretience);
-		fragPretice.setArguments(extraPretice);
-
-		List<Fragment> fragments = new ArrayList<Fragment>();
+		ArrayList<Fragment> fragments = new ArrayList<Fragment>();
 		fragments.add(fragPerday);
-		fragments.add(fragTotal);
-		fragments.add(fragPretice);
+//		fragments.add(fragTotal);
+//		fragments.add(fragPretice);
 		final FragAdapter adapter = new FragAdapter(getSupportFragmentManager(), fragments);
 		mViewPager.setAdapter(adapter);
-		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
-			@Override
-			public void onPageSelected(int positon) {
-				setTab(tabs.get(positon).getId());
-
-			}
-
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onPageScrollStateChanged(int arg0) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
+//		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
+//			@Override
+//			public void onPageSelected(int positon) {
+//				setTab(tabs.get(positon).getId());
 //
-//		List<View> views = new ArrayList<View>();
-//		View viewPerday = getLayoutInflater().inflate(R.layout.rank_tab, null);
-//		View viewTotal = getLayoutInflater().inflate(R.layout.rank_tab, null);
-//		View viewPretice = getLayoutInflater().inflate(R.layout.rank_tab, null);
-//		views.add(viewPerday);
-//		views.add(viewTotal);
-//		views.add(viewPretice);
-//		ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(views);
-//		mViewPager.setAdapter(viewPagerAdapter);
+//			}
 //
+//			@Override
+//			public void onPageScrolled(int arg0, float arg1, int arg2) {
+//				// TODO Auto-generated method stub
 //
+//			}
 //
-//		//test
-//		List<RankData> datas = new ArrayList<RankData>();
-//		for(int i = 0; i< 20 ; i++){
-//			RankData rankData = new RankData();
-//			rankData.rank = i *10 + "\n积分";
-//			rankData.name1 = i+ "name1";
-//			rankData.name2 = i + "name2";
-//			datas.add(rankData);
+//			@Override
+//			public void onPageScrollStateChanged(int arg0) {
+//				// TODO Auto-generated method stub
+//
+//			}
+//		});
+
+	}
+//	public void onClick(View v){
+//		switch (v.getId()) {
+//		case R.id.txtPerday:
+//			mViewPager.setCurrentItem(0);
+//			setTab(v.getId());
+//			break;
+//		case R.id.txtTotalScore:
+//			mViewPager.setCurrentItem(1);
+//			setTab(v.getId());
+//			break;
+//		case R.id.txtPrentice:
+//			mViewPager.setCurrentItem(2);
+//			setTab(v.getId());
+//			break;
+//
+//		default:
+//			break;
 //		}
 //
-//		PullDownUpListView listView = (PullDownUpListView) viewPerday.findViewById(R.id.listView);
-//		RankAdapter adapter = new RankAdapter(this, datas);
-//		listView.setAdapter(adapter);
-
-	}
-	public TabType getCurTab(){
-		int item = mViewPager.getCurrentItem();
-		switch (item) {
-		case 1:
-			return TabType.Total;
-		case 2:
-			return TabType.Pretience;
-		default:
-			return TabType.Perday;
-
-		}
-	}
-	public void onClick(View v){
-		switch (v.getId()) {
-		case R.id.txtPerday:
-			mViewPager.setCurrentItem(0);
-			setTab(v.getId());
-			break;
-		case R.id.txtTotalScore:
-			mViewPager.setCurrentItem(1);
-			setTab(v.getId());
-			break;
-		case R.id.txtPrentice:
-			mViewPager.setCurrentItem(2);
-			setTab(v.getId());
-			break;
-
-		default:
-			break;
-		}
-
-	}
+//	}
 	private void setTab(int id){
 		for(int i = 0, length = tabs.size(); i < length; i++){
 			TextView item = tabs.get(i);

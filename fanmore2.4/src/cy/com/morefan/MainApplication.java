@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 
@@ -47,6 +48,7 @@ import android.widget.Toast;
 public class MainApplication extends Application implements BroadcastListener{
 	private static ActivityManager activityManager;
 	private static MyBroadcastReceiver myBroadcastReceiver;
+	private static final String TAG = "JPush";
 	public Platform plat;
 	public Typeface font;
 	 public
@@ -60,7 +62,9 @@ public class MainApplication extends Application implements BroadcastListener{
 			CrashHandler crashHandler = CrashHandler.getInstance ();
 			crashHandler.init(getApplicationContext());
 			PushAgent.getInstance(this).setNotificationClickHandler(notificationClickHandler);
-	    	myBroadcastReceiver = new MyBroadcastReceiver(this.getApplicationContext(), this, MyBroadcastReceiver.ACTION_ALARM_UP);
+			JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+			JPushInterface.init(this);
+			myBroadcastReceiver = new MyBroadcastReceiver(this.getApplicationContext(), this, MyBroadcastReceiver.ACTION_ALARM_UP);
 
 	    }
 

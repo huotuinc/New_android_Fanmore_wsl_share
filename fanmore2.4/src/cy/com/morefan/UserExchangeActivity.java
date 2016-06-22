@@ -226,7 +226,7 @@ public class UserExchangeActivity extends BaseActivity implements UserInfoView.O
     }
     public boolean checkStatus(){
         if(!UserData.getUserData().isLogin){
-            Intent intentlogin = new Intent(this, LoginActivity.class);
+            Intent intentlogin = new Intent(this, MoblieLoginActivity.class);
             startActivity(intentlogin);
             return false;
         }
@@ -262,7 +262,7 @@ public class UserExchangeActivity extends BaseActivity implements UserInfoView.O
     public void onFinishReceiver(MyBroadcastReceiver.ReceiverType type, Object msg) {
         if(type == MyBroadcastReceiver.ReceiverType.Logout){
             logout();
-            Intent intentlogin	 = new Intent(this,LoginActivity.class);
+            Intent intentlogin	 = new Intent(this,MoblieLoginActivity.class);
             startActivity(intentlogin);
             finish();
 

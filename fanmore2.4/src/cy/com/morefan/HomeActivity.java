@@ -2,8 +2,6 @@ package cy.com.morefan;
 
 
 import cindy.android.test.synclistview.SyncImageLoaderHelper;
-import cy.com.morefan.AuthCodeSendActivity.AuthType;
-import cy.com.morefan.ToCrashAuthActivity.CrashAuthType;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.PrenticeTopData;
 import cy.com.morefan.bean.TaskData;
@@ -15,7 +13,6 @@ import cy.com.morefan.constant.Constant.FromType;
 import cy.com.morefan.frag.BaseFragment;
 import cy.com.morefan.frag.FragManager;
 import cy.com.morefan.frag.TaskNewFrag;
-import cy.com.morefan.frag.ToolFrag;
 import cy.com.morefan.frag.FragManager.FragType;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.listener.MyBroadcastReceiver;
@@ -23,21 +20,13 @@ import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
 import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.UserService;
 import cy.com.morefan.supervision.GroupActivity;
+import cy.com.morefan.util.ActivityUtils;
 import cy.com.morefan.util.AuthParamUtils;
-import cy.com.morefan.util.DensityUtil;
 import cy.com.morefan.util.L;
 
 import cy.com.morefan.util.SPUtil;
-import cy.com.morefan.util.Util;
-import cy.com.morefan.view.CustomDialog;
 import cy.com.morefan.view.CyButton;
-//import cy.com.morefan.view.DragLayout2;
 import cy.com.morefan.view.ImageLoad;
-import cy.com.morefan.view.PopExpUp;
-//import cy.com.morefan.view.PopCheckIn;
-//import cy.com.morefan.view.PopCheckIn.OnPopCheckListener;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,15 +36,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.security.spec.InvalidKeySpecException;
 
 
 /**
@@ -68,11 +54,11 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	private DrawerLayout mDragLayout;
 	private FragManager fragManager;
 	private UserService userService;
-	private TextView txtMine;
+	//private TextView txtMine;
 	private ImageView imgPhoto;
 	private TextView txtName;
 	private TextView txtScore;
-	private TextView txtExp;
+	private TextView txttodayScanCount;
 	//private TextView txtTodayScan;
 	//private TextView txtYesScore;
 	private PrenticeTopData topData;
@@ -81,6 +67,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	private boolean trendToMy = false;
 	private CyButton btnRight;
 	private LinearLayout layTab;
+	private RelativeLayout laySupervision;
+	private RelativeLayout layRank;
 	private LinearLayout layMiddle;
 	private TextView txtRight;
 	private TextView txtTitle;
@@ -90,6 +78,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	private ImageView img;
 	private TextView txtCheckDes;
 	private TextView count;
+	private TextView mylevel;
 
 	//private PopCheckIn popCheckIn;
 	private SyncImageLoaderHelper helper;
@@ -131,7 +120,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			fragManager.setCurrentFrag(FragType.Task);
 		}
 
-		myBroadcastReceiver = new MyBroadcastReceiver(this, this, MyBroadcastReceiver.ACTION_USER_LOGIN, MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE);
+		myBroadcastReceiver = new MyBroadcastReceiver(this, this, MyBroadcastReceiver.ACTION_USER_LOGIN, MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE,MyBroadcastReceiver.ACTION_REFRESH_USEDATA);
 		//showUserGuide(R.drawable.user_guide_task_list);
 
 		//userReg();
@@ -163,7 +152,6 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	}
 	private void initView() {
 		img = (ImageView) findViewById(R.id.img);
-		imgCheckFlag = (ImageView) findViewById(R.id.imgCheckFlag);
 		btnRight = (CyButton) findViewById(R.id.btnRight);
 		//txtPrenticeCount = (TextView) findViewById(R.id.txtPrenticeCount);
 		imgTag = (ImageView) findViewById(R.id.imgTag);
@@ -173,12 +161,15 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		layMiddle = (LinearLayout) findViewById(R.id.layMiddle);
 		mDragLayout	 = (DrawerLayout) findViewById(R.id.dragLayout);
 		//mDragLayout.setDragListener(this);
-		txtMine 	 = (TextView) findViewById(R.id.txtMine);
+		//txtMine 	 = (TextView) findViewById(R.id.txtMine);
 		imgPhoto 	 = (ImageView) findViewById(R.id.imgPhoto);
 		txtName		 = (TextView) findViewById(R.id.txtName);
 		txtScore	 = (TextView) findViewById(R.id.txtScore);
-		txtExp		 = (TextView) findViewById(R.id.txtExp);
+		txttodayScanCount		 = (TextView) findViewById(R.id.txttodayScanCount);
 		count        = (TextView) findViewById(R.id.count);
+		laySupervision =(RelativeLayout)findViewById(R.id.laySupervision);
+		layRank=(RelativeLayout)findViewById(R.id.layRank);
+		mylevel= (TextView)findViewById(R.id.mylevel);
 //		txtTodayScan = (TextView) findViewById(R.id.txtTodayScan);
 //		txtYesScore	 = (TextView) findViewById(R.id.txtYesScore);
 		//userLogin();
@@ -254,7 +245,6 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 				handler.post(new Runnable() {
 					@Override
 					public void run() {
-						txtMine.setText("我的帐号");
 					//点击“我的帐号”进行注册后，自动切至“我的帐号”
 					if (trendToMy) {
 						trendToMy = false;
@@ -273,6 +263,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		}
 		else if( type == ReceiverType.Logout){
 			//this.finish();
+		}else if (type == ReceiverType.refreshusedata){
+			setScores();
 		}
 
 	}
@@ -285,9 +277,9 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 
 		case R.id.btnLeft:
 			userService.getScanCount();
-				//mDragLayout.openOrClose();
+			userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
 			openOrCloseMenu();
-
+			setScores();
 			break;
 		case R.id.layHome://领取任务
 			fragManager.setCurrentFrag(FragType.Task);
@@ -300,13 +292,6 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			intentPre.putExtra(Constant.TYPE_FROM, FromType.PreTask);
 	        startActivity(intentPre);
 			break;
-//		case R.id.layJoin:
-//			Intent intentPutIn = new Intent(this, WebViewActivity.class);
-//			intentPutIn.putExtra("url", BusinessStatic.getInstance().URL_PUTIN);
-//			intentPutIn.putExtra("title", "投放指南");
-//			startActivity(intentPutIn);
-//			break;
-		case R.id.layMine:
 		case R.id.img://头像
 		case R.id.layScore:
 			trendToMy = false;
@@ -319,12 +304,15 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 				fragManager.setCurrentFrag(FragType.My);
 				setTitleButton(FragType.My);
 				openOrCloseMenu();
+				setScores();
 			}else{
 				trendToMy = true;
-				Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
+				Intent intentlogin = new Intent(HomeActivity.this, MoblieLoginActivity.class);
 				startActivity(intentlogin);
 				openOrCloseMenu();
+
 			}
+			setScores();
 
 			break;
 		case R.id.layPrentice:
@@ -339,16 +327,11 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			
 				openOrCloseMenu();
 			} else {
-				Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
+				Intent intentlogin = new Intent(HomeActivity.this, MoblieLoginActivity.class);
 				startActivity(intentlogin);
 				finish();
 			}
 			break;
-//		case R.id.layTool:
-//			fragManager.setCurrentFrag(FragType.Tool);
-//			setTitleButton(FragType.Tool);
-//			openOrCloseMenu();
-//			break;
 		case R.id.layRule:
 			fragManager.setCurrentFrag(FragType.Rule);
 			setTitleButton(FragType.Rule);
@@ -415,12 +398,18 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 //				 openOrCloseMenu();
 // 	        }
 //			break;
+			case R.id.layTask:
+				ActivityUtils.getInstance().showActivity(HomeActivity.this,WeekTaskActivity.class);
+				break;
+			case R.id.layRank:
+				ActivityUtils.getInstance().showActivity(HomeActivity.this,RankActivity.class);
+				break;
 			case R.id.layHistoryReturn://历史收益
 				if(UserData.getUserData().isLogin){
 					Intent intent = new Intent(HomeActivity.this, AllScoreActivity.class);
 					startActivity(intent);
 				}else{
-					Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
+					Intent intentlogin = new Intent(HomeActivity.this, MoblieLoginActivity.class);
 					startActivity(intentlogin);
 					openOrCloseMenu();
 				}
@@ -428,10 +417,10 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			case R.id.layMall://进入商城
 				inMall();
 				break;
-			case R.id.laySorceExchange://积分兑换
-				Intent intentGoods = new Intent( this , UserExchangeActivity.class);
-				startActivity(intentGoods);
-				break;
+//			case R.id.laySorceExchange://积分兑换
+//				Intent intentGoods = new Intent( this , UserExchangeActivity.class);
+//				startActivity(intentGoods);
+//				break;
 			case R.id.laySupervision://监督管理
 				Intent intent = new Intent(this, GroupActivity.class);
 				startActivity(intent);
@@ -459,7 +448,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	}
 
 	public void openOrCloseMenu(){
-
+		setScores();
 		boolean isOpen = mDragLayout.isDrawerOpen(Gravity.LEFT);
 		if(isOpen){
 			mDragLayout.closeDrawer(Gravity.LEFT);
@@ -487,10 +476,10 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 				title = ((TaskNewFrag)frag).getTitleText();
 
 			}
-			txtTitle.setText(title);
+			txtTitle.setText("乐享资讯");
 			//btnLeft.setVisibility(View.VISIBLE);
-			btnRight.setVisibility(View.GONE);
-			btnRight.setBackgroundResource(R.drawable.title_right_refresh);
+			btnRight.setVisibility(View.VISIBLE);
+			btnRight.setBackgroundResource(R.drawable.title_query_normal);
 			imgTag.setVisibility(View.VISIBLE);
 			//btnLeft.setBackgroundResource(R.drawable.title_left_menu);
 
@@ -498,7 +487,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		case My:
 			txtRight.setVisibility(View.GONE);
 			imgTag.setVisibility(View.GONE);
-			txtTitle.setText("我的帐号");
+			txtTitle.setText("个人中心");
 			btnRight.setVisibility(View.GONE);
 			break;
 		case Rule:
@@ -512,13 +501,13 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		case More:
 			txtRight.setVisibility(View.GONE);
 			imgTag.setVisibility(View.GONE);
-			txtTitle.setText("更多");
+			txtTitle.setText("更多选项");
 			//btnLeft.setVisibility(View.GONE);
 			btnRight.setVisibility(View.GONE);
 			break;
 		case Prentice:
 			imgTag.setVisibility(View.GONE);
-			txtTitle.setText("收徒");
+			txtTitle.setText("推荐有奖");
 			btnRight.setVisibility(View.GONE);
 			txtRight.setVisibility(View.VISIBLE);
 			//btnLeft.setVisibility(View.GONE);
@@ -539,61 +528,61 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			//mDragLayout.openOrClose();
 		   openOrCloseMenu();
 	   }
-	public void toCrash(){
-		//钱包不要求登录
-	if(BusinessStatic.getInstance().CRASH_TYPE != 1 && !UserData.getUserData().isLogin){
-		Intent intentlogin = new Intent(HomeActivity.this, LoginActivity.class);
-		startActivity(intentlogin);
-
-		return;
-	}
-	//是否为模拟器
-	if( !UserData.getUserData().ignoreJudgeEmulator && BusinessStatic.getInstance().ISEMULATOR){
-		toast("模拟器不支持该操作!");
-		return;
-	}
-	//积分是否已达标准下限
-	if(BusinessStatic.getInstance().CRASH_TYPE != 1 && Double.parseDouble(UserData.getUserData().score) < BusinessStatic.getInstance().CHANGE_BOUNDARY){
-		toast(String.format("需达到%d积分才能提现，赶快去赚积分吧!",BusinessStatic.getInstance().CHANGE_BOUNDARY));
-		return;
-	}
-
-
-
-	if(BusinessStatic.getInstance().CRASH_TYPE == 1){//到钱包
-		Intent intentWallet = new Intent(this, WalletActivity.class);
-		startActivity(intentWallet);
-	}else{//提现
-		//先判断是否已绑定手机号
-		if(TextUtils.isEmpty(UserData.getUserData().phone)){
-			toast("请先绑定手机号!");
-			Intent intentBind = new Intent(this,AuthCodeSendActivity.class);
-			intentBind.putExtra(Constant.AuthCodeType, AuthType.Phone2Ali);
-			startActivity(intentBind);
-			return;
-
-		}
-		if(TextUtils.isEmpty(UserData.getUserData().payAccount)){
-			toast("请先绑定支付宝账号!");
-			Intent intentBind = new Intent(this,AuthCodeSendActivity.class);
-			intentBind.putExtra(Constant.AuthCodeType, AuthType.Ali);
-			startActivity(intentBind);
-			return;
-		}
-
-			Intent intentToCash = new Intent(this,ToCrashAuthActivity.class);
-			//是否有提现密码
-			if(Util.isEmptyMd5(UserData.getUserData().toCrashPwd)){
-				//intentToCash.putExtra("type", NiePointActionType.Creat);
-				intentToCash.putExtra("type", CrashAuthType.ToCrash);
-			}else{//认证
-				//intentToCash.putExtra("type", NiePointActionType.Auth);
-				intentToCash.putExtra("type", CrashAuthType.Auth);
-			}
-			startActivityForResult(intentToCash, 0);
-	}
-
-}
+//	public void toCrash(){
+//		//钱包不要求登录
+//	if(BusinessStatic.getInstance().CRASH_TYPE != 1 && !UserData.getUserData().isLogin){
+//		Intent intentlogin = new Intent(HomeActivity.this, MoblieLoginActivity.class);
+//		startActivity(intentlogin);
+//
+//		return;
+//	}
+//	//是否为模拟器
+//	if( !UserData.getUserData().ignoreJudgeEmulator && BusinessStatic.getInstance().ISEMULATOR){
+//		toast("模拟器不支持该操作!");
+//		return;
+//	}
+////	//积分是否已达标准下限
+////	if(BusinessStatic.getInstance().CRASH_TYPE != 1 && Double.parseDouble(UserData.getUserData().score) < BusinessStatic.getInstance().CHANGE_BOUNDARY){
+////		toast(String.format("需达到%d积分才能提现，赶快去赚积分吧!",BusinessStatic.getInstance().CHANGE_BOUNDARY));
+////		return;
+////	}
+//
+//
+//
+//	if(BusinessStatic.getInstance().CRASH_TYPE == 1){//到钱包
+//		Intent intentWallet = new Intent(this, WalletActivity.class);
+//		startActivity(intentWallet);
+//	}else{//提现
+//		//先判断是否已绑定手机号
+//		if(TextUtils.isEmpty(UserData.getUserData().phone)){
+//			toast("请先绑定手机号!");
+//			Intent intentBind = new Intent(this,AuthCodeSendActivity.class);
+//			intentBind.putExtra(Constant.AuthCodeType, AuthType.Phone2Ali);
+//			startActivity(intentBind);
+//			return;
+//
+//		}
+//		if(TextUtils.isEmpty(UserData.getUserData().payAccount)){
+//			toast("请先绑定支付宝账号!");
+//			Intent intentBind = new Intent(this,AuthCodeSendActivity.class);
+//			intentBind.putExtra(Constant.AuthCodeType, AuthType.Ali);
+//			startActivity(intentBind);
+//			return;
+//		}
+//
+//			Intent intentToCash = new Intent(this,ToCrashAuthActivity.class);
+//			//是否有提现密码
+//			if(Util.isEmptyMd5(UserData.getUserData().toCrashPwd)){
+//				//intentToCash.putExtra("type", NiePointActionType.Creat);
+//				intentToCash.putExtra("type", CrashAuthType.ToCrash);
+//			}else{//认证
+//				//intentToCash.putExtra("type", NiePointActionType.Auth);
+//				intentToCash.putExtra("type", CrashAuthType.Auth);
+//			}
+//			startActivityForResult(intentToCash, 0);
+//	}
+//
+//}
 
 	/**
 	    * 用户注销后刷新任务列表
@@ -614,15 +603,20 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		String total = "未登录";
 		String scanCount = "未登录";
 		String userName = "未登录";
-		String exp = "未登录";
+		String todayScanCount = "未登录";
 		UserData userData = UserData.getUserData();
-		txtMine.setText(userData.isLogin ? "我的帐号" : "登录/注册");
+		//txtMine.setText(userData.isLogin ? "我的帐号" : "登录/注册");
 		if (userData.isLogin) {
-			exp = Util.MoneyFormat(userData.exp);
+			todayScanCount = String.valueOf(userData.todayScanCount);
 			yes = userData.yesScore;//Util.MoneyFormat(userData.yesScore);
 			total = userData.score;//Util.MoneyFormat(userData.totalScore);
-			count.setText(String.valueOf(userData.todayScanCount));
+			count.setText(String.valueOf(userData.TaskCount));
 			userName = userData.RealName;
+			if (userData.isSuper=true){
+				laySupervision.setVisibility(View.VISIBLE);
+			}else {
+				laySupervision.setVisibility(View.GONE);
+			}
 			if (TextUtils.isEmpty(userName))
 				userName = userData.UserNickName;
 			else if (TextUtils.isEmpty(userName)){
@@ -630,13 +624,13 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			}
 		}
 
-
+		mylevel.setText(UserData.getUserData().levelName);
 		txtName.setText(userName);
-		txtScore.setText("可用分红." + total);
-		txtExp.setText("Exp." + exp);
+		txtScore.setVisibility(View.GONE);
+		//txtScore.setText("可用分红." + total);
+		txttodayScanCount.setText("今日浏览量." + todayScanCount);
 		//txtTodayScan.setText(scanCount);
 		//txtYesScore.setText(yes);
-		imgCheckFlag.setVisibility(userData.dayCheckIn ? View.VISIBLE :View.GONE);
 		L.i(">>>>>>>>>picUrl:" + userData.picUrl);
 		if(TextUtils.isEmpty(userData.picUrl)){
 			img.setImageResource(R.drawable.user_icon);
@@ -686,7 +680,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	}
 
 
-	private boolean checking;
+//	private boolean checking;
 //	public void checkIn(){
 //		if(!checking){
 //			checking = true;
@@ -737,7 +731,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 				handler.post(new Runnable() {
 					@Override
 					public void run() {
-						txtMine.setText("我的帐号");
+						//txtMine.setText("我的帐号");
 						//点击“我的帐号”进行登录后，自动切至“我的帐号”
 						if(trendToMy){
 							trendToMy = false;
@@ -746,9 +740,6 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 						//任务列表
 						((TaskNewFrag)fragManager.getFragmentByType(FragType.Task)).initData();
 						//刷新道具中心
-						BaseFragment frag = fragManager.getFragmentByType(FragType.Tool);
-						if(null != frag)
-							((ToolFrag)frag).initData();
 						setScores();
 					}
 				});

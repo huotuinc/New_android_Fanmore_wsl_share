@@ -86,8 +86,10 @@ public class AwardAdapter extends TrendAdapter{
 		LinearLayout layGroup	= ViewHolderUtil.get(convertView, R.id.layGroup);
 		TextView txtGroupDate	= ViewHolderUtil.get(convertView, R.id.txtGroupDate);
 		TextView txtGroupScan	= ViewHolderUtil.get(convertView, R.id.txtGroupScan);
-		TextView txtGroupScore	= ViewHolderUtil.get(convertView, R.id.txtGroupScore);
+		//TextView txtGroupScore	= ViewHolderUtil.get(convertView, R.id.txtGroupScore);
 		LinearLayout layBottom	= ViewHolderUtil.get(convertView, R.id.layBottom);
+		LinearLayout lay_turn_browse = ViewHolderUtil.get(convertView,R.id.lay_turn_browse);
+		lay_turn_browse.setVisibility(View.GONE);
 
 		if(changeDes){
 			txtScanDes.setText("昨日浏览量:");
@@ -112,13 +114,13 @@ public class AwardAdapter extends TrendAdapter{
 			txtDate.setText(data.dateDes);
 			layAward.setVisibility(data.type == 2 ? View.VISIBLE : View.GONE);
 			layDate.setVisibility(data.type == 1 ? View.VISIBLE : View.GONE);
-			imgStatusTag.setVisibility(data.type == 2 ? View.VISIBLE : View.GONE);
+			imgStatusTag.setVisibility(data.type == 2 ? View.GONE : View.GONE);
 			txtScanCount .setText(data.scanCount + "");
 			txtScore .setText(data.score + "");
 			layGroup.setVisibility(View.VISIBLE);
 			txtGroupDate.setText(data.date);
 			txtGroupScan.setText(String.valueOf(data.dayScanCount));
-			txtGroupScore.setText(String.valueOf(data.dayScore));
+			//txtGroupScore.setText(String.valueOf(data.dayScore));
 			if(position - 1 >= 0 && data.date.equals(datas.get(position - 1).date))
 				layGroup.setVisibility(View.GONE);
 

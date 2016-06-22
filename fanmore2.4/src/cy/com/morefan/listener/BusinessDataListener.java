@@ -134,5 +134,11 @@ public interface BusinessDataListener {
 
 	public static final int ERROR_GET_GROUP_DATA = -7001;
 	public static final int ERROR_GET_GROUP_PERSON = -7002;
+	public static final int DONE_GET_STORE_LIST = 8000;
+	public static final int ERROR_GET_STORE_LIST = -8000;
+	public static final int DONE_CHECK_VERIFYCODE  = 8002;// 检查验证码是否有效
+	public static final int ERROR_CHECK_VERIFYCODE  = -8002;// 检查验证码是否有效
+	public static final int DONE_GET_WEEKTASK  = 8003;
+	public static final int ERROR_GET_WEEKTASK  = -8003;
 }
 

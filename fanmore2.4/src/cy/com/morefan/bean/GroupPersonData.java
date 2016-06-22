@@ -93,6 +93,11 @@ public class GroupPersonData implements BaseData ,Serializable {
      */
     private int  userid;
 
+    /**
+     * 列表页数
+     * @return
+     */
+    public int pageIndex;
     @Override
     public String getPageTag() {
         return null;

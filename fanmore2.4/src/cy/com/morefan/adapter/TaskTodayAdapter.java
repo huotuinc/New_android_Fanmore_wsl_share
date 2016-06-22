@@ -90,11 +90,7 @@ public class TaskTodayAdapter extends BaseAdapter{
 			txtSendCount .setText(data.sendCount + "人已转发" );
 			txtTimeDis.setText(data.dayDisDes);
 			txtDate .setText(data.creatTime.split(" ")[0]);
-			int resid = getStatusImgResId(data.status);
-			imgStatusTag.setVisibility(resid == 0 ? View.GONE : View.VISIBLE);
-			if(resid != 0){
-				imgStatusTag.setBackgroundResource(resid);
-			}
+
 
 
 
@@ -103,7 +99,6 @@ public class TaskTodayAdapter extends BaseAdapter{
 	private int getStatusImgResId(int status){
 		//4任务终结,5任务取消,6积分用完
 		if( status == 4 || status == 5 || status == 6){
-			return R.drawable.task_tag_over;
 		}
 		return 0;
 	}

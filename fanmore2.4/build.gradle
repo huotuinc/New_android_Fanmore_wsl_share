@@ -12,26 +12,29 @@ dependencies {
     //compile project(':lib:WeiboSDK')
     compile project(':lib:main')
     compile files('libs/gson-2.2.4.jar')
+    compile files('libs/alipaySDK-20150818.jar')
+    //compile 'com.android.support:design:23.2.0'
+    //compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile files('libs/jpush-android-2.1.5.jar')
     compile 'com.handmark.library:pulltorefresh:1.1'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile files('libs/alipaySDK-20150818.jar')
     compile 'com.huotu.android.library:libedittext:1.6'
-    //compile 'com.android.support:support-v4:23.2.0'
-    //compile 'com.android.support:design:23.2.0'
-
-    //compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile 'com.huibin.androidsegmentcontrol:androidsegmentcontrol:1.2'
+    compile 'com.android.support:support-v4:21.0.3'
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha1'
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion '19.1.0'
+    compileSdkVersion 21
+    buildToolsVersion '21.1.2'
 
     signingConfigs {
         huotu {
-            storeFile file('keystore/huotu_fm.keystore')
-            storePassword "huotuheyun"
-            keyAlias "huotu_fm.keystore"
-            keyPassword "huotuheyun"
+            storeFile file('G:\\key/wensli.jks')
+            storePassword "wensli"
+            keyAlias "wensli"
+            keyPassword "wensli"
         }
     }
     sourceSets {
@@ -43,6 +46,7 @@ android {
             renderscript.srcDirs = ['src']
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
+            jniLibs.srcDirs = ['libs']
         }
 
         // Move the tests to tests/java, tests/res, etc...
@@ -60,29 +64,28 @@ android {
     defaultConfig {
         signingConfig signingConfigs.huotu
         minSdkVersion 8
-        targetSdkVersion 19
+        targetSdkVersion 21
     }
 
     productFlavors {
         fanmore {
-            applicationId 'com.wensli.fanmore'
+            applicationId 'hz.huotu.wsl.aifenxiang'
             signingConfig signingConfigs.huotu
-            minSdkVersion 8
-            targetSdkVersion 23
+            minSdkVersion 9
+            targetSdkVersion 21
         }
     }
 
-    buildTypes{
+    buildTypes {
 
-        release{
+        release {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
         }
-        debug{
+        debug {
             signingConfig signingConfigs.huotu
         }
     }
-
 
 
 }

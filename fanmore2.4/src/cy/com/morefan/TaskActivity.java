@@ -224,7 +224,6 @@ public class TaskActivity extends BaseActivity implements BusinessDataListener, 
 			}else
 				taskId = taskDatas.get(position - 1).id;
 			if(mFromType == FromType.MyPartIn && !taskDatas.get(position - 1).isAccount){
-				toast("结算后查看!");
 				return;
 			}
 			if(mFromType == FromType.PreTask){

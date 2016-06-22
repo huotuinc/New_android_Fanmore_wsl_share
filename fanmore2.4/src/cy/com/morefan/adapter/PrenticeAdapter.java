@@ -97,14 +97,14 @@ public class PrenticeAdapter extends BaseAdapter{
 			ImageView imgPhoto	= ViewHolderUtil.get(convertView, R.id.imgPhoto);
 			RelativeLayout apprentice = ViewHolderUtil.get(convertView, R.id.apprentice);
 			helper = new SyncImageLoaderHelper(mContext);
-			apprentice.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					mHandler.sendEmptyMessage(0x11111111);
-				}
-			});
+//			apprentice.setOnClickListener(new OnClickListener() {
+//
+//				@Override
+//				public void onClick(View v) {
+//					// TODO Auto-generated method stub
+//					mHandler.sendEmptyMessage(0x11111111);
+//				}
+//			});
 			UserData userData = UserData.getUserData();
 			if(TextUtils.isEmpty(userData.picUrl)){
 				imgPhoto.setImageResource(R.drawable.user_icon);
@@ -114,9 +114,7 @@ public class PrenticeAdapter extends BaseAdapter{
 			}
 			txtTopCode.setText(topData.invitationCode);
 			txtTopDes.setText(topData.prenticeDes);
-			txtTopTotal.setText(topData.totalContri + "积分");
-			txtTopLast.setText(topData.lastContri + "积分");
-			prenticeAmount.setText( String.valueOf( topData.prenticeAmount));
+			prenticeAmount.setText( String.valueOf( topData.prenticeAmount)+"人");
 			BrowseAmount.setText( topData.yesterdayBrowseAmount+"/"+ topData.historyTotalBrowseAmount+"次");
 			TurnAmount.setText(topData.yesterdayTurnAmount+"/"+topData.historyTotalTurnAmount+"次");
 		}else{

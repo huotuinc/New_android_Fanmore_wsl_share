@@ -1,28 +1,19 @@
 package cy.com.morefan;
 
 import java.io.File;
-import java.math.BigDecimal;
-import java.net.URLEncoder;
-import java.security.Key;
-import java.text.NumberFormat;
-import java.util.HashMap;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import cindy.android.test.synclistview.SyncImageLoaderHelper;
 
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
+
 import com.lib.cylibimagedownload.ImageUtil;
 import com.lib.cyliblocation.LibLocation;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
 
+import cn.jpush.android.api.JPushInterface;
 import cy.com.morefan.AppUpdateActivity.UpdateType;
-import cy.com.morefan.bean.AllScoreData;
 import cy.com.morefan.bean.BaseData;
-import cy.com.morefan.bean.StoreData;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
@@ -34,12 +25,8 @@ import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.TaskService;
 import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.DensityUtil;
-import cy.com.morefan.util.JsonUtil;
 import cy.com.morefan.util.L;
-import cy.com.morefan.util.RSAUtil;
 import cy.com.morefan.util.SPUtil;
-import cy.com.morefan.util.IMEIUtil;
-import cy.com.morefan.util.NetworkUtil;
 import cy.com.morefan.util.Util;
 import cy.com.morefan.view.CustomDialog;
 import cy.com.morefan.view.CustomDialog.OnkeyBackListener;
@@ -55,12 +42,10 @@ import android.os.Handler.Callback;
 import android.os.Message;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 public class LoadingActivity extends BaseActivity implements
-		BusinessDataListener, OnkeyBackListener, BDLocationListener, Callback, BroadcastListener{
+		BusinessDataListener, OnkeyBackListener, Callback, BroadcastListener{
 
 	private Handler mHandler = new Handler(this);
 	private boolean isFinish;
@@ -180,14 +165,15 @@ public class LoadingActivity extends BaseActivity implements
 	}
 
 	private void toHome() {
-//		if (!SPUtil.getBooleanFromSpByName(this, Constant.SP_NAME_NORMAL,
-//				Constant.SP_NAME_NOT_SHOW_USER_GUIDE, false)) {
+		if (!SPUtil.getBooleanFromSpByName(this, Constant.SP_NAME_NORMAL,
+				Constant.SP_NAME_NOT_SHOW_USER_GUIDE, false)) {
 			Intent intentGuide = new Intent(LoadingActivity.this, GuideActivity.class);
 			intentGuide.putExtra("isCompleteUserInfo", isCompleteUserInfo);
 			intentGuide.putExtra("alarmId", alarmId);
 			startActivity(intentGuide);
 			finish();
-//		}else if (
+		}
+//		else if (
 //				!TextUtils.isEmpty( SPUtil.getStringToSpByName(LoadingActivity.this,Constant.SP_NAME_NORMAL,Constant.SP_NAME_USERNAME)) &&
 //				!TextUtils.isEmpty( SPUtil.getStringToSpByName(LoadingActivity.this,Constant.SP_NAME_NORMAL,Constant.SP_NAME_USERPWD) ) ) {
 //			Intent intent = new Intent(LoadingActivity.this, HomeActivity.class);
@@ -197,13 +183,13 @@ public class LoadingActivity extends BaseActivity implements
 //			startActivity(intent);
 //			finish();
 //		}
-// 		else {
-//			Intent intent = new Intent(LoadingActivity.this, LoginActivity.class);
-//			intent.putExtra("isCompleteUserInfo", isCompleteUserInfo);
-//			intent.putExtra("alarmId", alarmId);
-//			startActivity(intent);
-//			finish();
-//		}
+ 		else {
+			Intent intent = new Intent(LoadingActivity.this, AdActivity.class);
+			intent.putExtra("isCompleteUserInfo", isCompleteUserInfo);
+			intent.putExtra("alarmId", alarmId);
+			startActivity(intent);
+			finish();
+		}
 
 
 	}
@@ -219,7 +205,7 @@ public class LoadingActivity extends BaseActivity implements
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		setContentView(R.layout.loading);
-		((TextView)findViewById(R.id.txtVersion)).setText(String.format("V %s Beta", Constant.APP_VERSION));
+		//((TextView)findViewById(R.id.txtVersion)).setText(String.format("V %s Beta", Constant.APP_VERSION));
 		//推送：1、enable ;2、BaseActivity_oncreate:onAppStart
 		boolean pushSwitch = SPUtil.getBooleanFromSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_PUSH_SWITCH, true);
 		if(pushSwitch){
@@ -332,12 +318,14 @@ public static String getDeviceInfo(Context context) {
 		mHandler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				String token = UmengRegistrar.getRegistrationId(LoadingActivity.this);
+				//String tokens = UmengRegistrar.getRegistrationId(LoadingActivity.this);
+				String	token= JPushInterface.getRegistrationID(LoadingActivity.this);
 				L.i(">>>>>token:" + token);
 				if(!TextUtils.isEmpty(token) && (!SPUtil.getBooleanFromSpByName(LoadingActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_TOKEN, false)
 					||  !token.equals(SPUtil.getStringToSpByName(LoadingActivity.this,  Constant.SP_NAME_NORMAL, Constant.SP_NAME_TOKEN_VALUE)))){
 					L.i(">>>>commitToken:" + token);
-					taskService.commitToken(LoadingActivity.this, token);
+					taskService.commitToken(LoadingActivity.this,UserData.getUserData().loginCode, token,1);
+
 				}
 
 			}
@@ -345,7 +333,7 @@ public static String getDeviceInfo(Context context) {
 
 		//String loginCode = SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_LOGINCODE);
 		initData();
-		LibLocation.startLocation(this, this);
+		//LibLocation.startLocation(this, this);
 		super.onResume();
 	}
 
@@ -359,6 +347,7 @@ public static String getDeviceInfo(Context context) {
 
 		taskService.PayConfig(this);
 		userService.getScanCount();
+		userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
 	}
 
 	private Bitmap checkLoadingImage() {
@@ -427,39 +416,39 @@ public static String getDeviceInfo(Context context) {
 		super.onDestroy();
 	}
 
-	@Override
-	public void onReceiveLocation(BDLocation location) {
-		if (location != null) {
-			String cityCode = location.getCityCode();
-			System.out.println(">>>>>district:" + location.getDistrict());
-			if (!TextUtils.isEmpty(cityCode)) {
-				BusinessStatic.getInstance().CITY_CODE = cityCode;
-				SPUtil.saveStringToSpByName(LoadingActivity.this,
-						Constant.SP_NAME_NORMAL, Constant.SP_NAME_CITY_CODE,
-						cityCode);
-				LibLocation.stopLocation();
-
-				BusinessStatic.getInstance().USER_LAT = location.getLatitude();
-				BusinessStatic.getInstance().USER_LNG = location.getLongitude();
-				if(BusinessStatic.getInstance().USER_LAT == 0 && BusinessStatic.getInstance().USER_LNG == 0);
-				else{
-					SPUtil.saveIntToSpByName(LoadingActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_LOCATION_COUNT, 0);
-					SPUtil.saveLongToSpByName(LoadingActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_LAT, (long) BusinessStatic.getInstance().USER_LAT);
-					SPUtil.saveLongToSpByName(LoadingActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_LNG, (long) BusinessStatic.getInstance().USER_LNG);
-
-				}
-
-				L.i(">>>>>>>>>>stop baidu");
-			}
-		}
-
-	}
-
-	@Override
-	public void onReceivePoi(BDLocation arg0) {
-		// TODO Auto-generated method stub
-
-	}
+//	@Override
+//	public void onReceiveLocation(BDLocation location) {
+//		if (location != null) {
+//			String cityCode = location.getCityCode();
+//			System.out.println(">>>>>district:" + location.getDistrict());
+//			if (!TextUtils.isEmpty(cityCode)) {
+//				BusinessStatic.getInstance().CITY_CODE = cityCode;
+//				SPUtil.saveStringToSpByName(LoadingActivity.this,
+//						Constant.SP_NAME_NORMAL, Constant.SP_NAME_CITY_CODE,
+//						cityCode);
+//				LibLocation.stopLocation();
+//
+//				BusinessStatic.getInstance().USER_LAT = location.getLatitude();
+//				BusinessStatic.getInstance().USER_LNG = location.getLongitude();
+//				if(BusinessStatic.getInstance().USER_LAT == 0 && BusinessStatic.getInstance().USER_LNG == 0);
+//				else{
+//					SPUtil.saveIntToSpByName(LoadingActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_LOCATION_COUNT, 0);
+//					SPUtil.saveLongToSpByName(LoadingActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_LAT, (long) BusinessStatic.getInstance().USER_LAT);
+//					SPUtil.saveLongToSpByName(LoadingActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_LNG, (long) BusinessStatic.getInstance().USER_LNG);
+//
+//				}
+//
+//				L.i(">>>>>>>>>>stop baidu");
+//			}
+//		}
+//
+//	}
+//
+//	@Override
+//	public void onReceivePoi(BDLocation arg0) {
+//		// TODO Auto-generated method stub
+//
+//	}
 
 	@Override
 	public void onFinishReceiver(ReceiverType type, Object msg) {

@@ -101,7 +101,7 @@ class WebActivity extends BaseActivity implements Handler.Callback, MyBroadcastR
     protected
     void initView ( ) {
 
-        Drawable drawable = resources.getDrawable(R.color.theme_blue);
+        Drawable drawable = resources.getDrawable(R.color.theme_back);
         //设置title背景
         SystemTools.loadBackground(newtitleLayout, drawable);
         //设置左侧图标

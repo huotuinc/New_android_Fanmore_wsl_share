@@ -140,7 +140,7 @@ public class WalletActivity extends BaseActivity implements Callback{
 			break;
 		case R.id.btnHistory:
 			if(!UserData.getUserData().isLogin){
-				Intent intentlogin = new Intent(WalletActivity.this, LoginActivity.class);
+				Intent intentlogin = new Intent(WalletActivity.this, MoblieLoginActivity.class);
 				startActivity(intentlogin);
 				return ;
 			}
@@ -173,7 +173,7 @@ public class WalletActivity extends BaseActivity implements Callback{
 			break;
 		case R.id.btnDuiBa:
 			if(!UserData.getUserData().isLogin){
-				Intent intentlogin = new Intent(WalletActivity.this, LoginActivity.class);
+				Intent intentlogin = new Intent(WalletActivity.this, MoblieLoginActivity.class);
 				startActivity(intentlogin);
 				return;
 			}
@@ -188,7 +188,7 @@ public class WalletActivity extends BaseActivity implements Callback{
 	}
 	public boolean checkStatus(){
 		if(!UserData.getUserData().isLogin){
-			Intent intentlogin = new Intent(WalletActivity.this, LoginActivity.class);
+			Intent intentlogin = new Intent(WalletActivity.this, MoblieLoginActivity.class);
 			startActivity(intentlogin);
 			return false;
 		}

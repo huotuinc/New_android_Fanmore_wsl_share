@@ -1,6 +1,6 @@
 package cy.com.morefan.view;
 
-import cy.com.morefan.R;
+
 //import cy.com.morefan.util.Shake;
 import android.app.Dialog;
 import android.content.Context;
@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
+
+import cy.com.morefan.R;
 
 public class PopExpUp{
 

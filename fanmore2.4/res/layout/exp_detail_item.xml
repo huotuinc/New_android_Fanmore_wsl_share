@@ -134,7 +134,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="-4dp"
             android:layout_marginTop="-4dp"
-            android:background="@drawable/img_tag_partin_status_fail"
             android:visibility="gone" />
     </FrameLayout>
 

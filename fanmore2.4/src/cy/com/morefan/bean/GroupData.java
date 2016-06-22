@@ -7,6 +7,10 @@ import java.io.Serializable;
  */
 public class GroupData implements BaseData ,Serializable {
     /**
+     * 是否有下级组织
+     */
+    private int children;
+    /**
      * 组织编号
      */
     private int id;
@@ -14,9 +18,19 @@ public class GroupData implements BaseData ,Serializable {
      * 组织级别
      */
     private int level;
+
+    public int getChildren() {
+        return children;
+    }
+
+    public void setChildren(int children) {
+        this.children = children;
+    }
+
     /**
      *
      */
+
     private String icon;
     /**
      * 组织名称

@@ -14,6 +14,8 @@ import cindy.android.test.synclistview.SyncImageLoaderHelper;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.wechat.friends.Wechat;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.UserBaseInfoList;
 import cy.com.morefan.bean.UserData;
@@ -26,6 +28,7 @@ import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.Base64;
 import cy.com.morefan.util.L;
+import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.util.ToastUtil;
 import cy.com.morefan.util.Util;
 import cy.com.morefan.view.CropperView;
@@ -58,6 +61,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -83,6 +87,7 @@ public class MyBaseInfoActivity extends BaseActivity implements OnUserInfoBackLi
 	private ImageView img;
 	private PhotoSelectView pop;
 	private CropperView cropperView;
+	private Button btnLogOut;
 	private MyBroadcastReceiver myBroadcastReceiver;
 	private Handler mHandler = new Handler(this);
 	@Override
@@ -221,6 +226,7 @@ public class MyBaseInfoActivity extends BaseActivity implements OnUserInfoBackLi
 	}
 
 	private void initView() {
+		btnLogOut=(Button) findViewById(R.id.btnLogOut);
 		img = (ImageView) findViewById(R.id.img);
 		txtName = (TextView) findViewById(R.id.txtName);
 		txtSex = (TextView) findViewById(R.id.txtSex);
@@ -236,7 +242,19 @@ public class MyBaseInfoActivity extends BaseActivity implements OnUserInfoBackLi
 
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.btnLogOut:
+			CustomDialog.showChooiceDialg(this, null, "确定要注销吗？", "注销", "取消", null, new DialogInterface.OnClickListener() {
 
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					logout();
+					Intent intentlogin	 = new Intent(MyBaseInfoActivity.this,MoblieLoginActivity.class);
+					startActivity(intentlogin);
+					finish();
+
+				}
+			}, null);
+			break;
 		case R.id.layImg:
 			if(null == pop)
 				pop = new PhotoSelectView(this, this);
@@ -285,7 +303,18 @@ public class MyBaseInfoActivity extends BaseActivity implements OnUserInfoBackLi
 		}
 	}
 
+	public void logout(){
+		SPUtil.saveStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_PRE_USERNAME, UserData.getUserData().userName);
+		UserData.clear();
+		SPUtil.saveStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_BuserId, "");
+		SPUtil.saveStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_UnionId, "");
+		//清除微信授权信息
+		ShareSDK.getPlatform(Wechat.NAME).removeAccount();
 
+
+
+		SPUtil.saveStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, "");
+	}
 
 	private void initYears() {
 		YEAR = new String[60];

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/dragLayout"
-    android:background="@color/theme_blue"
+    android:background="@color/theme_back"
     tools:context=".AllScoreActivity" >
 
     <include layout="@layout/home_main_content" />

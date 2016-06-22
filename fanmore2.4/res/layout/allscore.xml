@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".HomeActivity" >
 
     <FrameLayout
         android:id="@+id/layTitle"
@@ -27,7 +27,7 @@
             android:ellipsize="end"
             android:maxWidth="300dp"
             android:singleLine="true"
-            android:text="历史"
+            android:text="历史浏览"
             android:textColor="@color/white"
             android:textSize="18dp" />
 
@@ -78,11 +78,13 @@
         android:listSelector="#00000000" />
 
     <ImageView
+        android:id="@+id/img_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/trendView"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
+        android:visibility="gone"
         android:background="@drawable/allscore_arrow" />
 
     <TextView

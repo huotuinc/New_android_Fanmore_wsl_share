@@ -1,28 +1,13 @@
 package cy.com.morefan.util;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
-
-import com.baidu.location.f.c;
-import com.tencent.connect.share.QzoneShare;
-import com.tencent.tauth.IUiListener;
-import com.tencent.tauth.Tencent;
-import com.tencent.tauth.UiError;
 import com.wensli.fanmore.wxapi.QzoneActivity;
 
 import com.wensli.fanmore.wxapi.WXEntryActivity;
 
-import cy.com.morefan.TaskDetailActivity;
-import cy.com.morefan.constant.Constant;
 
-import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 
 public class ShareUtil {
 	//渠道类型微信：1；新浪微博：2;qq空间：3
@@ -35,7 +20,6 @@ public class ShareUtil {
 //	}
 	/**
 	 * 分享到朋友圈
-	 * @param context
 	 * @param des
 	 * @param imgPath
 	 * @param content
@@ -52,7 +36,6 @@ public class ShareUtil {
 	}
 	/**
 	 * 分享到会话
-	 * @param context
 	 * @param des
 	 * @param imgPath
 	 * @param content
@@ -69,7 +52,6 @@ public class ShareUtil {
 	/**
 	 *
 	 * @param context
-	 * @param store
 	 * @param des
 	 * @param imgPath
 	 * @param content

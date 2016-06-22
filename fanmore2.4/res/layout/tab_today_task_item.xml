@@ -45,7 +45,8 @@
                         android:text="今日浏览量:"
                         android:textColor="@color/gray4"
                         android:textIsSelectable="false"
-                        android:textSize="12dp" />
+                        android:textSize="12dp"
+                        android:id="@+id/textView4" />
 
                     <TextView
                         android:id="@+id/txtDayScanCount"

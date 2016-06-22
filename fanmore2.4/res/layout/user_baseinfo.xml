@@ -428,6 +428,17 @@
                 android:layout_height="1px"
                 android:background="@drawable/line_gray_bg_h" />
             <!-- 注册时间end -->
+            <Button
+                android:onClick="onClick"
+                android:id="@+id/btnLogOut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:layout_marginTop="100dp"
+                android:background="@drawable/btn_red_sel"
+                android:text="@string/txt_logout"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
         </LinearLayout>
     </cy.com.morefan.view.BounceScrollView>
 

@@ -1,21 +1,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/bg_gray"
     android:orientation="vertical"
     tools:context=".AllScoreActivity" >
-<LinearLayout
+    <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/theme_blue"
-                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:background="@color/theme_back"
+                android:orientation="horizontal"
                 android:paddingTop="15dp" >
 
                 <FrameLayout
+                    android:id="@+id/ffprentice"
+                    android:layout_margin="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" 
-                    android:layout_gravity="center_horizontal">
+                    >
 
                     <ImageView
                         android:id="@+id/imgPhoto"
@@ -31,35 +33,43 @@
                         android:layout_height="75dp"
                         android:background="@drawable/photo_circle_pre" />
                 </FrameLayout>
-                 <LinearLayout
+        <LinearLayout
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
             android:orientation="vertical" >
-
+           <LinearLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="邀请码"
+                android:text="邀请码:"
                 android:textColor="@color/white" />
 
             <TextView
+                android:layout_marginTop="10dp"
                 android:id="@+id/txtCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="@color/white" />
+           </LinearLayout>
 
-            <cy.com.morefan.view.CyLinearLayout
+        <TextView
                 android:id="@+id/btnCopy"
-                android:layout_width="80dp"
-                android:layout_height="35dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:background="@drawable/prentice_bg_copy"
+                android:text="复制邀请码"
+                android:padding="5dp"
+                android:textSize="12sp"
+                android:textColor="@color/theme_blue"
+                android:background="@drawable/btn_white_sel"
                 android:onClick="onClick" />
-        </LinearLayout>
+    </LinearLayout>
 
                 
             </LinearLayout>
@@ -68,8 +78,7 @@
                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+
                 >
                 <ImageView 
                     android:id="@+id/apprenticeicon"
@@ -78,18 +87,20 @@
                     android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/shitutubiao"
+                    android:background="@drawable/img_huoban"
                     />
                 <TextView 
                     android:id="@+id/tvapprentice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="收徒总数"
+                    android:text="伙伴总数"
                      android:layout_centerInParent="true"
                     android:layout_toRightOf="@+id/apprenticeicon"
                     android:layout_margin="10dp"
                     />
-                <TextView 
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:gravity="right"
                     android:id="@+id/prenticeAmount"
                     android:layout_margin="10dp"
                     android:layout_width="wrap_content"
@@ -97,8 +108,9 @@
                     android:text=""
                      android:layout_centerInParent="true"
                     android:layout_toRightOf="@+id/tvapprentice"
-                    android:textColor="@color/theme_blue"/>
+                    android:textColor="@color/theme_back"/>
                 <ImageView
+                    android:visibility="gone"
                      android:layout_margin="10dp"
             	     android:layout_width="wrap_content"
            			 android:layout_height="wrap_content"
@@ -106,176 +118,111 @@
            			 android:layout_centerInParent="true"
             		 android:background="@drawable/arrows_right" />
             </RelativeLayout>
-
-    <LinearLayout 
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="1px"
+        android:background="#f6f4f5"/>
+    <RelativeLayout
+        android:id="@+id/rlBrowseAmount"
         android:background="@color/white"
-        android:orientation="horizontal"
-      >
-
-        <LinearLayout
-              android:padding="15dp"
-
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-           
-
-            <TextView
-                android:id="@+id/txtTotalContri"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/red"
-                android:textSize="15dp" />
-             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="徒弟总贡献"
-                android:textColor="@color/black"
-                android:textSize="13dp" />
-        </LinearLayout>
-
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        >
         <ImageView
+            android:id="@+id/imgBrowseAmount"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="5dp"
+            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/line_gray_bg_v" />
-
-        <LinearLayout
-               android:padding="15dp"
-            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical" >
+            android:background="@drawable/img_browseamount"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="昨日/历史浏览量"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/imgBrowseAmount"
+            android:layout_margin="10dp"
+            />
+        <TextView
+            android:layout_alignParentRight="true"
+            android:gravity="right"
+            android:id="@+id/BrowseAmount"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_centerInParent="true"
+            android:textColor="@color/theme_back"/>
 
-          
-
-            <TextView
-                android:id="@+id/txtLastContri"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/red"
-                android:textSize="15dp" />
-              <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="昨日总分红"
-                android:textColor="@color/black"
-                android:textSize="13dp" />
-        </LinearLayout>
-    </LinearLayout>
-     <ImageView
+    </RelativeLayout>
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@drawable/line_gray_bg_v" />
-    <LinearLayout
-        android:layout_marginTop="-5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="1px"
+        android:background="#f6f4f5"/>
+    <RelativeLayout
+        android:id="@+id/rlTurnAmount"
         android:background="@color/white"
-        android:orientation="horizontal"
-       >
-
-        <LinearLayout
-               android:padding="15dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            
-
-            <TextView
-                android:id="@+id/BrowseAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/red"
-                android:textSize="15dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="昨日/历史浏览量"
-                android:textColor="@color/black"
-                android:textSize="13dp" />
-        </LinearLayout>
-        
-
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        >
         <ImageView
+            android:id="@+id/imgTurnAmount"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/line_gray_bg_v" />
-
-        <LinearLayout
-               android:padding="15dp"
-            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical" >
+            android:background="@drawable/img_turnamount"
+            />
+        <TextView
+            android:id="@+id/tvTurnAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="昨日/历史转发量"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/imgTurnAmount"
+            android:layout_margin="10dp"
+            />
+        <TextView
+            android:layout_alignParentRight="true"
+            android:gravity="right"
+            android:id="@+id/TurnAmount"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/tvTurnAmount"
+            android:textColor="@color/theme_back"/>
 
-            <TextView
-                android:id="@+id/TurnAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/red"
-                android:textSize="15dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="昨日/历史转发量"
-                android:textColor="@color/black"
-                android:textSize="13dp" />
+    </RelativeLayout>
 
-        </LinearLayout>
-    </LinearLayout>
-    </LinearLayout>
+
+
      <FrameLayout
         android:id="@+id/layRuleFrag"
         android:layout_width="match_parent"
          android:layout_marginTop="15dp"
         android:onClick="onClick"
         android:clickable="true"
-        android:background="@color/white"
-        android:layout_height="wrap_content" >
+         android:background="@color/bg_gray"
+        android:layout_height="match_parent" >
 
         <TextView
             android:id="@+id/txtDes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/prentice_bg_des"
             android:layout_margin="10dp"
             android:paddingLeft="10dp"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:paddingRight="24dp"
-            android:text="将此拜(邀)师(请)令(码)分享给好友，让其注册时输入，即可收入师门。徒弟每次提现成功后，都会贡献提现金额的10%(由商家补贴)给师傅哦~"
-            android:textColor="@color/black" />
+            android:text="将此邀请码分享给好友，让其注册时输入，即可成为伙伴。伙伴每次浏览或者转发后，都会贡献10%(由商家补贴)给您哦~"
+             />
 
-        <ImageView
-            android:visibility="gone"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="right|bottom"
-                    android:background="@drawable/img_help"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="20dp"
-                    />
+
     </FrameLayout>
 
    

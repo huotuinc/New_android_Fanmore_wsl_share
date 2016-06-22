@@ -76,12 +76,58 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
+
             android:maxLines="2"
             android:text="des\ndes\ndes\ndes"
             android:textColor="@color/blue"
             android:textIsSelectable="false"
             android:textSize="14dp"
             android:textStyle="bold" />
+        <TextView
+            android:id="@+id/txtStore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginTop="5dp"
+            android:textColor="@color/gray4"
+            android:textIsSelectable="false"/>
+        <LinearLayout
+            android:id="@+id/lay_turn_browse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/ic_look"/>
+
+            <TextView
+                android:id="@+id/browseCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:layout_marginRight="5dp"
+                android:textColor="@color/theme_back"/>
+            <ImageView
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_turn"/>
+            <TextView
+                android:layout_marginRight="10dp"
+                android:id="@+id/sendCount"
+                android:textColor="@color/theme_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"/>
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

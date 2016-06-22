@@ -72,7 +72,6 @@ public class TaskAdapter extends BaseAdapter{
 		ImageView imgTask 			= ViewHolderUtil.get(convertView, R.id.imgTask);
 		ProgressBar bar				= ViewHolderUtil.get(convertView, R.id.load_pb);
 		TextView txtTaskName		= ViewHolderUtil.get(convertView, R.id.txtTaskName);
-		TextView txtStoreName		= ViewHolderUtil.get(convertView, R.id.txtStoreName);
 		TextView txtSendCount		= ViewHolderUtil.get(convertView, R.id.txtSendCount);
 		TextView txtDate			= ViewHolderUtil.get(convertView, R.id.txtDate);
 		ImageView imgTagWeiXin		= ViewHolderUtil.get(convertView, R.id.imgTagWeiXin);
@@ -106,8 +105,9 @@ public class TaskAdapter extends BaseAdapter{
 		ImageView imgLineShop 		= ViewHolderUtil.get(convertView, R.id.imgLineShop);
 		LinearLayout layLast		= ViewHolderUtil.get(convertView, R.id.layLast);
 		TextView txtLastScoreDes	= ViewHolderUtil.get(convertView, R.id.txtLastScoreDes);
-
-
+		TextView txtStore           = ViewHolderUtil.get(convertView,R.id.txtStore);
+		TextView browseCount        = ViewHolderUtil.get(convertView,R.id.browseCount);
+		TextView sendCount        = ViewHolderUtil.get(convertView,R.id.sendCount);
 
 
         	 TaskData data = datas.get(position);
@@ -124,24 +124,24 @@ public class TaskAdapter extends BaseAdapter{
 
         	imgTask.setBackgroundResource(R.drawable.picreviewre_fresh_bg);
         	mImageLoader.loadImage(position, imgTask, bar, data.smallImgUrl, Constant.IMAGE_PATH_TASK);
-        	imgTagTop.setVisibility(data.isTop ? View.VISIBLE : View.GONE);
+        	imgTagTop.setVisibility(View.GONE);
         	//设置联盟任务状态
 //        	//test
 //        	if(data.type == 1001000)
 //        		data.status = 9;
 //        	//test end
-        	imgTagTop.setBackgroundResource(data.status == 8 ? R.drawable.tag_over : R.drawable.flag_top);
-        	imgTagTop.setVisibility(data.status == 8 ? View.VISIBLE : View.GONE);
+        	//imgTagTop.setBackgroundResource(data.status == 8 ? R.drawable.tag_over : R.drawable.flag_top);
+        	imgTagTop.setVisibility(View.GONE);
 
         	imgTagWeiXin.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_WEIXIN + "") ? R.drawable.share_ico_weixin : R.drawable.share_ico_weixin);
         	imgTagSina.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_SINA + "") ? R.drawable.share_wechat : R.drawable.share_wechat);
         	imgTagQzone.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_QZONE + "") ? R.drawable.share_ico_qzone : R.drawable.share_ico_qzone);
-
-
+			browseCount.setText(data.browseCount);
+			sendCount.setText(data.sendCount);
         	//layScan.setVisibility(adapterType == TaskAdapterType.Normal ? View.GONE : View.VISIBLE);
         	//bar.setProgress(position *10);
         	txtTaskName.setText(data.taskName);
-			txtStoreName .setText(data.store);
+			txtStore.setText("由["+data.store+"]提供");
 //			txtSend .setText(data.awardSend);
 //			txtScan.setText(data.awardScan);
 //			txtLink .setText(data.awardLink);
@@ -158,14 +158,14 @@ public class TaskAdapter extends BaseAdapter{
 				txtLastScore.setText(data.lastScore);
 			}
 			layMyIncome.setVisibility((adapterType == TaskAdapterType.Normal || (adapterType == TaskAdapterType.Mine && !data.isAccount)) ? View.GONE : View.VISIBLE);
-			imgRight.setVisibility(adapterType == TaskAdapterType.Mine && !data.isAccount ? View.GONE : View.VISIBLE);
+			imgRight.setVisibility(adapterType == TaskAdapterType.Mine && !data.isAccount ? View.GONE : View.GONE);
 			layAlpha.setVisibility(adapterType == TaskAdapterType.Mine && !data.isAccount ? View.VISIBLE : View.GONE);
 			imgLine.setVisibility((adapterType == TaskAdapterType.Normal || (adapterType == TaskAdapterType.Mine && !data.isAccount)) ? View.GONE : View.VISIBLE);
 			//layMyYesIncome.setVisibility(adapterType == TaskAdapterType.Yes ? View.VISIBLE : View.GONE);
 
 			//layScore.setVisibility(data.flagShowSend == 0 ? View.GONE : View.VISIBLE);
 			//总积分<=1时，隐藏积分描述
-			layScore.setVisibility(Double.parseDouble(data.totalScore) <= 1 ? View.VISIBLE : View.VISIBLE);
+			//layScore.setVisibility(Double.parseDouble(data.totalScore) <= 1 ? View.VISIBLE : View.VISIBLE);
 			//不可转发的，隐藏积分，渠道，转发人数布局
 			if(data.flagShowSend == 0)
 				layScore.setVisibility( View.GONE );
@@ -189,61 +189,18 @@ public class TaskAdapter extends BaseAdapter{
 			//状态标记设置
 			setStatus(imgStatusTag, data);
 			//返利栏目没有状态;剩余积分<=0时，隐藏积分描述
-			if(tabType == TabType.Mall){
-				imgStatusTag.setVisibility(View.GONE);
-				if(Double.parseDouble(data.lastScore) <= 0)
-					layScore.setVisibility(View.GONE);
-
-			}
+//			if(tabType == TabType.Mall){
+//				imgStatusTag.setVisibility(View.GONE);
+//				if(Double.parseDouble(data.lastScore) <= 0)
+//					layScore.setVisibility(View.GONE);
+//
+//			}
 			imgLine2.setVisibility(layScore.getVisibility() == View.GONE ? View.GONE : View.VISIBLE);
 
 		return convertView;
 	}
-	private CharSequence getTypeName(int type) {
-		//1000200新手任务,90100求包养,1000100公告
-		switch (type) {
-		case 1000200://新手
-			return "新手";
-		case 1000100://公告
-			return "公告";
-		case 1001000://联盟
-			return "联盟";
-		case 90100:
-			return "求包养";
-		case 1000300:
-			return "闪购";
-
-		default:
-			return "活动";
-		}
-	}
 	private void setStatus(ImageView imgStatusTag, TaskData data) {
 		imgStatusTag.setVisibility(View.GONE);
-		if(adapterType == TaskAdapterType.Mine ){//我的参与
-			if(data.isAccount){//已结算
-				//4任务终结,5任务取消,6积分用完
-				if( data.status == 4 || data.status == 5 || data.status == 6){
-					imgStatusTag.setVisibility(View.VISIBLE);
-					imgStatusTag.setBackgroundResource(R.drawable.task_tag_over);
-				}
-			}else{
-				imgStatusTag.setVisibility(View.VISIBLE);
-				imgStatusTag.setBackgroundResource(R.drawable.task_tag_not_account);
-			}
-
-		}else{
-			if(data.isSend){//是否已转发
-				imgStatusTag.setVisibility(View.VISIBLE);
-				imgStatusTag.setBackgroundResource(R.drawable.task_send_tag);
-			}else if(Double.parseDouble(data.lastScore) <= 0){//积分是否用完
-				imgStatusTag.setVisibility(View.VISIBLE);
-				imgStatusTag.setBackgroundResource(R.drawable.task_scoreover_tag);
-			}
-		}
-		//不可转发，不显示状态
-		if(data.flagShowSend == 0 && adapterType != TaskAdapterType.Mine ){
-			imgStatusTag.setVisibility(View.GONE);
-		}
 
 
 	}

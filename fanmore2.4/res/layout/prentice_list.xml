@@ -25,7 +25,7 @@
                 android:ellipsize="end"
                 android:maxWidth="300dp"
                 android:singleLine="true"
-                android:text="徒弟列表"
+                android:text="伙伴列表"
                 android:textColor="@color/white"
                 android:textSize="18dp" />
 

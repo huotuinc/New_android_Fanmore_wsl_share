@@ -2,14 +2,13 @@ package cy.com.morefan.service;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.InterfaceAddress;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -21,7 +20,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import cy.com.morefan.MainApplication;
 import cy.com.morefan.bean.AllScoreData;
 import cy.com.morefan.bean.AwardData;
 import cy.com.morefan.bean.BuyData;
@@ -30,9 +28,7 @@ import cy.com.morefan.bean.FeedbackData;
 import cy.com.morefan.bean.HistoryData;
 import cy.com.morefan.bean.MyJSONObject;
 import cy.com.morefan.bean.PartInItemData;
-import cy.com.morefan.bean.PrenticeContriData;
 import cy.com.morefan.bean.PrenticeData;
-import cy.com.morefan.bean.PrenticeTopData;
 import cy.com.morefan.bean.PushMsgData;
 import cy.com.morefan.bean.RankData;
 import cy.com.morefan.bean.ShakePrenticeData;
@@ -44,11 +40,10 @@ import cy.com.morefan.bean.UserBaseInfoList;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.bean.UserSelectData;
 import cy.com.morefan.bean.WalletData;
-import cy.com.morefan.constant.BusinessStatic;
+import cy.com.morefan.bean.WeekTaskData;
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.util.L;
-import cy.com.morefan.util.PreferenceHelper;
 import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.util.TimeUtil;
 import cy.com.morefan.util.Util;
@@ -315,6 +310,7 @@ public class UserService extends BaseService{
 				    	 if(resultCode == 1){
 							int status = data.getInt("status");
 							if (status == 1) {
+								UserData.getUserData().picUrl=data.getJSONObject("resultData").getString("picUrl");
 								listener.onDataFinish(BusinessDataListener.DONE_COMMIT_PHOTO,null, null, null);
 							} else {
 								listener.onDataFailed(BusinessDataListener.ERROR_COMMIT_PHOTO,data.getString("tip"), null);
@@ -337,7 +333,7 @@ public class UserService extends BaseService{
 	 * 我的兑换
 	 * @param loginCode
 	 * @param pageSize
-	 * @param  autoId 提现表自增id（分页用）
+	 * @param  pageTag 提现表自增id（分页用）
 	 */
 	public void getExpHistory(final String loginCode, final String pageTag, final int pageSize){
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
@@ -803,7 +799,69 @@ public class UserService extends BaseService{
 
 
 	}
+	public void WeekTask(final String loginCode){
 
+		ThreadPoolManager.getInstance().addTask(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					String url = Constant.IP_URL + "/Api.ashx?req=WeekTask" + CONSTANT_URL();
+					JSONObject jsonUrl = new JSONObject();
+					jsonUrl.put("loginCode", loginCode);
+					url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
+
+					MyJSONObject data = getDataFromSer(url);
+					if(data != null){
+						int resultCode = data.getInt("resultCode");
+						if (resultCode == 1) {
+							int status = data.getInt("status");
+							if (status == 1) {
+								JSONArray array = data.getJSONArray("resultData");
+								int length = array.length();
+								WeekTaskData[] results = new WeekTaskData[length];
+								for(int i = 0; i < length; i++) {
+									MyJSONObject tip = (MyJSONObject) array.getJSONObject(i);
+									WeekTaskData itemData = new WeekTaskData();
+									itemData.id = tip.getInt("id");
+									itemData.title = tip.getString("title");
+									itemData.sort = tip.getInt("sort");
+									itemData.myFinishCount = tip.getInt("myFinishCount");
+									itemData.target = tip.getInt("target");
+
+									results[i] = itemData;
+								}
+
+								Arrays.sort(results, new Comparator<WeekTaskData>() {
+									@Override
+									public int compare(WeekTaskData lhs, WeekTaskData rhs) {
+										if( lhs.sort > rhs.sort ) return 1;
+										else if( lhs.sort == rhs.sort) return 0;
+										else return -1;
+									}
+								});
+
+
+
+								listener.onDataFinish(BusinessDataListener.DONE_GET_WEEKTASK, null, results, null);
+							}else{
+								listener.onDataFailed(BusinessDataListener.ERROR_GET_WEEKTASK, data.getString("tip"), null);
+							}
+						}else{
+							String description = data.getString("description");
+							listener.onDataFailed(BusinessDataListener.ERROR_GET_WEEKTASK, description, null);
+						}
+					}else
+						listener.onDataFailed(BusinessDataListener.ERROR_GET_WEEKTASK, ERROR_NET, null);
+
+				} catch (Exception e) {
+					listener.onDataFailed(BusinessDataListener.ERROR_GET_WEEKTASK, ERROR_DATA, null);
+					e.printStackTrace();
+				}
+			}
+		});
+
+
+	}
 	public void getPushMsg(final String loginCode, final int pageIndex, final int pageSize){
 
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
@@ -890,7 +948,7 @@ public class UserService extends BaseService{
 	/**
 	 *
 	 * @param loginCode
-	 * @param type1：每日积分排名
+	 * @param type 1：每日积分排名
                    2：总积分排名
                    3：收徒排名
 
@@ -901,32 +959,12 @@ public class UserService extends BaseService{
 			@Override
 			public void run() {
 				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=RANKING" + CONSTANT_URL();
+					String url = Constant.IP_URL + "/Api.ashx?req=ranking" + CONSTANT_URL();
 					JSONObject jsonUrl = new JSONObject();
 					jsonUrl.put("loginCode", loginCode);
 					jsonUrl.put("type", type);
 					url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 					L.i("RANKING:" + url);
-//					Thread.sleep(3000);
-//					//test
-//					RankData[] datas = new RankData[20];
-//
-//					for(int i = 0; i< 20 ; i++){
-//						RankData rankData = new RankData();
-//						rankData.rank = i *10 + "\n积分";
-//						rankData.name1 = i+ "name1";
-//						rankData.name2 = i + "name2";
-//						datas[i] = rankData;
-//					}
-//					Bundle extra = new Bundle();
-//					extra.putInt("myRank", 3);
-//					extra.putString("des", "test desc");
-//					listener.onDataFinish(BusinessDataListener.DONE_GET_RANK, null, datas, extra);
-//					//test end
-
-
-
-
 					MyJSONObject data = getDataFromSer(url);
 					if(data != null){
 						int resultCode = data.getInt("resultCode");
@@ -934,31 +972,31 @@ public class UserService extends BaseService{
 							int status = data.getInt("status");
 							if (status == 1) {
 								MyJSONObject json = data.getJSONObject("resultData");
+								MyJSONObject myrank =json.getJSONObject("myRank");
 								Bundle extra = new Bundle();
-								extra.putInt("myRank", json.getInt("myRank"));
-								extra.putString("des", json.getString("des"));
-
-								JSONArray array = json.getJSONArray("rankData");
+								if (myrank==null) {
+									return;
+								}else {
+									extra.putString("myRankvalue", myrank.getString("rankValue"));
+									extra.putString("myRanklogo", myrank.getString("logo"));
+									extra.putString("myRankname", myrank.getString("name"));
+									extra.putString("myRankDes", myrank.getString("value"));
+								}
+								JSONArray array = json.getJSONArray("rankList");
 								int length = array.length();
 								RankData[] results = new RankData[length];
 								for(int i = 0; i < length; i++){
 									MyJSONObject tip = (MyJSONObject) array.getJSONObject(i);
 									RankData itemData = new RankData();
-									String unit = type == 3 ? "\n人" : "\n积分";
-									itemData.rank = tip.getString("value") + unit;
-									String names = tip.getString("names");
-									int index = names.indexOf(",");
-									if(index < 0){
-										itemData.name1 = names;
-										itemData.name2 = "";
-									}else{
-										itemData.name1 = names.substring(0, index);
-										itemData.name2 =  names.substring(index + 1);
-									}
-
+									itemData.rankValue = tip.getInt("rankValue");
+									itemData.value =tip.getInt("value");
+									itemData.name =tip.getString("name");
+									itemData.logo =tip.getString("logo");
 
 									results[i] = itemData;
 								}
+
+								extra.putSerializable("list", results);
 								listener.onDataFinish(BusinessDataListener.DONE_GET_RANK, null, results, extra);
 
 
@@ -983,9 +1021,8 @@ public class UserService extends BaseService{
 	}
 	/**
 	 *
+	 * @param buyData
 	 * @param loginCode
-	 * @param pageTag  默认-1
-	 * @param pageSize
 	 */
 	public void getMallDetail(final BuyData buyData, final String loginCode){
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
@@ -1492,7 +1529,7 @@ public class UserService extends BaseService{
 									taskData.creatTime = Util.DateFormat(time);
 									taskData.dayCount = Util.getDayCount(time);
 									taskData.dayDisDes = Util.getDayDisDes(time);
-									taskData.sendCount = tip.getInt("sendAmount");
+									taskData.sendCount = tip.getString("sendAmount");
 									String sendList = tip.getString("sendList");
 									if(TextUtils.isEmpty(sendList)){
 										taskData.channelIds = new ArrayList<String>();
@@ -1600,7 +1637,7 @@ public class UserService extends BaseService{
 									MyJSONObject tip = (MyJSONObject) jsonArray.get(i);
 									AllScoreData scoreData = new AllScoreData();
 									scoreData.scanCount = tip.getInt("browseAmount");
-									scoreData.score = Util.opeDouble(tip.getDouble("totalScore"));//tip.getInt("totalScore");
+									scoreData.score = Util.opeDouble(tip.getDouble("browseAmount"));//tip.getInt("totalScore");
 									scoreData.date = tip.getString("date").split(" ")[0];
 									allScoreDatas.add(scoreData);
 									//scoreData.extra = tip.getString("extra").replaceAll(":", "").replaceAll("\\^", "\n");
@@ -1710,7 +1747,7 @@ public class UserService extends BaseService{
                             //更新内存量
 							try {
 								JSONObject resultData =data.getJSONObject("resultData");
-								UserData.getUserData().todayScanCount = resultData.getInt("count");
+								UserData.getUserData().TaskCount = resultData.getInt("count");
 							} catch (JSONException e) {
 								e.printStackTrace();
 							}
@@ -1731,12 +1768,62 @@ public class UserService extends BaseService{
 			}
 		});
 	}
+	public void GetUserTodayBrowseCount(final String loginCode) {
+		ThreadPoolManager.getInstance().addTask(new Runnable() {
 
+			@Override
+			public void run() {
+				try {
+				String url = Constant.IP_URL + "/Api.ashx?req=GetUserTodayBrowseCount" + CONSTANT_URL();
+				JSONObject jsonUrl = new JSONObject();
+
+					jsonUrl.put("loginCode", loginCode);
+
+				try {
+					url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+				L.i("GetUserTodayBrowseCount:" + url);
+
+				MyJSONObject data = getDataFromSer(url);
+				if(data != null){
+					int resultCode = data.getInt("resultCode");
+					if (resultCode == 1) {
+						int status = data.getInt("status");
+						if (status == 1) {
+							//更新内存量
+							try {
+								JSONObject resultData =data.getJSONObject("resultData");
+								UserData.getUserData().todayScanCount = resultData.getInt("count");
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+
+
+							listener.onDataFinish(BusinessDataListener.DONE_GET_SCANCOUNT, null, null, null);
+						}else{
+							listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK_LIST, data.getString("tip"), null);
+						}
+					}else{
+						String description = data.getString("description");
+						listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK_LIST, description, null);
+					}
+				}else
+					listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK_LIST, ERROR_NET, null);
+				} catch (JSONException e) {
+					listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK_LIST, ERROR_DATA, null);
+					e.printStackTrace();
+				}
+
+			}
+		});
+	}
 	/**
 	 *
-	 * @param name
-	 * @param contact
-	 * @param content
+	 * @param loginCode
+	 * @param pageSize
+	 * @param autoId
 	 */
 	public void FeedbackList(final String loginCode, final int pageSize, final String autoId) {
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
@@ -2011,7 +2098,6 @@ public class UserService extends BaseService{
 	}
 	/**
 	 * 获取用户基本信息
-	 * @param taskId
 	 * @param loginCode
 	 */
 	public void getUserBaseInfo(final String loginCode){
@@ -2103,12 +2189,12 @@ public class UserService extends BaseService{
 	/**
 	 *
 	 * @param loginCode
-	 * @param name姓名
-	 * @param sex性别
-	 * @param age年龄
-	 * @param job工作
-	 * @param fav爱好
-	 * @param income收入范围
+	 * @param name 姓名
+	 * @param sex 性别
+	 * @param age 年龄
+	 * @param job 工作
+	 * @param fav 爱好
+	 * @param income 收入范围
 	 */
 	public void modifyUserInfo(final Type type, final UserSelectData selectData, final String loginCode, final String name, final String sex, final String age, final String job, final String fav, final String income){
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
@@ -2415,7 +2501,7 @@ public class UserService extends BaseService{
 	/**
 	 * 解除手机号绑定
 	 * @param loginCode
-	 * @param payAccount
+	 * @param phone
 	 * @param code
 	 */
 	public void userUnBindPhone(final String loginCode, final String phone, final String code){
@@ -2468,8 +2554,8 @@ public class UserService extends BaseService{
 	/**
 	 * 我的兑换
 	 * @param loginCode
-	 * @param pageSize
-	 * @param autoId 提现表自增id（分页用）
+	 * @param pageTag
+	 * @param pageSize 提现表自增id（分页用）
 	 */
 	public void userCashHistory(final String loginCode, final String pageTag, final int pageSize){
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
@@ -2553,7 +2639,7 @@ public class UserService extends BaseService{
 			 * 收藏/取消收藏商家
 			 * @param loginCode
 			 * @param storeId 商家id
-			 * @param type 0：收藏;1：取消收藏
+			 * @param isFav 0：收藏;1：取消收藏
 			 */
 	public void userFavOrNotStore(final String loginCode, final String storeId, final boolean isFav){
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
@@ -2604,9 +2690,9 @@ public class UserService extends BaseService{
 	}
 	/**
 	 * 修改密码
+	 * @param mContext
 	 * @param loginCode
-	 * @param payAccount
-	 * @param code
+	 * @param newPwd
 	 */
 	public void userModifyPwd(final Context mContext, final String loginCode, final String newPwd){
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
@@ -2721,11 +2807,7 @@ public class UserService extends BaseService{
 	}
 
 
-	/**
-	 * 积分提现
-	 * @param loginCode
-	 * @param crashPwd
-	 */
+
 //	public void userToCrash(final String loginCode, final String crashPwd){
 //		ThreadPoolManager.getInstance().addTask(new Runnable() {
 //
@@ -2903,7 +2985,7 @@ public class UserService extends BaseService{
 	/**
 	 * 绑定手机号
 	 * @param loginCode
-	 * @param payAccount
+	 * @param phone
 	 * @param code
 	 */
 	public void userBindPhone(final String loginCode, final String phone, final String code){
@@ -3006,6 +3088,49 @@ public class UserService extends BaseService{
 			}
 		});
 
+	}
+	/**
+	 * 检查验证码是否有效
+	 */
+	public void checkverifyCode(final String verifycode, final String mobile){
+		ThreadPoolManager.getInstance().addTask(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					String url = Constant.IP_URL + "/Api.ashx?req=CHECKVERIFYCODE" + CONSTANT_URL();
+					JSONObject jsonUrl = new JSONObject();
+					jsonUrl.put("verifyCode",verifycode);
+					jsonUrl.put("mobile", mobile);
+					try {
+						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}
+					L.i(">>>>>>getCode:" + url);
+					MyJSONObject data = getDataFromSer(url);
+					if(data != null){
+						int resultCode = data.getInt("resultCode");
+						if (resultCode == 1) {
+							int status = data.getInt("status");
+							if (status == 1) {
+								listener.onDataFinish(BusinessDataListener.DONE_CHECK_VERIFYCODE, data.getString("tip"), null, null);
+							}else{
+								listener.onDataFailed(BusinessDataListener.ERROR_CHECK_VERIFYCODE, data.getString("tip"), null);
+							}
+						}else{
+							listener.onDataFailed(BusinessDataListener.ERROR_CHECK_VERIFYCODE, data.getString("description"), null);
+						}
+
+					}else{
+						listener.onDataFailed(BusinessDataListener.ERROR_CHECK_VERIFYCODE, ERROR_NET, null);
+					}
+				} catch (Exception e) {
+					listener.onDataFailed(BusinessDataListener.ERROR_CHECK_VERIFYCODE, ERROR_DATA, null);
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	/**
 	 * 获取验证码
@@ -3171,8 +3296,8 @@ public class UserService extends BaseService{
 			}
 		});
 	}
-	public void userMoblieReg(final Context mContext, final String phone, final String code,
-						final String invitationCode){
+	public void userMoblieReg(final Context mContext, final String mobile, final String verifyCode,
+							  final String password,final int isUpdate,final String invitationCode,final String token){
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
 
 			@Override
@@ -3180,17 +3305,12 @@ public class UserService extends BaseService{
 				try {
 					String url = Constant.IP_URL + "/Api.ashx?req=MobileRegister" + CONSTANT_URL();
 					JSONObject jsonUrl = new JSONObject();
-					//System.out.println(loginCode);
-
-
-					jsonUrl.put("mobile",phone );
-					//jsonUrl.put("psd", psd);
-					jsonUrl.put("verifyCode", code);
-					jsonUrl.put("invitationCode", invitationCode);
-//					jsonUrl.put("unionId",unionid);
-//					jsonUrl.put("openid",openid);
-//					jsonUrl.put("picUrl",picUrl);
-//					jsonUrl.put("nickname",nickname);
+					jsonUrl.put("mobile",mobile );
+					jsonUrl.put("verifyCode", verifyCode);
+					jsonUrl.put("password", password);
+					jsonUrl.put("isUpdate",isUpdate);
+					jsonUrl.put("invitationCode",invitationCode);
+					jsonUrl.put("token",token);
 					try {
 						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 					} catch (UnsupportedEncodingException e) {
@@ -3204,16 +3324,19 @@ public class UserService extends BaseService{
 						if (resultCode == 1) {
 							int status = data.getInt("status");
 							if (status == 1) {
-								String loginCode= data.getJSONObject("resultData").getString("loginCode");
-								String loginUsername = data.getJSONObject("resultData").getString("userName");
+								String mallUserId=String.valueOf(data.getJSONObject("resultData").getString("mallUserId"));
 								String unionId=data.getJSONObject("resultData").getString("unionId");
 
+								String loginCode= data.getJSONObject("resultData").getString("loginCode");
+								String loginUsername = data.getJSONObject("resultData").getString("userName");
+								boolean isSuper=data.getJSONObject("resultData").getBoolean("isSuper");
 								loginCode = loginCode.split("\\^")[1];
 								setUserData(loginUsername, loginCode, data.getJSONObject("resultData"));
 								//本地保存
 								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME, loginUsername);
 								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, loginCode);
 								SPUtil.saveStringToSpByName(mContext,Constant.SP_NAME_NORMAL,Constant.SP_NAME_UnionId,unionId);
+								SPUtil.saveStringToSpByName(mContext,Constant.SP_NAME_NORMAL,Constant.SP_NAME_BuserId,mallUserId);
 								listener.onDataFinish(BusinessDataListener.DONE_USER_REG, null, null, null);
 							}else{
 								L.i(">>>tip:" + data.getString("tip"));
@@ -3285,16 +3408,16 @@ public class UserService extends BaseService{
 		});
 	}
 
-	public void MobileLogin(final Context mContext, final String mobile, final String verifyCode ){
+	public void MobileLogin(final Context mContext, final String pwd, final String userName ){
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
 
 			@Override
 			public void run() {
 				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=MobileLogin" + CONSTANT_URL();
+					String url = Constant.IP_URL + "/Api.ashx?req=Login" + CONSTANT_URL();
 					JSONObject jsonUrl = new JSONObject();
-					jsonUrl.put("mobile",mobile );
-					jsonUrl.put("verifyCode", verifyCode);
+					jsonUrl.put("pwd",pwd );
+					jsonUrl.put("userName", userName);
 
 					try {
 						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
@@ -3310,15 +3433,28 @@ public class UserService extends BaseService{
 							if (status == 1) {
 								String loginCode= data.getJSONObject("resultData").getString("loginCode");
 								loginCode = loginCode.split("\\^")[1];
-								setUserData(mobile, loginCode, data.getJSONObject("resultData"));
+								setUserData(userName, loginCode, data.getJSONObject("resultData"));
 								String mallUserId=String.valueOf(data.getJSONObject("resultData").getString("mallUserId"));
 								String unionId=data.getJSONObject("resultData").getString("unionId");
-								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME, mobile);
+								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME, userName);
 								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, loginCode);
 								SPUtil.saveStringToSpByName(mContext,Constant.SP_NAME_NORMAL,Constant.SP_NAME_BuserId,mallUserId);
 								SPUtil.saveStringToSpByName(mContext,Constant.SP_NAME_NORMAL,Constant.SP_NAME_UnionId,unionId);
 								listener.onDataFinish(BusinessDataListener.DONE_TO_MOBLIELOGIN, null, null, null);
-							}else if (status==54003){
+							}
+							else if (status == 90003) {
+								String loginCode= data.getJSONObject("resultData").getString("loginCode");
+								loginCode = loginCode.split("\\^")[1];
+								setUserData(userName, loginCode, data.getJSONObject("resultData"));
+								String mallUserId=String.valueOf(data.getJSONObject("resultData").getString("mallUserId"));
+								String unionId=data.getJSONObject("resultData").getString("unionId");
+								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME, userName);
+								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, loginCode);
+								SPUtil.saveStringToSpByName(mContext,Constant.SP_NAME_NORMAL,Constant.SP_NAME_BuserId,mallUserId);
+								SPUtil.saveStringToSpByName(mContext,Constant.SP_NAME_NORMAL,Constant.SP_NAME_UnionId,unionId);
+								listener.onDataFinish(BusinessDataListener.DONE_TO_MOBLIELOGIN, null, null, null);
+							}
+							else if (status==54003){
 								listener.onDataFinish(BusinessDataListener.NULL_USER,data.getString("tip"),null,null);
 							}
 							else{

@@ -8,9 +8,21 @@ import android.R.integer;
 
 public class TaskData implements BaseData, Serializable {
 	/**
+	 * 转发按钮
+	 */
+	public int ShowTurnButton;
+	/**
+	 * 任务浏览量
+	 */
+	public String browseCount;
+	/**
 	 * 总积分
 	 */
 	public String totalScore;
+	/**
+	 * 任务Id
+	 */
+	public int taskId;
 	/**
 	 * 剩余积分
 	 */
@@ -44,7 +56,10 @@ public class TaskData implements BaseData, Serializable {
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-
+	/**
+	 * 当前页数
+	 */
+	public int pageIndex;
 	/**
 	 * 主键id
 	 */
@@ -123,7 +138,7 @@ public class TaskData implements BaseData, Serializable {
 	/**
 	 * 转发量
 	 */
-	public int sendCount;
+	public String sendCount;
 	/**
 	 * 微信公众号原始id
 	 */
@@ -210,5 +225,6 @@ public class TaskData implements BaseData, Serializable {
 		}
 		return super.equals(o);
 	}
+
 
 }

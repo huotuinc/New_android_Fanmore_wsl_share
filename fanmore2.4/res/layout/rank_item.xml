@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ff565656"
+    android:background="@color/white"
     android:orientation="horizontal"
     tools:context=".AllScoreActivity" >
 
@@ -10,53 +10,51 @@
         android:id="@+id/lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rank_item_top1_bg"
         android:gravity="center_vertical"
         android:padding="10dp" >
 
-        <ImageView
+        <TextView
             android:id="@+id/imgIndex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="40dp"
+            android:minWidth="20dp"
             android:scaleType="center"
-            android:src="@drawable/index_0" />
+             />
+        <ImageView
+            android:layout_toRightOf="@+id/imgIndex"
+            android:id="@+id/imgRankuser"
+            android:layout_width="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/img" />
+
+
+
+
+            <TextView
+                android:layout_toRightOf="@+id/imgRankuser"
+                android:id="@+id/txtName1"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="name1"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
 
         <TextView
             android:id="@+id/txtDes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:gravity="center"
-            android:text="10000\n积分"
+            android:text=""
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
             android:textColor="@color/black"
-            android:textSize="14dp" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="37dp"
-            android:layout_marginLeft="20dp"
-            android:gravity="center_vertical"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/txtName1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="name1"
-                android:textColor="@color/black"
-                android:textSize="15dp" />
-
-            <TextView
-                android:id="@+id/txtName2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="name2name2name2name2name2name2name2name2name2name2name2name2name2name2"
-                android:textColor="@color/gray_my" />
-        </LinearLayout>
+            android:textSize="14dp"
+             />
     </LinearLayout>
 
 </LinearLayout>

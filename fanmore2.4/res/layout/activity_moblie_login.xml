@@ -1,0 +1,93 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:cy="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="cy.com.morefan.MoblieLoginActivity">
+
+    <FrameLayout android:id="@+id/ff1" style="@style/TitleStyle">
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="登录"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:textIsSelectable="false"
+        android:textSize="18dp" />
+    </FrameLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="30dp"
+        android:background="@color/gray"/>
+    <com.huotu.android.library.libedittext.EditText
+        android:id="@+id/edtPhone"
+        style="@style/CyEditTextStyle"
+        cy:style="transparent"
+        android:drawableLeft="@drawable/ic_login_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="13dp"
+        android:hint="手机号码"
+        android:imeOptions="actionNext"
+        android:inputType="phone"
+        android:maxLength="11"
+        android:textColor="@color/black" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray"/>
+    <com.huotu.android.library.libedittext.EditText
+        android:id="@+id/edtCode"
+        style="@style/CyEditTextStyle"
+        cy:style="transparent"
+        android:drawableLeft="@drawable/ic_login_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="13dp"
+        android:hint="登录密码"
+        android:imeOptions="actionNext"
+        android:inputType="textPassword"
+        android:maxLength="20"
+        android:textColor="@color/black" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray"/>
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_red_sel"
+        android:clickable="true"
+        android:onClick="onClickButton"
+        android:text="立即登录"
+        android:textColor="@color/white"
+        android:textSize="18dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/Txt_reg"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="注册"/>
+        <TextView
+            android:layout_alignParentRight="true"
+            android:id="@+id/Txt_forget_psw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="忘记密码？"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"/>
+    </RelativeLayout>
+
+</LinearLayout>

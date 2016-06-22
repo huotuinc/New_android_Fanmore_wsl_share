@@ -25,12 +25,13 @@ public class Constant {
 	 */
 	//public static final String IP_URL = "http://taskapi.fancat.cn";
 	//public static final String IP_URL = "http://api.fanmore.cn";
-	public static final String IP_URL ="http://192.168.1.6:8050";
+	//public static final String IP_URL ="http://192.168.1.6:8050";
 	//public static final String IP_URL ="http://192.168.3.2:8050";
+	//public static final String IP_URL ="http://api.guo.fancat.cn:8084";
 	/**
 	 * 正式url
 	 */
-	//public static final String IP_URL ="http://taskapi.silk08.com";
+	public static final String IP_URL ="http://taskapi.fhsilk.com";
 
 	public static final String OPERATION = "HuoTu2013AD";
 	public static final String QD = "huotu";
@@ -60,7 +61,7 @@ public class Constant {
 	public static final int BACK_TIME_DIS = 30 * 60;//后台返回需刷新数据的时间间隔(单位s)
 
 	public final static String SP_NAME_LOADING = "MFSP_LOADING";//sp内容会被不定期清理
-	public final static String SP_NAME_NORMAL = "MFSP_NORMAL  ";//sp内容不会被清理
+	public final static String SP_NAME_NORMAL = "MFSP_NORMAL";//sp内容不会被清理
 	public final static String SP_NAME_SINA_TOKEN = "MFSP_SINA_TOKEN";//sp内容不会被清理
 	public final static String SP_NAME_BACK_TIME = "MFSP_BACK_TIME";//切换至后台的时间点
 	public final static String SP_NAME_PUSH_SWITCH = "MFSP_PUSH_SWITCH";//推送设置
@@ -293,7 +294,6 @@ public class Constant {
 		 * app系统配置
 		 */
 		public static final String SYS_INFO    = "sysInfo";
-		public static final String SYS_PACKAGE = "com.wensli.fanmore";
 		public static final String FIRST_OPEN  = "firstOpen";
 
 		/**

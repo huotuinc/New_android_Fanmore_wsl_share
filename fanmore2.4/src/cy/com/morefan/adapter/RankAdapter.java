@@ -7,6 +7,8 @@ import cy.com.morefan.bean.RankData;
 import cy.com.morefan.util.DensityUtil;
 import cy.com.morefan.util.L;
 import cy.com.morefan.util.ViewHolderUtil;
+import cy.com.morefan.view.ImageLoad;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -67,44 +69,114 @@ public class RankAdapter extends BaseAdapter{
 	}
 
 	@Override
+	public int getViewTypeCount() {
+		//return super.getViewTypeCount();
+		return 2;
+
+	}
+
+	@Override
+	public int getItemViewType(int position) {
+		//return super.getItemViewType(position);
+		return datas.get(position).type;
+	}
+
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+
+
+
+		int type= getItemViewType(position);
+		if(type==0){
+			return  getView0( convertView,position);
+
+		}else {
+			return getView1(convertView,position);
+		}
+
+
+
+
+
+
+
+
+
+
+		//return convertView;
+	}
+
+
+	protected View getView0(View convertView, int position){
+
 		if(convertView == null){
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.rank_item, null);
 		}
-		ImageView imgIndex = ViewHolderUtil.get(convertView, R.id.imgIndex);
+
+
+		TextView imgIndex = ViewHolderUtil.get(convertView, R.id.imgIndex);
+		ImageView imgRankuser = ViewHolderUtil.get(convertView,R.id.imgRankuser);
 		TextView txtDes = ViewHolderUtil.get(convertView, R.id.txtDes);
 		TextView txtName1 = ViewHolderUtil.get(convertView, R.id.txtName1);
-		TextView txtName2 = ViewHolderUtil.get(convertView, R.id.txtName2);
+
 		LinearLayout lay = ViewHolderUtil.get(convertView, R.id.lay);
 
 		RankData data = datas.get(position);
-		imgIndex.setImageBitmap(getIndexImage(position + 1));
+		if (TextUtils.isEmpty(data.logo)){
+			imgRankuser.setImageResource(R.drawable.user_icon);
+		}else {
+			ImageLoad.loadLogo(data.logo, imgRankuser, mContext);
+		}
+		imgIndex.setBackgroundResource(getIndexImage(position ));
 		lay.setBackgroundResource(getBgRes(position));
-		txtDes.setText(data.rank);
-		txtName1.setText(data.name1);
-		txtName2.setText(data.name2);
-		txtName2.setVisibility(TextUtils.isEmpty(data.name2) ? View.GONE : View.VISIBLE);
-
+		txtDes.setText(String.valueOf((data.value))+"次");
+		txtName1.setText(data.name);
 
 		return convertView;
 	}
+
+	protected View getView1(View convertView, int position){
+
+		if(convertView == null){
+			convertView = LayoutInflater.from(mContext).inflate(R.layout.rank_item_2, null);
+		}
+		RankData data = datas.get(position);
+		ImageView myRanklogo =  ViewHolderUtil.get(convertView,R.id.myRanklogo);
+		TextView myRankname =  ViewHolderUtil.get(convertView,R.id.myRankname);
+		TextView myRankDes =  ViewHolderUtil.get(convertView,R.id.myRankDes);
+		TextView myRankvalue =  ViewHolderUtil.get(convertView,R.id.myRankvalue);
+		myRankDes.setText(data.myRankDes);
+		myRankname.setText("我");
+		myRankvalue.setText(data.myRankvalue);
+		if (TextUtils.isEmpty(data.logo)){
+			myRanklogo.setImageResource(R.drawable.user_icon);
+		}else {
+			ImageLoad.loadLogo(data.logo, myRanklogo, mContext);
+		}
+		return convertView;
+	}
+
+
 	private int getBgRes(int position) {
 
 		if(0 == position){//第0项
-			return (myIndex- 1) == position ? R.drawable.rank_item_top1_bg_my : R.drawable.rank_item_top1_bg;
-		}else if(0 == position%2){//偶数项
-			return (myIndex- 1) == position ? R.drawable.rank_item_even_bg_my : R.drawable.rank_item_even_bg;
-		}else{
-			return (myIndex- 1) == position ? R.drawable.rank_item_odd_my : R.drawable.rank_item_odd_bg;
+			return  R.color.gray_list_bg ;
+		}
+		if (1== position){
+			return  R.color.gray_list_bg;
+		}if (2==position){
+			return R.color.gray_list_bg;
+		}if (3==position){
+			return R.color.gray_list_bg;
+		}else {
+			return R.color.white;
 		}
 	}
-	private Bitmap getIndexImage(int index){
-		Bitmap bitmapTen = null;
-		int ten = index/10;
-		if(0 != ten )
-			bitmapTen = getBitmap(ten);
-		Bitmap bitmap = getBitmap(index%10);
-		return bitmapTen == null ? bitmap : add2Bitmap(bitmapTen, bitmap);
+	private int getIndexImage(int position){
+
+			return indexRes[(position)%10];
+
+
 	}
 	private Bitmap getBitmap(int index){
 		return BitmapFactory.decodeResource(mContext.getResources(), indexRes[index]);

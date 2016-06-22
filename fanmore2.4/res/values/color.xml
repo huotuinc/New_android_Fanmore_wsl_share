@@ -15,7 +15,7 @@
     <color name="gray5">#ff989898</color>
      <color name="gray_e">#ffeeeeee</color>
     <color name="gray_my">#ff616467</color>
-    <color name="gray_list_bg">#ffdbdbdb</color>
+    <color name="gray_list_bg">#fff6f4f5</color>
      <color name="yellow_my">#fffe8706</color>
 
      <color name="yellow_send">#FFAE02</color>
@@ -33,5 +33,6 @@
     <color name="dialog_bg">#ffe9e9e9</color>
      <color name="dialog_press_bg">#ffd2d2d2</color>
      <color name="yellow_check">#ffffad03</color>
+    <color name="theme_back">#ff4e00</color>
 
 </resources>

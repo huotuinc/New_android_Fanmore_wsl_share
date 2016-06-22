@@ -1,11 +1,11 @@
 package cy.com.morefan.frag;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import cy.com.morefan.BaseActivity;
 import cy.com.morefan.HomeActivity;
+
 import cy.com.morefan.R;
 import cy.com.morefan.TaskDetailActivity;
 import cy.com.morefan.adapter.TaskAdapter;
@@ -53,12 +53,12 @@ import android.widget.PopupWindow.OnDismissListener;
 public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRefreshOrLoadListener, Callback, OnClickListener, BroadcastListener{
 
 	public enum TabType{
-		Task, Mall
+		mr,jljf,zfrs,syjf
 	}
 	private TabType tabType;
 	private static TaskFrag frag;
 	private View mRootView;
-	private int oldTaskId;//客户端现有发布时间最早任务id（做分页用）
+	private int pageIndex;//客户端现有发布时间最早任务id（做分页用）
 	private TaskService taskService;
 	private PullDownUpListView listView;
 	private TaskAdapter adapter;
@@ -69,15 +69,25 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 	private ImageView layEmpty;
 	private MyBroadcastReceiver myBroadcastReceiver;
 	private int taskType;
-//	public enum TaskType{
-//		All,Hot,Recommend,Active, Scoreful
-//	}
-	//private TaskType currentTaskType;
-//	public static TaskFrag newInstance(){
-//		if(frag == null)
-//			frag = new TaskFrag();
-//		return frag;
-//	}
+	private int taskStaus=1;
+	private int userId=0;
+
+	public void setTaskStatus(int taskStatus){
+		this.taskStaus = taskStatus;
+	}
+	public void setUserid(int userId){
+		this.userId = userId;
+	}
+
+	public enum TaskType{
+		mr,jljf,zfrs,syjf
+	}
+	private TaskType currentTaskType;
+	public static TaskFrag newInstance(){
+		if(frag == null)
+			frag = new TaskFrag();
+		return frag;
+	}
 	public PullDownUpListView getListView(){
 		return this.listView;
 	}
@@ -86,19 +96,22 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 	public boolean handleMessage(Message msg){
 		if (msg.what == BusinessDataListener.DONE_GET_TASK_LIST) {
 			dismissProgress();
-			if (oldTaskId == 0){
-				datas.clear();
-				if(getActivity() != null)
-					((HomeActivity)getActivity()).setScores();
-			}
-
 			TaskData[] results = (TaskData[]) msg.obj;
 			int length = results.length;
+			if (length>0) {
+				if (results[0].pageIndex == 1) {
+					datas.clear();
+					if (getActivity() != null)
+						((HomeActivity) getActivity()).setScores();
+				}
+			}
+
+
+
 			for (int i = 0; i < length; i++) {
 				if(!datas.contains(results[i]))
 					datas.add(results[i]);
-				if(i== length -1)
-					oldTaskId = results[i].id;
+				pageIndex=results[i].pageIndex;
 			}
 			layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
 
@@ -122,7 +135,7 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 			listView.onFinishRefresh();
 		}
 		return false;
-		};
+		}
 		@Override
 		public void setArguments(Bundle args) {
 			if(args != null){
@@ -134,9 +147,9 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initPopupWindow();
-		oldTaskId = 0;
+		pageIndex = 0;
 		taskService = new TaskService(this);
-		//currentTaskType = TaskType.All;
+		currentTaskType = TaskType.mr;
 		myBroadcastReceiver = new MyBroadcastReceiver(getActivity(), this, MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE, MyBroadcastReceiver.ACTION_REFRESH_TASK_LIST);
 	}
 	@Override
@@ -173,7 +186,6 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 
 		datas = new ArrayList<TaskData>();
 		adapter = new TaskAdapter(listView.getImageLoader(), getActivity(), datas, TaskAdapterType.Normal);
-		adapter.setIsMall(tabType == TabType.Mall);
 		adapter.setTabType(tabType);
 		listView.setAdapter(adapter);
 			initData();
@@ -285,51 +297,51 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 		/**
 		 * 设置栏目数据
 		 */
-		if(layGroup.getChildCount() == 0){
-			Iterator<String> groups = BusinessStatic.getInstance().GROUPS.keySet().iterator();
-			int i = 0;
-			while(groups.hasNext()){
-				final String name = groups.next();
-				final int type = BusinessStatic.getInstance().GROUPS.get(name);
-				if(null == getActivity())
-					break;
-				View view = getActivity().getLayoutInflater().inflate(R.layout.pop_dis_view_item, null);
-				view.setId(i);
-				i ++;
-				TextView txtName = (TextView) view.findViewById(R.id.txtName);
-				txtName.setText(name);
-				layGroup.addView(view);
-				setPopBg(0);
-
-
-				view.setOnClickListener(new View.OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						if(type == 0)
-							currentTitle = "粉猫";
-						else
-							currentTitle = name;
-
-						setPopBg(v.getId());
-
-						txtTitle.setText(currentTitle);
-						//currentTaskType = TaskType.Scoreful;
-						taskType = type;
-						initData();
-						popupWindow.dismiss();
-
-					}
-				});
-
-			}
-		}
+//		if(layGroup.getChildCount() == 0){
+//			Iterator<String> groups = BusinessStatic.getInstance().GROUPS.keySet().iterator();
+//			int i = 0;
+//			while(groups.hasNext()){
+//				final String name = groups.next();
+//				final int type = BusinessStatic.getInstance().GROUPS.get(name);
+//				if(null == getActivity())
+//					break;
+//				View view = getActivity().getLayoutInflater().inflate(R.layout.pop_dis_view_item, null);
+//				view.setId(i);
+//				i ++;
+//				TextView txtName = (TextView) view.findViewById(R.id.txtName);
+//				txtName.setText(name);
+//				layGroup.addView(view);
+//				setPopBg(0);
+//
+//
+//				view.setOnClickListener(new View.OnClickListener() {
+//
+//					@Override
+//					public void onClick(View v) {
+//						if(type == 0)
+//							currentTitle = "粉猫";
+//						else
+//							currentTitle = name;
+//
+//						setPopBg(v.getId());
+//
+//						txtTitle.setText(currentTitle);
+//						//currentTaskType = TaskType.Scoreful;
+//						taskType = type;
+//						initData();
+//						popupWindow.dismiss();
+//
+//					}
+//				});
+//
+//			}
+//		}
 		//layGroup.removeAllViews();
 
 
 		datas.clear();
 		adapter.notifyDataSetChanged();
-		oldTaskId = 0;
+		pageIndex = 0;
 		L.i("initData:" + datas.size());
 		getDataFromSer();
 	}
@@ -340,37 +352,31 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 		}
 
 	}
-	private void reLoadData(){
+	public void reLoadData(){
 		getDataFromSer();
 	}
 	public void getDataFromSer(){
-//		int taskType = 0;
+	int taskType = 0;
 //		//0全部;1文章（任务）;2活动;3推荐;4热门;5有分
-//		switch (currentTaskType) {
-//		case All:
+//		switch (tabType) {
+//		case mr:
 //			taskType = 0;
 //			break;
-//		case Scoreful:
-//			taskType = 5;
+//		case syjf:
+//			taskType = 1;
 //			break;
-//		case Active:
+//		case jljf:
 //			taskType = 2;
 //			break;
-//		case Recommend:
+//		case zfrs:
 //			taskType = 3;
 //			break;
-//		case Hot:
-//			taskType = 4;
-//			break;
-//
 //		default:
 //			break;
 //		}
-		if(tabType == TabType.Task){
-			taskService.getTaskList(UserData.getUserData().loginCode, taskType,Constant.PAGESIZE, oldTaskId);
-		}else{
-			//taskService.getFlashMallList(UserData.getUserData().loginCode, taskType,Constant.PAGESIZE, oldTaskId);
-		}
+
+		taskService.getTaskList("",UserData.getUserData().loginCode,1,pageIndex+1, taskType,userId,taskStaus);
+
 		showProgress();
 	}
 	@Override

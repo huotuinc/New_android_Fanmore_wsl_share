@@ -1,69 +1,66 @@
 package cy.com.morefan;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Handler.Callback;
+import android.os.Message;
+import android.text.TextUtils;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+
+import com.huotu.android.library.libedittext.EditText;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.listener.MyBroadcastReceiver;
-import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
 import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
+import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
 import cy.com.morefan.service.UserService;
-import cy.com.morefan.util.DensityUtil;
-import cy.com.morefan.util.SecurityUtil;
+import cy.com.morefan.util.ActivityUtils;
+import cy.com.morefan.util.EncryptUtil;
 import cy.com.morefan.util.Util;
-import android.content.Intent;
-import android.graphics.Paint;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.Handler.Callback;
-import android.text.TextUtils;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import com.huotu.android.library.libedittext.EditText;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
-import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
+import cy.com.morefan.util.VolleyUtil;
+import cy.com.morefan.view.CyButton;
 
-import java.security.cert.CertificateEncodingException;
+public class UserRegActivity extends BaseActivity implements BusinessDataListener, Callback, BroadcastListener {
 
-public class UserRegActivity extends BaseActivity implements BusinessDataListener, Callback, BroadcastListener{
-	private UserService userService;
-	private EditText edtPhone;
-	private EditText edtCode;
-//	private EditText edtPwd;
-//	private EditText edtRePwd;
-	private TextView btnGet;
-	private TextView txtDes;
-	private RelativeLayout layCode;
-	private ImageView imgPhoneLine;
+	@Bind(R.id.btnBack)
+	CyButton btnBack;
+	@Bind(R.id.txtTitle) TextView txtTitle;
+	@Bind(R.id.edtPhone) EditText edtPhone;
+	@Bind(R.id.btn_getcode) TextView btnGetcode;
+	@Bind(R.id.edtPassword) EditText edtPassword;
+	@Bind(R.id.edtCode) EditText edtCode;
+	@Bind(R.id.edtinvitationCode) EditText edtinvitationCode;
+	@Bind(R.id.linegone)
+	ImageView linegone;
 	private MyBroadcastReceiver myBroadcastReceiver;
 	private Handler mHandler = new Handler(this);
+	private UserService userService;
+	private int isUpdate;
+
 	@Override
 	public boolean handleMessage(Message msg) {
-		if (msg.what==BusinessDataListener.DONE_TO_MOBLIELOGIN){
-			dismissProgress();
-			Intent intenthome = new Intent(UserRegActivity.this, HomeActivity.class);
-			startActivity(intenthome);
-			finish();
-		}else if (msg.what==BusinessDataListener.ERROR_TO_MOBLIELOGIN){
-			dismissProgress();
-			toast(msg.obj.toString());
-		}else if (msg.what==BusinessDataListener.NULL_USER){
-			dismissProgress();
-			String usephone = edtPhone.getText().toString();
-			String usecode=edtCode.getText().toString().trim();
-			popReg(2, usephone, usecode);
-		}
 		if(msg.what == BusinessDataListener.DONE_USER_REG){
 			dismissProgress();
-			toast("注册成功!");
+			if (isUpdate==1){
+				toast("修改密码成功!");
+			}else {
+				toast("注册成功!");
+			}
 			MyBroadcastReceiver.sendBroadcast(this, MyBroadcastReceiver.ACTION_USER_LOGIN);
 			Intent intenthome = new Intent(UserRegActivity.this, HomeActivity.class);
 			startActivity(intenthome);
+			handler.removeCallbacks(runnable);
 			finish();
+
 		}else if(msg.what == BusinessDataListener.DONE_GET_CODE){
 			dismissProgress();
 			toast("验证码已发送,请注意查收短信!");
@@ -75,118 +72,125 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 				recLen = 1;
 				handler.postAtTime(runnable, 0);
 			}
+		}else if (msg.what == BusinessDataListener.DONE_CHECK_VERIFYCODE){
+			dismissProgress();
+			toast("验证码正确，请设置密码");
+			Bundle bundle=new Bundle();
+			bundle.putString("moblie",edtPhone.getText().toString());
+			bundle.putString("code",edtCode.getText().toString());
+			handler.removeCallbacks(runnable);
+			bundle.putInt("isUpdate",isUpdate);
+			handler.removeCallbacks(runnable);
+			ActivityUtils.getInstance().skipActivity(UserRegActivity.this,SetPassWordActivity.class,bundle);
+
+
+		}else if (msg.what == BusinessDataListener.ERROR_CHECK_VERIFYCODE){
+			dismissProgress();
+			toast("验证码错误");
 		}
 		return false;
 	}
 
 	@Override
-	protected void onCreate(Bundle arg0) {
-		// TODO Auto-generated method stub
-		super.onCreate(arg0);
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_reg);
-		edtPhone = (EditText) findViewById(R.id.edtPhone);
-		edtCode = (EditText) findViewById(R.id.edtCode);
-		//edtCode.setText("WSL0LOVE");
-//		edtPwd = (EditText) findViewById(R.id.edtPwd);
-//		edtRePwd = (EditText) findViewById(R.id.edtRePwd);
-		btnGet = (TextView) findViewById(R.id.btnGet);
-		txtDes = (TextView) findViewById(R.id.txtDes);
-		layCode = (RelativeLayout) findViewById(R.id.layCode);
-		imgPhoneLine = (ImageView) findViewById(R.id.imgPhoneLine);
-		//((EditText)findViewById(R.id.edtInvitationCode)).setOnEditorActionListener(actionClickListener);
-
-		layCode.setVisibility(View.VISIBLE);
-		RelativeLayout.LayoutParams params = (LayoutParams) imgPhoneLine.getLayoutParams();
-		int left = BusinessStatic.getInstance().SMS_ENALBE ? DensityUtil.dip2px(this,	10f) : 0;
-		params.setMargins(left, 0, 0, 0);
-		imgPhoneLine.setLayoutParams(params);
-//		edtCode.setVisibility(!BusinessStatic.SMS_ENALBE ? View.GONE : View.VISIBLE);
-//		btnGet.setVisibility(!BusinessStatic.SMS_ENALBE ? View.GONE : View.VISIBLE);
-		txtDes.setVisibility(TextUtils.isEmpty(BusinessStatic.getInstance().grenadeRewardInfo) ? View.GONE : View.GONE);
-		txtDes.setText(BusinessStatic.getInstance().grenadeRewardInfo);
+		ButterKnife.bind(this);
 
 		userService = new UserService(this);
-		myBroadcastReceiver = new MyBroadcastReceiver(this, this, MyBroadcastReceiver.ACTION_SMS_RECEIVED, MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE);
+		Intent intent = getIntent();
+		Bundle bundle=intent.getExtras();
+		isUpdate=bundle.getInt("isUpdate");
+		edtPassword.setVisibility(View.GONE);
+		edtinvitationCode.setVisibility(View.GONE);
+		linegone.setVisibility(View.GONE);
 
+		txtTitle.setText(bundle.getString("title"));
+		myBroadcastReceiver = new MyBroadcastReceiver(this, this, MyBroadcastReceiver.ACTION_SMS_RECEIVED, MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE);
 	}
-//	OnEditorActionListener actionClickListener = new OnEditorActionListener() {
-//		@Override
-//		public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//			if(actionId == EditorInfo.IME_ACTION_DONE){
-//				userReg();
-//				return true;
-//			}
-//			return false;
-//		}
-//	};
+
 	public void onClickButton(View v){
 		super.onClickButton(v);
 		switch (v.getId()) {
-		case R.id.imgTag:
-			Intent intentRule = new Intent(this, WebViewActivity.class);
-			intentRule.putExtra("url", BusinessStatic.getInstance().URL_RULE + "#shoutumimi");
-			intentRule.putExtra("title", "规则说明");
-			startActivity(intentRule);
-			break;
-		case R.id.btnGet:
-			String phone = edtPhone.getText().toString().trim();
-				if(!Util.isPhoneNum(phone)){
+
+			case R.id.btn_getcode:
+				String phone = edtPhone.getText().toString().trim();
+				if (TextUtils.isEmpty(phone)){
 					edtPhone.requestFocus();
-				edtPhone.setError("手机号错误");
-				return;
-			}
-			//test logincode,正式不需要logincode
-			//String logincode = "test01^" + SecurityUtil.MD5Encryption("123456");
-			userService.getAuthCode("",phone,3);
-			showProgress();
+					edtPhone.setError("手机号不能为空");
+					return;
+				}
+				else if(!Util.isPhoneNum(phone)){
+					edtPhone.requestFocus();
+					edtPhone.setError("手机号错误");
+					return;
+				}
+				userService.getAuthCode("",phone,3);
+				showProgress();
 
-			recLen = 90;
-			handler.postDelayed(runnable, 1000);
-			btnGet.setClickable(false);
-			btnGet.setBackgroundResource(R.drawable.shape_gray);
-			break;
-		case R.id.btnReg:
-			userReg();
+				recLen = 60;
+				handler.postDelayed(runnable, 1000);
+				btnGetcode.setClickable(false);
+				break;
+			case R.id.btnReg:
+
+					userupdata();
+
+				break;
 
 
-			break;
-//		case R.id.txtYinSi:
-//			Intent intentlogin = new Intent(UserRegActivity.this, LoginActivity.class);
-//			startActivity(intentlogin);
-//			finish();
-//			break;
-
-		default:
-			break;
+			default:
+				break;
 		}
 	}
-
-
-
 	private int recLen;
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-        	recLen--;
-            if(recLen > 0){
-            	btnGet.setText(String.format("%d秒后重新获取", recLen));
- 	            handler.postDelayed(this, 1000);
-            }else if(recLen == 0){
-            	btnGet.setText("重新获取");
-            	btnGet.setBackgroundResource(R.drawable.shape_red);
-            	btnGet.setClickable(true);
-            }
+	Runnable runnable = new Runnable() {
+		@Override
+		public void run() {
+			recLen--;
+			if(recLen > 0){
+				btnGetcode.setText(String.format("%d秒后重新获取", recLen));
+				handler.postDelayed(this, 1000);
+			}else if(recLen == 0){
+				btnGetcode.setText("重新获取");
+				btnGetcode.setBackgroundResource(R.drawable.btn_code);
+				btnGetcode.setClickable(true);
+			}
 
-        }
-    };
-
-	public void userReg() {
-		edtPhone.setError(null);
-		edtCode.setError(null);
+		}
+	};
+//	public void userReg() {
+//		String phone = edtPhone.getText().toString();
+//		String userPwd = edtPassword.getText().toString();
+//		String code = edtCode.getText().toString().trim();
+//		String invitationCode =edtinvitationCode.getText().toString();
+//		if(!Util.isPhoneNum(phone)){
+//			edtPhone.requestFocus();
+//			edtPhone.setError("手机号为11位数字且不能为空");
+//			return;
+//		}
+//		if(TextUtils.isEmpty(userPwd)){
+//			edtPassword.requestFocus();
+//			edtPassword.setError("密码不能为空");
+//			return;
+//		}
+//		if(BusinessStatic.getInstance().SMS_ENALBE && edtCode.getVisibility() == View.VISIBLE && TextUtils.isEmpty(code)){
+//			edtCode.setError("验证码不能为空");
+//			edtCode.requestFocus();
+//			edtCode.requestFocusFromTouch();
+//			return;
+//		}
+//		if (TextUtils.isEmpty(invitationCode)){
+//			edtinvitationCode.setError("邀请码不能为空");
+//			edtinvitationCode.requestFocus();
+//			return;
+//		}
+//		userService.userMoblieReg(UserRegActivity.this,phone,code, EncryptUtil.getInstance().encryptMd532(userPwd),isUpdate,invitationCode);
+//		showProgress();
+//	}
+	public void userupdata() {
 		String phone = edtPhone.getText().toString();
-		//String userPwd = edtPwd.getText().toString();
 		String code = edtCode.getText().toString().trim();
-		//String userRePwd = edtRePwd.getText().toString();
 		if(!Util.isPhoneNum(phone)){
 			edtPhone.requestFocus();
 			edtPhone.setError("手机号不能为空");
@@ -198,38 +202,12 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 			edtCode.requestFocusFromTouch();
 			return;
 		}
-		String usephone = edtPhone.getText().toString();
-		String usecode=edtCode.getText().toString().trim();
-		userService.MobileLogin(UserRegActivity.this,usephone,usecode);
+		userService.checkverifyCode(code,phone);
 		showProgress();
-//		if(!Util.userPwdIsLegal(userPwd).equals("success")){
-//			edtPwd.setError(Util.userPwdIsLegal(userPwd));
-//			edtPwd.requestFocus();
-//			edtPwd.requestFocusFromTouch();
-//			return;
-//		}
-//
-//		if(!Util.userPwdIsLegal(userRePwd).equals("success")){
-//			edtRePwd.setError(Util.userPwdIsLegal(userRePwd));
-//			edtRePwd.requestFocus();
-//			edtRePwd.requestFocusFromTouch();
-//			return;
-//		}
-//		if(!userPwd.equals(userRePwd)){
-//			edtRePwd.setError("两次输入不同!");
-//			edtRePwd.requestFocus();
-//			edtRePwd.requestFocusFromTouch();
-//			return;
-//		}
-		//String invitationCode = ((EditText)findViewById(R.id.edtInvitationCode)).getText().toString().trim();
-		//userService.userReg(this, userName,null, code, null,null,null );
-		//showProgress();
-
 	}
-
 	@Override
 	public void onDataFinish(int type, String des, BaseData[] datas,
-			Bundle extra) {
+							 Bundle extra) {
 		super.onDataFinish(type, des, datas, extra);
 		mHandler.obtainMessage(type, des).sendToTarget();
 
@@ -242,6 +220,8 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 	}
 	@Override
 	protected void onDestroy() {
+		ButterKnife.unbind(this);
+		VolleyUtil.cancelAllRequest();
 		myBroadcastReceiver.unregisterReceiver();
 		super.onDestroy();
 	}
@@ -250,6 +230,7 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 		if (keyCode == KeyEvent.KEYCODE_BACK ) {
 
 			finish();
+			handler.removeCallbacks(runnable);
 		}
 		return true;
 	}
@@ -261,10 +242,7 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 
 		}else if(type == ReceiverType.Sms){
 			edtCode.setText(msg.toString());
-			//edtPwd.requestFocus();
-
 		}
 
 	}
-
 }

@@ -54,18 +54,14 @@ public class GroupPersonDataAdapter  extends BaseAdapter {
         }
         TextView txtName = ViewHolderUtil.get(convertView, R.id.company_data_item_name);
         ImageView imgIcon =  ViewHolderUtil.get(convertView, R.id.company_data_item_icon);
-        TextView txtCount = ViewHolderUtil.get(convertView,R.id.company_data_item_count);
-        TextView txtCount2 =ViewHolderUtil.get(convertView,R.id.company_data_item_count2);
-        TextView txtCount3 =ViewHolderUtil.get(convertView,R.id.company_data_item_count4);
-        TextView txtScore  =ViewHolderUtil.get(convertView,R.id.company_data_item_personcount);
+        TextView txtCount = ViewHolderUtil.get(convertView,R.id.company_data_item_label1);
+
         GroupPersonData data = datas.get(position);
 
         ImageLoad.loadLogo(data.getLogo(), imgIcon, mContext);
         txtName.setText(data.getName());
-        txtCount.setText(String.valueOf(data.getTotalTurnCount()));
-        txtCount2.setText(String.valueOf(data.getTotalBrowseCount()));
-        txtCount3.setText(String.valueOf(data.getPrenticeCount()));
-        txtScore.setText(String.valueOf(data.getTotalScore()));
+        txtCount.setText("转发"+String.valueOf(data.getTotalTurnCount())+"/"+"浏览"+String.valueOf(data.getTotalBrowseCount())+"/"+"伙伴"+String.valueOf(data.getPrenticeCount()));
+
 
         //syncImageLoaderHelper.loadImage(position, imgIcon , null, data.getIcon() , Constant.IMAGE_PATH_TASK);
         RandomColor randomColor = new RandomColor();

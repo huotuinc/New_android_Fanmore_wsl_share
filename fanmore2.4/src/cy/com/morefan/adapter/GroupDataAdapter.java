@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cindy.android.test.synclistview.SyncImageLoaderHelper;
+
 import cy.com.morefan.R;
 import cy.com.morefan.bean.GroupData;
 import cy.com.morefan.bean.TaskData;
@@ -61,11 +62,13 @@ public class GroupDataAdapter extends BaseAdapter {
         TextView txtName = ViewHolderUtil.get(convertView, R.id.group_data_item_name);
         ImageView imgIcon =  ViewHolderUtil.get(convertView, R.id.group_data_item_icon);
         TextView txtCount = ViewHolderUtil.get(convertView,R.id.group_data_item_count);
+        TextView txttb    = ViewHolderUtil.get(convertView,R.id.txttb);
 
         GroupData data = datas.get(position);
 
         txtName.setText(data.getName());
-        txtCount.setText(String.valueOf(data.getPersonCount()));
+        txtCount.setText(String.valueOf(data.getPersonCount())+"人");
+        txttb.setText("总转发"+data.getTotalTurnCount()+"/"+"总流浏览"+data.getTotalBrowseCount());
 
         //syncImageLoaderHelper.loadImage(position, imgIcon , null, data.getIcon() , Constant.IMAGE_PATH_TASK);
         RandomColor randomColor = new RandomColor();

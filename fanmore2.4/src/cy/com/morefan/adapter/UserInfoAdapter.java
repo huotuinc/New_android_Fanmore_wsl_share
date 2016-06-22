@@ -3,6 +3,7 @@ package cy.com.morefan.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import cy.com.morefan.R;
 import cy.com.morefan.bean.UserSelectData;
 import cy.com.morefan.util.ViewHolderUtil;

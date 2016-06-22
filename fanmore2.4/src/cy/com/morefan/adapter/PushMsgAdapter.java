@@ -62,7 +62,6 @@ public class PushMsgAdapter extends BaseAdapter{
 		txtTime.setText(data.time);
 		imgStatus.setVisibility(data.type == 0 ? View.VISIBLE : View.GONE);
 		txtTitle.setTextColor(data.type == 0 ? Color.RED : Color.BLACK);
-		imgStatus.setBackgroundResource(getImgRes(data.taskStatus));
 
 
 		return convertView;
@@ -75,16 +74,7 @@ public class PushMsgAdapter extends BaseAdapter{
 
 	 * @return
 	 */
-	public int getImgRes(int status){
-		switch (status) {
-		case 0:
-			return R.drawable.msg_tag_start;
-		case 2:
-			return R.drawable.msg_tag_off;
-		default:
-			return R.drawable.msg_tag_pre;
-		}
-	}
+
 
 
 }

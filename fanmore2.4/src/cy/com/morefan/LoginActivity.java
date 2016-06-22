@@ -1,6 +1,5 @@
 package cy.com.morefan;
 
-import java.util.Map;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -15,14 +14,11 @@ import android.widget.TextView;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.listener.BusinessDataListener;
-import cy.com.morefan.util.AuthParamUtils;
 import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.util.ToastUtil;
-import cy.com.morefan.view.CyLoadingProgress;
 import cy.com.morefan.bean.AccountModel;
 import cy.com.morefan.constant.Constant;
 import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.wechat.friends.Wechat;
 
 /**
@@ -104,7 +100,7 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
 
                     //
                    showProgress();
-                    ShareSDK.getPlatform(LoginActivity.this, Wechat.NAME);
+                   // ShareSDK.getPlatform(LoginActivity.this, Wechat.NAME);
                     login = new AutnLogin(LoginActivity.this, mHandler, loginL, application);
                     login.authorize(new Wechat(LoginActivity.this));
 
@@ -114,7 +110,7 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
             }
             break;
             case R.id.btn_moblielogin:{
-                startActivity(new Intent(LoginActivity.this, UserRegActivity.class));
+                startActivity(new Intent(LoginActivity.this, MoblieLoginActivity.class));
 
 
             }
@@ -296,7 +292,7 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    userLogin(1);
+                   // userLogin(1);
                 }
             });
         }

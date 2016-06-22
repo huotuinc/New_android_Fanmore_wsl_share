@@ -102,7 +102,6 @@ public class PreTaskAdapter extends BaseAdapter{
 		TextView txtPreTime			= ViewHolderUtil.get(convertView, R.id.txtPreTime);
 
 //		TextView tagType			= ViewHolderUtil.get(convertView, R.id.tagType);//活动标识，活动，新手，公告
-		ImageView imgStatusTag		= ViewHolderUtil.get(convertView, R.id.imgStatusTag);//首页状态
 		ImageView imgTagTop			= ViewHolderUtil.get(convertView, R.id.imgTagTop);
 		LinearLayout layShopDes		= ViewHolderUtil.get(convertView, R.id.layShopDes);
 		LinearLayout layScore		= ViewHolderUtil.get(convertView, R.id.layScore);
@@ -117,7 +116,7 @@ public class PreTaskAdapter extends BaseAdapter{
 
         	imgTask.setBackgroundResource(R.drawable.picreviewre_fresh_bg);
         	mImageLoader.loadImage(position, imgTask, bar, data.smallImgUrl, Constant.IMAGE_PATH_TASK);
-        	imgTagTop.setVisibility(data.isTop ? View.VISIBLE : View.GONE);
+        	imgTagTop.setVisibility(data.isTop ? View.GONE : View.GONE);
 
         	//bar.setProgress(position *10);
         	txtTaskName.setText(data.taskName);
@@ -148,11 +147,10 @@ public class PreTaskAdapter extends BaseAdapter{
 			txtOrderTime.setText("正式上线时间" + data.startTime);
 			//txtPreTime.setText("您可以在" + data.advTime + "后,提前转发");
 			txtPreTime.setText("拥有火眼金睛 可以提前转发");
-
 			//总积分<=1时，隐藏积分描述
-			layScore.setVisibility(Double.parseDouble(data.totalScore) <= 1 ? View.VISIBLE : View.VISIBLE);
+			layScore.setVisibility(Double.parseDouble(data.totalScore) <= 1 ? View.GONE : View.GONE);
 
-			layShopDes.setVisibility(data.type == 1000300 && !TextUtils.isEmpty(data.rebate) ? View.VISIBLE : View.GONE);
+			layShopDes.setVisibility(data.type == 1000300 && !TextUtils.isEmpty(data.rebate) ? View.GONE : View.GONE);
 			txtShopDes.setText(data.rebate);
 
 			//活动标识
@@ -160,88 +158,9 @@ public class PreTaskAdapter extends BaseAdapter{
 //			tagType.setText(getTypeName(data.type));
 
 			//状态标记设置
-			setStatus(imgStatusTag, data);
 			//已上线、已转发不显示设置闹钟
-			btnAlarm.setVisibility(data.online == 2 || data.isSend ? View.GONE : View.GONE);
-			imgOnline.setVisibility(data.online == 2 ? View.VISIBLE : View.GONE);
+			imgOnline.setVisibility(data.online == 2 ? View.GONE : View.GONE);
 
-			btnAlarm.setBackgroundResource(alarmStatus.get(data.id) ? R.drawable.shape_red_empty_sel : R.drawable.shape_red_sel);
-			btnAlarm.setText(alarmStatus.get(data.id) ? "取消提醒" : "设置提醒");
-			btnAlarm.setTextColor(alarmStatus.get(data.id) ? 0xffFF4143 : Color.WHITE);
-
-			btnAlarm.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {//取消闹钟
-					String ids = SPUtil.getStringToSpByName(mActivity, Constant.SP_NAME_NORMAL, Constant.SP_NAME_ALARM);
-					if(alarmStatus.get(data.id)){
-						Util.cancelAlarm(mActivity, data.id);
-						alarmStatus.put(data.id, false);
-						btnAlarm.setBackgroundResource(R.drawable.shape_red_sel);
-						btnAlarm.setText("设置提醒");
-						btnAlarm.setTextColor(Color.WHITE);
-						//save to sp
-						String[] idsA = ids.split(",");
-						if(null != idsA){
-							StringBuilder sb = new StringBuilder();
-							for(int i = 0, length = idsA.length; i < length; i++){
-								if(!idsA[i].equals(data.id+"")){
-									sb.append("," + idsA[i]);
-								}
-							}
-							SPUtil.saveStringToSpByName(mActivity, Constant.SP_NAME_NORMAL, Constant.SP_NAME_ALARM, sb.toString());
-						}
-					}else{//设置闹钟
-//						final View view = LayoutInflater.from(mActivity).inflate(R.layout.custom_dialog_time, null);
-//						final TextView txtTime1 = (TextView) view.findViewById(R.id.txtTime1);
-//						final TextView txtTime2 = (TextView) view.findViewById(R.id.txtTime2);
-//						try {
-//							txtTime1.setText(data.alarmTime.split(" ")[1]);
-//							txtTime2.setText(data.alarmTimePre.split(" ")[1]);
-//						} catch (Exception e) {
-//							// TODO: handle exception
-//						}
-//						//有火眼金睛道具时，默认提前提醒，否则默认上线提前
-//						final int gray = mActivity.getResources().getColor(R.color.gray);
-//						final int green = mActivity.getResources().getColor(R.color.green);
-//						txtTime1.setBackgroundColor(BusinessStatic.hasPreTool ? gray : green);
-//						txtTime2.setBackgroundColor(BusinessStatic.hasPreTool ? green : gray);
-						boolean hasPreTool = UserData.getUserData().hasPreTool;
-						//String alarmTime = hasPreTool ? data.alarmTimePre : data.alarmTime;
-						//若当前时间已超过闹钟时间，则变更闹钟时间为任务上线时间
-						long alramPre = TimeUtil.getLongTime(data.alarmTimePre);
-						long curTime = System.currentTimeMillis();
-						final String alarmTime = curTime > alramPre ?  data.alarmTime : (hasPreTool ? data.alarmTimePre : data.alarmTime);
-						String des = "未知";
-						try {
-							String des1 = String.format("设置小粉在%s发送通知提醒您,您可使用\"火眼金睛\"提前转发该任务!", alarmTime.split(" ")[1]);
-							String des2 = String.format("设置小粉在%s发送通知提醒您,您还没有\"火眼金睛\"道具,购买道具快人一步转发该任务!", alarmTime.split(" ")[1]);
-							des = hasPreTool ? des1 : des2;
-						} catch (Exception e) {
-							// TODO: handle exception
-						}
-						CustomDialog.showChooiceDialg(mActivity, null, des, "设置", "放弃", null, new DialogInterface.OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								String ids = SPUtil.getStringToSpByName(mActivity, Constant.SP_NAME_NORMAL, Constant.SP_NAME_ALARM);
-								Util.setAlarmTime(mActivity, alarmTime, data.id, data.taskName);
-								alarmStatus.put(data.id, true);
-								btnAlarm.setBackgroundResource(R.drawable.shape_red_empty_sel);
-								btnAlarm.setText("取消提醒");
-								btnAlarm.setTextColor(0xffFF4143);
-								//save to sp
-								ids += "," + data.id;
-								SPUtil.saveStringToSpByName(mActivity, Constant.SP_NAME_NORMAL, Constant.SP_NAME_ALARM, ids);
-
-							}
-						}, null);
-
-//
-					}
-
-
-				}
-			});
 
 		return convertView;
 	}
@@ -266,11 +185,9 @@ public class PreTaskAdapter extends BaseAdapter{
 	private void setStatus(ImageView imgStatusTag, TaskData data) {
 		imgStatusTag.setVisibility(View.GONE);
 			if(data.isSend){//是否已转发
-				imgStatusTag.setVisibility(View.VISIBLE);
-				imgStatusTag.setBackgroundResource(R.drawable.task_send_tag);
+				imgStatusTag.setVisibility(View.GONE);
 			}else if(Double.parseDouble(data.lastScore) <= 0){//积分是否用完
 				imgStatusTag.setVisibility(View.VISIBLE);
-				imgStatusTag.setBackgroundResource(R.drawable.task_scoreover_tag);
 			}
 		//不可转发，不显示状态
 		if(data.flagShowSend == 0 ){

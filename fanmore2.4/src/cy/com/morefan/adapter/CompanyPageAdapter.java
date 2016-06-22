@@ -17,12 +17,13 @@ import java.util.Comparator;
 import java.util.List;
 
 import cy.com.morefan.bean.GroupData;
+import cy.com.morefan.supervision.CompanyActivity;
 import cy.com.morefan.supervision.DepartmentActivity;
 
 /**
  * Created by Administrator on 2016/3/10.
  */
-public class CompanyPageAdapter extends PagerAdapter implements AdapterView.OnItemClickListener{
+public class CompanyPageAdapter extends PagerAdapter{
     String[] titles={"默认","转发","浏览"};
     List<PullToRefreshListView> listviews;
     View layEmpty;
@@ -49,7 +50,6 @@ public class CompanyPageAdapter extends PagerAdapter implements AdapterView.OnIt
 
         CompanyDataAdapter dataAdapter0 = new CompanyDataAdapter( mContext , datas);
         listviews.get(0).setAdapter(dataAdapter0);
-        listviews.get(0).setOnItemClickListener(this);
 
         List<GroupData> datas1 = new ArrayList<GroupData>();
         datas1.addAll(datas);
@@ -57,7 +57,6 @@ public class CompanyPageAdapter extends PagerAdapter implements AdapterView.OnIt
         Collections.sort(datas1, new ZFComparar());
         CompanyDataAdapter dataAdapter1 = new CompanyDataAdapter(mContext, datas1);
         listviews.get(1).setAdapter(dataAdapter1);
-        listviews.get(1).setOnItemClickListener(this);
 
         List<GroupData> datas2 = new ArrayList<GroupData>();
         datas2.addAll(datas);
@@ -65,15 +64,8 @@ public class CompanyPageAdapter extends PagerAdapter implements AdapterView.OnIt
         Collections.sort(datas2, new LRComparar());
         CompanyDataAdapter dataAdapter2 = new CompanyDataAdapter(mContext, datas2);
         listviews.get(2).setAdapter(dataAdapter2);
-        listviews.get(2).setOnItemClickListener(this);
     }
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        GroupData data = datas.get(position-1);
-        Intent intent = new Intent(mContext, DepartmentActivity.class);
-        intent.putExtra("name", data.getName());
-        intent.putExtra("pid",data.getId());
-        mContext.startActivity(intent);
-    }
+
     @Override
     public CharSequence getPageTitle(int position) {
         //return super.getPageTitle(position);

@@ -22,6 +22,7 @@
         <!-- 返利描述 -->
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/txtShopDes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,6 +44,7 @@
         <!-- 积分情况 -->
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/layScore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -117,6 +119,7 @@
             android:background="@drawable/line_gray_bg_h" />
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/layMyIncome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -181,6 +184,7 @@
         </LinearLayout>
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/imgLine2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -190,40 +194,42 @@
     </LinearLayout>
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/txtDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:layout_below="@+id/lay"
         android:layout_marginBottom="3dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="3dp"
         android:text="date"
-        android:textColor="@color/gray5"
+        android:textColor="@color/black"
         android:textIsSelectable="false"
         android:textSize="11dp" />
 
     <!-- 状态标记 -->
 
     <ImageView
+        android:visibility="gone"
         android:id="@+id/imgStatusTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:layout_marginTop="0dp"
-        android:background="@drawable/task_send_tag"
+
         android:contentDescription="@string/img" />
     <!-- 状态标记end -->
 >
 
     <ImageView
+        android:visibility="gone"
         android:id="@+id/imgTagTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="6dp"
         android:layout_marginTop="2dp"
-        android:background="@drawable/flag_top"
         android:contentDescription="@string/img"
         android:scaleType="fitXY" />
 

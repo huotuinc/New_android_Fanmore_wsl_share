@@ -81,7 +81,7 @@ public class AwardDetailActivity extends BaseActivity implements BroadcastListen
 
 
 		int pageCount = mFromType == FromType.MyPartIn ? 1 : 2;
-		List<Fragment> fragments = new ArrayList<Fragment>();
+		ArrayList<Fragment> fragments = new ArrayList<Fragment>();
 		for(int i = 0; i < pageCount; i++){
 			Bundle argsDay = new Bundle();
 			argsDay.putInt(TASK_ID, taskId);

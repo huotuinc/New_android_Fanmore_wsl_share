@@ -35,9 +35,9 @@ public class FragManager {
 		BaseFragment frag =  (BaseFragment) fragManager.findFragmentByTag(fragTag);
 		if(frag == null){
 			switch (type) {
-			case Tool:
-				frag = ToolFrag.newInstance();
-				break;
+//			case Tool:
+//				frag = ToolFrag.newInstance();
+//				break;
 			case Prentice:
 				frag = PrenticeFrag.newInstance();
 				break;

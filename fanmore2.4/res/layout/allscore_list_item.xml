@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#797979"
+    android:background="@color/gray_list_bg"
     tools:context=".AllScoreActivity" >
 
     <LinearLayout
@@ -36,7 +36,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:textColor="@color/black"
-                android:text="收益" />
+                android:text="浏览量" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -59,20 +59,7 @@
                     android:text="date"
                     android:textColor="@color/white" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="总积分:"
-                    android:textColor="@color/white" />
 
-                <TextView
-                    android:id="@+id/txtGroupScore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="date"
-                    android:layout_marginLeft="5dp"
-                    android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>
 
@@ -103,19 +90,20 @@
                     android:layout_marginLeft="10dp"
                     android:orientation="horizontal"
                     android:padding="5dp"
-                    android:weightSum="1" >
+                     >
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
+                        android:layout_weight="1"
                         android:orientation="horizontal" >
 
                         <TextView
                             android:id="@+id/txtScoreDes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="当日收益:"
+                            android:text=""
                             android:textColor="@color/gray4"
                             android:textIsSelectable="false"
                             android:textSize="12dp" />
@@ -125,7 +113,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:text="0"
+                            android:text=""
                             android:textColor="@color/red"
                             android:textIsSelectable="false"
                             android:textSize="13dp" />
@@ -139,6 +127,10 @@
                         android:orientation="horizontal" >
 
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"/>
+                        <TextView
                             android:id="@+id/txtScanDes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -151,8 +143,8 @@
                             android:id="@+id/txtScanCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:text="0"
+                            android:layout_marginRight="10dp"
+                            android:text=""
                             android:textColor="@color/red"
                             android:textIsSelectable="false"
                             android:textSize="13dp" />
@@ -213,6 +205,7 @@
             android:textSize="11dp" />
             -->
             <ImageView
+                android:visibility="gone"
         android:id="@+id/imgStatusTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

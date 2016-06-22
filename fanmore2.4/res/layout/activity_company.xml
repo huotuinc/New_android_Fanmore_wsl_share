@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="cy.com.morefan.supervision.CompanyActivity">
 
     <FrameLayout android:id="@+id/ff1" style="@style/TitleStyle" >
@@ -39,112 +40,106 @@
             android:onClick="onClick"
             android:layout_height="wrap_content"/>
     </FrameLayout>
+
     <LinearLayout
-        android:id="@+id/productSwitch"
         android:layout_below="@+id/ff1"
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:padding="5dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:background="@color/white">
-        <RelativeLayout
-            android:id="@+id/rqL"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="5dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-            <RelativeLayout
-                android:id="@+id/rqInnerL"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_width="70dp"
-                android:layout_height="35dp">
-                <TextView
-                    android:id="@+id/rqLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="默认"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"/>
-            </RelativeLayout>
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/zxL"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="5dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-            <RelativeLayout
-                android:id="@+id/zxInnerL"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_width="70dp"
-                android:layout_height="35dp">
-                <TextView
-                    android:id="@+id/zxLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="转发"
-                    android:layout_centerInParent="true"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"/>
-            </RelativeLayout>
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/jdL"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="5dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-            <RelativeLayout
-                android:id="@+id/jdInnerL"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_width="70dp"
-                android:layout_height="35dp">
-                <TextView
-                    android:id="@+id/jdLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="浏览"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"/>
-            </RelativeLayout>
-
-        </RelativeLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/productsL"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/productSwitch"
-        android:background="@color/white" >
-    </LinearLayout>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/company_viewpager"
-        android:layout_below="@id/productSwitch"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/llTab"
+        >
+
+
+            <LinearLayout
+                android:id="@+id/lay_mr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="@color/white">
+                <TextView
+                    android:id="@+id/txtmr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:text="默认"
+                    android:padding="10dp"
+                    android:textColor="@color/theme_blue"
+                    android:textSize="12sp" />
+                <ImageView
+                    android:id="@+id/mr_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dip"
+                    android:scaleType="matrix"
+                    android:background="@color/theme_blue" />
+            </LinearLayout>
+        <LinearLayout
+            android:id="@+id/lay_zf"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/txtzf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text="转发"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+            <ImageView
+                android:id="@+id/zf_bottom_line"
+                android:layout_width="match_parent"
+                android:layout_height="2dip"
+                android:scaleType="matrix"
+                android:background="@color/white" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/lay_ll"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white">
+            <TextView
+                android:id="@+id/txtll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text="浏览"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+            <ImageView
+                android:id="@+id/ll_bottom_line"
+                android:layout_width="match_parent"
+                android:layout_height="2dip"
+                android:scaleType="matrix"
+                android:background="@color/white" />
+        </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+    <cy.com.morefan.view.PullDownUpListView
+        android:layout_below="@id/llTab"
+        android:id="@+id/listView"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:fadingEdge="none"/>
 
 
         <cy.com.morefan.view.EmptyView
-            android:layout_below="@id/company_tab"
+            android:layout_below="@id/llTab"
             android:id="@+id/layEmpty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -152,7 +147,7 @@
             android:src="@anim/anim_empty"
             android:visibility="gone" />
 
-    </android.support.v4.view.ViewPager>
+
 
 
 

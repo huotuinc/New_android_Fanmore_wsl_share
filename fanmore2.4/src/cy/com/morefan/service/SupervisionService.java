@@ -3,14 +3,19 @@ package cy.com.morefan.service;
 import android.os.Bundle;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Arrays;
+import java.util.List;
 
 import cy.com.morefan.bean.GroupData;
 import cy.com.morefan.bean.GroupPersonData;
 import cy.com.morefan.bean.MyJSONObject;
 import cy.com.morefan.bean.TaskData;
+import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.util.JJSONUtil;
@@ -26,22 +31,77 @@ public class SupervisionService extends BaseService {
         super(listener);
     }
 
+
+    /**
+     * 获取平台所有的任务（按任务查看）
+     * @param keyword
+     * @param pageIndex
+     */
+public void AllTask(final String keyword,final int pageIndex){
+    ThreadPoolManager.getInstance().addTask(new Runnable() {
+        @Override
+        public void run() {
+            try {
+                String url = Constant.IP_URL + "/Api.ashx?req=UserOrganizeAllTask" + CONSTANT_URL();
+                JSONObject jsonUrl = new JSONObject();
+                jsonUrl.put("keyword", keyword);
+                jsonUrl.put("pageIndex", pageIndex);
+                try {
+                    url = url + URLEncoder.encode(jsonUrl.toString(), "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                MyJSONObject data = getDataFromSer(url);
+                if (data != null) {
+                    int pageIndex = data.getInt("pageIndex");
+                    int resultCode = data.getInt("resultCode");
+                    if (resultCode == 1) {
+                        int status = data.getInt("status");
+                        if (status == 1) {
+                            JSONArray jArray = data.getJSONArray("resultData");
+                            int length = jArray.length();
+                            TaskData[] results = new TaskData[length];
+                            for (int i = 0; i < length; i++) {
+                                MyJSONObject tip = (MyJSONObject) jArray.get(i);
+                                TaskData taskData = setTaskData(tip);
+                                taskData.pageIndex = pageIndex;
+                                results[i] = taskData;
+                            }
+                            listener.onDataFinish(BusinessDataListener.DONE_GET_TASK_LIST, null, results, null);
+                        } else {
+                            listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, data.getString("tip"), null);
+                        }
+                    } else {
+                        String description = data.getString("description");
+                        listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, description, null);
+                    }
+                } else
+                    listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, ERROR_NET, null);
+
+            } catch (JSONException e) {
+                listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, ERROR_DATA, null);
+                e.printStackTrace();
+            }
+        }
+    });
+
+}
+
     /**
      *获取企业组织架构及每级下的总人数，总转发和浏览量
-     * @param level 当前组织级别 默认1
-     * @param logincode 登录代码
-     * @param pid 组织架构ID
+     * @param logincode
+     * @param orid
+     * @param taskId
      */
-    public void getGroupData(final int level , final String logincode, final int pid , final int taskId){
+    public void getGroupData( final String logincode, final int orid , final int taskId){
         ThreadPoolManager.getInstance().addTask(new Runnable() {
             @Override
             public void run() {
                 try {
                     String url = Constant.IP_URL + "/Api.ashx?req=UserOrganize" + CONSTANT_URL();
                     JSONObject jsonUrl = new JSONObject();
-                    jsonUrl.put("level", level);
                     jsonUrl.put("loginCode", logincode);
-                    jsonUrl.put("pid", pid);
+                    jsonUrl.put("orid", orid);
                     jsonUrl.put("taskId", taskId);
                     url += URLEncoder.encode(jsonUrl.toString(), "UTF-8");
                     L.i("UserOrganize:" + url);
@@ -59,9 +119,7 @@ public class SupervisionService extends BaseService {
                                     GroupData item = setGroupData(obj);
                                     results[i] = item;
                                 }
-                                //Bundle extra = new Bundle();
-                                //extra.putInt("status", result.getInt("status"));
-                                //extra.putString("webUrl", result.getString("webUrl"));
+
                                 listener.onDataFinish(BusinessDataListener.DONE_GET_GROUP_DATA, null, results, null);
                             } else {
                                 listener.onDataFailed(BusinessDataListener.ERROR_GET_GROUP_DATA, data.getString("tip"), null);
@@ -80,6 +138,63 @@ public class SupervisionService extends BaseService {
             }
         });
     }
+    /**
+     * 获取员工徒弟列表
+     * @param loginCode
+     * @param masterId
+     * @param pageIndex
+     *
+     */
+//    public void GetUserListByMasterId(final String loginCode,final int masterId,final int pageIndex){
+//        ThreadPoolManager.getInstance().addTask(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    String url=Constant.IP_URL + "/Api.ashx?req=GetUserListByMasterId" + CONSTANT_URL();
+//                    JSONObject jsonUrl=new JSONObject();
+//                    jsonUrl.put("loginCode",loginCode);
+//                    jsonUrl.put("masterId", masterId);
+//                    jsonUrl.put("pageIndex", pageIndex);
+//                    try {
+//                        url += URLEncoder.encode(jsonUrl.toString(), "UTF-8");
+//                    } catch (UnsupportedEncodingException e) {
+//                        e.printStackTrace();
+//                    }
+//                    L.i("GetGroupPerson:" + url);
+//                    MyJSONObject data = getDataFromSer(url);
+//                    if (data != null) {
+//                        int resultCode = data.getInt("resultCode");
+//                        if (resultCode == 1) {
+//                            int status = data.getInt("status");
+//                            if (status == 1) {
+//                                JSONArray jArray = data.getJSONArray("resultData");
+//                                int length = jArray.length();
+//                                GroupPersonData[] results = new GroupPersonData[length];
+//                                for (int i = 0; i < length; i++) {
+//                                    MyJSONObject obj = (MyJSONObject) jArray.get(i);
+//                                    GroupPersonData item = setGroupPersonData(obj);
+//                                    results[i] = item;
+//                                }
+//                                //Bundle extra = new Bundle();
+//                                //extra.putInt("status", result.getInt("status"));
+//                                //extra.putString("webUrl", result.getString("webUrl"));
+//                                listener.onDataFinish(BusinessDataListener.DONE_GET_GROUP_PERSON, null, results, null);
+//                            } else {
+//                                listener.onDataFailed(BusinessDataListener.ERROR_GET_GROUP_PERSON, data.getString("tip"), null);
+//                            }
+//                        } else {
+//                            listener.onDataFailed(BusinessDataListener.ERROR_GET_GROUP_PERSON, data.getString("description"), null);
+//                        }
+//                    } else {
+//                        listener.onDataFailed(BusinessDataListener.ERROR_GET_GROUP_PERSON, ERROR_NET, null);
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                    listener.onDataFailed(BusinessDataListener.ERROR_GET_GROUP_PERSON, ERROR_DATA, null);
+//                }
+//            }
+//        });
+//    }
     /**
      * 获取部门下的人员、人员积分、总转发、总浏览数据
      * @param loginCode 登录code
@@ -104,6 +219,7 @@ public class SupervisionService extends BaseService {
                     L.i("GetGroupPerson:" + url);
                     MyJSONObject data = getDataFromSer(url);
                     if (data != null) {
+                        int pageIndex = data.getInt("pageIndex");
                         int resultCode = data.getInt("resultCode");
                         if (resultCode == 1) {
                             int status = data.getInt("status");
@@ -114,6 +230,7 @@ public class SupervisionService extends BaseService {
                                 for (int i = 0; i < length; i++) {
                                     MyJSONObject obj = (MyJSONObject) jArray.get(i);
                                     GroupPersonData item = setGroupPersonData(obj);
+                                    item.pageIndex = pageIndex;
                                     results[i] = item;
                                 }
                                 //Bundle extra = new Bundle();
@@ -141,8 +258,9 @@ public class SupervisionService extends BaseService {
 
     protected GroupData setGroupData(MyJSONObject obj){
         GroupData data = new GroupData();
+        data.setChildren(obj.getInt("children"));
         data.setId(obj.getInt("orgid"));
-        data.setLevel(obj.getInt("level"));
+        //data.setLevel(obj.getInt("level"));
         data.setName(obj.getString("name"));
         data.setPersonCount(obj.getInt("personCount"));
         data.setTotalBrowseCount(obj.getInt("totalBrowseCount"));

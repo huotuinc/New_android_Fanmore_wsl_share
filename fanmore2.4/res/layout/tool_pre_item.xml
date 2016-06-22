@@ -28,6 +28,7 @@
             <!-- 返利描述 -->
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/layShopDes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -58,6 +59,7 @@
             <!-- 积分情况 -->
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/layScore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -170,18 +172,17 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="0dp"
         android:visibility="gone"
-        android:background="@drawable/task_send_tag"
         android:contentDescription="@string/img" />
     <!-- 状态标记end -->
 
 
     <ImageView
+        android:visibility="gone"
         android:id="@+id/imgTagTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="6dp"
         android:layout_marginTop="2dp"
-        android:background="@drawable/flag_top"
         android:contentDescription="@string/img"
         android:scaleType="fitXY" />
 
@@ -213,12 +214,12 @@
         android:contentDescription="@string/img" />
     <!-- 设置闹钟end -->
 <ImageView
+        android:visibility="gone"
         android:id="@+id/imgOnline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="6dp"
         android:layout_marginTop="2dp"
-        android:background="@drawable/msg_tag_start"
         android:contentDescription="@string/img"
         android:scaleType="fitXY" />
 </FrameLayout>

@@ -58,7 +58,6 @@ public class MyPartInAdapter extends BaseAdapter{
 		TextView txtStatus		= ViewHolderUtil.get(convertView, R.id.txtStatus);
 		LinearLayout layFrom	= ViewHolderUtil.get(convertView, R.id.layFrom);
 		ImageView imgFrom		= ViewHolderUtil.get(convertView, R.id.imgFrom);
-		ImageView imgStatusTag	= ViewHolderUtil.get(convertView, R.id.imgStatusTag);
 
 
 		PartInItemData data = datas.get(position);
@@ -82,14 +81,6 @@ public class MyPartInAdapter extends BaseAdapter{
 		txtTime.setText(data.time);
 		txtStatus.setText(data.score);
 		L.i(">>>>>score" + position + ":" + data.score + "," + "0".equals(data.score));
-		if(TextUtils.isEmpty(data.score)){
-			imgStatusTag.setVisibility(View.GONE);
-		}else{
-			imgStatusTag.setVisibility(View.VISIBLE);
-			imgStatusTag.setBackgroundResource("0".equals(data.score) ? R.drawable.img_tag_partin_status_fail : R.drawable.img_tag_partin_status_success);
-		}
-		if(data.des.contains("转发") && "0".equals(data.score))
-			imgStatusTag.setVisibility(View.GONE);
 		layFrom.setVisibility(data.channel == 0 ? View.GONE : View.VISIBLE);
 		if(data.channel > 0 && data.channel < 4)
 			imgFrom.setBackgroundResource(res[data.channel - 1]);

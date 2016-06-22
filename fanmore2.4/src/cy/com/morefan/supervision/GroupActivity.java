@@ -1,99 +1,106 @@
 package cy.com.morefan.supervision;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.edmodo.cropper.cropwindow.handle.Handle;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.huibin.androidsegmentcontrol.SegmentControl;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cy.com.morefan.BaseActivity;
 import cy.com.morefan.R;
-import cy.com.morefan.adapter.GroupDataAdapter;
-import cy.com.morefan.adapter.ToolAdapter;
-import cy.com.morefan.bean.BaseData;
-import cy.com.morefan.bean.GroupData;
-import cy.com.morefan.bean.TaskData;
-import cy.com.morefan.bean.UserData;
-import cy.com.morefan.listener.BusinessDataListener;
-import cy.com.morefan.service.SupervisionService;
+import cy.com.morefan.adapter.FragAdapter;
+import cy.com.morefan.frag.ArchitectureFrag;
+import cy.com.morefan.frag.GroupTaskFrag;
+import cy.com.morefan.frag.TaskFrag;
 import cy.com.morefan.view.CyButton;
-import cy.com.morefan.view.EmptyView;
 
 /**
  *
  */
-public class GroupActivity extends BaseActivity implements Handler.Callback, AdapterView.OnItemClickListener{
+public class GroupActivity extends BaseActivity implements SegmentControl.OnSegmentControlClickListener {
     @Bind(R.id.btnBack)
     public CyButton btnBack;
     @Bind(R.id.btnQuery)
     public CyButton btnQuery;
-    @Bind(R.id.txtTitle)
-    public TextView tvTitle;
-    @Bind(R.id.listview)
-    public PullToRefreshListView listview;
-    @Bind(R.id.layEmpty)
-    public EmptyView layEmpty;
+    FragAdapter adapter;
+    int taskId=0;
+    @Bind(R.id.segment_control)
+    public SegmentControl segment_control;
 
-    List<GroupData> datas;
-    Handler handler;
-    GroupDataAdapter adapter;
-    SupervisionService supervisionService;
+
+    private ArrayList<Fragment> list = null;
+    @Bind(R.id.myviewpager)
+    public ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
         ButterKnife.bind(this);
+        segment_control.setOnSegmentControlClickListener(this);
+        initViewPager();
+    }
+    private void initViewPager() {
+        Fragment jg = ArchitectureFrag.newInstance();
+        Fragment rw = GroupTaskFrag.newInstance();
 
-        supervisionService = new SupervisionService(this);
-        handler = new Handler(this);
-        datas=new ArrayList<GroupData>();
-        adapter = new GroupDataAdapter(this,datas);
-        listview.setAdapter(adapter);
-        listview.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
-        listview.setOnItemClickListener(this);
 
-        listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
-            @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                loadData();
+
+        list = new ArrayList<Fragment>();
+
+        list.add(jg);
+        list.add(rw);
+
+
+        mViewPager.setAdapter(new FragAdapter(getSupportFragmentManager(),list));
+        mViewPager.setCurrentItem(0);
+        mViewPager.setOnPageChangeListener(new MyViewPagerChangedListener());
+
+
+    }
+
+    public void setFrag( ){
+        mViewPager.setCurrentItem(0);
+
+    }
+
+
+
+    class MyViewPagerChangedListener implements ViewPager.OnPageChangeListener {
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+            // TODO Auto-generated method stub
+
+        }
+
+
+
+        @Override
+        public void onPageSelected(int arg0) {
+            if (arg0==0){
+                segment_control.setCurrentIndex(0);
             }
-
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-
+            else if (arg0==1){
+                segment_control.setCurrentIndex(1);
             }
-        });
+        }
 
-        firstRefreshData();
+
     }
 
-    protected void firstRefreshData(){
-        showProgress();
-        loadData();
-    }
 
-    protected void loadData(){
-        datas.clear();
-        String loginCode = UserData.getUserData().loginCode;
-        supervisionService.getGroupData( 0 , loginCode , 1 ,0);
-    }
 
     public void onClick(View view){
         if(view.getId()==R.id.btnBack){
@@ -105,59 +112,24 @@ public class GroupActivity extends BaseActivity implements Handler.Callback, Ada
 
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        GroupData data = datas.get(position-1);
-        Intent intent = new Intent(this, CompanyActivity.class);
-        intent.putExtra("data", data);
-        this.startActivity(intent);
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
     }
 
+
+
+
     @Override
-    public boolean handleMessage(Message msg) {
-        if( msg.what == BusinessDataListener.DONE_GET_GROUP_DATA ){
-
-            GroupData[] results = (GroupData[]) msg.obj;
-            int length = results.length;
-            for (int i = 0; i < length; i++) {
-                if(!datas.contains(results[i]))
-                    datas.add(results[i]);
-            }
-
-            layEmpty.setVisibility( datas.size()<1? View.VISIBLE:View.GONE );
-            listview.onRefreshComplete();
-            adapter.notifyDataSetChanged();
-            dismissProgress();
-
-        }else if(msg.what==BusinessDataListener.ERROR_GET_GROUP_DATA){
-            layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
-            dismissProgress();
-            toast(msg.obj.toString());
-            listview.onRefreshComplete();
+    public void onSegmentControlClick(int index) {
+        switch (index){
+            case 0:
+                mViewPager.setCurrentItem(0);
+                return;
+            case 1:
+                mViewPager.setCurrentItem(1);
+                return;
         }
-
-        return false;
-    }
-
-    @Override
-    public void onDataFinish(int type, String des, BaseData[] datas, Bundle extra) {
-        super.onDataFinish(type, des, datas, extra);
-
-        if( type == BusinessDataListener.DONE_GET_GROUP_DATA ){
-            handler.obtainMessage(type, datas).sendToTarget();
-        }
-    }
-
-    @Override
-    public void onDataFailed(int type, String des, Bundle extra) {
-        super.onDataFailed(type, des, extra);
-
-        handler.obtainMessage(type, des).sendToTarget();
 
     }
 }

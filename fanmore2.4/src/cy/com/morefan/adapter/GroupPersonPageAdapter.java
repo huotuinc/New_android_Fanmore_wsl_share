@@ -18,6 +18,7 @@ import java.util.List;
 import cy.com.morefan.bean.GroupData;
 import cy.com.morefan.bean.GroupPersonData;
 import cy.com.morefan.supervision.DepartmentActivity;
+import cy.com.morefan.supervision.MasterActivity;
 
 /**
  * Created by 47483 on 2016/3/25.
@@ -81,8 +82,8 @@ public class GroupPersonPageAdapter extends PagerAdapter implements AdapterView.
     }
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         GroupPersonData data = datas.get(position-1);
-        Intent intent = new Intent(mContext, DepartmentActivity.class);
-        intent.putExtra("name", data.getName());
+        Intent intent = new Intent(mContext, MasterActivity.class);
+        intent.putExtra("data", data);
         mContext.startActivity(intent);
     }
     @Override

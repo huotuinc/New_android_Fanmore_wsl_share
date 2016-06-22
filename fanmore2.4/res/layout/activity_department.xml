@@ -40,20 +40,126 @@
             android:layout_height="wrap_content"/>
     </FrameLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/company_viewpager"
-        android:layout_below="@id/ff1"
+    <LinearLayout
+        android:layout_below="@+id/ff1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/llTab"
+        >
 
-        <android.support.v4.view.PagerTabStrip
-            android:id="@+id/company_tab"
-            android:layout_gravity="top"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
+        <LinearLayout
+            android:id="@+id/lay_mr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:background="@color/white">
+            <TextView
+                android:id="@+id/txtmr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text="默认"
+                android:padding="10dp"
+                android:textColor="@color/theme_blue"
+                android:textSize="12sp" />
+            <ImageView
+                android:id="@+id/mr_line"
+                android:layout_width="match_parent"
+                android:layout_height="2dip"
+                android:scaleType="matrix"
+                android:background="@color/theme_blue" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/lay_zf"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/txtzf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text="转发"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+            <ImageView
+                android:id="@+id/zf_bottom_line"
+                android:layout_width="match_parent"
+                android:layout_height="2dip"
+                android:scaleType="matrix"
+                android:background="@color/white" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/lay_ll"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white">
+            <TextView
+                android:id="@+id/txtll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text="浏览"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+            <ImageView
+                android:id="@+id/ll_bottom_line"
+                android:layout_width="match_parent"
+                android:layout_height="2dip"
+                android:scaleType="matrix"
+                android:background="@color/white" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/lay_hb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:background="@color/white">
+            <TextView
+                android:id="@+id/txthb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text="伙伴"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+            <ImageView
+                android:id="@+id/hb_line"
+                android:layout_width="match_parent"
+                android:layout_height="2dip"
+                android:scaleType="matrix"
+                android:background="@color/white" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <cy.com.morefan.view.PullDownUpListView
+        android:layout_below="@id/llTab"
+        android:id="@+id/listView"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:fadingEdge="none"/>
         <cy.com.morefan.view.EmptyView
-            android:layout_below="@id/company_tab"
+            android:layout_below="@id/llTab"
             android:id="@+id/layEmpty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -61,7 +167,6 @@
             android:src="@anim/anim_empty"
             android:visibility="gone" />
 
-    </android.support.v4.view.ViewPager>
 
 
 

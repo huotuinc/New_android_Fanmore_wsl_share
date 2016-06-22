@@ -3,6 +3,7 @@ package cy.com.morefan;
 
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
 import cy.com.morefan.view.PopReg;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
@@ -110,17 +111,20 @@ public class BaseActivity extends SwipeBackActivity implements BusinessDataListe
 		MainApplication.getActivityManager().popActivity(this);
 		if (mMediaPlayer != null)
 			mMediaPlayer.release();
+		unregisterReceiver(mHomeKeyEventReceiver);
 		super.onDestroy();
 	}
 	@Override
 	protected void onResume() {
 		isMarkedHomeLong = false;
 		MobclickAgent.onResume(this);
+		JPushInterface.onResume(this);
 		super.onResume();
 	}
 	@Override
 	protected void onPause() {
 		MobclickAgent.onPause(this);
+		JPushInterface.onPause(this);
 		super.onPause();
 	}
 	@Override
@@ -261,155 +265,7 @@ public class BaseActivity extends SwipeBackActivity implements BusinessDataListe
 		Intent intentForget = new Intent(BaseActivity.this, ForgetLoginPwdActivity.class);
 		startActivity(intentForget);
 	}
-	protected PopReg popreg;
-	public void popReg( int logintype,final String phone,String code){
 
-		if( null == popreg)
-			popreg = new PopReg(this , logintype , phone, code );
-		popreg.show(this, new PopReg.OnPopRegListener() {
-			@Override
-			public void onReg(int ltype , String invitationCode,  String phone, String code) {
-				if (ltype == 1) {
-
-					userService.userReg(BaseActivity.this,
-							BusinessStatic.getInstance().accountModel.getAccountName(), null,
-							BusinessStatic.getInstance().accountModel.getAccountId(), invitationCode,
-							BusinessStatic.getInstance().accountModel.getAccountUnionId(), BusinessStatic.getInstance().accountModel.getOpenid(),
-							BusinessStatic.getInstance().accountModel.getAccountIcon(), BusinessStatic.getInstance().accountModel.getNickname());
-				} else {
-					userService.userMoblieReg(BaseActivity.this,phone,code,invitationCode );
-				}
-			}
-
-			@Override
-			public void onLogin(String userName, String pwd) {
-				String loginCode = SPUtil.getStringToSpByName(BaseActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD);
-				userService.userLogin(BaseActivity.this, userName, loginCode, true);
-
-			}
-
-			@Override
-			public void onForget() {
-				forgetLogin();
-
-			}
-
-		});
-	}
-	private PopUserLogin pop;
-	public void userLogin(final int logintype){
-		if( null == pop)
-			pop = new PopUserLogin(this);
-		pop.show(this, new OnPopLoginListener() {
-			@Override
-			public void onReg() {
-				Intent intentReg = new Intent(BaseActivity.this, UserRegActivity.class);
-				startActivity(intentReg);
-
-			}
-
-			@Override
-			public void onLogin(String userName, String pwd) {
-
-
-			}
-
-			@Override
-			public void onForget() {
-				forgetLogin();
-
-			}
-			@Override
-			public  void onNext(){
-				popReg(logintype,"","");
-			}
-		});
-//		int i =0;
-//		if(i == 0)
-//			return;
-
-
-//		View loginView = LayoutInflater.from(this).inflate(R.layout.user_login, null);
-//		loginView.findViewById(R.id.txtForget).setOnClickListener(new View.OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				forgetLogin();
-//			}
-//		});
-//		final EditText edtName = (EditText) loginView.findViewById(R.id.edtName);
-//		final EditText edtPwd = (EditText) loginView.findViewById(R.id.edtPwd);
-//		String userName = SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME);
-//		edtName.setText(TextUtils.isEmpty(tempUserName) ? userName :tempUserName);
-//		if(!TextUtils.isEmpty(userName)){
-//			edtPwd.requestFocus();
-//			edtPwd.requestFocusFromTouch();
-//		}
-//		edtPwd.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//
-//			@Override
-//			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//				if(actionId == EditorInfo.IME_ACTION_DONE){
-//					login(edtName, edtPwd);
-//					return true;
-//				}
-//				return false;
-//			}
-//		});
-
-//		customDialog = CustomDialog.showChooiceDialg(this, "用户登录", null, "登录", "注册", loginView, new DialogInterface.OnClickListener() {
-//
-//			@Override
-//			public void onClick(DialogInterface dialog, int which) {
-//				login(edtName, edtPwd);
-//			}
-//
-//		}, new DialogInterface.OnClickListener() {
-//
-//			@Override
-//			public void onClick(DialogInterface dialog, int which) {
-//				Intent intentReg = new Intent(BaseActivity.this, UserRegActivity.class);
-//				startActivity(intentReg);
-//				customDialog.setDialogDismissAfterClick();
-//
-//			}
-//		});
-//		customDialog.setDialogShowAfterClick();
-
-
-
-//		final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//		handler.postDelayed(new Runnable() {
-//			@Override
-//			public void run() {
-//				imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-//			}
-//		}, 10);
-	}
-
-
-//	private void login(final EditText edtName, final EditText edtPwd) {
-//		edtName.setError(null);
-//		edtPwd.setError(null);
-//		String name = edtName.getText().toString();
-//		String pwd = edtPwd.getText().toString();
-////		if(!Util.userNameIsLegal(name).equals("success")){
-////			edtName.requestFocus();
-////			edtName.requestFocusFromTouch();
-////			edtName.setError(Util.userNameIsLegal(name), getResources().getDrawable(R.drawable.ic_launcher));
-////
-////			return;
-////		}
-//		if(!Util.userPwdIsLegal(pwd).equals("success")){
-//			edtPwd.requestFocus();
-//			edtPwd.requestFocusFromTouch();
-//			edtPwd.setError(Util.userPwdIsLegal(pwd));
-//			return;
-//		}
-//		tempUserName = name;
-//		login(name, pwd, true, true);
-//		customDialog.setDialogDismissAfterClick();
-//	}
 
 	/**
 	 *

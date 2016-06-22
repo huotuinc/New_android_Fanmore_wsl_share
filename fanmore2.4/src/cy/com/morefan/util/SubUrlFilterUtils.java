@@ -16,13 +16,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.Key;
 
-import cy.com.morefan.LoginActivity;
 import cy.com.morefan.MainApplication;
+import cy.com.morefan.MoblieLoginActivity;
 import cy.com.morefan.PayModel;
 import cy.com.morefan.WebActivity;
 import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
-import cy.com.morefan.listener.BusinessDataListener;
 
 /**
  * 过滤UI类
@@ -86,7 +85,7 @@ class SubUrlFilterUtils {
             //清除登录信息
             application.logout ();
             //跳转到登录界面
-            ActivityUtils.getInstance ().skipActivity ( aty, LoginActivity.class );
+            ActivityUtils.getInstance ().skipActivity ( aty, MoblieLoginActivity.class );
         }else if(url.contains(Constant.WEB_TAG_INFO)){
             //处理信息保护
             return true;
@@ -162,7 +161,7 @@ class SubUrlFilterUtils {
             //清除登录信息
             application.logout ();
             //跳转到登录界面
-            ActivityUtils.getInstance ().skipActivity ( aty, LoginActivity.class );
+            ActivityUtils.getInstance ().skipActivity ( aty, MoblieLoginActivity.class );
         }
         else
         {

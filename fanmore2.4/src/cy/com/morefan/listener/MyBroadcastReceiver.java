@@ -25,9 +25,10 @@ public class MyBroadcastReceiver extends BroadcastReceiver{
 	public static String ACTION_ALARM_UP = "cy.com.morefan.ACTION_ALARM_UP" ;
 	//分享成功后微信没有回调
 	public static String ACTION_WX_NOT_BACK = "cy.com.morefan.ACTION_WX_NOT_BACK" ;
+	public static String ACTION_REFRESH_USEDATA="cy.com.morefan.ACTION_REFRESH_USEDATA";
 	public enum ReceiverType{
 		WXNotBack,AlarmUp, RefreshTaskList,UserMainDataUpdate, Sms, Login, Logout, ShareToWeixinSuccess, ShareToSinaSuccess,
-		ShareToQzoneSuccess, BackgroundBackToUpdate,wxPaySuccess
+		ShareToQzoneSuccess, BackgroundBackToUpdate,wxPaySuccess,refreshusedata
 	}
 	public interface BroadcastListener{
 		void onFinishReceiver(ReceiverType type, Object msg);
@@ -101,7 +102,10 @@ public class MyBroadcastReceiver extends BroadcastReceiver{
 			}
 		}else if(intent.getAction().equals(ACTION_WX_NOT_BACK)){
 			listener.onFinishReceiver(ReceiverType.WXNotBack, intent.getExtras());
-		} else if(intent.getAction().equals(ACTION_ALARM_UP)){
+		}else if (intent.getAction().equals(ACTION_REFRESH_USEDATA)){
+			listener.onFinishReceiver(ReceiverType.refreshusedata, intent.getExtras());
+		}
+		else if(intent.getAction().equals(ACTION_ALARM_UP)){
 			listener.onFinishReceiver(ReceiverType.AlarmUp, intent.getExtras());
 		} else if(intent.getAction().equals(ACTION_REFRESH_TASK_LIST)){
 			listener.onFinishReceiver(ReceiverType.RefreshTaskList, null);

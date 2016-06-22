@@ -27,8 +27,25 @@ public class UserData implements BaseData, Serializable{
 	 */
 	public String yesScore;
 	/**
+	 * 历史总浏览量
+	 */
+	public String TotalBrowseAmount;
+	/**
+	 * 历史总转发量
+	 */
+	public String TotalTurnAmount;
+	/**
+	 * 等级名称
+	 */
+	public String levelName;
+	/**
 	 * 总积分
 	 */
+	/**
+	 * 伙伴数量
+	 */
+	public String PrenticeAmount;
+
 	public String totalScore;
 	/**
 	 * 可用积分
@@ -90,6 +107,11 @@ public class UserData implements BaseData, Serializable{
 	 */
 	public String toCrashPwd;
 	/**
+	 * 是否超级管理员
+	 */
+	public boolean isSuper;
+	/**
+	 *
 	 * 手机号
 	 */
 	public String phone;
@@ -131,6 +153,10 @@ public class UserData implements BaseData, Serializable{
 	 * 今日浏览量
 	 */
 	public int todayScanCount;
+	/**
+	 * 预告数量
+	 */
+	public int TaskCount;
 
 	/**
 	 * 是否有火眼金眼

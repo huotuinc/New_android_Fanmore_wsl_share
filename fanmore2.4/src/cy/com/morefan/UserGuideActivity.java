@@ -32,7 +32,7 @@ public class UserGuideActivity extends BaseActivity implements BroadcastListener
 		switch (v.getId()) {
 		case R.id.btnStart:
 			if(!isFromMore){
-				Intent intent = new Intent(this, LoginActivity.class);
+				Intent intent = new Intent(this, MoblieLoginActivity.class);
 				intent.putExtra("isCompleteUserInfo", isCompleteUserInfo);
 				intent.putExtra("alarmId", alarmId);
 				startActivity(intent);

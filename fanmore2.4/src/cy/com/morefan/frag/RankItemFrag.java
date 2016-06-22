@@ -5,21 +5,17 @@ import java.util.List;
 
 
 
-import cy.com.morefan.AwardDetailActivity;
-import cy.com.morefan.HomeActivity;
 import cy.com.morefan.R;
 import cy.com.morefan.RankActivity;
-import cy.com.morefan.adapter.MyPartInAdapter;
 import cy.com.morefan.adapter.RankAdapter;
 import cy.com.morefan.bean.BaseData;
-import cy.com.morefan.bean.PartInItemData;
 import cy.com.morefan.bean.RankData;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.constant.Constant;
-import cy.com.morefan.constant.Constant.FromType;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.L;
+import cy.com.morefan.view.ImageLoad;
 import cy.com.morefan.view.PullDownUpListView;
 import cy.com.morefan.view.PullDownUpListView.OnRefreshOrLoadListener;
 import android.os.Bundle;
@@ -27,11 +23,11 @@ import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class RankItemFrag extends Fragment implements OnRefreshOrLoadListener, BusinessDataListener, Callback{
@@ -44,11 +40,15 @@ public class RankItemFrag extends Fragment implements OnRefreshOrLoadListener, B
 	private List<RankData> datas;
 	private RankAdapter adapter;
 	private ImageView layEmpty;
-	private PullDownUpListView listView;
+	private ListView listView;
 	private TextView txtDes;
-	private String rankDes;
-	private int myRank;
+	private String Des;
+	private String name;
+	private String logo;
+	private String value;
+
 	private int type;
+	private RankData rankData;
 
 	private Handler mHandler = new Handler(this);
 
@@ -56,25 +56,36 @@ public class RankItemFrag extends Fragment implements OnRefreshOrLoadListener, B
 	public boolean handleMessage(Message msg) {
 		if(msg.what == BusinessDataListener.DONE_GET_RANK){
 			dismissProgress();
-			txtDes.setVisibility(TextUtils.isEmpty(rankDes) ? View.GONE : View.VISIBLE);
-			txtDes.setText(rankDes);
-			RankData[] results = (RankData[]) msg.obj;
+
+			Bundle ex=(Bundle) msg.obj;
+
+
+			RankData top=new RankData();
+			top.name = "我";
+			top.logo=ex.getString("myRanklogo");
+			top.myRankvalue ="第"+ ex.getString("myRankvalue")+"名";
+			top.myRankDes = "累计浏览:"+ex.getString("myRankDes");
+			top.type = 1;
+			datas.add(top);
+
+
+			RankData[] results = (RankData[])ex.getSerializable("list");
 			int length = results.length;
 			for (int i = 0; i < length; i++) {
 				datas.add(results[i]);
 			}
-			layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
-			listView.onFinishLoad();
-			listView.onFinishRefresh();
-			adapter.setMyRank(myRank);
-			//adapter.notifyDataSetChanged();
 
-		}else if(msg.what == BusinessDataListener.ERROR_GET_MY_PARTIN_DETAIL){
+
+
+			listView.setAdapter(adapter);
+			layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
+
+
+		}else if(msg.what == BusinessDataListener.ERROR_GET_RANK){
 			layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
 			dismissProgress();
 			toast(msg.obj.toString());
-			listView.onFinishLoad();
-			listView.onFinishRefresh();
+
 		}
 		return false;
 	}
@@ -103,11 +114,9 @@ public class RankItemFrag extends Fragment implements OnRefreshOrLoadListener, B
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		mRootView = inflater.inflate(R.layout.rank_tab, null);
-		listView = (PullDownUpListView) mRootView.findViewById(R.id.listView);
+		listView = (ListView) mRootView.findViewById(R.id.listView);
 		txtDes = (TextView) mRootView.findViewById(R.id.txtDes);
 		layEmpty = (ImageView) mRootView.findViewById(R.id.layEmpty);
-		listView.setOnRefreshOrLoadListener(this);
-		listView.setPullUpToLoadEnable(false);
 
 		if(datas == null || adapter == null){
 			datas = new ArrayList<RankData>();
@@ -117,21 +126,13 @@ public class RankItemFrag extends Fragment implements OnRefreshOrLoadListener, B
 			refreshView();
 		}
 		listView.setAdapter(adapter);
-
-
-
-
-
-
-
 		return mRootView;
 	}
 
 	private void refreshView() {
 		adapter.setDatas(datas);
 		layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
-		txtDes.setVisibility(TextUtils.isEmpty(rankDes) ? View.GONE : View.VISIBLE);
-		txtDes.setText(rankDes);
+
 
 	}
 
@@ -152,10 +153,9 @@ public class RankItemFrag extends Fragment implements OnRefreshOrLoadListener, B
 		if( null != getActivity())
 			((RankActivity)getActivity()).onDataFinish(type, des, datas, extra);
 		if(extra != null){
-			rankDes = extra.getString("des");
-			myRank = extra.getInt("myRank");
+
 		}
-		mHandler.obtainMessage(type, datas).sendToTarget();
+		mHandler.obtainMessage(type, extra).sendToTarget();
 	}
 	@Override
 	public void onDataFailed(int type, String des, Bundle extra) {
@@ -166,7 +166,9 @@ public class RankItemFrag extends Fragment implements OnRefreshOrLoadListener, B
 
 	@Override
 	public void onDataFail(int type, String des, Bundle extra) {
-
+		if( null != getActivity())
+			((RankActivity)getActivity()).onDataFailed(type, des, extra);
+		mHandler.obtainMessage(type, des).sendToTarget();
 	}
 
 

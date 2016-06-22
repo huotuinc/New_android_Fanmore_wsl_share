@@ -73,6 +73,8 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 @SuppressLint("SetJavaScriptEnabled")
 public class TaskDetailActivity extends BaseActivity implements BusinessDataListener, Callback, BroadcastListener, OnClickListener{
 	public enum StatusType{
@@ -105,7 +107,6 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 	private ImageView imgLine;
 	private CyButton btnFav;
 	private TextView txtExtraDes;//闪购描述
-	private TextView btnBuySend;
 	private LinearLayout layTop;
 	private FrameLayout layWeb;
 	private int topHeight;
@@ -133,12 +134,11 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 
 		}else if(msg.what == BusinessDataListener.DONE_CHECK_TASK_STATUS){
 //			//状态：0：已开始  1：未开始2:已下架
-//			int status = ((Bundle)msg.obj).getInt("status");
-//			isPre = status == 1;
-//			if(fromPre && !isPre){
-//				btnBuySend.setVisibility(View.GONE);
-//				btnShare.setVisibility(View.GONE);
-//			}
+			int status = ((Bundle)msg.obj).getInt("status");
+			isPre = status == 1;
+			if(fromPre && !isPre){
+				btnShare.setVisibility(View.GONE);
+			}
 		}else if(msg.what == BusinessDataListener.ERROR_BUY_TOOL){
 			dismissProgress();
 			toast(msg.obj.toString());
@@ -154,10 +154,7 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 			 * addOneUseTip	+1道具使用提示
 			 * addOneBuyTip	＋1道具购买提示
 			 */
-			if(statusData.taskType == 0){
-				String des = fromPre ? btnBuySend.getTag().toString() + "后,使用火眼金睛可提前转发该任务!": "该任务暂不支持转发!";
-				toast(des);
-			}else if(statusData.taskType == 1){
+			 if(statusData.taskType == 1){
 				//是否有提前道具
 				if(statusData.advanceTool == 1){//使用提示
 					showTipDialog(1, 0, statusData.advanceUseTip, "使用", new DialogInterface.OnClickListener() {
@@ -222,10 +219,10 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 			dismissProgress();
 			if(!isFree()){
 				if(BusinessStatic.getInstance().disasterFlag){
-					toast("复制成功!转发成功!明日查看收益!");
+					toast("转发成功!");
 					copy();
 				}else
-					toast("转发成功!明日查看收益!");
+					toast("转发成功!");
 			}
 
 			taskData.isSend = true;
@@ -361,7 +358,6 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 	private void initView() {
 		layTop = (LinearLayout) findViewById(R.id.layTop);
 		layWeb = (FrameLayout) findViewById(R.id.layWeb);
-		btnBuySend = (TextView) findViewById(R.id.btnBuySend);
 		txtExtraDes = (TextView) findViewById(R.id.txtExtraDes);
 		//btnFav = (CyButton) findViewById(R.id.btnFav);
 		layDes = (LinearLayout) findViewById(R.id.layDes);
@@ -393,9 +389,12 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 		final ProgressBar bar = (ProgressBar) findViewById(R.id.progressBar);
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.getSettings().setDomStorageEnabled(true);
-
-		mWebView.getSettings().setUseWideViewPort(true);
+		mWebView.getSettings().setPluginState(WebSettings.PluginState.ON);
+		mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+		mWebView.getSettings().setAllowFileAccess(true);
+		mWebView.getSettings().setDefaultTextEncodingName("UTF-8");
 		mWebView.getSettings().setLoadWithOverviewMode(true);
+		mWebView.getSettings().setUseWideViewPort(true);
 		mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 		mWebView.setWebChromeClient(new WebChromeClient() {
 			public void onProgressChanged(WebView view, int progress) {
@@ -557,7 +556,7 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 	@Override
 	public void finish() {
 		if(statusType == StatusType.Share){
-			CustomDialog.showChooiceDialg(this, null, "您的转发任务接交并未成功,离开后将无法得到任务收益!确定离开吗?", "再次提交", "离开", null,
+			CustomDialog.showChooiceDialg(this, null, "您的转发任务接交并未成功,确定离开吗?", "再次提交", "离开", null,
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -596,11 +595,10 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 		txtSend.setText(taskData.awardSend);
 		txtScan.setText(taskData.awardScan);
 		//转发按钮文字显示
-		String des = taskData.sendstatus == 1 || (taskData.sendstatus == 0 && fromPre) ? "立即转发" : "立即转发";
-		btnShare.setBackgroundResource(taskData.sendstatus == 1 || (taskData.sendstatus == 0 && fromPre) ? R.drawable.shape_yellow_sel : R.drawable.btn_red_sel);
+		//btnShare.setVisibility(taskData.sendstatus==2||(taskData.sendstatus == 0 && fromPre) ? View.VISIBLE :View.GONE);
+		btnShare.setVisibility(taskData.ShowTurnButton==1? View.VISIBLE:View.GONE);
 
-		btnBuySend.setText(des);
-		btnShare.setText(des);
+
 		if(!TextUtils.isEmpty(advTime) && !TextUtils.isEmpty(taskData.curTime)){
 			long advLTime = TimeUtil.FormatterTimeToLong("yyy-MM-dd HH:mm:ss", advTime);
 			L.i(">>>>>>Time:" + advLTime + "," + taskData.curTime);
@@ -612,7 +610,6 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 						mHandler.post(new Runnable() {
 							@Override
 							public void run() {
-								btnBuySend.setTag(timeDes);
 //								btnBuySend.setText(timeDes+ "后转发");
 //								btnShare.setText(timeDes + "后转发");
 							}
@@ -642,74 +639,69 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 				txtExtraDes.setText(taskData.extraDes);
 		}
 
-
-		//转发按钮显示与否
-		if(taskData.flagShowSend == 1){
-			btnShare.setVisibility(View.VISIBLE);
-
-			//闪购时，转发在右上角
-			if(taskData.type == 1000300){
-				//showUserGuide(R.drawable.user_guide_mall_send);
-				 btnShare.setVisibility(View.GONE);
-				 btnBuySend.setVisibility(View.VISIBLE);
-				 if(taskData.channelIds.size() == 3){
-					 //btnBuySend.setVisibility(View.GONE);
-						btnBuySend.setText("已转发");
-						btnBuySend.setClickable(false);
-					}
-					//更新pop上状态
-					if(popupWindow != null && popupWindow.isShowing())
-						updatePopView();
-				 return;
-			}
-			UserData userData = UserData.getUserData();
-			if(!userData.isLogin)
-				return;
-
-			calCount = true;
-			btnShare.setClickable(true);
-//			if(userData.completeTaskCount >= userData.totalTaskCount && taskData.channelIds.size() == 0){
-//				btnShare.setBackgroundResource(R.drawable.shape_yellow_sel);
-//				//if(!fromPre)
-//				btnShare.setText(taskData.sendstatus == 1 || (taskData.sendstatus == 0 && fromPre) ? "火眼金睛" : "再来一发");
-//				//不计算转发次数的，显示立即转发
-//				if(taskData.type == 1000300 || taskData.type == 1001000){
-//					btnShare.setText("立即转发");
-//					btnShare.setBackgroundResource(R.drawable.btn_red_sel);
-//				}
-////				if(taskData.sendstatus == 1)
-////					btnShare.setText("再来一发");
-//				//btnShare.setClickable(false);
+//
+//		//转发按钮显示与否
+//		if(taskData.flagShowSend == 1){
+//			btnShare.setVisibility(View.VISIBLE);
+//
+//			//闪购时，转发在右上角
+//			if(taskData.type == 1000300){
+//				//showUserGuide(R.drawable.user_guide_mall_send);
+//				 btnShare.setVisibility(View.GONE);
+//				 if(taskData.channelIds.size() == 3){
+//					 //btnBuySend.setVisibility(View.GONE);
+//					}
+//					//更新pop上状态
+//					if(popupWindow != null && popupWindow.isShowing())
+//						updatePopView();
+//				 return;
 //			}
-			if(Double.parseDouble(taskData.lastScore) == 0){
-				btnShare.setBackgroundResource(R.drawable.btn_gray);
-				btnShare.setText("抢光了");
-				btnShare.setClickable(false);
-			}
-			//无偿转发，任务为抢光了，且未进行过转发
-			if(isFree()){
-				btnShare.setBackgroundResource(R.drawable.btn_green_sel);
-				calCount = false;
-				btnShare.setText("无偿转发");
-				btnShare.setClickable(true);
-			}
-			if(taskData.channelIds.size() == 3){
-				btnShare.setBackgroundResource(R.drawable.btn_gray);
-				btnShare.setText("已转发");
-				btnShare.setClickable(false);
-			}
-			//更新pop上状态
-			if(popupWindow != null && popupWindow.isShowing())
-				updatePopView();
-		}else{
-			 btnBuySend.setVisibility(View.GONE);
-			btnShare.setVisibility(View.GONE);
-		}
-		//预告过来，已上线的/未登录 不显示按钮
-		if(fromPre && taskData.sendstatus == 2 ){
-			btnBuySend.setVisibility(View.GONE);
-			btnShare.setVisibility(View.GONE);
-		}
+//			UserData userData = UserData.getUserData();
+//			if(!userData.isLogin)
+//				return;
+//
+//			calCount = true;
+//			btnShare.setClickable(true);
+////			if(userData.completeTaskCount >= userData.totalTaskCount && taskData.channelIds.size() == 0){
+////				btnShare.setBackgroundResource(R.drawable.shape_yellow_sel);
+////				//if(!fromPre)
+////				btnShare.setText(taskData.sendstatus == 1 || (taskData.sendstatus == 0 && fromPre) ? "火眼金睛" : "再来一发");
+////				//不计算转发次数的，显示立即转发
+////				if(taskData.type == 1000300 || taskData.type == 1001000){
+////					btnShare.setText("立即转发");
+			btnShare.setBackgroundResource(R.drawable.btn_red_sel);
+////				}
+//////				if(taskData.sendstatus == 1)
+//////					btnShare.setText("再来一发");
+////				//btnShare.setClickable(false);
+////			}
+//			if(Double.parseDouble(taskData.lastScore) == 0){
+////				btnShare.setBackgroundResource(R.drawable.btn_gray);
+////				btnShare.setText("抢光了");
+////				btnShare.setClickable(false);
+//			}
+//			//无偿转发，任务为抢光了，且未进行过转发
+//			if(isFree()){
+////				btnShare.setBackgroundResource(R.drawable.btn_green_sel);
+////				calCount = false;
+////				btnShare.setText("无偿转发");
+////				btnShare.setClickable(true);
+//			}
+//			if(taskData.channelIds.size() == 3){
+////				btnShare.setBackgroundResource(R.drawable.btn_gray);
+////				btnShare.setText("已转发");
+////				btnShare.setClickable(false);
+//			}
+//			//更新pop上状态
+//			if(popupWindow != null && popupWindow.isShowing())
+//				updatePopView();
+//		}else{
+//			btnShare.setVisibility(View.GONE);
+//		}
+//		//预告过来，已上线的/未登录 不显示按钮
+//		if(fromPre && taskData.sendstatus == 2 ){
+//			btnShare.setVisibility(View.GONE);
+//		}
 
 	}
 
@@ -738,11 +730,10 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 	public void onClickBottomTab(View view){
 		switch (view.getId()) {
 		case R.id.btnShare:
-		case R.id.btnBuySend:
 
 
 			if(!UserData.getUserData().isLogin){
-				Intent intentlogin = new Intent(TaskDetailActivity.this, LoginActivity.class);
+				Intent intentlogin = new Intent(TaskDetailActivity.this, MoblieLoginActivity.class);
 				startActivity(intentlogin);
 			}else{
 				if( !UserData.getUserData().ignoreJudgeEmulator && BusinessStatic.getInstance().ISEMULATOR){
@@ -750,53 +741,53 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 					return;
 				}
 				//帐号切换进行验证
-				String preUserName = SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_PRE_USERNAME);
-				if(!TextUtils.isEmpty(preUserName) && !preUserName.equals(UserData.getUserData().userName)){
-					View view2 = LayoutInflater.from(this).inflate(R.layout.verify, null);
-					final VerifyView mVerifyView = (VerifyView) view2.findViewById(R.id.txt);
-					final EditText edt = (EditText) view2.findViewById(R.id.edt);
-					final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-					mDialog = CustomDialog.showChooiceDialg(this, null, null, "确定", "换一个", view2,
-							new DialogInterface.OnClickListener() {
+//				String preUserName = SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_PRE_USERNAME);
+//				if(!TextUtils.isEmpty(preUserName) && !preUserName.equals(UserData.getUserData().userName)){
+//					View view2 = LayoutInflater.from(this).inflate(R.layout.verify, null);
+//					final VerifyView mVerifyView = (VerifyView) view2.findViewById(R.id.txt);
+//					final EditText edt = (EditText) view2.findViewById(R.id.edt);
+//					final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//					mDialog = CustomDialog.showChooiceDialg(this, null, null, "确定", "换一个", view2,
+//							new DialogInterface.OnClickListener() {
+//
+//								@Override
+//								public void onClick(DialogInterface dialog, int which) {
+//									//验证是否通过
+//									try {
+//										int vaule = Integer.valueOf(edt.getText().toString().trim());
+//										if(vaule == mVerifyView.getResult()){
+//											SPUtil.saveStringToSpByName(TaskDetailActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_PRE_USERNAME, UserData.getUserData().userName);
+//											mDialog.setDialogDismissAfterClick();
+//											share();
+//											imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+//										}else{
+//											toast("验证错误!请重试");
+//										}
+//									} catch (Exception e) {
+//										toast("验证错误!请重试");
+//									}
+//								}
+//							} ,
+//							new DialogInterface.OnClickListener() {
+//
+//								@Override
+//								public void onClick(DialogInterface dialog, int which) {
+//									mVerifyView.refresh();
+//								}
+//							});
+//					mDialog.setDialogShowAfterClick();
 
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									//验证是否通过
-									try {
-										int vaule = Integer.valueOf(edt.getText().toString().trim());
-										if(vaule == mVerifyView.getResult()){
-											SPUtil.saveStringToSpByName(TaskDetailActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_PRE_USERNAME, UserData.getUserData().userName);
-											mDialog.setDialogDismissAfterClick();
-											share();
-											imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-										}else{
-											toast("验证错误!请重试");
-										}
-									} catch (Exception e) {
-										toast("验证错误!请重试");
-									}
-								}
-							} ,
-							new DialogInterface.OnClickListener() {
 
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									mVerifyView.refresh();
-								}
-							});
-					mDialog.setDialogShowAfterClick();
-
-
-					mHandler.postDelayed(new Runnable() {
-						@Override
-						public void run() {
-							imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-						}
-					}, 10);
-
-				}else{
+//					mHandler.postDelayed(new Runnable() {
+//						@Override
+//						public void run() {
+//							imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+//						}
+//					}, 10);
+//
+//				}else{
 					share();
-				}
+
 
 
 
@@ -1076,6 +1067,7 @@ private void share(){
 				String msg = "";
 				if (platform.getName().equals(Wechat.NAME)) {
 					ToastUtil.show(context, "微信分享成功");
+					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
 				} else if (platform.getName().equals(WechatMoments.NAME)) {
 					ToastUtil.show(context, "微信朋友圈分享成功");
 					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
@@ -1118,6 +1110,7 @@ private void share(){
                 String msg = "";
                 if (platform.getName().equals(Wechat.NAME)) {
                     ToastUtil.show(context, "微信分享成功");
+					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
                 } else if (platform.getName().equals(WechatMoments.NAME)) {
                     ToastUtil.show(context, "微信朋友圈分享成功");
 					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);

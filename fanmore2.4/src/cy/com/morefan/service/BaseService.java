@@ -71,6 +71,10 @@ public class BaseService {
 	public void setUserData(String userName, String pwd, MyJSONObject myUserData) throws JSONException{
 		//MyJSONObject myUserData = myJSONObject.getJSONObject("userData");
 		UserData userData = UserData.getUserData();
+		userData.TotalBrowseAmount = myUserData.getString("TotalBrowseAmount");
+		userData.TotalTurnAmount  = myUserData.getString("TotalTurnAmount");
+		userData.PrenticeAmount  = myUserData.getString("PrenticeAmount");
+		userData.levelName   = myUserData.getString("levelName");
 		userData.completeInfo = myUserData.getBoolean("completeInfo");
 		userData.dayCheckIn = myUserData.getInt("dayCheckIn") == 1;
 		userData.checkInDays = myUserData.getInt("checkInDays");
@@ -101,6 +105,7 @@ public class BaseService {
 		userData.todayScanCount = myUserData.getInt("todayBrowseCount");
 		//judgeEmulator是否进行模拟器判断，0进行;1不进行
 		userData.ignoreJudgeEmulator = myUserData.getInt("judgeEmulator") == 1;
+		userData.isSuper =myUserData.getBoolean("isSuper");
 		try {
 			JSONArray msg = myUserData.getJSONArray("msg");
 			if (msg != null)
@@ -137,7 +142,7 @@ public class BaseService {
 		String time = tip.getString("orderTime");
 		item.startTime = Util.DateFormatFull(time);
 		//s
-		item.advTime = Util.DateFormatFull(tip.getString("advancedseconds"));//tip.getInt("advancedseconds") + "";
+ 		item.advTime = Util.DateFormatFull(tip.getString("advancedseconds"));//tip.getInt("advancedseconds") + "";
 		item.creatTime = Util.DateFormat(time);
 		item.dayCount = Util.getDayCount(time);
 		item.dayDisDes = Util.getDayDisDes(time);
@@ -147,7 +152,9 @@ public class BaseService {
 		item.storeId = tip.getString("storeId");
 		item.store = tip.getString("storeName");
 		item.content = tip.getString("taskInfo");
-		item.sendCount = tip.getInt("sendCount");
+		item.sendCount = tip.getString("sendCount");
+		item.browseCount = tip.getString("browseCount");
+		item.ShowTurnButton=tip.getInt("ShowTurnButton");
 		item.status = tip.getInt("status");
 		item.type = tip.getInt("type");
 		//item.type = 1001000;

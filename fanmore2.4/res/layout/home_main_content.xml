@@ -24,7 +24,7 @@
             android:layout_marginLeft="95dp"
             android:layout_marginRight="95dp"
             android:orientation="horizontal"
-          android:background="@color/theme_blue">
+          android:background="@color/theme_back">
 
             <TextView
                 android:id="@+id/txtTask"
@@ -33,7 +33,7 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:onClick="onClick"
-                android:text="领取任务"
+                android:text="乐享资讯"
                 android:textSize="18sp"
                 android:textColor="@color/white" />
 
@@ -68,13 +68,13 @@
         </LinearLayout>
 
         <cy.com.morefan.view.CyButton
+            android:visibility="visible"
             android:id="@+id/btnRight"
             android:layout_width="wrap_content"
-            android:visibility="gone"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/title_right_refresh"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/title_query_normal"
             android:clickable="true"
             android:onClick="onClick" />
           <TextView

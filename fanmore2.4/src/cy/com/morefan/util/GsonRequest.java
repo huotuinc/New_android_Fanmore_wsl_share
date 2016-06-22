@@ -22,7 +22,6 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 
-import org.apache.http.client.methods.HttpHead;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;

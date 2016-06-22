@@ -48,7 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:divider="@null"
+            android:footerDividersEnabled="false"
+            android:divider="@color/gray_list_bg"
             android:fadingEdge="none"
             android:layout_below="@+id/frameLayout" />
 

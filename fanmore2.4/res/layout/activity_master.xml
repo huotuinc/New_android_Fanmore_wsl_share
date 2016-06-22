@@ -162,20 +162,12 @@
             android:scaleType="matrix"
             android:background="@color/white" />
     </LinearLayout>
-    <cy.com.morefan.view.PullDownUpListView
+    <android.support.v4.view.ViewPager
         android:layout_below="@+id/text_bottom_ll"
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:divider="@null"
-        android:fadingEdge="none"/>
-    <cy.com.morefan.view.EmptyView
-        android:layout_below="@+id/text_bottom_ll"
-        android:id="@+id/layEmpty"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        />
+        android:id="@+id/viewPager"
+        android:background="@color/gray_list_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" >
+    </android.support.v4.view.ViewPager>
 </RelativeLayout>

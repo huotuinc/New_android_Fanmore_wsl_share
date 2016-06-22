@@ -102,6 +102,7 @@
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:footerDividersEnabled="false"
             android:layout_gravity="center"
             android:divider="@null"
             android:fadingEdge="none"

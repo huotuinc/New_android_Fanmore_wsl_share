@@ -153,6 +153,7 @@
     <cy.com.morefan.view.PullDownUpListView
         android:layout_below="@id/llTab"
         android:id="@+id/listView"
+        android:footerDividersEnabled="false"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

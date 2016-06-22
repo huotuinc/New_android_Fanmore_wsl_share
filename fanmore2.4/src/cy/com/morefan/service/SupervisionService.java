@@ -145,56 +145,56 @@ public void AllTask(final String keyword,final int pageIndex){
      * @param pageIndex
      *
      */
-//    public void GetUserListByMasterId(final String loginCode,final int masterId,final int pageIndex){
-//        ThreadPoolManager.getInstance().addTask(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    String url=Constant.IP_URL + "/Api.ashx?req=GetUserListByMasterId" + CONSTANT_URL();
-//                    JSONObject jsonUrl=new JSONObject();
-//                    jsonUrl.put("loginCode",loginCode);
-//                    jsonUrl.put("masterId", masterId);
-//                    jsonUrl.put("pageIndex", pageIndex);
-//                    try {
-//                        url += URLEncoder.encode(jsonUrl.toString(), "UTF-8");
-//                    } catch (UnsupportedEncodingException e) {
-//                        e.printStackTrace();
-//                    }
-//                    L.i("GetGroupPerson:" + url);
-//                    MyJSONObject data = getDataFromSer(url);
-//                    if (data != null) {
-//                        int resultCode = data.getInt("resultCode");
-//                        if (resultCode == 1) {
-//                            int status = data.getInt("status");
-//                            if (status == 1) {
-//                                JSONArray jArray = data.getJSONArray("resultData");
-//                                int length = jArray.length();
-//                                GroupPersonData[] results = new GroupPersonData[length];
-//                                for (int i = 0; i < length; i++) {
-//                                    MyJSONObject obj = (MyJSONObject) jArray.get(i);
-//                                    GroupPersonData item = setGroupPersonData(obj);
-//                                    results[i] = item;
-//                                }
-//                                //Bundle extra = new Bundle();
-//                                //extra.putInt("status", result.getInt("status"));
-//                                //extra.putString("webUrl", result.getString("webUrl"));
-//                                listener.onDataFinish(BusinessDataListener.DONE_GET_GROUP_PERSON, null, results, null);
-//                            } else {
-//                                listener.onDataFailed(BusinessDataListener.ERROR_GET_GROUP_PERSON, data.getString("tip"), null);
-//                            }
-//                        } else {
-//                            listener.onDataFailed(BusinessDataListener.ERROR_GET_GROUP_PERSON, data.getString("description"), null);
-//                        }
-//                    } else {
-//                        listener.onDataFailed(BusinessDataListener.ERROR_GET_GROUP_PERSON, ERROR_NET, null);
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    listener.onDataFailed(BusinessDataListener.ERROR_GET_GROUP_PERSON, ERROR_DATA, null);
-//                }
-//            }
-//        });
-//    }
+    public void GetUserListByMasterId(final String loginCode,final int masterId,final int pageIndex){
+        ThreadPoolManager.getInstance().addTask(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String url=Constant.IP_URL + "/Api.ashx?req=GetUserListByMasterId" + CONSTANT_URL();
+                    JSONObject jsonUrl=new JSONObject();
+                    jsonUrl.put("loginCode",loginCode);
+                    jsonUrl.put("masterId", masterId);
+                    jsonUrl.put("pageIndex", pageIndex);
+                    try {
+                        url += URLEncoder.encode(jsonUrl.toString(), "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    L.i("GetGroupPerson:" + url);
+                    MyJSONObject data = getDataFromSer(url);
+                    if (data != null) {
+                        int resultCode = data.getInt("resultCode");
+                        if (resultCode == 1) {
+                            int status = data.getInt("status");
+                            if (status == 1) {
+                                JSONArray jArray = data.getJSONArray("resultData");
+                                int length = jArray.length();
+                                GroupPersonData[] results = new GroupPersonData[length];
+                                for (int i = 0; i < length; i++) {
+                                    MyJSONObject obj = (MyJSONObject) jArray.get(i);
+                                    GroupPersonData item = setGroupPersonData(obj);
+                                    results[i] = item;
+                                }
+                                //Bundle extra = new Bundle();
+                                //extra.putInt("status", result.getInt("status"));
+                                //extra.putString("webUrl", result.getString("webUrl"));
+                                listener.onDataFinish(BusinessDataListener.DONE_GET_GROUP_PERSON, null, results, null);
+                            } else {
+                                listener.onDataFailed(BusinessDataListener.ERROR_GET_GROUP_PERSON, data.getString("tip"), null);
+                            }
+                        } else {
+                            listener.onDataFailed(BusinessDataListener.ERROR_GET_GROUP_PERSON, data.getString("description"), null);
+                        }
+                    } else {
+                        listener.onDataFailed(BusinessDataListener.ERROR_GET_GROUP_PERSON, ERROR_NET, null);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onDataFailed(BusinessDataListener.ERROR_GET_GROUP_PERSON, ERROR_DATA, null);
+                }
+            }
+        });
+    }
     /**
      * 获取部门下的人员、人员积分、总转发、总浏览数据
      * @param loginCode 登录code

@@ -14,6 +14,7 @@ public class FragAdapter extends FragmentPagerAdapter{
 		this.frags = frags;
 	}
 
+
 	@Override
 	public Fragment getItem(int arg0) {
 		return frags.get(arg0);

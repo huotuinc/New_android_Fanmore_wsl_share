@@ -97,7 +97,7 @@ public class TermActivity extends BaseActivity implements BusinessDataListener, 
         taskService =new TaskService(this);
         Bundle bundle = getIntent().getExtras();
         userId=bundle.getInt("userId");
-        txtTitle.setText(bundle.getString("usename"));
+        txtTitle.setText(bundle.getString("username"));
         listView.setOnRefreshOrLoadListener(this);
         listView.setOnItemClickListener(this);
         datas = new ArrayList<TaskData>();

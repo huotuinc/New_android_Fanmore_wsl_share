@@ -10,10 +10,10 @@
         android:layout_height="match_parent" >
     <cy.com.morefan.view.PullDownUpListView
         android:id="@+id/listView"
+        android:footerDividersEnabled="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:divider="@null"
         android:fadingEdge="none"/>
 
     <cy.com.morefan.view.EmptyView

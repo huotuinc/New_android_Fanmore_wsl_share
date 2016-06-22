@@ -29,7 +29,7 @@
                 android:layout_gravity="center"
                 android:ellipsize="end"
                 android:maxWidth="300dp"
-                android:text="任务概况"
+                android:text="资讯详情"
                 android:textColor="@color/white"
                 android:textSize="18dp"
                 android:visibility="visible" />

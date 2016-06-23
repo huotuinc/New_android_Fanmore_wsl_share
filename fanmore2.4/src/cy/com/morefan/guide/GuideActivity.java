@@ -23,7 +23,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cy.com.morefan.BaseActivity;
 import cy.com.morefan.HomeActivity;
-import cy.com.morefan.LoginActivity;
 import cy.com.morefan.MainApplication;
 import cy.com.morefan.MoblieLoginActivity;
 import cy.com.morefan.R;

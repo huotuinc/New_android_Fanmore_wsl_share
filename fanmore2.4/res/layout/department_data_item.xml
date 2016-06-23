@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/company_data_item_icon"
         android:layout_width="50dp"
-        android:background="@color/green"
+        android:background="@drawable/user_icon"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_height="50dp"/>
@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/company_data_item_label1"
-        android:text="转发 "
+        android:text=""
         android:layout_below="@id/company_data_item_name"
         android:layout_alignLeft="@id/company_data_item_name"
         android:layout_width="wrap_content"

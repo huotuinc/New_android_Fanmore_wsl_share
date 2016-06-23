@@ -407,7 +407,7 @@
             android:theme="@style/ThemeActivity" />
         -->
         <activity
-            android:name="com.wensli.fanmore.wxapi.WXEntryActivity"
+            android:name="hz.huotu.wsl.aifenxiang.wxapi.WXEntryActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
@@ -519,7 +519,6 @@
         <activity android:name=".NewWebActivity" />
         <activity android:name=".SetPassWordActivity" />
         <activity android:name=".WeekTaskActivity"></activity>
-        <activity android:name="hz.huotu.wsl.aifenxiang.wxapi.WXEntryActivity" />
         <activity android:name=".TermActivity"></activity>
     </application>
 

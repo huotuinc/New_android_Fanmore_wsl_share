@@ -19,7 +19,7 @@ import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.view.CyButton;
 
 public class PaySucceedActivity extends BaseActivity implements View.OnClickListener,Handler.Callback {
-    public CyButton btnBack;
+    public Button btnBack;
     public Button btntoshop;
     public
     MainApplication application;

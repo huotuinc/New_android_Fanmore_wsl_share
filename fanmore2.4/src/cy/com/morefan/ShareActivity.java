@@ -20,7 +20,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 public class ShareActivity extends BaseActivity{
-	private String imgUrl = "http://task.silk08.com/images/104X104.jpg";
+	private String imgUrl = "http://taskapi.fhsilk.com/resource/app/104X104.png";
 	private String imgPath;
 	private String shareDes;
 	private String shareUrl;

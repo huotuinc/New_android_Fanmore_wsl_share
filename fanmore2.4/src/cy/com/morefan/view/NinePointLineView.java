@@ -1,6 +1,5 @@
 package cy.com.morefan.view;
 
-import cy.com.morefan.LoginActivity;
 import cy.com.morefan.R;
 import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.util.DensityUtil;

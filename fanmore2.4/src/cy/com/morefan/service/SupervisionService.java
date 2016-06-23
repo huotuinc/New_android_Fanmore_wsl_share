@@ -14,6 +14,7 @@ import java.util.List;
 import cy.com.morefan.bean.GroupData;
 import cy.com.morefan.bean.GroupPersonData;
 import cy.com.morefan.bean.MyJSONObject;
+import cy.com.morefan.bean.PartnerData;
 import cy.com.morefan.bean.TaskData;
 import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
@@ -163,34 +164,44 @@ public void AllTask(final String keyword,final int pageIndex){
                     L.i("GetGroupPerson:" + url);
                     MyJSONObject data = getDataFromSer(url);
                     if (data != null) {
+                        int pageIndex = data.getInt("pageIndex");
                         int resultCode = data.getInt("resultCode");
                         if (resultCode == 1) {
                             int status = data.getInt("status");
                             if (status == 1) {
                                 JSONArray jArray = data.getJSONArray("resultData");
                                 int length = jArray.length();
-                                GroupPersonData[] results = new GroupPersonData[length];
+                                PartnerData[] results = new PartnerData[length];
                                 for (int i = 0; i < length; i++) {
-                                    MyJSONObject obj = (MyJSONObject) jArray.get(i);
-                                    GroupPersonData item = setGroupPersonData(obj);
+                                    MyJSONObject tip = (MyJSONObject) jArray.get(i);
+                                    PartnerData item =new PartnerData();
+                                    item.pageIndex = pageIndex;
+                                    item.userName =tip.getString("userName");
+                                    item.time =tip.getString("time");
+                                    item.historyTotalBrowseAmount=tip.getString("historyTotalBrowseAmount");
+                                    item.yesterdayBrowseAmount =tip.getString("yesterdayBrowseAmount");
+                                    item.historyTotalTurnAmount=tip.getString("historyTotalTurnAmount");
+                                    item.yesterdayTurnAmount=tip.getString("yesterdayTurnAmount");
+                                    item.headFace =tip.getString("headFace");
+
                                     results[i] = item;
                                 }
                                 //Bundle extra = new Bundle();
                                 //extra.putInt("status", result.getInt("status"));
                                 //extra.putString("webUrl", result.getString("webUrl"));
-                                listener.onDataFinish(BusinessDataListener.DONE_GET_GROUP_PERSON, null, results, null);
+                                listener.onDataFinish(BusinessDataListener.DONE_GET_PRENTICE_LIST, null, results, null);
                             } else {
-                                listener.onDataFailed(BusinessDataListener.ERROR_GET_GROUP_PERSON, data.getString("tip"), null);
+                                listener.onDataFailed(BusinessDataListener.ERROR_GET_PRENTICE_LIST, data.getString("tip"), null);
                             }
                         } else {
-                            listener.onDataFailed(BusinessDataListener.ERROR_GET_GROUP_PERSON, data.getString("description"), null);
+                            listener.onDataFailed(BusinessDataListener.ERROR_GET_PRENTICE_LIST, data.getString("description"), null);
                         }
                     } else {
-                        listener.onDataFailed(BusinessDataListener.ERROR_GET_GROUP_PERSON, ERROR_NET, null);
+                        listener.onDataFailed(BusinessDataListener.ERROR_GET_PRENTICE_LIST, ERROR_NET, null);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    listener.onDataFailed(BusinessDataListener.ERROR_GET_GROUP_PERSON, ERROR_DATA, null);
+                    listener.onDataFailed(BusinessDataListener.ERROR_GET_PRENTICE_LIST, ERROR_DATA, null);
                 }
             }
         });

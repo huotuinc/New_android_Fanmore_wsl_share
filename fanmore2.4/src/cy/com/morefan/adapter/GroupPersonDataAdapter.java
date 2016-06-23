@@ -1,6 +1,7 @@
 package cy.com.morefan.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,15 +59,16 @@ public class GroupPersonDataAdapter  extends BaseAdapter {
 
         GroupPersonData data = datas.get(position);
 
-        ImageLoad.loadLogo(data.getLogo(), imgIcon, mContext);
+        if (TextUtils.isEmpty(data.getLogo())){
+            imgIcon.setImageResource(R.drawable.user_icon);
+        }else {
+            ImageLoad.loadLogo(data.getLogo(), imgIcon, mContext);
+        }
         txtName.setText(data.getName());
         txtCount.setText("转发"+String.valueOf(data.getTotalTurnCount())+"/"+"浏览"+String.valueOf(data.getTotalBrowseCount())+"/"+"伙伴"+String.valueOf(data.getPrenticeCount()));
 
 
-        //syncImageLoaderHelper.loadImage(position, imgIcon , null, data.getIcon() , Constant.IMAGE_PATH_TASK);
-        RandomColor randomColor = new RandomColor();
-        int colorid =  randomColor.randomColor( data.getName().hashCode() , RandomColor.SaturationType.RANDOM , RandomColor.Luminosity.RANDOM );
-        imgIcon.setBackgroundColor( colorid );
+
 
         return convertView;
     }

@@ -36,7 +36,8 @@ public class MyReceiver extends BroadcastReceiver {
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
         	Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
         	//processCustomMessage(context, bundle);
-        
+			String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
+			String extra = bundle.getString(JPushInterface.EXTRA_EXTRA);
         } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知");
             int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
@@ -44,13 +45,54 @@ public class MyReceiver extends BroadcastReceiver {
         	
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
-            
-//        	//打开自定义的Activity
-//        	Intent i = new Intent(context, TestActivity.class);
-//        	i.putExtras(bundle);
-//        	//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        	i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
-//        	context.startActivity(i);
+
+			// 接受点击通知事件
+			String title = bundle
+					.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
+			String extra = bundle.getString(JPushInterface.EXTRA_EXTRA);
+			// json封装成bean
+//			JModel bean = new JModel();
+//			JSONUtil<JModel> jsonUtil = new JSONUtil<JModel>();
+//			bean = jsonUtil.toBean(extra, bean);
+//			bean.setTitle(title);
+//			if(6==Integer.parseInt(bean.getType()))
+//			{
+//				AppUserBuyFlowModel winner = new AppUserBuyFlowModel();
+//				winner.setDefaultPictureUrl(bean.getGoodsUrl());
+//				winner.setTitle(bean.getTitle());
+//				winner.setIssueId(String.valueOf(bean.getIssueId()));
+//				winner.setToAmount(bean.getNeedNumber());
+//				winner.setLuckyNumber(bean.getLuckyNumber());
+//				winner.setAmount(bean.getJoinNumber());
+//				winner.setAwardingDate(bean.getAnnounceTime());
+//				bundle.putSerializable("winner", winner);
+//				//中奖，跳转到中奖列表
+//				Intent i = new Intent(context, WinLogDetailActivity.class);
+//				i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//				i.putExtras(bundle);
+//				context.startActivity(i);
+			//}
+
+
+
+		} else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent
+				.getAction()))
+		{
+			// 在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity，
+			// 打开一个网页等..
+			// 接受富文本框
+			int notifactionId = bundle
+					.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
+
+
+		} else if (JPushInterface.ACTION_CONNECTION_CHANGE.equals(intent
+				.getAction()))
+		{
+			boolean connected = intent.getBooleanExtra(
+					JPushInterface.EXTRA_CONNECTION_CHANGE, false);
+			// 处理网络变更事件
+
+
         	
         } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));

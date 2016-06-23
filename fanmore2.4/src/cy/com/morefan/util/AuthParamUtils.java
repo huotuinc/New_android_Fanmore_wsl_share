@@ -4,8 +4,13 @@ import android.content.Context;
 import android.text.TextUtils;
 import cy.com.morefan.MainApplication;
 import cy.com.morefan.bean.AccountModel;
+import cy.com.morefan.bean.BaseData;
+import cy.com.morefan.bean.UserData;
+import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
 
+import org.apache.commons.codec.binary.StringUtils;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -49,33 +54,24 @@ class AuthParamUtils {
         try {
             Map< String, String > paramMap = new HashMap< String, String > ( );
 
-
-
-
-                //paramMap.put ( "version", application.getAppVersion ( context ) );
-               // paramMap.put ( "operation", Constant.OPERATION_CODE );
-                paramMap.put ( "buserId", application.readUserId() );
+                paramMap.put("redirecturl",   BusinessStatic.getInstance().URL_WEBSITE);
+                paramMap.put ( "userid", application.readUserId() );
                 paramMap.put ( "customerid", application.readMerchantId ( ) );
+                paramMap.put  ("moblie", UserData.getUserData().phone);
                 //添加额外固定参数
                 //1、timestamp
                 paramMap.put ( "timestamp", URLEncoder.encode ( String.valueOf ( timestamp ), "UTF-8" ) );
-                //appid
-                paramMap.put ( "appid", URLEncoder.encode ( Constant.APP_ID , "UTF-8" ));
-                //unionid
-                paramMap.put (
-                        "unionid", URLEncoder.encode (
-                                application.readUserUnionId ( ),
-                                "UTF-8" ) );
-                //生成sigin
-                paramMap.put ( "sign", getSign ( paramMap ) );
 
-                builder.append ( url );
-                builder.append ( "?timestamp=" + paramMap.get ( "timestamp" ) );
+                //生成sigin
+                paramMap.put ( "sign", getMapSign ( paramMap ) );
+
+                builder.append ( url+"/OAuth2/WSLAuthorize.aspx" );
+                builder.append("?redirecturl="+paramMap.get("redirecturl"));
                 builder.append ( "&customerid="+application.readMerchantId ( ) );
-                builder.append ( "&appid="+paramMap.get ( "appid" ) );
-                builder.append ( "&unionid="+paramMap.get ( "unionid" ) );
+                builder.append ( "&userid="+application.readUserId ( ) );
+                builder.append  ("&moblie="+paramMap.get ( "moblie" ));
+                builder.append ( "&timestamp=" + paramMap.get ( "timestamp" ) );
                 builder.append ( "&sign="+paramMap.get ( "sign" ) );
-                builder.append ( "&buserId="+application.readUserId ( ) );
 //                builder.append ( "&version=" + application.getAppVersion ( context ) );
 //                builder.append ( "&operation=" + Constant.OPERATION_CODE );
 
@@ -282,6 +278,32 @@ class AuthParamUtils {
         }
     }
 
+    private String getMapSign(Map<String, String> map) throws UnsupportedEncodingException {
+
+
+
+
+//        Map<String, String> resultMap = new TreeMap<String, String>();
+//        for (Object key : map.keySet()) {
+//            resultMap.put(key.toString(), map.get(key));
+//        }
+//
+//        StringBuilder strB = new StringBuilder();
+//        for (String key : resultMap.keySet()) {
+//            if (!"sign".equals(key) && !TextUtils.isEmpty(resultMap.get(key))) {
+//                strB.append("&" + key + "=" + resultMap.get(key));
+//            }
+//        }
+//        String toSign = (strB.toString().length() > 0 ? strB.toString().substring(1) : "") + "1165a8d240b29af3f418b8d10599d0dc";
+
+
+        String toSign = doSort(map);
+
+
+        return EncryptUtil.getInstance().encryptMd532(toSign).toLowerCase();
+    }
+
+
     private String getSign(Map map)
     {
         String values = this.doSort(map);
@@ -327,7 +349,7 @@ class AuthParamUtils {
             buffer.append ( entry.getKey ()+"=" );
             buffer.append ( entry.getValue ()+"&" );
         }
-        String suffix = buffer.substring ( 0, buffer.length ()-1 )+Constant.APP_SECRET;
+        String suffix = buffer.substring ( 0, buffer.length ()-1 )+  Constant.APP_SECRET;//Constant.APP_SECRET;
         return suffix;
     }
 

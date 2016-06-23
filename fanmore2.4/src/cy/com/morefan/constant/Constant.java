@@ -32,7 +32,10 @@ public class Constant {
 	 * 正式url
 	 */
 	public static final String IP_URL ="http://taskapi.fhsilk.com";
-
+	//测试
+	//public static final String APP_SECRET = "1165a8d240b29af3f418b8d10599d0dc";
+	//正式
+	public static final String APP_SECRET = "2a5577a6792d46eb984580e5591467f7";
 	public static final String OPERATION = "HuoTu2013AD";
 	public static final String QD = "huotu";
 	//public static final String QD = "dm";
@@ -320,10 +323,7 @@ public class Constant {
 		//public static final String INTERFACE_PREFIX = "http://192.168.1.56:8089/";
 
 		// 平台安全码
-		//测试
-		public static final String APP_SECRET = "0ad8abe244331aacf89c9231848c9f49";
-		//正式
-		//public static final String APP_SECRET = "0ad8abe244331aacf89c9231848c9f49";
+
 
 	//微信支付
 	public static final String WX_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";

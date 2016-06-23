@@ -57,8 +57,14 @@ public class WeekTaskAdapter extends BaseAdapter {
         WeekTaskData data = datas.get(position);
         ViewHolder viewHolder= (ViewHolder) convertView.getTag();
         viewHolder.title.setText(data.title);
-        viewHolder.finishCount.setText(String.valueOf(data.myFinishCount));
-        viewHolder.target.setText("/"+String.valueOf(data.target));
+
+        if (data.myFinishCount*100/data.target>=100){
+            viewHolder.finishCount.setText("已完成");
+            viewHolder.target.setVisibility(View.GONE);
+        }else {
+            viewHolder.finishCount.setText(String.valueOf(data.myFinishCount));
+            viewHolder.target.setText("/"+String.valueOf(data.target));
+        }
         viewHolder.progress.setProgress((data.myFinishCount*100/data.target));
         return convertView;
     }

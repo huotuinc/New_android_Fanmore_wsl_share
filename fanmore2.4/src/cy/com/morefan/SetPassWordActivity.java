@@ -7,6 +7,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 
 import com.huotu.android.library.libedittext.EditText;
 
@@ -15,7 +16,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 import cy.com.morefan.bean.BaseData;
-import cy.com.morefan.bean.UserData;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.ActivityUtils;
@@ -26,7 +26,7 @@ import cy.com.morefan.view.CyButton;
 public class SetPassWordActivity extends BaseActivity implements View.OnClickListener , Handler.Callback {
 
     @Bind(R.id.btnBack)
-    CyButton btnBack;
+    Button btnBack;
     @Bind(R.id.edtPassword)
     EditText edtPassword;
     @Bind(R.id.edtpsw)
@@ -87,20 +87,20 @@ public class SetPassWordActivity extends BaseActivity implements View.OnClickLis
             edtpsw.setError("密码不能为空");
             return;
         }
-        if(TextUtils.isEmpty(invitationCode)){
-            edtinvitationCode.requestFocus();
-            edtinvitationCode.setError("邀请码不能为空");
-            return;
-        }
+
         if (password.equals(psw)) {
             showProgress();
             String token = JPushInterface.getRegistrationID(SetPassWordActivity.this);
             if (isUpdate == 1) {
 
-                userService.userMoblieReg(SetPassWordActivity.this, moblie, code, EncryptUtil.getInstance().encryptMd532(password), isUpdate, invitationCode, token);
-            } else {
-
                 userService.userMoblieReg(SetPassWordActivity.this, moblie, code, EncryptUtil.getInstance().encryptMd532(password), isUpdate, "", token);
+            } else {
+                if(TextUtils.isEmpty(invitationCode)){
+                    edtinvitationCode.requestFocus();
+                    edtinvitationCode.setError("邀请码不能为空");
+                    return;
+                }
+                userService.userMoblieReg(SetPassWordActivity.this, moblie, code, EncryptUtil.getInstance().encryptMd532(password), isUpdate, invitationCode, token);
             }
         }else {
             toast("两次输入的密码不一致");

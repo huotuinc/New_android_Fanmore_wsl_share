@@ -25,6 +25,7 @@ import cy.com.morefan.util.AuthParamUtils;
 import cy.com.morefan.util.L;
 
 import cy.com.morefan.util.SPUtil;
+import cy.com.morefan.view.CircleImageView;
 import cy.com.morefan.view.CyButton;
 import cy.com.morefan.view.ImageLoad;
 import android.content.Intent;
@@ -37,6 +38,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -75,10 +77,11 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	private ImageView imgTag;
 	//private TextView txtPrenticeCount;
 	private ImageView imgCheckFlag;
-	private ImageView img;
+	private CircleImageView img;
 	private TextView txtCheckDes;
 	private TextView count;
 	private TextView mylevel;
+	private CircleImageView btnLeft;
 
 	//private PopCheckIn popCheckIn;
 	private SyncImageLoaderHelper helper;
@@ -151,8 +154,9 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		super.onDestroy();
 	}
 	private void initView() {
-		img = (ImageView) findViewById(R.id.img);
+		img = (CircleImageView) findViewById(R.id.img);
 		btnRight = (CyButton) findViewById(R.id.btnRight);
+		btnLeft =(CircleImageView) findViewById(R.id.btnLeft);
 		//txtPrenticeCount = (TextView) findViewById(R.id.txtPrenticeCount);
 		imgTag = (ImageView) findViewById(R.id.imgTag);
 		txtRight=(TextView)findViewById(R.id.txtRight);
@@ -170,6 +174,10 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		laySupervision =(RelativeLayout)findViewById(R.id.laySupervision);
 		layRank=(RelativeLayout)findViewById(R.id.layRank);
 		mylevel= (TextView)findViewById(R.id.mylevel);
+		btnLeft.setBorderColor(getResources().getColor(R.color.white));
+		btnLeft.setBorderWidth((int)getResources().getDimension(R.dimen.head_width));
+		img.setBorderColor(getResources().getColor(R.color.white));
+		img.setBorderWidth((int)getResources().getDimension(R.dimen.head_width));
 //		txtTodayScan = (TextView) findViewById(R.id.txtTodayScan);
 //		txtYesScore	 = (TextView) findViewById(R.id.txtYesScore);
 		//userLogin();
@@ -293,7 +301,6 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	        startActivity(intentPre);
 			break;
 		case R.id.img://头像
-		case R.id.layScore:
 			trendToMy = false;
 			if(UserData.getUserData().isLogin){
 				//是否为模拟器
@@ -612,7 +619,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			total = userData.score;//Util.MoneyFormat(userData.totalScore);
 			count.setText(String.valueOf(userData.TaskCount));
 			userName = userData.RealName;
-			if (userData.isSuper=true){
+			if (userData.isSuper){
 				laySupervision.setVisibility(View.VISIBLE);
 			}else {
 				laySupervision.setVisibility(View.GONE);
@@ -634,9 +641,11 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		L.i(">>>>>>>>>picUrl:" + userData.picUrl);
 		if(TextUtils.isEmpty(userData.picUrl)){
 			img.setImageResource(R.drawable.user_icon);
+			btnLeft.setImageResource(R.drawable.user_icon);
 		}else{
 			//helper.loadImage(-1, img, null, userData.picUrl, Constant.BASE_IMAGE_PATH);
 			ImageLoad.loadLogo(userData.picUrl, img, this);
+			ImageLoad.loadLogo(userData.picUrl, btnLeft, this);
 
 		}
 

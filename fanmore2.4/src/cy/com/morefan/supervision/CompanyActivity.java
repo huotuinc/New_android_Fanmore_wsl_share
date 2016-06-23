@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -57,7 +58,7 @@ public class CompanyActivity extends BaseActivity implements Handler.Callback ,A
     @Bind(R.id.listView)
     PullDownUpListView listView;
     @Bind(R.id.btnBack)
-    public CyButton btnBack;
+    public Button btnBack;
     @Bind(R.id.txtTitle)
     public TextView tvTitle;
     @Bind(R.id.btnQuery)

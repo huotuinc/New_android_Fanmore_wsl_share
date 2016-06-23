@@ -20,7 +20,8 @@
             android:padding="10dp"
             android:background="@color/theme_back"
             android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:clickable="true">
 
             <FrameLayout
                 android:id="@+id/layPhoto"
@@ -29,7 +30,7 @@
                 android:layout_margin="5dp"
                 android:paddingLeft="5dp" >
 
-                <ImageView
+                <cy.com.morefan.view.CircleImageView
                     android:id="@+id/img"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
@@ -51,7 +52,6 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:onClick="onClick"
                 android:orientation="vertical" >
 
                 <TextView
@@ -79,7 +79,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@+id/txtName"
                     android:layout_below="@+id/txtName"
-                    android:onClick="onClick"
                     android:text=""
                     android:textColor="@color/white"
                     android:textSize="16sp" />

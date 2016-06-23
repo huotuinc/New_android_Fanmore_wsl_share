@@ -8,15 +8,18 @@
     android:orientation="vertical">
     <FrameLayout style="@style/TitleStyle" >
 
-        <cy.com.morefan.view.CyButton
+        <Button
             android:id="@+id/btnBack"
+            android:background="@color/theme_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/title_back_normal"
-            android:contentDescription="@string/img"
-            android:onClick="onClickButton" />
+            android:layout_marginLeft="10dp"
+            android:text="返回"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:drawableLeft="@drawable/title_back_normal" />
 
         <TextView
             android:id="@+id/txtTitle"

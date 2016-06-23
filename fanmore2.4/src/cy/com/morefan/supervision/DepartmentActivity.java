@@ -10,6 +10,7 @@ import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,7 +42,8 @@ public class DepartmentActivity extends BaseActivity implements Handler.Callback
 
     @Bind(R.id.txtTitle)
     public TextView tvTitle;
-    @Bind(R.id.btnBack) CyButton btnBack;
+    @Bind(R.id.btnBack)
+    Button btnBack;
     @Bind(R.id.btnQuery) CyButton btnQuery;
     @Bind(R.id.lay_mr)
     LinearLayout layMr;

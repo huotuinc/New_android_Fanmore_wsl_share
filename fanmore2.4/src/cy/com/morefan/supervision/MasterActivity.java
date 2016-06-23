@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,15 +21,15 @@ import cy.com.morefan.bean.GroupPersonData;
 import cy.com.morefan.frag.MyTaskFrag;
 import cy.com.morefan.frag.PartnerFrag;
 import cy.com.morefan.listener.MyBroadcastReceiver;
-import cy.com.morefan.view.CyButton;
+import cy.com.morefan.view.CircleImageView;
 import cy.com.morefan.view.ImageLoad;
 
 
 public class MasterActivity extends BaseActivity implements View.OnClickListener, MyBroadcastReceiver.BroadcastListener {
     @Bind(R.id.btnBack)
-    public CyButton btnBack;
+    public Button btnBack;
     @Bind(R.id.imguser)
-    public ImageView imguser;
+    public CircleImageView imguser;
     TextView txt_partner;
     @Bind(R.id.txtTitle)
     TextView txtTitle;
@@ -56,8 +57,32 @@ public class MasterActivity extends BaseActivity implements View.OnClickListener
         ButterKnife.bind(this);
         hb.setOnClickListener(this);
         rw.setOnClickListener(this);
+        imguser.setBorderColor(getResources().getColor(R.color.white));
+        imguser.setBorderWidth((int)getResources().getDimension(R.dimen.head_width));
+
+        if( getIntent().hasExtra("data") ) {
+            groupData = (GroupPersonData)getIntent().getSerializableExtra("data");
+            String title = groupData.getName();
+            txtTitle.setText(title);
+            if(TextUtils.isEmpty(groupData.getLogo())){
+                imguser.setImageResource(R.drawable.user_icon);
+            }else{
+                ImageLoad.loadLogo(groupData.getLogo(), imguser, this);
+            }
+            userid = groupData.getUserid();
+            browseCount.setText(String.valueOf(groupData.getTotalBrowseCount())+"次");
+            turnAmount.setText(String.valueOf(groupData.getTotalTurnCount())+"次");
+            prenticeAmount.setText(String.valueOf(groupData.getPrenticeCount())+"人");
+        }
+
+
         Fragment rw = new MyTaskFrag();
         Fragment hb = new PartnerFrag();
+        Bundle bd=new Bundle();
+        bd.putInt("userid",userid);
+
+        hb.setArguments(bd);
+
         ArrayList<Fragment> fragments = new ArrayList<Fragment>();
         fragments.add(rw);
         fragments.add(hb);
@@ -74,10 +99,14 @@ public class MasterActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onPageSelected(int position) {
                 switch (position) {
-                    case 1:
+                    case 0:
 
+                        //PartnerFrag partnerFrag = new PartnerFrag();
+                        //Bundle bundle = new Bundle();
+                        //bundle.putInt("userId", userid);
+                        //partnerFrag.setArguments(bundle);
 
-                        ((PartnerFrag)adapter.getItem( viewPager.getCurrentItem())).onRefresh();
+                        //((PartnerFrag)adapter.getItem( viewPager.getCurrentItem())).setUserid(userid);
                         break;
                 }
 
@@ -89,20 +118,7 @@ public class MasterActivity extends BaseActivity implements View.OnClickListener
             }
         });
         myBroadcastReceiver = new MyBroadcastReceiver(this, this, MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE);
-        if( getIntent().hasExtra("data") ) {
-            groupData = (GroupPersonData)getIntent().getSerializableExtra("data");
-            String title = groupData.getName();
-            txtTitle.setText(title);
-            if(TextUtils.isEmpty(groupData.getLogo())){
-                imguser.setImageResource(R.drawable.user_icon);
-            }else{
-                ImageLoad.loadLogo(groupData.getLogo(), imguser, this);
-            }
-            userid = groupData.getUserid();
-            browseCount.setText(String.valueOf(groupData.getTotalBrowseCount())+"次");
-            turnAmount.setText(String.valueOf(groupData.getTotalTurnCount())+"次");
-            prenticeAmount.setText(String.valueOf(groupData.getPrenticeCount())+"人");
-        }
+
     }
 
 
@@ -112,7 +128,6 @@ public class MasterActivity extends BaseActivity implements View.OnClickListener
         }else if(v.getId()==R.id.btnQuery){
 
         }else if (v.getId()==R.id.hb){
-            ((PartnerFrag)adapter.getItem( viewPager.getCurrentItem())).setUserid(userid);
             viewPager.setCurrentItem(1);
             hb_bottom_line.setBackgroundColor(getResources().getColor(R.color.theme_back));
             rw_bottom_line.setBackgroundColor(getResources().getColor(R.color.white));

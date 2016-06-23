@@ -4,12 +4,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,22 +21,17 @@ import cy.com.morefan.bean.WeekTaskData;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.service.UserService;
-import cy.com.morefan.util.L;
-import cy.com.morefan.view.CyButton;
+import cy.com.morefan.view.CircleImageView;
 import cy.com.morefan.view.ImageLoad;
 
 public class WeekTaskActivity extends BaseActivity implements Handler.Callback {
 
     @Bind(R.id.listView)
     ListView listView;
-//    @Bind(R.id.activity_week_task)
-//    LinearLayout activityWeekTask;
-//    @Bind(R.id.ff)
-//    FrameLayout ff;
 private List<WeekTaskData> datas;
     private WeekTaskAdapter adapter;
     @Bind(R.id.btnBack)
-    CyButton btnBack;
+    Button btnBack;
     @Bind(R.id.txtTitle)
     TextView txtTitle;
     @Bind(R.id.mylevel)
@@ -47,7 +39,7 @@ private List<WeekTaskData> datas;
     @Bind(R.id.myname)
     TextView myname;
     @Bind(R.id.imguser)
-    ImageView imguser;
+    CircleImageView imguser;
     UserData userData;
     private MyBroadcastReceiver myBroadcastReceiver;
     private Handler mHandler = new Handler(this);
@@ -88,6 +80,8 @@ public boolean handleMessage(Message msg) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week_task);
         ButterKnife.bind(this);
+        imguser.setBorderColor(getResources().getColor(R.color.white));
+        imguser.setBorderWidth((int)getResources().getDimension(R.dimen.head_width));
         userService = new UserService(this);
          userData= UserData.getUserData();
         datas = new ArrayList<WeekTaskData>();

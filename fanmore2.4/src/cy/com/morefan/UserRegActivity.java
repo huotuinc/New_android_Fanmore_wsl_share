@@ -8,6 +8,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,7 +33,7 @@ import cy.com.morefan.view.CyButton;
 public class UserRegActivity extends BaseActivity implements BusinessDataListener, Callback, BroadcastListener {
 
 	@Bind(R.id.btnBack)
-	CyButton btnBack;
+	Button btnBack;
 	@Bind(R.id.txtTitle) TextView txtTitle;
 	@Bind(R.id.edtPhone) EditText edtPhone;
 	@Bind(R.id.btn_getcode) TextView btnGetcode;

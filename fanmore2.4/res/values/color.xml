@@ -33,6 +33,7 @@
     <color name="dialog_bg">#ffe9e9e9</color>
      <color name="dialog_press_bg">#ffd2d2d2</color>
      <color name="yellow_check">#ffffad03</color>
-    <color name="theme_back">#ff4e00</color>
+    <color name="theme_back">#e99319</color>
+    <color name="company_icon">#f4a61f</color>
 
 </resources>

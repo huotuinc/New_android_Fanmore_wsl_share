@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.Button;
 
 import com.huibin.androidsegmentcontrol.SegmentControl;
 
@@ -16,7 +17,6 @@ import cy.com.morefan.R;
 import cy.com.morefan.adapter.FragAdapter;
 import cy.com.morefan.frag.ArchitectureFrag;
 import cy.com.morefan.frag.GroupTaskFrag;
-import cy.com.morefan.frag.TaskFrag;
 import cy.com.morefan.view.CyButton;
 
 /**
@@ -24,7 +24,7 @@ import cy.com.morefan.view.CyButton;
  */
 public class GroupActivity extends BaseActivity implements SegmentControl.OnSegmentControlClickListener {
     @Bind(R.id.btnBack)
-    public CyButton btnBack;
+    public Button btnBack;
     @Bind(R.id.btnQuery)
     public CyButton btnQuery;
     FragAdapter adapter;

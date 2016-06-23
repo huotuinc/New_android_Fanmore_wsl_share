@@ -18,7 +18,6 @@ import org.json.JSONObject;
 import java.net.URLEncoder;
 import java.security.Key;
 
-import cy.com.morefan.LoginActivity;
 import cy.com.morefan.MainApplication;
 import cy.com.morefan.PayModel;
 import cy.com.morefan.WebActivity;
@@ -102,7 +101,7 @@ class UrlFilterUtils {
             //清除登录信息
             application.logout ();
             //跳转到登录界面
-            ActivityUtils.getInstance ().skipActivity ( aty, LoginActivity.class );
+            //ActivityUtils.getInstance ().skipActivity ( aty, LoginActivity.class );
         }else if(url.contains(Constant.WEB_TAG_INFO)){
             //处理信息保护
             return true;
@@ -182,7 +181,7 @@ class UrlFilterUtils {
             //清除登录信息
             application.logout ();
             //跳转到登录界面
-            ActivityUtils.getInstance ().skipActivity ( aty, LoginActivity.class );
+            //ActivityUtils.getInstance ().skipActivity ( aty, LoginActivity.class );
         }
         else
         {

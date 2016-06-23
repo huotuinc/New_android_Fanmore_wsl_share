@@ -831,14 +831,7 @@ public class UserService extends BaseService{
 									results[i] = itemData;
 								}
 
-								Arrays.sort(results, new Comparator<WeekTaskData>() {
-									@Override
-									public int compare(WeekTaskData lhs, WeekTaskData rhs) {
-										if( lhs.sort > rhs.sort ) return 1;
-										else if( lhs.sort == rhs.sort) return 0;
-										else return -1;
-									}
-								});
+
 
 
 

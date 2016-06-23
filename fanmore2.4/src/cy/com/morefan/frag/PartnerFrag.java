@@ -16,17 +16,13 @@ import java.util.List;
 
 import cy.com.morefan.BaseActivity;
 import cy.com.morefan.R;
-import cy.com.morefan.adapter.ListAdapter;
+import cy.com.morefan.adapter.PartnerAdapter;
 import cy.com.morefan.bean.BaseData;
-import cy.com.morefan.bean.GroupPersonData;
+import cy.com.morefan.bean.PartnerData;
 import cy.com.morefan.bean.UserData;
-import cy.com.morefan.constant.Constant;
 import cy.com.morefan.listener.BusinessDataListener;
-import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.service.SupervisionService;
-import cy.com.morefan.service.UserService;
 import cy.com.morefan.supervision.MasterActivity;
-import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.view.PullDownUpListView;
 
 /**
@@ -38,11 +34,11 @@ public class PartnerFrag extends BaseFragment implements PullDownUpListView.OnRe
     private ImageView layEmpty;
     private PullDownUpListView listView;
     SupervisionService supervisionService;
-    private ListAdapter adapter;
-    private List<BaseData> datas;
-    private int pageTag;//分页标识
+    private PartnerAdapter adapter;
+    private List<PartnerData> datas;
+    private int pageIndex;//分页标识
     private Handler mHandler = new Handler(this);
-    private int userId=0;
+    private int userId;
     @Override
     public void onReshow() {
 
@@ -63,20 +59,23 @@ public class PartnerFrag extends BaseFragment implements PullDownUpListView.OnRe
         listView = (PullDownUpListView) mRootView.findViewById(R.id.listView);
         layEmpty = (ImageView) mRootView.findViewById(R.id.layEmpty);
         listView.setOnRefreshOrLoadListener(this);
-        datas = new ArrayList<BaseData>();
-        adapter = new ListAdapter(getActivity(), datas);
+        Bundle bundle = getArguments();//从activity传过来的Bundle
+        if(bundle!=null){
+            userId=(bundle.getInt("userid"));
+        }
+        datas = new ArrayList<PartnerData>();
+        adapter = new PartnerAdapter(getActivity(), datas);
         listView.setAdapter(adapter);
         initData();
         return mRootView;
     }
     public void initData(){
         datas.clear();
-        adapter.setDatas(datas);
-        pageTag = 0;
+        pageIndex = 0;
         getDataFromSer();
     }
     public void getDataFromSer(){
-        supervisionService.GetUserListByMasterId(UserData.getUserData().loginCode, userId ,pageTag+1);
+        supervisionService.GetUserListByMasterId(UserData.getUserData().loginCode, userId ,pageIndex+1);
         showProgress();
     }
 
@@ -118,37 +117,43 @@ public class PartnerFrag extends BaseFragment implements PullDownUpListView.OnRe
         switch (msg.what) {
             case BusinessDataListener.DONE_GET_PRENTICE_LIST:
                 dismissProgress();
-                if(null != msg.obj){
-                    BaseData[] results = (BaseData[]) msg.obj;
+                if (null != msg.obj) {
+                    PartnerData[] results = (PartnerData[]) msg.obj;
                     int length = results.length;
-                    for (int i = 0; i < length; i++) {
-                        BaseData item = results[i];
+                    if (length > 0) {
+                        if (results[0].pageIndex == 1) {
+                            datas.clear();
 
-                        if(i== length -1)
-                            pageTag = Integer.valueOf(item.getPageTag()).intValue();
+                        }
                     }
-                    adapter.setDatas(datas);
-                }
-                layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
 
 
+                    for (int i = 0; i < length; i++) {
+                        if (!datas.contains(results[i]))
+                            datas.add(results[i]);
+                        pageIndex = results[i].pageIndex;
+                    }
+                    layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
+
+
+                    adapter.notifyDataSetChanged();
                     listView.onFinishLoad();
-                listView.onFinishRefresh();
+                    listView.onFinishRefresh();
+                }
+                    break;
 
+                    case BusinessDataListener.ERROR_GET_PRENTICE_LIST:
+                        dismissProgress();
+                        toast(msg.obj.toString());
+                        listView.onFinishLoad();
+                        listView.onFinishRefresh();
+                        layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
+                        break;
 
-                break;
+                    default:
+                        break;
+                }
 
-            case BusinessDataListener.ERROR_GET_PRENTICE_LIST:
-                dismissProgress();
-                toast(msg.obj.toString());
-                 listView.onFinishLoad();
-                 listView.onFinishRefresh();
-                layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
-                break;
-
-            default:
-                break;
-        }
         return false;
     }
 

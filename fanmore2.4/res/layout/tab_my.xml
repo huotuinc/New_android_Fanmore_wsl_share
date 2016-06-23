@@ -90,7 +90,6 @@
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:maxLength="6"
                     android:text=""
                     android:textColor="@color/gray_my"
                     android:textSize="14dp" />

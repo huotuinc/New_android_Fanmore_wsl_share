@@ -219,6 +219,7 @@
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:paddingRight="24dp"
+            android:textColor="@color/gray"
             android:text="将此邀请码分享给好友，让其注册时输入，即可成为伙伴。伙伴每次浏览或者转发后，都会贡献10%(由商家补贴)给您哦~"
              />
 

@@ -6,15 +6,18 @@
     android:background="@color/gray_list_bg"
     tools:context="cy.com.morefan.supervision.MasterActivity">
     <FrameLayout android:id="@+id/ff1" style="@style/TitleStyle" >
-        <cy.com.morefan.view.CyButton
+        <Button
             android:id="@+id/btnBack"
+            android:background="@color/theme_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/title_back_normal"
-            android:contentDescription="@string/img"
-            android:onClick="onClick" />
+            android:text="返回"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:drawableLeft="@drawable/title_back_normal" />
         <TextView
             android:id="@+id/txtTitle"
             android:layout_width="wrap_content"
@@ -39,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center">
 
-            <ImageView
+            <cy.com.morefan.view.CircleImageView
                 android:id="@+id/imguser"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
@@ -68,7 +71,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/master_icon_zf"/>
         <TextView
-            android:id="@+id/browseCount"
+            android:id="@+id/TurnAmount"
             android:layout_marginLeft="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,7 +83,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/master_icon_ll"/>
         <TextView
-            android:id="@+id/TurnAmount"
+            android:id="@+id/browseCount"
             android:layout_marginLeft="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -129,7 +129,7 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 			int type = ((Bundle)msg.obj).getInt("type");
 			toast("购买成功!");
 			if(type == 4){//提前道具购买成功
-				checkSendCount(statusData);
+				//checkSendCount(statusData);
 			}
 
 		}else if(msg.what == BusinessDataListener.DONE_CHECK_TASK_STATUS){
@@ -157,28 +157,28 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 			 if(statusData.taskType == 1){
 				//是否有提前道具
 				if(statusData.advanceTool == 1){//使用提示
-					showTipDialog(1, 0, statusData.advanceUseTip, "使用", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							if(statusData.forwardLimit == 0){//未达转发上限
-								showPopup();
-							}else{
-								checkSendCount(statusData);
-							}
-						}
-					});
+//					showTipDialog(1, 0, statusData.advanceUseTip, "使用", new DialogInterface.OnClickListener() {
+//						@Override
+//						public void onClick(DialogInterface dialog, int which) {
+//							if(statusData.forwardLimit == 0){//未达转发上限
+//								showPopup();
+//							}else{
+//								//checkSendCount(statusData);
+//							}
+//						}
+//					});
 				}else{//购买提示
-						showTipDialog(1, statusData.advanceToolExp, statusData.advanceBuyTip, "购买", new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								//购买提前道具
-								userService.buyTool(UserData.getUserData().loginCode, 4, statusData.advanceToolExp, null, null);
-								showProgress();
-							}
-						});
+//						showTipDialog(1, statusData.advanceToolExp, statusData.advanceBuyTip, "购买", new DialogInterface.OnClickListener() {
+//							@Override
+//							public void onClick(DialogInterface dialog, int which) {
+//								//购买提前道具
+//								userService.buyTool(UserData.getUserData().loginCode, 4, statusData.advanceToolExp, null, null);
+//								showProgress();
+//							}
+//						});
 						}
 			}else if(statusData.taskType == 2){
-					checkSendCount(statusData);
+					//checkSendCount(statusData);
 			}
 
 
@@ -826,45 +826,8 @@ private boolean isFree(){
 	return (Double.parseDouble(taskData.lastScore) == 0 || taskData.status == 8 ) && taskData.channelIds.size() != 3;
 }
 private void share(){
-	//先判断该任务是否有被转发过，已转发过，则不进行时间间隔判断
-	//无偿转发不计算时间,闪购不计算,联盟
-	if(taskData.channelIds.size() == 0 && !isFree() && taskData.type != 1000300 && taskData.type != 1001000){
-		//命名格式 userName_lastId
-		String idName = UserData.getUserData().userName + "_lastId";
-		String timeName = UserData.getUserData().userName + "_lastTime";
 
-		int id = SPUtil.getIntFromSpByName(this, Constant.SP_NAME_NORMAL, idName);
-		/**
-		 * 每个任务转发之间必须大于10分钟
-		 */
-		if(taskData.id != id && id != 0){
-			//命名格式 userName_lastTime
-
-			long time = SPUtil.getLongToSpByName(this, Constant.SP_NAME_NORMAL, timeName);
-			int seconds = (int) ((System.currentTimeMillis() - time)/1000);
-			if(seconds < BusinessStatic.getInstance().TASK_TIME_LAG){
-				String msg = String.format("需要间隔%s才能转发下一个，请再等待%s", TimeUtil.getTimeDes(BusinessStatic.getInstance().TASK_TIME_LAG), TimeUtil.getTimeDes(BusinessStatic.getInstance().TASK_TIME_LAG - seconds));
-				toast(msg);
-//				String[] des = getResources().getStringArray(R.array.task_time_des);
-//				int minute = (BusinessStatic.TASK_TIME_LAG - seconds) / 60;
-//				minute = minute == 0 ? 1 : minute;
-//				int index = (int) (Math.random()*des.length);
-//				toast(String.format(des[index] ,minute ));
-				return;
-			}
-
-		}
-	}
-	if(taskData.type == 1001000 || (taskData.type == 1000300 && Double.parseDouble(taskData.lastScore) < 1)){//闪购栏目不做限制
-		showPopup();
-	}else{
-		//查询是否使用道具
-		statusData = new PreTaskStatusData();
-		taskService.checkPreTaskStatus(UserData.getUserData().loginCode, taskData.id, statusData);
-		showProgress();
-	}
-
-	//showPopup();
+	showPopup();
 }
 
 

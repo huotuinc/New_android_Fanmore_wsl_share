@@ -43,9 +43,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 
-public class GroupTaskFrag extends BaseFragment implements BusinessDataListener, Callback,PullDownUpListView.OnRefreshOrLoadListener,AdapterView.OnItemClickListener {
+public class GroupTaskFrag extends BaseFragment implements BusinessDataListener, Callback,AdapterView.OnItemClickListener {
 
 
 
@@ -53,7 +54,7 @@ public class GroupTaskFrag extends BaseFragment implements BusinessDataListener,
     private View mRootView;
     private int pageIndex;//客户端现有发布时间最早任务id（做分页用）
     private SupervisionService supervisionService;
-    private PullDownUpListView listView;
+    private ListView listView;
     private TaskAdapter adapter;
     private List<TaskData> datas;
     private EmptyView layEmpty;
@@ -66,9 +67,7 @@ public class GroupTaskFrag extends BaseFragment implements BusinessDataListener,
             frag = new GroupTaskFrag();
         return frag;
     }
-    public PullDownUpListView getListView(){
-        return this.listView;
-    }
+
 
     private Handler mHandler = new Handler(this);
     @Override
@@ -92,8 +91,7 @@ public class GroupTaskFrag extends BaseFragment implements BusinessDataListener,
                 pageIndex=results[i].pageIndex;
             }
             layEmpty.setVisibility( datas.size()<1? View.VISIBLE:View.GONE );
-            listView.onFinishLoad();
-            listView.onFinishRefresh();
+
             adapter.notifyDataSetChanged();
 
 
@@ -102,8 +100,7 @@ public class GroupTaskFrag extends BaseFragment implements BusinessDataListener,
             layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
             dismissProgress();
             toast(msg.obj.toString());
-            listView.onFinishLoad();
-            listView.onFinishRefresh();
+
         }
         return false;
     }
@@ -120,8 +117,7 @@ public class GroupTaskFrag extends BaseFragment implements BusinessDataListener,
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)  {
         mRootView = inflater.inflate(R.layout.tab_grouptask, container, false);
-        listView = (PullDownUpListView) mRootView.findViewById(R.id.listView);
-        listView.setOnRefreshOrLoadListener(this);
+        listView = (ListView) mRootView.findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
         layEmpty = (EmptyView) mRootView.findViewById(R.id.layEmpty);
         datas = new ArrayList<TaskData>();
@@ -190,7 +186,7 @@ public class GroupTaskFrag extends BaseFragment implements BusinessDataListener,
 
     public void getDataFromSer(){
 
-        supervisionService.AllTask("",pageIndex+1);
+        supervisionService.AllTask(UserData.getUserData().loginCode,"",pageIndex+1);
 
         showProgress();
     }
@@ -226,15 +222,6 @@ public class GroupTaskFrag extends BaseFragment implements BusinessDataListener,
     }
 
 
-    @Override
-    public void onRefresh() {
-        initData();
-    }
-
-    @Override
-    public void onLoad() {
-        getDataFromSer();
-    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

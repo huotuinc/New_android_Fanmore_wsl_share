@@ -9,10 +9,13 @@ import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.BuyData;
 import cy.com.morefan.bean.FeedbackData;
 import cy.com.morefan.bean.HistoryData;
+import cy.com.morefan.bean.PartnerData;
 import cy.com.morefan.bean.PrenticeData;
 import cy.com.morefan.bean.WalletData;
 import cy.com.morefan.util.L;
 import cy.com.morefan.util.ViewHolderUtil;
+import cy.com.morefan.view.ImageLoad;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -157,8 +160,8 @@ public class ListAdapter extends BaseAdapter{
 				txtStatus.setText(flag + data.amount);
 				txtTime.setText(data.time);
 			}
-			else if(item instanceof PrenticeData){
-					final PrenticeData data = (PrenticeData) item;
+			else if(item instanceof PartnerData){
+					final PartnerData data = (PartnerData) item;
 					if(convertView == null){
 						convertView = LayoutInflater.from(mContext).inflate(R.layout.prentice_list_item, null);
 					}
@@ -167,17 +170,19 @@ public class ListAdapter extends BaseAdapter{
 					TextView txtTime		= ViewHolderUtil.get(convertView, R.id.txtTime);
 					TextView txtLastContri	= ViewHolderUtil.get(convertView, R.id.txtLastContri);
 					TextView txtTotalContri	= ViewHolderUtil.get(convertView, R.id.txtTotalContri);
-					TextView tvContri	    = ViewHolderUtil.get(convertView, R.id.tvContri);
 					TextView yesterdayBrowseAmount = ViewHolderUtil.get(convertView, R.id.yesterdayBrowseAmount);
 					TextView historyTotalBrowseAmount = ViewHolderUtil.get(convertView, R.id.historyTotalBrowseAmount);
 					ImageView imgPhoto      = ViewHolderUtil.get(convertView,R.id.imgPhoto);
 
 					txtIndex.setText((position + 1) + "");
-					txtName.setText(data.name);
-					tvContri.setText(data.lastContri+"/"+data.totalContri+"积分");
-
-					yesterdayBrowseAmount.setText(data.yesterdayBrowseAmount+"/"+data.yesterdayTurnAmount+"积分");
-					historyTotalBrowseAmount.setText(data.historyTotalBrowseAmount+"/"+data.historyTotalTurnAmount+"积分");
+					txtName.setText(data.userName);
+				if (TextUtils.isEmpty(data.headFace)) {
+					imgPhoto.setImageResource(R.drawable.user_icon);
+				}else {
+					ImageLoad.loadLogo(data.headFace,imgPhoto,mContext);
+				}
+					yesterdayBrowseAmount.setText(data.yesterdayBrowseAmount.substring(0,data.yesterdayBrowseAmount.indexOf("."))+"/"+data.yesterdayTurnAmount.substring(0,data.yesterdayTurnAmount.indexOf("."))+"次");
+					historyTotalBrowseAmount.setText(data.historyTotalBrowseAmount.substring(0,data.historyTotalBrowseAmount.indexOf("."))+"/"+data.historyTotalTurnAmount.substring(0,data.historyTotalTurnAmount.indexOf("."))+"次");
 				//imgPhoto
 //					convertView.setOnClickListener(new View.OnClickListener() {
 //						@Override

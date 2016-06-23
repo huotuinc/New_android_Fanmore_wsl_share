@@ -142,7 +142,6 @@ public class ArchitectureFrag extends BaseFragment implements View.OnClickListen
     }
     @Override
     public void onLoad() {
-        loadData();
 
     }
     @Override

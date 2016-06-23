@@ -111,19 +111,19 @@
         <!-- 3 add -->
 
         <LinearLayout
-            android:id="@+id/layRule"
+            android:id="@+id/laypsw"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/lay_bg"
             android:padding="12dp"
-            android:visibility="gone" >
+             >
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/more_sina"
+                android:background="@drawable/ic_psw"
                 android:contentDescription="@string/img" />
 
             <TextView
@@ -132,7 +132,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:text="规则说明"
+                android:text="修改密码"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
         </LinearLayout>

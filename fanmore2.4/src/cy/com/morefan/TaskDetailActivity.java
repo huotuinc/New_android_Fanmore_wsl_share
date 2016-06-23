@@ -938,11 +938,9 @@ private void share(){
 					return;
 				}
 				if(!BusinessStatic.getInstance().CHANNEL_LIST.contains(ShareUtil.CHANNEL_WEIXIN + "")){
-					toast("Sorry!转发朋友暂不支持!");
 					return;
 				}
 				if(taskData.channelIds.contains(ShareUtil.CHANNEL_WEIXIN + "")){
-					toast("转发成功!");
 					return;
 				}
 				showProgress();
@@ -963,11 +961,9 @@ private void share(){
 				return;
 			}
 			if(!BusinessStatic.getInstance().CHANNEL_LIST.contains(ShareUtil.CHANNEL_WEIXIN + "")){
-				toast("Sorry!朋友圈暂不支持转发!");
 				return;
 			}
 			if(taskData.channelIds.contains(ShareUtil.CHANNEL_WEIXIN + "")){
-				toast("朋友圈已转发!");
 				return;
 			}
 			showProgress();
@@ -978,11 +974,9 @@ private void share(){
 			break;
 		case R.id.layQQ:
 			if(!BusinessStatic.getInstance().CHANNEL_LIST.contains(ShareUtil.CHANNEL_QZONE + "")){
-				toast("Sorry!QQ空间暂不支持转发!");
 				return;
 			}
 			if(taskData.channelIds.contains(ShareUtil.CHANNEL_QZONE + "")){
-				toast("QQ空间已转发!");
 				return;
 			}
 			showProgress();
@@ -1029,10 +1023,8 @@ private void share(){
 			public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
 				String msg = "";
 				if (platform.getName().equals(Wechat.NAME)) {
-					ToastUtil.show(context, "微信分享成功");
 					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
 				} else if (platform.getName().equals(WechatMoments.NAME)) {
-					ToastUtil.show(context, "微信朋友圈分享成功");
 					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
 
 				}
@@ -1041,18 +1033,14 @@ private void share(){
 			@Override
 			public void onError(Platform platform, int i, Throwable throwable) {
 				if (platform.getName().equals(Wechat.NAME)) {
-					ToastUtil.show(context, "微信分享失败");
 				} else if (platform.getName().equals(WechatMoments.NAME)) {
-					ToastUtil.show(context, "微信朋友圈分享失败");
 				}
 			}
 
 			@Override
 			public void onCancel(Platform platform, int i) {
 				if (platform.getName().equals(Wechat.NAME)) {
-					ToastUtil.show(context, "取消微信分享");
 				} else if (platform.getName().equals(WechatMoments.NAME)) {
-					ToastUtil.show(context, "取消微信朋友圈分享");
 				}
 			}
 		});
@@ -1072,10 +1060,8 @@ private void share(){
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
                 String msg = "";
                 if (platform.getName().equals(Wechat.NAME)) {
-                    ToastUtil.show(context, "微信分享成功");
 					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
                 } else if (platform.getName().equals(WechatMoments.NAME)) {
-                    ToastUtil.show(context, "微信朋友圈分享成功");
 					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
 
 				}
@@ -1084,18 +1070,14 @@ private void share(){
             @Override
             public void onError(Platform platform, int i, Throwable throwable) {
                 if (platform.getName().equals(Wechat.NAME)) {
-                    ToastUtil.show(context, "微信分享失败");
                 } else if (platform.getName().equals(WechatMoments.NAME)) {
-                    ToastUtil.show(context, "微信朋友圈分享失败");
                 }
             }
 
             @Override
             public void onCancel(Platform platform, int i) {
                 if (platform.getName().equals(Wechat.NAME)) {
-                    ToastUtil.show(context, "取消微信分享");
                 } else if (platform.getName().equals(WechatMoments.NAME)) {
-                    ToastUtil.show(context, "取消微信朋友圈分享");
                 }
             }
         });

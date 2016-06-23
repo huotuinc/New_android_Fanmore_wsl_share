@@ -7,15 +7,19 @@
     tools:context=".AllScoreActivity" >
     <FrameLayout style="@style/TitleStyle" >
 
-            <cy.com.morefan.view.CyButton
-                android:id="@+id/btnBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/title_back_normal"
-                android:clickable="true"
-                android:onClick="onClickButton" />
+        <Button
+            android:id="@+id/btnBack"
+            android:background="@color/theme_back"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:text="返回"
+            android:onClick="onClickButton"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:drawableLeft="@drawable/title_back_normal" />
 
             <TextView
                 android:id="@+id/txtTitle"

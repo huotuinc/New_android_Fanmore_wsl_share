@@ -124,15 +124,15 @@ public class WebShopActivity extends BaseActivity implements Handler.Callback  {
                 }
         );
         L.i("url:" + url);
-        String title = getIntent().getExtras().getString("title");
+        //String title = getIntent().getExtras().getString("title");
 //        boolean isShare = getIntent().getExtras().getBoolean("isShare");
 //        boolean disasterFlag = getIntent().getExtras().getBoolean("disasterFlag");
 //        isSend = getIntent().getExtras().getBoolean("isSend");
 //        btnShare.setVisibility(disasterFlag ? View.VISIBLE : View.GONE);
         //if(isShare)
 //         findViewById(R.id.layAll).setVisibility(View.VISIBLE);
-        txtTitle.setText(title);
-        txtTitle.setVisibility(View.GONE);
+        //txtTitle.setText(title);
+        //txtTitle.setVisibility(View.GONE);
         //首页鉴权
         //AuthParamUtils paramUtils = new AuthParamUtils ( application, System.currentTimeMillis (), application.obtainMerchantUrl ( ), WebShopActivity.this );
 

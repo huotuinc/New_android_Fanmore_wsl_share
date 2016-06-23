@@ -12,6 +12,7 @@ import cy.com.morefan.PushMsgActivity;
 import cy.com.morefan.R;
 import cy.com.morefan.UserGuideActivity;
 import cy.com.morefan.AppUpdateActivity.UpdateType;
+import cy.com.morefan.UserRegActivity;
 import cy.com.morefan.WebViewActivity;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.UserData;
@@ -20,6 +21,7 @@ import cy.com.morefan.constant.Constant;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.service.TaskService;
 import cy.com.morefan.service.ThreadPoolManager;
+import cy.com.morefan.util.ActivityUtils;
 import cy.com.morefan.util.L;
 import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.util.Util;
@@ -137,7 +139,7 @@ public class MoreFrag extends BaseFragment implements OnClickListener, Callback,
 		
 		mRootView.findViewById(R.id.layAbout).setOnClickListener(this);
 		mRootView.findViewById(R.id.layClearSina).setOnClickListener(this);
-		mRootView.findViewById(R.id.layRule).setOnClickListener(this);
+		mRootView.findViewById(R.id.laypsw).setOnClickListener(this);
 
 	
 		((TextView)mRootView.findViewById(R.id.txtVersion)).setText(Constant.APP_VERSION);
@@ -173,23 +175,13 @@ public class MoreFrag extends BaseFragment implements OnClickListener, Callback,
 		switch (v.getId()) {
 		
 		
-		case R.id.layRule:
-//			Intent intentRule = new Intent(getActivity(), WebViewActivity.class);
-//			intentRule.putExtra("url", BusinessStatic.URL_RULE);
-//			intentRule.putExtra("title", "规则说明");
-//			startActivity(intentRule);
+		case R.id.laypsw:
+			Bundle bundle=new Bundle();
+			bundle.putString("title","忘记密码");
+			bundle.putInt("isUpdate",1);
+			ActivityUtils.getInstance().showActivity(getActivity(),UserRegActivity.class,bundle);
 			break;
-		case R.id.layClearSina:
-			// 获取 Token 成功
-			String response = SPUtil.getStringToSpByName(getActivity(), Constant.SP_NAME_NORMAL, Constant.SP_NAME_SINA_TOKEN);
-			if(TextUtils.isEmpty(response)){
-				toast("未认证,无需清除!");
-			}else{
-				SPUtil.saveStringToSpByName(getActivity(), Constant.SP_NAME_NORMAL, Constant.SP_NAME_SINA_TOKEN, "");
-				toast("清除成功!");
-			}
 
-			break;
 		case R.id.layClear:
 			ThreadPoolManager.getInstance().addTask(new Runnable() {
 				@Override

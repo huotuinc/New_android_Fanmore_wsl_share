@@ -19,13 +19,12 @@
                     android:layout_height="wrap_content" 
                     >
 
-                    <ImageView
+                    <cy.com.morefan.view.CircleImageView
                         android:id="@+id/imgPhoto"
                         android:layout_width="75dp"
                         android:layout_height="75dp"
                         android:background="@drawable/user_icon"
-                        android:clickable="true"
-                        android:onClick="onClick" />
+                         />
 
                     <ImageView
                         android:id="@+id/imgPhotocircle"
@@ -73,7 +72,7 @@
 
                 
             </LinearLayout>
-            <RelativeLayout 
+            <LinearLayout
                 android:id="@+id/apprentice"
                 android:background="@color/white"
                 android:layout_width="match_parent"
@@ -94,30 +93,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="伙伴总数"
-                     android:layout_centerInParent="true"
-                    android:layout_toRightOf="@+id/apprenticeicon"
                     android:layout_margin="10dp"
                     />
                 <TextView
-                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical"
                     android:gravity="right"
                     android:id="@+id/prenticeAmount"
                     android:layout_margin="10dp"
-                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text=""
-                     android:layout_centerInParent="true"
-                    android:layout_toRightOf="@+id/tvapprentice"
-                    android:textColor="@color/theme_back"/>
+                    android:text="111"
+                    android:textColor="@color/gray"/>
                 <ImageView
-                    android:visibility="gone"
+                    android:id="@+id/huoban_arrows"
                      android:layout_margin="10dp"
             	     android:layout_width="wrap_content"
            			 android:layout_height="wrap_content"
-           			 android:layout_alignParentRight="true"
-           			 android:layout_centerInParent="true"
             		 android:background="@drawable/arrows_right" />
-            </RelativeLayout>
+            </LinearLayout>
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1px"
@@ -154,7 +148,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:layout_centerInParent="true"
-            android:textColor="@color/theme_back"/>
+            android:textColor="@color/gray"/>
 
     </RelativeLayout>
     <ImageView
@@ -195,7 +189,7 @@
             android:text=""
             android:layout_centerInParent="true"
             android:layout_toRightOf="@+id/tvTurnAmount"
-            android:textColor="@color/theme_back"/>
+            android:textColor="@color/gray"/>
 
     </RelativeLayout>
 

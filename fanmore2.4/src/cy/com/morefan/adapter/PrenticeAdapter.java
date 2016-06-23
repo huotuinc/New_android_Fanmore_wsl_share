@@ -11,6 +11,7 @@ import cy.com.morefan.bean.PrenticeTopData;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.util.ViewHolderUtil;
+import cy.com.morefan.view.CircleImageView;
 import cy.com.morefan.view.ImageLoad;
 
 import android.content.Context;
@@ -24,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -94,18 +96,20 @@ public class PrenticeAdapter extends BaseAdapter{
 			TextView prenticeAmount = ViewHolderUtil.get(convertView, R.id.prenticeAmount);
 			TextView BrowseAmount   = ViewHolderUtil.get(convertView, R.id.BrowseAmount);
 			TextView TurnAmount     = ViewHolderUtil.get(convertView, R.id.TurnAmount);
-			ImageView imgPhoto	= ViewHolderUtil.get(convertView, R.id.imgPhoto);
-			RelativeLayout apprentice = ViewHolderUtil.get(convertView, R.id.apprentice);
+			CircleImageView imgPhoto	= ViewHolderUtil.get(convertView, R.id.imgPhoto);
+			LinearLayout apprentice = ViewHolderUtil.get(convertView, R.id.apprentice);
 			helper = new SyncImageLoaderHelper(mContext);
-//			apprentice.setOnClickListener(new OnClickListener() {
-//
-//				@Override
-//				public void onClick(View v) {
-//					// TODO Auto-generated method stub
-//					mHandler.sendEmptyMessage(0x11111111);
-//				}
-//			});
+			apprentice.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					mHandler.sendEmptyMessage(0x11111111);
+				}
+			});
 			UserData userData = UserData.getUserData();
+			imgPhoto.setBorderColor(mContext.getResources().getColor(R.color.white));
+			imgPhoto.setBorderWidth((int)mContext.getResources().getDimension(R.dimen.head_width));
 			if(TextUtils.isEmpty(userData.picUrl)){
 				imgPhoto.setImageResource(R.drawable.user_icon);
 			}else{

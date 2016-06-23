@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:text="1"
                 android:layout_marginRight="5dp"
-                android:textColor="@color/theme_back"/>
+                android:textColor="@color/gray"/>
             <ImageView
                 android:layout_marginRight="5dp"
                 android:layout_gravity="center_vertical"
@@ -123,7 +123,7 @@
             <TextView
                 android:layout_marginRight="10dp"
                 android:id="@+id/sendCount"
-                android:textColor="@color/theme_back"
+                android:textColor="@color/gray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1"/>

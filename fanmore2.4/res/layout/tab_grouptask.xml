@@ -8,7 +8,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-    <cy.com.morefan.view.PullDownUpListView
+    <ListView
         android:id="@+id/listView"
         android:footerDividersEnabled="false"
         android:layout_width="match_parent"

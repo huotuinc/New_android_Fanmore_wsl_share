@@ -28,6 +28,7 @@ import cy.com.morefan.bean.FeedbackData;
 import cy.com.morefan.bean.HistoryData;
 import cy.com.morefan.bean.MyJSONObject;
 import cy.com.morefan.bean.PartInItemData;
+import cy.com.morefan.bean.PartnerData;
 import cy.com.morefan.bean.PrenticeData;
 import cy.com.morefan.bean.PushMsgData;
 import cy.com.morefan.bean.RankData;
@@ -42,6 +43,7 @@ import cy.com.morefan.bean.UserSelectData;
 import cy.com.morefan.bean.WalletData;
 import cy.com.morefan.bean.WeekTaskData;
 import cy.com.morefan.constant.Constant;
+import cy.com.morefan.frag.PartnerFrag;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.util.L;
 import cy.com.morefan.util.SPUtil;
@@ -1271,20 +1273,16 @@ public class UserService extends BaseService{
 								}
 								JSONArray array = json.getJSONArray("list");
 								int length = array.length();
-								PrenticeData[] testResults = new PrenticeData[length];
+								PartnerData[] testResults = new PartnerData[length];
 								for(int i = 0; i < length; i++){
 									MyJSONObject tip = (MyJSONObject) array.getJSONObject(i);
-									PrenticeData item = new PrenticeData();
-									item.id = tip.getInt("userId");
-									item.pageTag = String.valueOf(item.id);
-									item.name = tip.getString("userName");
-									item.lastContri =  Util.opeDouble(tip.getDouble("recentScore"));
-									item.totalContri = Util.opeDouble(tip.getDouble("totalScore"));
-									item.time = TimeUtil.FormatterTimeToDay(tip.getString("time"));
-									item.yesterdayBrowseAmount=Util.opeDouble(tip.getDouble("yesterdayBrowseAmount"));
-									item.historyTotalBrowseAmount=Util.opeDouble(tip.getDouble("historyTotalBrowseAmount"));
-									item.yesterdayTurnAmount=Util.opeDouble(tip.getDouble("yesterdayTurnAmount"));
-									item.historyTotalTurnAmount=Util.opeDouble(tip.getDouble("historyTotalTurnAmount"));
+									PartnerData item = new PartnerData();
+									item.headFace=tip.getString("headFace");
+									item.userName = tip.getString("userName");
+									item.yesterdayBrowseAmount=tip.getString("yesterdayBrowseAmount");
+									item.historyTotalBrowseAmount=tip.getString("historyTotalBrowseAmount");
+									item.yesterdayTurnAmount=tip.getString("yesterdayTurnAmount");
+									item.historyTotalTurnAmount=tip.getString("historyTotalTurnAmount");
 
 									testResults[i] = item;
 								}

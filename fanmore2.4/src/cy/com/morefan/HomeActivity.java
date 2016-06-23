@@ -38,6 +38,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -82,6 +83,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	private TextView count;
 	private TextView mylevel;
 	private CircleImageView btnLeft;
+	private Button btnBack;
 
 	//private PopCheckIn popCheckIn;
 	private SyncImageLoaderHelper helper;
@@ -157,15 +159,13 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		img = (CircleImageView) findViewById(R.id.img);
 		btnRight = (CyButton) findViewById(R.id.btnRight);
 		btnLeft =(CircleImageView) findViewById(R.id.btnLeft);
-		//txtPrenticeCount = (TextView) findViewById(R.id.txtPrenticeCount);
+		btnBack = (Button)findViewById(R.id.btnBack);
 		imgTag = (ImageView) findViewById(R.id.imgTag);
 		txtRight=(TextView)findViewById(R.id.txtRight);
 		txtTitle = (TextView) findViewById(R.id.txtTitle);
 		layTab = (LinearLayout) findViewById(R.id.layTab);
 		layMiddle = (LinearLayout) findViewById(R.id.layMiddle);
 		mDragLayout	 = (DrawerLayout) findViewById(R.id.dragLayout);
-		//mDragLayout.setDragListener(this);
-		//txtMine 	 = (TextView) findViewById(R.id.txtMine);
 		imgPhoto 	 = (ImageView) findViewById(R.id.imgPhoto);
 		txtName		 = (TextView) findViewById(R.id.txtName);
 		txtScore	 = (TextView) findViewById(R.id.txtScore);
@@ -282,6 +282,11 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			return ;
 		}
 		switch (v.getId()) {
+			case R.id.btnBack:
+				userService.getScanCount();
+				userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
+				openOrCloseMenu();
+				setScores();
 
 		case R.id.btnLeft:
 			userService.getScanCount();
@@ -474,6 +479,9 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		//txtPrenticeCount.setVisibility(View.GONE);
 		switch (type) {
 		case Task:
+			btnBack.setVisibility(View.GONE);
+			imgPhoto.setVisibility(View.VISIBLE);
+			btnLeft.setVisibility(View.VISIBLE);
 			layMiddle.setVisibility(View.GONE);
 			layTab.setVisibility(View.VISIBLE);
 			txtRight.setVisibility(View.GONE);
@@ -484,7 +492,9 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 
 			}
 			txtTitle.setText("乐享资讯");
-			//btnLeft.setVisibility(View.VISIBLE);
+			btnBack.setVisibility(View.GONE);
+			btnLeft.setVisibility(View.VISIBLE);
+			imgPhoto.setVisibility(View.VISIBLE);
 			btnRight.setVisibility(View.VISIBLE);
 			btnRight.setBackgroundResource(R.drawable.title_query_normal);
 			imgTag.setVisibility(View.VISIBLE);
@@ -492,6 +502,9 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 
 			break;
 		case My:
+			btnBack.setVisibility(View.VISIBLE);
+			btnLeft.setVisibility(View.GONE);
+			imgPhoto.setVisibility(View.GONE);
 			txtRight.setVisibility(View.GONE);
 			imgTag.setVisibility(View.GONE);
 			txtTitle.setText("个人中心");
@@ -506,6 +519,9 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			break;
 
 		case More:
+			imgPhoto.setVisibility(View.GONE);
+			btnBack.setVisibility(View.VISIBLE);
+			btnLeft.setVisibility(View.GONE);
 			txtRight.setVisibility(View.GONE);
 			imgTag.setVisibility(View.GONE);
 			txtTitle.setText("更多选项");
@@ -513,6 +529,9 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			btnRight.setVisibility(View.GONE);
 			break;
 		case Prentice:
+			imgPhoto.setVisibility(View.GONE);
+			btnBack.setVisibility(View.VISIBLE);
+			btnLeft.setVisibility(View.GONE);
 			imgTag.setVisibility(View.GONE);
 			txtTitle.setText("推荐有奖");
 			btnRight.setVisibility(View.GONE);

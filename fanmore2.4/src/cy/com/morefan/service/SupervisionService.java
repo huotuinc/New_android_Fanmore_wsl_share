@@ -35,16 +35,18 @@ public class SupervisionService extends BaseService {
 
     /**
      * 获取平台所有的任务（按任务查看）
+     * @param loginCode
      * @param keyword
      * @param pageIndex
      */
-public void AllTask(final String keyword,final int pageIndex){
+public void AllTask(final String loginCode, final String keyword,final int pageIndex){
     ThreadPoolManager.getInstance().addTask(new Runnable() {
         @Override
         public void run() {
             try {
                 String url = Constant.IP_URL + "/Api.ashx?req=UserOrganizeAllTask" + CONSTANT_URL();
                 JSONObject jsonUrl = new JSONObject();
+                jsonUrl.put("loginCode",loginCode);
                 jsonUrl.put("keyword", keyword);
                 jsonUrl.put("pageIndex", pageIndex);
                 try {

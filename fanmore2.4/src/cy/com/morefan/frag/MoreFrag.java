@@ -177,7 +177,7 @@ public class MoreFrag extends BaseFragment implements OnClickListener, Callback,
 		
 		case R.id.laypsw:
 			Bundle bundle=new Bundle();
-			bundle.putString("title","忘记密码");
+			bundle.putString("title","修改密码");
 			bundle.putInt("isUpdate",1);
 			ActivityUtils.getInstance().showActivity(getActivity(),UserRegActivity.class,bundle);
 			break;

@@ -26,6 +26,8 @@ import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.SupervisionService;
 import cy.com.morefan.service.TaskService;
 import cy.com.morefan.supervision.GroupActivity;
+import cy.com.morefan.supervision.SelectTaskActivity;
+import cy.com.morefan.util.ActivityUtils;
 import cy.com.morefan.util.DensityUtil;
 import cy.com.morefan.util.L;
 import cy.com.morefan.view.EmptyView;
@@ -226,7 +228,10 @@ public class GroupTaskFrag extends BaseFragment implements BusinessDataListener,
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        ((GroupActivity)getActivity()).setFrag();
+        TaskData taskData =datas.get(position);
+        Bundle bundle =new Bundle();
+        bundle.putInt("taskId",taskData.id);
+        ActivityUtils.getInstance().showActivity(getActivity(), SelectTaskActivity.class,bundle);
 
 
     }

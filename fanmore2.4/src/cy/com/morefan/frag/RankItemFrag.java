@@ -63,6 +63,7 @@ public class RankItemFrag extends Fragment implements OnRefreshOrLoadListener, B
 			RankData top=new RankData();
 			top.name = "我";
 			top.logo=ex.getString("myRanklogo");
+			//if (ex.getString("myRankvalue"))
 			top.myRankvalue ="第"+ ex.getString("myRankvalue")+"名";
 			top.myRankDes = "累计浏览:"+ex.getString("myRankDes");
 			top.type = 1;

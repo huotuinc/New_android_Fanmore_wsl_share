@@ -62,6 +62,7 @@ public class WeekTaskAdapter extends BaseAdapter {
             viewHolder.finishCount.setText("已完成");
             viewHolder.target.setVisibility(View.GONE);
         }else {
+            viewHolder.target.setVisibility(View.VISIBLE);
             viewHolder.finishCount.setText(String.valueOf(data.myFinishCount));
             viewHolder.target.setText("/"+String.valueOf(data.target));
         }

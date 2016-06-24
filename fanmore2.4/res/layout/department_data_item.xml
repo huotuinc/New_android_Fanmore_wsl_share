@@ -7,10 +7,17 @@
     <ImageView
         android:id="@+id/company_data_item_icon"
         android:layout_width="50dp"
-        android:background="@drawable/user_icon"
+        android:background="@drawable/prentice_photo"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_height="50dp"/>
+    <ImageView
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/imgPhotocircle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/photo_circle_white" />
     <TextView
         android:id="@+id/company_data_item_name"
         android:layout_width="wrap_content"

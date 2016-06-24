@@ -3,11 +3,9 @@ package cy.com.morefan;
 import java.io.InputStream;
 import java.util.HashMap;
 
-import cindy.android.test.synclistview.ImageUtil;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 import cy.com.morefan.bean.UserData;
@@ -51,11 +49,7 @@ public class ShareActivity extends BaseActivity{
 			showProgress();
 			ShareUtil.share2Qzone(this, shareDes , imgUrl, shareUrl);
 			break;
-		case R.id.laySina:
-			showProgress();
-			Platform platform2 = new SinaWeibo(this);
-			sinaWeibo(this, UserData.getUserData().shareDes, imgUrl, shareUrl, platform2);
-			break;
+
 		case R.id.layWX:
 			showProgress();
 			Platform platform1 = new WechatMoments(this);
@@ -74,39 +68,7 @@ public class ShareActivity extends BaseActivity{
 
 
 	}
-	private void sinaWeibo(final Context context , String Title ,String imgUrl,String shareUrl,Platform platform)
-	{
-		Platform.ShareParams sp = new Platform.ShareParams ( );
-		sp.setShareType(Platform.SHARE_WEBPAGE);
-		sp.setText(Title +shareUrl);
-		sp.setImageUrl(imgUrl);
-		Platform sinaWeibo = ShareSDK.getPlatform(context, SinaWeibo.NAME);
-		sinaWeibo.setPlatformActionListener ( new PlatformActionListener() {
-			@Override
-			public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-				String msg = "";
 
-				ToastUtil.show(context, "微博分享成功");
-
-			}
-
-			@Override
-			public void onError(Platform platform, int i, Throwable throwable) {
-
-				ToastUtil.show(context, "微博分享失败");
-
-			}
-
-			@Override
-			public void onCancel(Platform platform, int i) {
-
-				ToastUtil.show(context, "取消微博分享");
-
-			}
-		});
-		//执行分享
-		sinaWeibo.share ( sp );
-	}
 	protected void wx(final Context context , String Title ,String imgUrl,String shareUrl,Platform platform ){
 		Platform.ShareParams sp = new Platform.ShareParams();
 		sp.setShareType(Platform.SHARE_WEBPAGE);

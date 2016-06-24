@@ -60,7 +60,7 @@ public class GroupPersonDataAdapter  extends BaseAdapter {
         GroupPersonData data = datas.get(position);
 
         if (TextUtils.isEmpty(data.getLogo())){
-            imgIcon.setImageResource(R.drawable.user_icon);
+            imgIcon.setImageResource(R.drawable.prentice_photo);
         }else {
             ImageLoad.loadLogo(data.getLogo(), imgIcon, mContext);
         }

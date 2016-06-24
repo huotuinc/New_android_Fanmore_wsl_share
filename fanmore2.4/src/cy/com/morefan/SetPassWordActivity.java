@@ -21,7 +21,6 @@ import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.ActivityUtils;
 import cy.com.morefan.util.EncryptUtil;
 import cy.com.morefan.util.VolleyUtil;
-import cy.com.morefan.view.CyButton;
 
 public class SetPassWordActivity extends BaseActivity implements View.OnClickListener , Handler.Callback {
 
@@ -42,7 +41,11 @@ public class SetPassWordActivity extends BaseActivity implements View.OnClickLis
         if(msg.what == BusinessDataListener.DONE_USER_REG){
             dismissProgress();
             toast("设置密码成功!");
-            ActivityUtils.getInstance().skipActivity(SetPassWordActivity.this,MoblieLoginActivity.class);
+            if (isUpdate==1) {
+                ActivityUtils.getInstance().skipActivity(SetPassWordActivity.this, MoblieLoginActivity.class);
+            }else {
+                ActivityUtils.getInstance().skipActivity(SetPassWordActivity.this, HomeActivity.class);
+            }
         }else if (msg.what == BusinessDataListener.ERROR_USER_REG){
             dismissProgress();
             toast(msg.obj.toString());
@@ -89,10 +92,10 @@ public class SetPassWordActivity extends BaseActivity implements View.OnClickLis
         }
 
         if (password.equals(psw)) {
-            showProgress();
+
             String token = JPushInterface.getRegistrationID(SetPassWordActivity.this);
             if (isUpdate == 1) {
-
+                showProgress();
                 userService.userMoblieReg(SetPassWordActivity.this, moblie, code, EncryptUtil.getInstance().encryptMd532(password), isUpdate, "", token);
             } else {
                 if(TextUtils.isEmpty(invitationCode)){
@@ -100,6 +103,7 @@ public class SetPassWordActivity extends BaseActivity implements View.OnClickLis
                     edtinvitationCode.setError("邀请码不能为空");
                     return;
                 }
+                showProgress();
                 userService.userMoblieReg(SetPassWordActivity.this, moblie, code, EncryptUtil.getInstance().encryptMd532(password), isUpdate, invitationCode, token);
             }
         }else {

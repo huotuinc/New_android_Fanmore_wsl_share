@@ -4,10 +4,8 @@ package cy.com.morefan;
 import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
-import cy.com.morefan.view.PopReg;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
-import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
 
 import cy.com.morefan.bean.BaseData;
@@ -117,13 +115,11 @@ public class BaseActivity extends SwipeBackActivity implements BusinessDataListe
 	@Override
 	protected void onResume() {
 		isMarkedHomeLong = false;
-		MobclickAgent.onResume(this);
 		JPushInterface.onResume(this);
 		super.onResume();
 	}
 	@Override
 	protected void onPause() {
-		MobclickAgent.onPause(this);
 		JPushInterface.onPause(this);
 		super.onPause();
 	}

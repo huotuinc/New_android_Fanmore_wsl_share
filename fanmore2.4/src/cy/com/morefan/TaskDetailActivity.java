@@ -8,8 +8,6 @@ import java.util.HashMap;
 import cindy.android.test.synclistview.SyncImageLoaderHelper;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 import cy.com.morefan.AppUpdateActivity.UpdateType;
@@ -524,7 +522,6 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 		imgSina = (ImageView) layout.findViewById(R.id.imgSina);
 		imgQzone = (ImageView) layout.findViewById(R.id.imgQzone);
 		popupWindow = new PopupWindow(layout, WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
-
 		popupWindow.setFocusable(true);
 		popupWindow.setBackgroundDrawable(new BitmapDrawable());
 		//设置PopupWindow显示和隐藏时的动画
@@ -977,6 +974,7 @@ private void share(){
 				return;
 			}
 			if(taskData.channelIds.contains(ShareUtil.CHANNEL_QZONE + "")){
+				toast("转发成功");
 				return;
 			}
 			showProgress();
@@ -1023,8 +1021,10 @@ private void share(){
 			public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
 				String msg = "";
 				if (platform.getName().equals(Wechat.NAME)) {
+					toast("转发成功");
 					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
 				} else if (platform.getName().equals(WechatMoments.NAME)) {
+					toast("转发成功");
 					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
 
 				}
@@ -1033,14 +1033,18 @@ private void share(){
 			@Override
 			public void onError(Platform platform, int i, Throwable throwable) {
 				if (platform.getName().equals(Wechat.NAME)) {
+					toast("转发失败");
 				} else if (platform.getName().equals(WechatMoments.NAME)) {
+					toast("转发失败");
 				}
 			}
 
 			@Override
 			public void onCancel(Platform platform, int i) {
 				if (platform.getName().equals(Wechat.NAME)) {
+					toast("取消转发");
 				} else if (platform.getName().equals(WechatMoments.NAME)) {
+					toast("取消转发");
 				}
 			}
 		});
@@ -1060,8 +1064,10 @@ private void share(){
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
                 String msg = "";
                 if (platform.getName().equals(Wechat.NAME)) {
+					toast("转发成功");
 					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
                 } else if (platform.getName().equals(WechatMoments.NAME)) {
+					toast("转发成功");
 					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
 
 				}
@@ -1070,14 +1076,18 @@ private void share(){
             @Override
             public void onError(Platform platform, int i, Throwable throwable) {
                 if (platform.getName().equals(Wechat.NAME)) {
+					toast("转发失败");
                 } else if (platform.getName().equals(WechatMoments.NAME)) {
+					toast("转发失败");
                 }
             }
 
             @Override
             public void onCancel(Platform platform, int i) {
                 if (platform.getName().equals(Wechat.NAME)) {
+					toast("取消转发");
                 } else if (platform.getName().equals(WechatMoments.NAME)) {
+					toast("取消转发");
                 }
             }
         });

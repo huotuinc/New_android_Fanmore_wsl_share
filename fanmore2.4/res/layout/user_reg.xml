@@ -63,12 +63,12 @@
             android:textColor="@color/black"
             android:layout_weight="1"
             cy:style="transparent" />
+
         <TextView
             android:id="@+id/btn_getcode"
             android:layout_margin="13dp"
             android:padding="5dp"
             android:text="发送验证码"
-            android:onClick="onClickButton"
             android:textColor="@color/theme_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
         android:background="@drawable/btn_red_sel"
         android:clickable="true"
         android:gravity="center"
-        android:onClick="onClickButton"
+        android:onClick="onClick"
         android:text="下一步"
         android:textColor="@color/white"
         android:textSize="18dp" />

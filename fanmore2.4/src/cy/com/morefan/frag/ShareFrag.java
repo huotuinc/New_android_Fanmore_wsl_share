@@ -13,7 +13,6 @@ import com.tencent.tauth.UiError;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 import cy.com.morefan.HomeActivity;
@@ -190,11 +189,7 @@ public class ShareFrag extends BaseFragment implements OnClickListener{
 			showProgress();
 			ShareUtil.share2Qzone( getActivity(), UserData.getUserData().shareDes, imgUrl, UserData.getUserData().shareContent);
 			break;
-		case R.id.layXinLang:
-			showProgress();
-			Platform platform2 = new SinaWeibo(getActivity());
-			sinaWeibo(getActivity(), UserData.getUserData().shareDes, imgUrl,UserData.getUserData().shareContent,platform2);
-			break;
+
 
 
 		default:
@@ -204,39 +199,7 @@ public class ShareFrag extends BaseFragment implements OnClickListener{
 	}
 
 
-	private void sinaWeibo(final Context context , String Title ,String imgUrl,String shareUrl,Platform platform)
-	{
-		Platform.ShareParams sp = new Platform.ShareParams ( );
-		sp.setShareType(Platform.SHARE_WEBPAGE);
-		sp.setText(Title +shareUrl);
-		sp.setImageUrl(imgUrl);
-		Platform sinaWeibo = ShareSDK.getPlatform(context, SinaWeibo.NAME);
-		sinaWeibo.setPlatformActionListener ( new PlatformActionListener() {
-			@Override
-			public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-				String msg = "";
 
-				ToastUtil.show(context, "微博分享成功");
-
-			}
-
-			@Override
-			public void onError(Platform platform, int i, Throwable throwable) {
-
-				ToastUtil.show(context, "微博分享失败");
-
-			}
-
-			@Override
-			public void onCancel(Platform platform, int i) {
-
-				ToastUtil.show(context, "取消微博分享");
-
-			}
-		});
-		//执行分享
-		sinaWeibo.share ( sp );
-	}
 	protected void wx(final Context context , String Title ,String imgUrl,String shareUrl,Platform platform ){
 		Platform.ShareParams sp = new Platform.ShareParams();
 		sp.setShareType(Platform.SHARE_WEBPAGE);

@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/company_data_item_icon"
         android:layout_width="50dp"
-        android:background="@color/green"
+        android:background="@drawable/btn_red_sel"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_height="50dp"/>

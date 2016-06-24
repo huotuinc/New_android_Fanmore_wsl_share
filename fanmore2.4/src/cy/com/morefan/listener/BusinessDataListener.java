@@ -15,6 +15,8 @@ public interface BusinessDataListener {
 	public static final int DONE_GET_TASK_LIST = 6000;// 获取任务列表
 	public static final int DONE_GET_TASK_DETAIL = 6001;// 获取任务详情
 	public static final int DONE_GET_CODE = 6002;// 获取验证码
+	public static final int DONE_VERIFY_MOBILE = 8004;// 获取手机号码是否注册
+	public static final int ERROR_VERIFY_MOBILE = -8004;
 	public static final int DONE_USER_LOGIN = 6003;// 获取验证码
 	public static final int DONE_USER_REG = 6004;// 获取验证码
 	public static final int DONE_INIT = 6005;

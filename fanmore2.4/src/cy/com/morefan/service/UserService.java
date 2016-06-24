@@ -3124,6 +3124,51 @@ public class UserService extends BaseService{
 		});
 	}
 	/**
+	 * 验证手机号码是否注册接口
+	 * @param mobile 手机号
+	 */
+	public void VerifyMobile(final String mobile){
+		ThreadPoolManager.getInstance().addTask(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					String url = Constant.IP_URL + "/Api.ashx?req=VerifyMobile" + CONSTANT_URL();
+					JSONObject jsonUrl = new JSONObject();
+
+					jsonUrl.put("mobile", mobile);
+
+					try {
+						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}
+					L.i(">>>>>>VerifyMobile:" + url);
+					MyJSONObject data = getDataFromSer(url);
+					if(data != null){
+						int resultCode = data.getInt("resultCode");
+						if (resultCode == 1) {
+							int status = data.getInt("status");
+							if (status == 1) {
+								listener.onDataFinish(BusinessDataListener.DONE_VERIFY_MOBILE, data.getString("tip"), null, null);
+							}else{
+								listener.onDataFailed(BusinessDataListener.ERROR_VERIFY_MOBILE, data.getString("tip"), null);
+							}
+						}else{
+							listener.onDataFailed(BusinessDataListener.ERROR_VERIFY_MOBILE, data.getString("description"), null);
+						}
+
+					}else{
+						listener.onDataFailed(BusinessDataListener.ERROR_VERIFY_MOBILE, ERROR_NET, null);
+					}
+				} catch (Exception e) {
+					listener.onDataFailed(BusinessDataListener.ERROR_VERIFY_MOBILE, ERROR_DATA, null);
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	/**
 	 * 获取验证码
 	 * @param type 1：手机号相关;2：支付宝相关,3注册相关，4登录密码相关
 	 */

@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -30,7 +32,7 @@ import cy.com.morefan.util.Util;
 import cy.com.morefan.util.VolleyUtil;
 import cy.com.morefan.view.CyButton;
 
-public class UserRegActivity extends BaseActivity implements BusinessDataListener, Callback, BroadcastListener {
+public class UserRegActivity extends BaseActivity implements BusinessDataListener, Callback, BroadcastListener ,View.OnClickListener {
 
 	@Bind(R.id.btnBack)
 	Button btnBack;
@@ -40,13 +42,14 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 	@Bind(R.id.edtPassword) EditText edtPassword;
 	@Bind(R.id.edtCode) EditText edtCode;
 	@Bind(R.id.edtinvitationCode) EditText edtinvitationCode;
+	@Bind(R.id.btnReg)Button btnReg;
 	@Bind(R.id.linegone)
 	ImageView linegone;
 	private MyBroadcastReceiver myBroadcastReceiver;
 	private Handler mHandler = new Handler(this);
 	private UserService userService;
 	private int isUpdate;
-
+	String phone;
 	@Override
 	public boolean handleMessage(Message msg) {
 		if(msg.what == BusinessDataListener.DONE_USER_REG){
@@ -88,6 +91,15 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 		}else if (msg.what == BusinessDataListener.ERROR_CHECK_VERIFYCODE){
 			dismissProgress();
 			toast("验证码错误");
+		}else if (msg.what == BusinessDataListener.DONE_VERIFY_MOBILE){
+			userService.getAuthCode("",edtPhone.getText().toString(),3);
+			showProgress();
+
+			recLen = 60;
+			handler.postDelayed(runnable, 1000);
+			btnGetcode.setClickable(false);
+		}else if (msg.what == BusinessDataListener.ERROR_VERIFY_MOBILE){
+			toast("该手机已注册");
 		}
 		return false;
 	}
@@ -105,17 +117,18 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 		edtPassword.setVisibility(View.GONE);
 		edtinvitationCode.setVisibility(View.GONE);
 		linegone.setVisibility(View.GONE);
-
+		btnGetcode.setOnClickListener(this);
+		btnReg.setOnClickListener(this);
 		txtTitle.setText(bundle.getString("title"));
+
 		myBroadcastReceiver = new MyBroadcastReceiver(this, this, MyBroadcastReceiver.ACTION_SMS_RECEIVED, MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE);
 	}
 
-	public void onClickButton(View v){
-		super.onClickButton(v);
+	public void onClick(View v){
 		switch (v.getId()) {
 
 			case R.id.btn_getcode:
-				String phone = edtPhone.getText().toString().trim();
+				phone = edtPhone.getText().toString().trim();
 				if (TextUtils.isEmpty(phone)){
 					edtPhone.requestFocus();
 					edtPhone.setError("手机号不能为空");
@@ -126,12 +139,17 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 					edtPhone.setError("手机号错误");
 					return;
 				}
-				userService.getAuthCode("",phone,3);
-				showProgress();
+				if (isUpdate==1) {
+					userService.getAuthCode("", edtPhone.getText().toString(), 3);
+					showProgress();
 
-				recLen = 60;
-				handler.postDelayed(runnable, 1000);
-				btnGetcode.setClickable(false);
+					recLen = 60;
+					handler.postDelayed(runnable, 1000);
+					btnGetcode.setClickable(false);
+				}else {
+					userService.VerifyMobile(edtPhone.getText().toString());
+				}
+
 				break;
 			case R.id.btnReg:
 
@@ -144,7 +162,7 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 				break;
 		}
 	}
-	private int recLen;
+		private int recLen;
 	Runnable runnable = new Runnable() {
 		@Override
 		public void run() {
@@ -224,6 +242,7 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 		ButterKnife.unbind(this);
 		VolleyUtil.cancelAllRequest();
 		myBroadcastReceiver.unregisterReceiver();
+		handler.removeCallbacks(runnable);
 		super.onDestroy();
 	}
 	@Override
@@ -231,7 +250,7 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 		if (keyCode == KeyEvent.KEYCODE_BACK ) {
 
 			finish();
-			handler.removeCallbacks(runnable);
+
 		}
 		return true;
 	}

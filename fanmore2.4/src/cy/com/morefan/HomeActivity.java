@@ -533,7 +533,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			btnBack.setVisibility(View.VISIBLE);
 			btnLeft.setVisibility(View.GONE);
 			imgTag.setVisibility(View.GONE);
-			txtTitle.setText("推荐有奖");
+			txtTitle.setText("我要推荐");
 			btnRight.setVisibility(View.GONE);
 			txtRight.setVisibility(View.VISIBLE);
 			//btnLeft.setVisibility(View.GONE);

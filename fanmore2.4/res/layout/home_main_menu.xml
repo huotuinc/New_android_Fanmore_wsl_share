@@ -385,7 +385,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:text="推荐有奖"
+                android:text="我要推荐"
                 android:layout_centerVertical="true"
                 android:textSize="15sp" />
             <ImageView

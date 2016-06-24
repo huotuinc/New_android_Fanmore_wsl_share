@@ -121,7 +121,11 @@ public class TaskAdapter extends BaseAdapter{
         	 }else{
         		 txtDate.setVisibility(View.VISIBLE);
         	 }
-
+				if (data.isSend){
+					imgStatusTag.setVisibility(View.VISIBLE);
+				}else {
+					imgStatusTag.setVisibility(View.GONE);
+				}
         	imgTask.setBackgroundResource(R.drawable.picreviewre_fresh_bg);
         	mImageLoader.loadImage(position, imgTask, bar, data.smallImgUrl, Constant.IMAGE_PATH_TASK);
         	imgTagTop.setVisibility(View.GONE);
@@ -187,7 +191,6 @@ public class TaskAdapter extends BaseAdapter{
 //			tagType.setText(getTypeName(data.type));
 
 			//状态标记设置
-			setStatus(imgStatusTag, data);
 			//返利栏目没有状态;剩余积分<=0时，隐藏积分描述
 //			if(tabType == TabType.Mall){
 //				imgStatusTag.setVisibility(View.GONE);

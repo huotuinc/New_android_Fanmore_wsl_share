@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,7 +25,6 @@ import butterknife.ButterKnife;
 import cy.com.morefan.BaseActivity;
 
 import cy.com.morefan.R;
-import cy.com.morefan.adapter.CompanyPageAdapter;
 import cy.com.morefan.adapter.GroupDataAdapter;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.GroupData;
@@ -72,6 +72,7 @@ public class CompanyActivity extends BaseActivity implements Handler.Callback ,A
     GroupDataAdapter groupDataAdapter;
     SupervisionService supervisionService;
     int tag=0;
+    int taskId=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,9 @@ public class CompanyActivity extends BaseActivity implements Handler.Callback ,A
         if( getIntent().hasExtra("data") ) {
             groupData = (GroupData)getIntent().getSerializableExtra("data");
             String title = groupData.getName();
+            Intent intent = getIntent();
+            Bundle bundle = intent.getExtras();
+            taskId = bundle.getInt("taskId");
             tvTitle.setText(title);
         }
         if (txtmr.getTextColors()== ColorStateList.valueOf(getResources().getColor(R.color.theme_back))){
@@ -170,7 +174,7 @@ public class CompanyActivity extends BaseActivity implements Handler.Callback ,A
         showProgress();
         datas.clear();
         String loginCode = UserData.getUserData().loginCode;
-        supervisionService.getGroupData( loginCode, groupData.getId(), 0);
+        supervisionService.getGroupData( loginCode, groupData.getId(), taskId);
     }
 
     public void onClick(View v ){

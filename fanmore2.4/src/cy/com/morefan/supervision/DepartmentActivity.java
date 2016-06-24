@@ -65,6 +65,7 @@ public class DepartmentActivity extends BaseActivity implements Handler.Callback
     private int pageIndex;
     private int sort;
     private int tag=0;
+    private int taskId=0;
     int pid;
     GroupData groupData;
     GroupPersonData groupPersonData;
@@ -83,9 +84,11 @@ public class DepartmentActivity extends BaseActivity implements Handler.Callback
         layZf.setOnClickListener(this);
         groupData = (GroupData)getIntent().getSerializableExtra("data");
         if( getIntent().hasExtra("data") ) {
-            String title = getIntent().getStringExtra("name");
             //pid =groupPersonData.getUserid();
-            tvTitle.setText(title);
+            Intent intent = getIntent();
+            Bundle bundle = intent.getExtras();
+            taskId = bundle.getInt("taskId");
+            tvTitle.setText(bundle.getString("name"));
         }
         supervisionService = new SupervisionService(this);
         handler = new Handler(this);
@@ -171,7 +174,7 @@ public class DepartmentActivity extends BaseActivity implements Handler.Callback
     }
     public void getDataFromSer() {
         String loginCode = UserData.getUserData().loginCode;
-        supervisionService.GetGroupPerson(loginCode,pageIndex+1, groupData.getId(), sort, 0);
+        supervisionService.GetGroupPerson(loginCode,pageIndex+1, groupData.getId(), sort, taskId);
         showProgress();
     }
     public void onClick(View v ){

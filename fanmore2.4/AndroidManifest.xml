@@ -518,8 +518,9 @@
         <activity android:name=".AdActivity" />
         <activity android:name=".NewWebActivity" />
         <activity android:name=".SetPassWordActivity" />
-        <activity android:name=".WeekTaskActivity"></activity>
-        <activity android:name=".TermActivity"></activity>
+        <activity android:name=".WeekTaskActivity" />
+        <activity android:name=".TermActivity" />
+        <activity android:name=".supervision.SelectTaskActivity"></activity>
     </application>
 
 </manifest>

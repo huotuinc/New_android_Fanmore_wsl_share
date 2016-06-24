@@ -97,8 +97,17 @@ public class PrenticeAdapter extends BaseAdapter{
 			TextView BrowseAmount   = ViewHolderUtil.get(convertView, R.id.BrowseAmount);
 			TextView TurnAmount     = ViewHolderUtil.get(convertView, R.id.TurnAmount);
 			CircleImageView imgPhoto	= ViewHolderUtil.get(convertView, R.id.imgPhoto);
+			TextView btnCopy     =ViewHolderUtil.get(convertView,R.id.btnCopy);
 			LinearLayout apprentice = ViewHolderUtil.get(convertView, R.id.apprentice);
 			helper = new SyncImageLoaderHelper(mContext);
+			btnCopy.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					mHandler.sendEmptyMessage(0x111111);
+				}
+			});
 			apprentice.setOnClickListener(new OnClickListener() {
 
 				@Override

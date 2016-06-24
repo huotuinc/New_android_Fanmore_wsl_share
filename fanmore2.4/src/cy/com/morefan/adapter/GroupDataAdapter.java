@@ -71,9 +71,7 @@ public class GroupDataAdapter extends BaseAdapter {
         txttb.setText("总转发"+data.getTotalTurnCount()+"/"+"总流浏览"+data.getTotalBrowseCount());
 
         //syncImageLoaderHelper.loadImage(position, imgIcon , null, data.getIcon() , Constant.IMAGE_PATH_TASK);
-        RandomColor randomColor = new RandomColor();
-        int colorid =  randomColor.randomColor( data.getName().hashCode() , RandomColor.SaturationType.RANDOM , RandomColor.Luminosity.RANDOM );
-        imgIcon.setBackgroundColor( colorid );
+
 
         return convertView;
     }

@@ -211,14 +211,16 @@
     <!-- 状态标记 -->
 
     <ImageView
+        android:layout_below="@+id/txtDate"
+
         android:visibility="gone"
         android:id="@+id/imgStatusTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="0dp"
-
+        android:layout_marginTop="5dp"
+        android:background="@drawable/task_send_tag"
         android:contentDescription="@string/img" />
     <!-- 状态标记end -->
 >

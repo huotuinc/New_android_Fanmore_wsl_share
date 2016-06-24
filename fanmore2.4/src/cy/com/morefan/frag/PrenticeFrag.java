@@ -12,36 +12,25 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Handler.Callback;
 import android.text.ClipboardManager;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import cy.com.morefan.bean.UserData;
-import android.widget.TextView;
 import cy.com.morefan.HomeActivity;
 import cy.com.morefan.DataListActivity;
-//import cy.com.morefan.PrenticDetailActivity;
 import cy.com.morefan.R;
 import cy.com.morefan.ShareActivity;
-import cy.com.morefan.WebViewActivity;
 import cy.com.morefan.DataListActivity.ActivityType;
 import cy.com.morefan.adapter.PrenticeAdapter;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.PrenticeData;
 import cy.com.morefan.bean.PrenticeTopData;
-import cy.com.morefan.bean.UserData;
-import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
-import cy.com.morefan.frag.FragManager.FragType;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.service.UserService;
-import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.view.PullDownUpListView;
 import cy.com.morefan.view.PullDownUpListView.OnRefreshOrLoadListener;
 
@@ -99,6 +88,11 @@ public class PrenticeFrag extends BaseFragment implements OnClickListener, Busin
 			startActivity(intentList);
 		}
 		break;
+			case 0x111111:
+				ClipboardManager cmb = (ClipboardManager)getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+				cmb.setText(topData.invitationCode);
+				toast("邀请码复制成功!");
+				break;
 		default:
 			break;
 		}

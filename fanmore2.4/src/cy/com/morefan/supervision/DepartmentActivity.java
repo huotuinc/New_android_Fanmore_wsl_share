@@ -82,13 +82,12 @@ public class DepartmentActivity extends BaseActivity implements Handler.Callback
         layLl.setOnClickListener(this);
         layMr.setOnClickListener(this);
         layZf.setOnClickListener(this);
-        groupData = (GroupData)getIntent().getSerializableExtra("data");
         if( getIntent().hasExtra("data") ) {
-            //pid =groupPersonData.getUserid();
-            Intent intent = getIntent();
-            Bundle bundle = intent.getExtras();
-            taskId = bundle.getInt("taskId");
-            tvTitle.setText(bundle.getString("name"));
+            groupData = (GroupData)getIntent().getSerializableExtra("data");
+            taskId = getIntent().getIntExtra("taskId",0);
+            String title = groupData.getName();
+            pid =groupData.getId();
+            tvTitle.setText(title);
         }
         supervisionService = new SupervisionService(this);
         handler = new Handler(this);

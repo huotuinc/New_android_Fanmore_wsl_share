@@ -65,21 +65,8 @@
         ShareByAppClient="true"
         Enable="true" />
 
-    <TencentWeibo
-        Id="5"
-        SortId="5"
-        AppKey="1101260450"
-        AppSecret="qBjXnyJfVgppCpKF"
-        RedirectUri="https://api.weibo.com/oauth2/default.html"
-        Enable="false" />
-    <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
-    <QZone
-        Id="4"
-        SortId="4 "
-        AppId="1104949609"
-        AppKey="kNy5OIffTR66fnvu"
-        ShareByAppClient="true"
-        Enable="true" />
+
+
     
     <!-- 
     	Wechat微信和WechatMoments微信朋友圈的appid是一样的；
@@ -108,22 +95,37 @@
         AppSecret="0dcbc62b9a4724e89097bb00a0bd0ae2"
         BypassApproval="false"
         Enable="true" />
-        
 	<WechatFavorite
-        Id="6"
-        SortId="6"
-        AppId="wx369cdeb338051de5"
-        AppSecret="0dcbc62b9a4724e89097bb00a0bd0ae2"
-        Enable="false" />
+		Id="4"
+		SortId="4"
+		AppId="wx369cdeb338051de5"
+		AppSecret="0dcbc62b9a4724e89097bb00a0bd0ae2"
+		Enable="true" />
+	<QZone
+		Id="7"
+		SortId="7"
+		AppId="1104949609"
+		AppKey="kNy5OIffTR66fnvu"
+		ShareByAppClient="true"
+		Enable="true" />
+	<TencentWeibo
+		Id="5"
+		SortId="5"
+		AppKey="1104949609"
+		AppSecret="qBjXnyJfVgppCpKF"
+		RedirectUri="https://api.weibo.com/oauth2/default.html"
+		Enable="false" />
+	<!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
+
     
 	<!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
 	<QQ
-        Id="7"
-        SortId="7"
+        Id="6"
+        SortId="6"
         AppId="1104949609"
         AppKey="kNy5OIffTR66fnvu"
-        ShareByAppClient="false"
-        Enable="false" />
+        ShareByAppClient="true"
+        Enable="true" />
     
     <Facebook
         Id="8"

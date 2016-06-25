@@ -73,6 +73,7 @@ public class CompanyActivity extends BaseActivity implements Handler.Callback ,A
     SupervisionService supervisionService;
     int tag=0;
     int taskId=0;
+    int pid =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,10 +86,9 @@ public class CompanyActivity extends BaseActivity implements Handler.Callback ,A
 
         if( getIntent().hasExtra("data") ) {
             groupData = (GroupData)getIntent().getSerializableExtra("data");
+            taskId = getIntent().getIntExtra("taskId",0);
             String title = groupData.getName();
-            Intent intent = getIntent();
-            Bundle bundle = intent.getExtras();
-            taskId = bundle.getInt("taskId");
+            pid =groupData.getId();
             tvTitle.setText(title);
         }
         if (txtmr.getTextColors()== ColorStateList.valueOf(getResources().getColor(R.color.theme_back))){
@@ -174,7 +174,7 @@ public class CompanyActivity extends BaseActivity implements Handler.Callback ,A
         showProgress();
         datas.clear();
         String loginCode = UserData.getUserData().loginCode;
-        supervisionService.getGroupData( loginCode, groupData.getId(), taskId);
+        supervisionService.getGroupData( loginCode, pid, taskId);
     }
 
     public void onClick(View v ){
@@ -259,12 +259,14 @@ public class CompanyActivity extends BaseActivity implements Handler.Callback ,A
             Intent intent = new Intent(CompanyActivity.this, DepartmentActivity.class);
             intent.putExtra("name", data.getName());
             intent.putExtra("pid", data.getId());
+            intent.putExtra("taskId",taskId);
             intent.putExtra("data", data);
             startActivity(intent);
         }else {
             Intent intent = new Intent(CompanyActivity.this, CompanyActivity.class);
             intent.putExtra("name", data.getName());
             intent.putExtra("pid", data.getId());
+            intent.putExtra("taskId",taskId);
             intent.putExtra("data", data);
             startActivity(intent);
         }

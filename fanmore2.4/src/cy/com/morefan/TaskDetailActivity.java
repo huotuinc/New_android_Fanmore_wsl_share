@@ -8,6 +8,8 @@ import java.util.HashMap;
 import cindy.android.test.synclistview.SyncImageLoaderHelper;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 import cy.com.morefan.AppUpdateActivity.UpdateType;
@@ -824,7 +826,35 @@ private boolean isFree(){
 }
 private void share(){
 
-	showPopup();
+	String imgUrl = "http://taskapi.fhsilk.com/resource/app/104X104.png";
+	String shareDes =taskData.taskName;
+	String shareUrl =taskData.smallImgUrl;
+	String fullPath1 = Constant.IMAGE_PATH_TASK + File.separator + taskData.smallImgUrl.substring(taskData.smallImgUrl.lastIndexOf("/") + 1);
+	ShareSDK.initSDK(this);
+	OnekeyShare oks = new OnekeyShare();
+	//关闭sso授权
+	oks.disableSSOWhenAuthorize();
+
+
+	// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+	oks.setTitle(shareDes);
+	// titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+	oks.setTitleUrl("http://sharesdk.cn");
+	// text是分享文本，所有平台都需要这个字段
+	oks.setText(shareDes);
+	// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+	oks.setImagePath(fullPath1);//确保SDcard下面存在此张图片
+	// url仅在微信（包括好友和朋友圈）中使用
+	oks.setUrl(taskData.content);
+	// comment是我对这条分享的评论，仅在人人网和QQ空间使用
+	oks.setComment("我是测试评论文本");
+	// site是分享此内容的网站名称，仅在QQ空间使用
+	oks.setSite(getString(R.string.app_name));
+	// siteUrl是分享此内容的网站地址，仅在QQ空间使用
+	oks.setSiteUrl("http://sharesdk.cn");
+
+// 启动分享GUI
+	oks.show(this);
 }
 
 
@@ -1033,9 +1063,9 @@ private void share(){
 			@Override
 			public void onError(Platform platform, int i, Throwable throwable) {
 				if (platform.getName().equals(Wechat.NAME)) {
-					toast("转发失败");
+					toast("转发失败111");
 				} else if (platform.getName().equals(WechatMoments.NAME)) {
-					toast("转发失败");
+					toast("转发失败111");
 				}
 			}
 
@@ -1064,10 +1094,10 @@ private void share(){
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
                 String msg = "";
                 if (platform.getName().equals(Wechat.NAME)) {
-					toast("转发成功");
+					toast("转发成功111");
 					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
                 } else if (platform.getName().equals(WechatMoments.NAME)) {
-					toast("转发成功");
+					toast("转发成功111");
 					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
 
 				}
@@ -1076,9 +1106,9 @@ private void share(){
             @Override
             public void onError(Platform platform, int i, Throwable throwable) {
                 if (platform.getName().equals(Wechat.NAME)) {
-					toast("转发失败");
+					toast("转发失败111");
                 } else if (platform.getName().equals(WechatMoments.NAME)) {
-					toast("转发失败");
+					toast("转发失败111");
                 }
             }
 

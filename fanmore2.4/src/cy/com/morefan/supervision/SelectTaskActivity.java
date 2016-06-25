@@ -114,19 +114,17 @@ public class    SelectTaskActivity extends BaseActivity implements Handler.Callb
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         GroupData data = datas.get(position);
-        if(data.getChildren()==0) {
-            Bundle bundle =new Bundle();
-            bundle.putInt("taskId",taskID);
-            bundle.putString("name", data.getName());
-            bundle.putInt("pid", data.getId());
-            ActivityUtils.getInstance().showActivity(this,DepartmentActivity.class,bundle);
+        if (data.getChildren()==1) {
+            Intent intent = new Intent(this, CompanyActivity.class);
+            intent.putExtra("data", data);
+            intent.putExtra("taskId",taskID);
+            this.startActivity(intent);
         }else {
-            Bundle bundle =new Bundle();
-            bundle.putInt("taskId",taskID);
-            bundle.putString("name", data.getName());
-            bundle.putInt("pid", data.getId());
-            ActivityUtils.getInstance().showActivity(this,CompanyActivity.class,bundle);
-
+            Intent intent = new Intent(this, DepartmentActivity.class);
+            intent.putExtra("name", data.getName());
+            intent.putExtra("data", data);
+            intent.putExtra("taskId",taskID);
+            this.startActivity(intent);
         }
     }
 }

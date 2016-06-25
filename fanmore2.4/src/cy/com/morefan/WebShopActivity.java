@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
@@ -137,6 +139,7 @@ public class WebShopActivity extends BaseActivity implements Handler.Callback  {
         //AuthParamUtils paramUtils = new AuthParamUtils ( application, System.currentTimeMillis (), application.obtainMerchantUrl ( ), WebShopActivity.this );
 
         webView.loadUrl(url);
+
         webView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 webView.setVisibility(View.VISIBLE);
@@ -151,6 +154,7 @@ public class WebShopActivity extends BaseActivity implements Handler.Callback  {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
+                txtTitle.setText(title);
             }
         });
 
@@ -181,7 +185,17 @@ public class WebShopActivity extends BaseActivity implements Handler.Callback  {
                     public void onPageFinished(WebView view, String url) {
                         //页面加载完成后,读取菜单项
                         super.onPageFinished(view, url);
-                        txtTitle.setText(view.getTitle());
+                        String title = view.getTitle();
+                        String temp = url;
+                        if(url.startsWith("http://")){
+                            int start = url.indexOf("http://");
+                            temp = url.substring( start+7 );
+                        }
+                        if (temp.equals(title)) {
+                            txtTitle.setText("");
+                        }else {
+                            txtTitle.setText(title);
+                        }
 
 
                     }
@@ -203,6 +217,19 @@ public class WebShopActivity extends BaseActivity implements Handler.Callback  {
 
     }
 
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            if (webView.canGoBack()){
+                webView.goBack();
+            }else {
+                finish();
+            }
+
+            return true;
+        }else if(keyCode == KeyEvent.KEYCODE_MENU){
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     public void onResume() {
         super.onResume();
         dismissProgress();

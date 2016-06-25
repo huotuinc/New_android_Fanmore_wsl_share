@@ -68,7 +68,7 @@ public class GroupDataAdapter extends BaseAdapter {
 
         txtName.setText(data.getName());
         txtCount.setText(String.valueOf(data.getPersonCount())+"人");
-        txttb.setText("总转发"+data.getTotalTurnCount()+"/"+"总流浏览"+data.getTotalBrowseCount());
+        txttb.setText("总转发"+data.getTotalTurnCount()+"/"+"总浏览"+data.getTotalBrowseCount());
 
         //syncImageLoaderHelper.loadImage(position, imgIcon , null, data.getIcon() , Constant.IMAGE_PATH_TASK);
 

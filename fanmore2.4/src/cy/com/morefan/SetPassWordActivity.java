@@ -91,7 +91,7 @@ public class SetPassWordActivity extends BaseActivity implements View.OnClickLis
             return;
         }
 
-        if (password.equals(psw)) {
+        if (password.equals(psw)) {    
 
             String token = JPushInterface.getRegistrationID(SetPassWordActivity.this);
             if (isUpdate == 1) {

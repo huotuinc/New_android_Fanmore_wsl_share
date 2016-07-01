@@ -82,7 +82,7 @@ public class SetPassWordActivity extends BaseActivity implements View.OnClickLis
         String invitationCode =edtinvitationCode.getText().toString();
         if(TextUtils.isEmpty(password)){
             edtPassword.requestFocus();
-            edtPassword.setError("密码不能为空");
+            edtPassword.setError("密码密码密码密码不能为空");
             return;
         }
         if(TextUtils.isEmpty(psw)){

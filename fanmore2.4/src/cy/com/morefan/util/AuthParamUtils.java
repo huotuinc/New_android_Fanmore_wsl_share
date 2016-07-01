@@ -278,7 +278,45 @@ class AuthParamUtils {
         }
     }
 
-    private String getMapSign(Map<String, String> map) throws UnsupportedEncodingException {
+    public String getMapSign1(Map<String, String> map)   {
+
+
+
+        String toSign = doSort1(map);
+
+
+        return EncryptUtil.getInstance().encryptMd532(toSign).toLowerCase();
+
+    }
+    private String doSort1(Map<String, String> map)
+    {
+        //将MAP中的key转成小写
+        Map<String, String> lowerMap = new HashMap< String, String > (  );
+        Iterator lowerIt = map.entrySet ().iterator ();
+        while ( lowerIt.hasNext () )
+        {
+            Map.Entry entry = ( Map.Entry ) lowerIt.next ();
+            Object value = entry.getValue ( );
+            if( ! TextUtils.isEmpty ( String.valueOf ( value ) ) )
+            {
+                lowerMap.put ( String.valueOf ( entry.getKey () ).toLowerCase (), String.valueOf ( value ) );
+            }
+        }
+
+        TreeMap<String, String> treeMap = new TreeMap< String, String > ( lowerMap );
+        StringBuffer buffer = new StringBuffer();
+        Iterator it = treeMap.entrySet ().iterator ();
+        while(it.hasNext ())
+        {
+            Map.Entry entry =(Map.Entry) it.next();
+            buffer.append ( entry.getKey ()+"=" );
+            buffer.append ( entry.getValue ()+"&" );
+        }
+        String suffix = buffer.substring ( 0, buffer.length ()-1 )+ Constant.SMS_SECRET;//Constant.APP_SECRET;
+        return suffix;
+    }
+
+    public String getMapSign(Map<String, String> map) throws UnsupportedEncodingException {
 
 
 
@@ -302,7 +340,6 @@ class AuthParamUtils {
 
         return EncryptUtil.getInstance().encryptMd532(toSign).toLowerCase();
     }
-
 
     private String getSign(Map map)
     {

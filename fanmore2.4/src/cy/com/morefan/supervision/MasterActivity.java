@@ -100,13 +100,16 @@ public class MasterActivity extends BaseActivity implements View.OnClickListener
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-
-                        //PartnerFrag partnerFrag = new PartnerFrag();
-                        //Bundle bundle = new Bundle();
-                        //bundle.putInt("userId", userid);
-                        //partnerFrag.setArguments(bundle);
-
-                        //((PartnerFrag)adapter.getItem( viewPager.getCurrentItem())).setUserid(userid);
+                        viewPager.setCurrentItem(0);
+                        hb_bottom_line.setBackgroundColor(getResources().getColor(R.color.white));
+                        rw_bottom_line.setBackgroundColor(getResources().getColor(R.color.theme_back));
+                        break;
+                    case 1:
+                        viewPager.setCurrentItem(1);
+                        hb_bottom_line.setBackgroundColor(getResources().getColor(R.color.theme_back));
+                        rw_bottom_line.setBackgroundColor(getResources().getColor(R.color.white));
+                        break;
+                    default:
                         break;
                 }
 

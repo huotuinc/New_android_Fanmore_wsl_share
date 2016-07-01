@@ -132,7 +132,7 @@ public class ForgetCashPwdActivity extends BaseActivity implements Callback, Bro
 				}
 				//test logincode,正式不需要logincode
 				//String logincode = "test01^" + SecurityUtil.MD5Encryption("123456");
-				userService.getAuthCode("",phone,3);
+				//userService.getAuthCode("",phone,3);
 				showProgress();
 
 				recLen = 90;

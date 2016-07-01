@@ -75,7 +75,7 @@ public class ToCrashAuthActivity extends BaseActivity implements OnSecretFinishL
         String buserId =
                 SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_BuserId);
 
-        userService.userchange(UserData.getUserData().loginCode, buserId, UserData.getUserData().score, UserData.getUserData().toCrashPwd);
+        //userService.userchange(UserData.getUserData().loginCode, buserId, UserData.getUserData().score, UserData.getUserData().toCrashPwd);
 
     }
 
@@ -119,7 +119,7 @@ public class ToCrashAuthActivity extends BaseActivity implements OnSecretFinishL
     public void OnSecretFinish(NiePointActionType type, String key) {
         if (type == NiePointActionType.Creat) {
             //加密上传提现密码
-            userService.userCommitToCrashPwd(UserData.getUserData().loginCode, SecurityUtil.MD5Encryption(key), UserData.getUserData().toCrashPwd);
+            //userService.userCommitToCrashPwd(UserData.getUserData().loginCode, SecurityUtil.MD5Encryption(key), UserData.getUserData().toCrashPwd);
             showProgress();
 
         } else if (type == NiePointActionType.Auth) {

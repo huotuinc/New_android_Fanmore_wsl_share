@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ class GuideActivity extends BaseActivity implements View.OnClickListener, ViewPa
     ViewPager mVPActivity;
     @Bind(R.id.guideL)
     LinearLayout guideL;
+    Button btn_tohome;
     private ViewPagerAdapter vpAdapter;
     private List< View > views;
     private int lastValue = - 1;
@@ -51,7 +53,7 @@ class GuideActivity extends BaseActivity implements View.OnClickListener, ViewPa
     Resources resources;
     public Handler mHandler;
     public MainApplication application;
-    TextView skipText;
+
 
     //引导图片资源
     private String[] pics;
@@ -101,31 +103,31 @@ class GuideActivity extends BaseActivity implements View.OnClickListener, ViewPa
             //初始化引导图片列表
             for(int i=0; i<pics.length; i++) {
                 RelativeLayout iv = (RelativeLayout) LayoutInflater.from(GuideActivity.this).inflate(R.layout.guid_item, null);
-                skipText = (TextView) iv.findViewById(R.id.skipText);
+                btn_tohome = (Button) iv.findViewById(R.id.btn_tohome);
                 if (i==pics.length-1){
-                    skipText.setVisibility(View.GONE);
-                    iv.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (
-                                    !TextUtils.isEmpty(SPUtil.getStringToSpByName(GuideActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME)) &&
-                                            !TextUtils.isEmpty(SPUtil.getStringToSpByName(GuideActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD))) {
-
-                                ActivityUtils.getInstance().skipActivity(GuideActivity.this, HomeActivity.class);
-                            } else {
-                                ActivityUtils.getInstance().skipActivity(GuideActivity.this, MoblieLoginActivity.class);
-                            }
-                        }
-                    });
+                    btn_tohome.setVisibility(View.VISIBLE);
+//                    iv.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            if (
+//                                    !TextUtils.isEmpty(SPUtil.getStringToSpByName(GuideActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME)) &&
+//                                            !TextUtils.isEmpty(SPUtil.getStringToSpByName(GuideActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD))) {
+//
+//                                ActivityUtils.getInstance().skipActivity(GuideActivity.this, HomeActivity.class);
+//                            } else {
+//                                ActivityUtils.getInstance().skipActivity(GuideActivity.this, MoblieLoginActivity.class);
+//                            }
+//                        }
+//                    });
                 }
                 iv.setLayoutParams ( mParams );
                 int iconId = resources.getIdentifier ( pics[i], "drawable",getPackageName(this) );
                 Drawable menuIconDraw = resources.getDrawable ( iconId );
                 SystemTools.loadBackground(iv, menuIconDraw);
-                skipText.setOnClickListener(new View.OnClickListener() {
+
+                btn_tohome.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
 
                         if (
                                 !TextUtils.isEmpty(SPUtil.getStringToSpByName(GuideActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME)) &&
@@ -135,8 +137,6 @@ class GuideActivity extends BaseActivity implements View.OnClickListener, ViewPa
                         } else {
                             ActivityUtils.getInstance().skipActivity(GuideActivity.this, MoblieLoginActivity.class);
                         }
-
-
                     }
                 });
                 views.add(iv);

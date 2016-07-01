@@ -229,22 +229,22 @@ public class DataListActivity extends BaseActivity implements BusinessDataListen
 	public void getDataFromSer(){
 		pageTag = TextUtils.isEmpty(pageTag) ? "0" : pageTag;
 		switch (curActivityType) {
-		case WalletHistory:
-			userService.getWalletList(UserData.getUserData().loginCode,pageTag, Constant.PAGESIZE);
-			showProgress();
-			break;
-		case FeedbackList:
-			userService.FeedbackList(UserData.getUserData().loginCode, Constant.PAGESIZE, pageTag);
-			showProgress();
-			break;
-		case MallList:
-			userService.getMallList(UserData.getUserData().loginCode, pageTag, Constant.PAGESIZE);
-			showProgress();
-			break;
-		case MonenyChange:
-			userService.userCashHistory(UserData.getUserData().loginCode, pageTag, Constant.PAGESIZE);
-			showProgress();
-			break;
+//		case WalletHistory:
+//			userService.getWalletList(UserData.getUserData().loginCode,pageTag, Constant.PAGESIZE);
+//			showProgress();
+//			break;
+//		case FeedbackList:
+//			userService.FeedbackList(UserData.getUserData().loginCode, Constant.PAGESIZE, pageTag);
+//			showProgress();
+//			break;
+//		case MallList:
+//			userService.getMallList(UserData.getUserData().loginCode, pageTag, Constant.PAGESIZE);
+//			showProgress();
+//			break;
+//		case MonenyChange:
+//			userService.userCashHistory(UserData.getUserData().loginCode, pageTag, Constant.PAGESIZE);
+//			showProgress();
+//			break;
 //		case ExpHistory:
 //			userService.getExpHistory(UserData.getUserData().loginCode, pageTag, Constant.PAGESIZE);
 //			showProgress();

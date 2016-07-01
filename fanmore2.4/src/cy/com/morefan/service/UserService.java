@@ -8,7 +8,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -20,6 +22,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import cy.com.morefan.MainApplication;
 import cy.com.morefan.bean.AllScoreData;
 import cy.com.morefan.bean.AwardData;
 import cy.com.morefan.bean.BuyData;
@@ -45,6 +48,7 @@ import cy.com.morefan.bean.WeekTaskData;
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.frag.PartnerFrag;
 import cy.com.morefan.listener.BusinessDataListener;
+import cy.com.morefan.util.AuthParamUtils;
 import cy.com.morefan.util.L;
 import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.util.TimeUtil;
@@ -53,250 +57,29 @@ import cy.com.morefan.view.UserInfoView.Type;
 import cy.lib.libhttpclient.CyHttpClient;
 
 public class UserService extends BaseService{
-
+	long timestamp = System.currentTimeMillis();
 	public UserService(BusinessDataListener listener) {
 		super(listener);
 	}
-	public void getWalletList(final String loginCode, final String pageTag, final int pageSize){
-
-
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=MyWalletMoneyFlow" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					//System.out.println(loginCode);
-					jsonUrl.put("loginCode",loginCode );
-					jsonUrl.put("pageTag",pageTag );
-					jsonUrl.put("pageSize",pageSize );
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					System.out.println("MyWalletMoneyFlow:"+url);
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								JSONArray array = data.getJSONArray("resultData");
-								int length = array.length();
-								WalletData[] results = new WalletData[length];
-								for(int i = 0; i < length; i++){
-									MyJSONObject tip = (MyJSONObject) array.get(i);
-									WalletData item = new WalletData();
-									item.id = tip.getString("id");
-									item.type = tip.getInt("type");
-									item.amount = Util.opeDouble(tip.getDouble("amount"));
-									item.time = TimeUtil.FormatterTimeToMinute(tip.getString("time"));
-									item.actionDes = tip.getString("actionDes");
-									results[i] = item;
-
-								}
-								listener.onDataFinish(BusinessDataListener.DONE_GET_WALLET_HISTORY, null, results, null);
-								}else{
-									listener.onDataFailed(BusinessDataListener.ERROR_GET_WALLET_HISTORY, data.getString("tip"), null);
-								}
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_GET_WALLET_HISTORY, data.getString("description"), null);
-							}
-
-					}else{
-						listener.onDataFailed(BusinessDataListener.ERROR_GET_WALLET_HISTORY, ERROR_NET, null);
-					}
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_GET_WALLET_HISTORY, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-
-			}
-		});
-
-
-
-
-
-
-
-
-	}
-//	public void cashToWallet(final String loginCode){
-//
-//		ThreadPoolManager.getInstance().addTask(new Runnable() {
-//
-//			@Override
-//			public void run() {
-//				try {
-//					String url = Constant.IP_URL + "/Api.ashx?req=ScoreWallet" + CONSTANT_URL();
-//					JSONObject jsonUrl = new JSONObject();
-//					//System.out.println(loginCode);
-//					jsonUrl.put("loginCode",loginCode );
-//					try {
-//						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-//					} catch (UnsupportedEncodingException e) {
-//						e.printStackTrace();
-//					}
-//					System.out.println("ScoreWallet:"+url);
-//					MyJSONObject data = getDataFromSer(url);
-//					if(data != null){
-//						int resultCode = data.getInt("resultCode");
-//						if (resultCode == 1) {
-//							int status = data.getInt("status");
-//							if (status == 1) {
-//								//设置内存量
-//								UserData userData = UserData.getUserData();
-////								userData.lockScore = userData.score;
-////								userData.score = "0";
-//								double total = Double.parseDouble(userData.score);
-//								int useScore = ((int)total/10)*10;
-//								userData.lockScore = String.valueOf(useScore);
-//								userData.score = Util.opeDouble(total - useScore);
-//								listener.onDataFinish(BusinessDataListener.DONE_TO_CRASH, data.getString("tip"), null, null);
-//								}else{
-//									listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, data.getString("tip"), null);
-//								}
-//							}else{
-//								listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, data.getString("description"), null);
-//							}
-//
-//					}else{
-//						listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, ERROR_NET, null);
-//					}
-//				} catch (Exception e) {
-//					listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, ERROR_DATA, null);
-//					e.printStackTrace();
-//				}
-//
-//			}
-//		});
-//
-//
-//
-//
-//
-//
-//
-//	}
-
-	public void getDuiBaUrl(final String loginCode){
-
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=duibaautologin" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					//System.out.println(loginCode);
-					jsonUrl.put("loginCode",loginCode );
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					System.out.println("duibaautologin:"+url);
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								//MyJSONObject json = data.getJSONObject("resultData");
-								Bundle extra = new Bundle();
-								extra.putString("loginurl", data.getString("url"));
-								listener.onDataFinish(BusinessDataListener.DONE_GET_DUIBA_URL, null, null, extra);
-								}else{
-									listener.onDataFailed(BusinessDataListener.ERROR_GET_DUIBA_URL, data.getString("tip"), null);
-								}
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_GET_DUIBA_URL, data.getString("description"), null);
-							}
-
-					}else{
-						listener.onDataFailed(BusinessDataListener.ERROR_GET_DUIBA_URL, ERROR_NET, null);
-					}
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_GET_DUIBA_URL, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-
-			}
-		});
-
-
-
-
-
-	}
-	public void getTicket(final String loginCode, final TicketData ticket){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=ScratchTicket" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					//System.out.println(loginCode);
-					jsonUrl.put("loginCode",loginCode );
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					System.out.println("ScratchTicket:"+url);
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								MyJSONObject json = data.getJSONObject("resultData");
-								ticket.id = json.getInt("id");
-								ticket.residueCount = json.getInt("residueCount");
-								ticket.value = json.getInt("value");
-
-
-								listener.onDataFinish(BusinessDataListener.DONE_GET_TICKET, null, null, null);
-								}else{
-									listener.onDataFailed(BusinessDataListener.ERROR_GET_TICKET, data.getString("tip"), null);
-								}
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_GET_TICKET, data.getString("description"), null);
-							}
-
-					}else{
-						listener.onDataFailed(BusinessDataListener.ERROR_GET_TICKET, ERROR_NET, null);
-					}
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_GET_TICKET, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-
-			}
-		});
-
-
-
-	}
-
-
 	public void commitPhoto(final String loginCode, final String imgs){
 
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
 			@Override
 			public void run() {
 			    try {
-			    	String url = Constant.IP_URL + "/Api.ashx?req=UploadPicture" + CONSTANT_URL2();
-
-
+			    	String url = Constant.IP_URL + "/Api.ashx?req=UploadPicture" + CONSTANT_URL();
 			    	JSONObject jsonUrl = new JSONObject();
 					//System.out.println(loginCode);
 					jsonUrl.put("loginCode",loginCode );
 					jsonUrl.put("pic", imgs);
+					jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("loginCode",loginCode);
+					paramMap.put("pic", imgs);
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
 					String	p = URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 
 			    	NameValuePair imgs1 = new BasicNameValuePair("p",p);
@@ -331,93 +114,11 @@ public class UserService extends BaseService{
 			}
 		});
 	}
-	/**
-	 * 我的兑换
-	 * @param loginCode
-	 * @param pageSize
-	 * @param  pageTag 提现表自增id（分页用）
-	 */
-	public void getExpHistory(final String loginCode, final String pageTag, final int pageSize){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
 
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=ExpHistory" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					//System.out.println(loginCode);
-					jsonUrl.put("loginCode",loginCode );
-					jsonUrl.put("pageSize", pageSize);
-					jsonUrl.put("oldId", pageTag);
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					System.out.println("ExpHistory:"+url);
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								JSONArray jArray = data.getJSONObject("resultData").getJSONArray("expHistory");
-								int size = jArray.length();
-								HistoryData[] results = new HistoryData[size];
-								for(int i = 0; i < size; i ++){
-									MyJSONObject tip = (MyJSONObject) jArray.get(i);
-									HistoryData item = new HistoryData();
-									item.pageTag = tip.getString("id");
-									item.action = tip.getString("reason");
-									item.time = Util.DateFormatFull(tip.getString("date"));
-									int amount = tip.getInt("amount");
-									item.status = amount > 0 ? "+" + amount : "" + amount;
-									results[i] = item;
-								}
-
-
-//								MoneyChangeData[] results = new MoneyChangeData[size];
-//								for(int i = 0; i < size; i++){
-//									MyJSONObject tip = (MyJSONObject) jArray.get(i);
-//									MoneyChangeData item = new MoneyChangeData();
-//									item.tagId = tip.getInt("autoId");
-//									item.money = tip.getString("money");
-//									item.time = Util.DateFormatFull(tip.getString("time"));
-//									item.score = tip.getString("score");
-//									item.status = tip.getInt("status");
-//
-//									item.des = tip.getString("statusName");
-//
-//									item.extras = Util.replaceBlank(tip.getString("extraMsg"));
-//									results[i] = item;
-//
-//								}
-								listener.onDataFinish(BusinessDataListener.DONE_GET_MONEY_CHANGE_LIST, null, results, null);
-								}else{
-									listener.onDataFailed(BusinessDataListener.ERROR_GET_MONEY_CHANGE_LIST, data.getString("tip"), null);
-								}
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_GET_MONEY_CHANGE_LIST, data.getString("description"), null);
-							}
-
-					}else{
-						listener.onDataFailed(BusinessDataListener.ERROR_GET_MONEY_CHANGE_LIST, ERROR_NET, null);
-					}
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_GET_MONEY_CHANGE_LIST, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-
-			}
-		});
-
-
-
-	}
 
 	public void getPreTaskList(final Context mContext, final String loginCode, final int pageSize, final int id){
 		if(id == 0)
-		 getToolList(loginCode, null, null);
+
 
 
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
@@ -433,6 +134,16 @@ public class UserService extends BaseService{
 					jsonUrl.put("screenType", 0);
 					jsonUrl.put("pageSize", pageSize);
 					jsonUrl.put("oldTaskId", id);
+					jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("loginCode", loginCode == null ? "" : loginCode);
+					paramMap.put("screenType", String.valueOf(0));
+					paramMap.put("pageSize", String.valueOf(pageSize));
+					paramMap.put("oldTaskId", String.valueOf(id));
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
 					try {
 						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 					} catch (UnsupportedEncodingException e) {
@@ -490,317 +201,8 @@ public class UserService extends BaseService{
 
 	}
 
-	public void useTool(final String loginCode, final int type, final int id){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=UsePropItem" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					jsonUrl.put("loginCode", loginCode);
-					jsonUrl.put("type", type);
-					jsonUrl.put("rid", id);
-					url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					L.i("UsePropItem:" + url);
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								MyJSONObject json = data.getJSONObject("resultData");
-								Bundle extra = new Bundle();
-								extra.putInt("count", json.getInt("count"));
-
-//								result.id =  shake.getInt("id");
-//								result.name = shake.getString("name");
-//								result.imgUrl = shake.getString("pictureUrl");
-//								result.sex = shake.getInt("sex");
-//								result.sentCount = shake.getInt("sentCount");
-//								result.regTime = shake.getString("registerDate");
-								listener.onDataFinish(BusinessDataListener.DONE_USE_TOOL, null, null, extra);
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_USE_TOOL, data.getString("tip"), null);
-							}
-						}else{
-							String description = data.getString("description");
-							listener.onDataFailed(BusinessDataListener.ERROR_USE_TOOL, description, null);
-						}
-					}else
-						listener.onDataFailed(BusinessDataListener.ERROR_USE_TOOL, ERROR_NET, null);
-
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_USE_TOOL, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-			}
-		});
 
 
-
-	}
-
-
-	public void shakePrentice(final String loginCode, final ShakePrenticeData result){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=RollPrentice" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					jsonUrl.put("loginCode", loginCode);
-					url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					L.i("RollPrentice:" + url);
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								MyJSONObject shake = data.getJSONObject("resultData");
-								result.hasResult = true;
-								result.id =  shake.getInt("id");
-								result.name = shake.getString("name");
-								result.imgUrl = shake.getString("pictureUrl");
-								result.sex = shake.getInt("sex");
-								result.sentCount = shake.getInt("sentCount");
-								result.regTime = shake.getString("registerDate").split(" ")[0];
-								listener.onDataFinish(BusinessDataListener.DONE_SHAKE_PRENTICE, null, null, null);
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_SHAKE_PRENTICE, data.getString("tip"), null);
-							}
-						}else{
-							String description = data.getString("description");
-							listener.onDataFailed(BusinessDataListener.ERROR_SHAKE_PRENTICE, description, null);
-						}
-					}else
-						listener.onDataFailed(BusinessDataListener.ERROR_SHAKE_PRENTICE, ERROR_NET, null);
-
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_SHAKE_PRENTICE, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 *
-	 * @param loginCode
-	 * @param type 1 摇徒弟2抽奖3任务转发提限4任务提前预览
-	 * @param value
-	 * @param listTools
-	 * @param listMyTools
-	 */
-	public void buyTool(final String loginCode, final int type, final int value, final List<ToolData> listTools, final List<ToolData> listMyTools){
-
-
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=BuyProp" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					jsonUrl.put("loginCode", loginCode);
-					jsonUrl.put("type", type);
-					url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					L.i("BuyProp:" + url);
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								//update user exp
-								UserData.getUserData().exp -= value;
-								Bundle extra = new Bundle();
-								extra.putInt("type", type);
-
-								MyJSONObject arrays = data.getJSONObject("resultData");
-
-								if( null != listTools){
-									listTools.clear();
-									JSONArray tools = arrays.getJSONArray("items");
-									for(int i = 0, length = tools.length(); i < length; i++ ){
-										MyJSONObject item = (MyJSONObject) tools.get(i);
-										ToolData tool = new ToolData();
-										tool.name = item.getString("name");
-										tool.value = item.getInt("exp");
-										tool.desc = item.getString("desc");
-										tool.residueCount = item.getInt("store");
-										tool.totalCount = item.getInt("storeTotal");
-										tool.type = item.getInt("type");
-										listTools.add(tool);
-									}
-
-								}
-
-								if(null != listMyTools){
-									listMyTools.clear();
-									JSONArray myTools = arrays.getJSONArray("myItems");
-									for(int i = 0, length = myTools.length(); i < length; i++ ){
-										MyJSONObject item = (MyJSONObject) myTools.get(i);
-										ToolData tool = new ToolData();
-										tool.name = item.getString("name");
-										tool.desc = item.getString("desc");
-										tool.type = item.getInt("type");
-										tool.ownCount = item.getInt("amount");
-										listMyTools.add(tool);
-									}
-								}
-								listener.onDataFinish(BusinessDataListener.DONE_BUY_TOOL, null, null, extra);
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_BUY_TOOL, data.getString("tip"), null);
-							}
-						}else{
-							String description = data.getString("description");
-							listener.onDataFailed(BusinessDataListener.ERROR_BUY_TOOL, description, null);
-						}
-					}else
-						listener.onDataFailed(BusinessDataListener.ERROR_BUY_TOOL, ERROR_NET, null);
-
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_BUY_TOOL, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-			}
-		});
-
-
-
-	}
-
-
-	public void getToolList(final String loginCode, final List<ToolData> listTools, final List<ToolData> listMyTools){
-
-
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=PropItemList" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					jsonUrl.put("loginCode", loginCode);
-					url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					L.i("ItemList:" + url);
-//					//test
-//					Thread.sleep(3000);
-//					int exp1 = 3;
-//					Bundle extra1 = new Bundle();
-//					extra1.putInt("exp", exp1);
-//					listener.onDataFinish(BusinessDataListener.DONE_GET_TOOL_LIST, null, null, extra1);
-//					//test end
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								if(listTools != null)
-									listTools.clear();
-								if(listMyTools != null)
-									listMyTools.clear();
-								MyJSONObject arrays = data.getJSONObject("resultData");
-								JSONArray tools = arrays.getJSONArray("items");
-								for(int i = 0, length = tools.length(); i < length; i++ ){
-									MyJSONObject item = (MyJSONObject) tools.get(i);
-									ToolData tool = new ToolData();
-									tool.name = item.getString("name");
-									tool.value = item.getInt("exp");
-									tool.desc = item.getString("desc");
-									tool.residueCount = item.getInt("store");
-									tool.totalCount = item.getInt("storeTotal");
-									tool.type = item.getInt("type");
-									if(listTools != null)
-										listTools.add(tool);
-								}
-
-								JSONArray myTools = arrays.getJSONArray("myItems");
-								for(int i = 0, length = myTools.length(); i < length; i++ ){
-									MyJSONObject item = (MyJSONObject) myTools.get(i);
-									ToolData tool = new ToolData();
-									tool.name = item.getString("name");
-									tool.desc = item.getString("desc");
-									tool.type = item.getInt("type");
-									tool.ownCount = item.getInt("amount");
-									if(tool.type == 4 && tool.ownCount > 0)
-										UserData.getUserData().hasPreTool = true;
-									if(listMyTools != null)
-										listMyTools.add(tool);
-								}
-								listener.onDataFinish(BusinessDataListener.DONE_GET_TOOL_LIST, null, null, null);
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_GET_TOOL_LIST, data.getString("tip"), null);
-							}
-						}else{
-							String description = data.getString("description");
-							listener.onDataFailed(BusinessDataListener.ERROR_GET_TOOL_LIST, description, null);
-						}
-					}else
-						listener.onDataFailed(BusinessDataListener.ERROR_GET_TOOL_LIST, ERROR_NET, null);
-
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_GET_TOOL_LIST, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-			}
-		});
-
-
-
-	}
-	public void CheckIn(final String loginCode){
-
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=CheckIn" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					jsonUrl.put("loginCode", loginCode);
-					url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					L.i("CheckIn:" + url);
-//					//test
-//					Thread.sleep(3000);
-//					int exp1 = 3;
-//					Bundle extra1 = new Bundle();
-//					extra1.putInt("exp", exp1);
-//					listener.onDataFinish(BusinessDataListener.DONE_CHECK_IN, null, null, extra1);
-//					//test end
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-//								MyJSONObject array = data.getJSONObject("resultData");
-//								int exp = array.getInt("exp");
-								Bundle extra = new Bundle();
-								extra.putInt("exp", data.getInt("resultData"));
-								UserData.getUserData().dayCheckIn = true;
-								UserData.getUserData().checkInDays ++;
-								listener.onDataFinish(BusinessDataListener.DONE_CHECK_IN, null, null, extra);
-							}else if(status == 54006){//今日已签到
-								listener.onDataFailed(BusinessDataListener.ERROR_ALREADY_CHECK_IN, data.getString("tip"), null);
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_CHECK_IN, data.getString("tip"), null);
-							}
-						}else{
-							String description = data.getString("description");
-							listener.onDataFailed(BusinessDataListener.ERROR_CHECK_IN, description, null);
-						}
-					}else
-						listener.onDataFailed(BusinessDataListener.ERROR_CHECK_IN, ERROR_NET, null);
-
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_GET_PUSH_MSG, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-			}
-		});
-
-
-	}
 	public void WeekTask(final String loginCode){
 
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
@@ -810,6 +212,13 @@ public class UserService extends BaseService{
 					String url = Constant.IP_URL + "/Api.ashx?req=WeekTask" + CONSTANT_URL();
 					JSONObject jsonUrl = new JSONObject();
 					jsonUrl.put("loginCode", loginCode);
+					jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("loginCode", loginCode );
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
 					url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 
 					MyJSONObject data = getDataFromSer(url);
@@ -857,88 +266,6 @@ public class UserService extends BaseService{
 
 
 	}
-	public void getPushMsg(final String loginCode, final int pageIndex, final int pageSize){
-
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=MESSAGELIST" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					jsonUrl.put("loginCode", loginCode);
-					jsonUrl.put("pageIndex", pageIndex);
-					jsonUrl.put("pageSize", pageSize);
-					url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					L.i("MESSAGELIST:" + url);
-				//	Thread.sleep(2000);
-//					//test
-//					PushMsgData[] datas = new PushMsgData[20];
-//
-//					for(int i = 0; i< 20 ; i++){
-//						PushMsgData rankData = new PushMsgData();
-//						rankData.title = "title" + i;
-//						rankData.des = "des" + i;
-//						rankData.time = "time" + i;
-//						rankData.taskId = i;
-//						rankData.taskStatus = i;
-//						rankData.webUrl = "http://www.baidu.com";
-//						datas[i] = rankData;
-//					}
-//					Bundle extra = new Bundle();
-//					extra.putInt("myRank", 3);
-//					extra.putString("des", "test desc");
-//					listener.onDataFinish(BusinessDataListener.DONE_GET_PUSH_MSG, null, datas, extra);
-//					//test end
-
-
-
-
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								JSONArray array = data.getJSONArray("resultData");
-								int length = array.length();
-								PushMsgData[] results = new PushMsgData[length];
-								for(int i = 0; i < length; i++){
-									MyJSONObject tip = (MyJSONObject) array.getJSONObject(i);
-									PushMsgData itemData = new PushMsgData();
-									itemData.id = tip.getInt("id");
-									itemData.title = tip.getString("title");
-									itemData.des = tip.getString("des");
-									itemData.time = tip.getString("time");
-									itemData.type = tip.getInt("type");
-									itemData.taskId = tip.getInt("taskid");
-									itemData.taskStatus = tip.getInt("taskStatus");
-									itemData.webUrl = tip.getString("webUrl");
-									results[i] = itemData;
-								}
-								listener.onDataFinish(BusinessDataListener.DONE_GET_PUSH_MSG, null, results, null);
-								//listener.onDataFinish(BusinessDataListener.DONE_GET_RANK, null, null, null);
-
-
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_GET_PUSH_MSG, data.getString("tip"), null);
-							}
-						}else{
-							String description = data.getString("description");
-							listener.onDataFailed(BusinessDataListener.ERROR_GET_PUSH_MSG, description, null);
-						}
-					}else
-						listener.onDataFailed(BusinessDataListener.ERROR_GET_PUSH_MSG, ERROR_NET, null);
-
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_GET_PUSH_MSG, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-			}
-		});
-
-
-	}
-
 
 	/**
 	 *
@@ -958,6 +285,14 @@ public class UserService extends BaseService{
 					JSONObject jsonUrl = new JSONObject();
 					jsonUrl.put("loginCode", loginCode);
 					jsonUrl.put("type", type);
+					jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("loginCode", loginCode);
+					paramMap.put("type", String.valueOf(type));
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
 					url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 					L.i("RANKING:" + url);
 					MyJSONObject data = getDataFromSer(url);
@@ -1014,225 +349,8 @@ public class UserService extends BaseService{
 
 
 	}
-	/**
-	 *
-	 * @param buyData
-	 * @param loginCode
-	 */
-	public void getMallDetail(final BuyData buyData, final String loginCode){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=FlashMallDetail" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					jsonUrl.put("loginCode", loginCode);
-					jsonUrl.put("orderNo", buyData.orderNo);
-					url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					L.i("FlashMallDetail:" + url);
-
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								MyJSONObject json = data.getJSONObject("resultData");
-
-								buyData.goodsName =  json.getString("goodsName");
-								buyData.time = json.getString("time").split(" ")[0];
-								buyData.name = json.getString("name");
-								buyData.tempScore = Util.opeDouble(json.getDouble("tempScore"));//json.getInt("tempScore");
-								buyData.realScore = Util.opeDouble(json.getDouble("realScore"));//json.getInt("realScore");
-								buyData.timeCount = json.getString("timeCount");
-								buyData.status = json.getInt("status2");
-								buyData.statusDes = json.getString("status2Des");
 
 
-								JSONArray array = json.getJSONArray("list");
-								int length = array.length();
-								List<BuyItemData> itemDatas = new ArrayList<BuyItemData>();
-								for(int i = 0; i < length; i++){
-									MyJSONObject tip = (MyJSONObject) array.getJSONObject(i);
-									BuyItemData itemData = new BuyItemData();
-									itemData.action = tip.getString("action");
-									itemData.score = Util.opeDouble(tip.getDouble("score"));//tip.getString("score");
-									itemData.time =  tip.getString("time").split(" ")[0];
-									itemDatas.add(itemData);
-								}
-								buyData.listDatas = itemDatas;
-								listener.onDataFinish(BusinessDataListener.DONE_GET_MALL_DETAIL, null, null, null);
-
-
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_GET_MALL_DETAIL, data.getString("tip"), null);
-							}
-						}else{
-							String description = data.getString("description");
-							listener.onDataFailed(BusinessDataListener.ERROR_GET_MALL_DETAIL, description, null);
-						}
-					}else
-						listener.onDataFailed(BusinessDataListener.ERROR_GET_MALL_DETAIL, ERROR_NET, null);
-
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_GET_MALL_DETAIL, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 *
-	 * @param loginCode
-	 * @param pageTag  默认-1
-	 * @param pageSize
-	 */
-	public void getMallList(final String loginCode, final String pageTag, final int pageSize){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=FlashMallList" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					jsonUrl.put("loginCode", loginCode);
-					jsonUrl.put("pageTag", pageTag);
-					jsonUrl.put("pageSize", pageSize);
-					url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					L.i("FlashMallList:" + url);
-//					//test
-//					BuyData[] testResults = new BuyData[10];
-//					for(int i = 0; i < 10; i++){
-//						BuyData item = new BuyData();
-//						item.orderNo = "orderNo" + i;
-//						item.orderID = i;
-//						item.goodsName =  "goodsName" + i;
-//						item.time = "time" + i;
-//						item.name = "name" + i;
-//						item.tempScore = i;
-//						item.realScore = i;
-//						item.timeCount = "" + i;
-//						item.status = 0;
-//						testResults[i] = item;
-//					}
-//					listener.onDataFinish(BusinessDataListener.DONE_GET_MALL_LIST, null, testResults, null);
-//					//test end
-
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								MyJSONObject json = data.getJSONObject("resultData");
-								Bundle extra = null;
-								if(pageTag.equals("0")){
-									extra = new Bundle();
-									extra.putString("count", json.getString("count"));
-									extra.putString("tempScore", Util.opeDouble(json.getDouble("tempScore")));
-									extra.putString("realScore", Util.opeDouble(json.getDouble("realScore")));
-								}
-								JSONArray array = json.getJSONArray("list");
-									int length = array.length();
-									List<BuyData> results = new ArrayList<BuyData>();
-									for(int i = 0; i < length; i++){
-										MyJSONObject tip = (MyJSONObject) array.getJSONObject(i);
-										BuyData item = new BuyData();
-										item.orderNo = tip.getString("orderNo");
-										item.orderID = tip.getInt("orderID");
-										item.goodsName =  tip.getString("goodsName");
-										item.orderTime = tip.getString("updateTime");
-										item.time = tip.getString("time").split(" ")[0];
-										item.name = tip.getString("name");
-										item.tempScore = Util.opeDouble(tip.getDouble("tempScore"));//tip.getInt("tempScore");
-										item.realScore = Util.opeDouble(tip.getDouble("realScore"));//tip.getInt("realScore");
-										item.timeCount = tip.getString("timeCount");
-										item.status = tip.getInt("status2");
-//										if(!buyDatas.contains(item))
-											results.add(item);
-									}
-									listener.onDataFinish(BusinessDataListener.DONE_GET_MALL_LIST, null, results.toArray(new BuyData[]{}), extra);
-
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_GET_MALL_LIST, data.getString("tip"), null);
-							}
-						}else{
-							String description = data.getString("description");
-							listener.onDataFailed(BusinessDataListener.ERROR_GET_MALL_LIST, description, null);
-						}
-					}else
-						listener.onDataFailed(BusinessDataListener.ERROR_GET_MALL_LIST, ERROR_NET, null);
-
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_GET_MALL_LIST, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-
-//	public void getPrenticeDetail(final String loginCode, final int id, final int pageTag, final int pageSize){
-//
-//
-//
-//		ThreadPoolManager.getInstance().addTask(new Runnable() {
-//
-//			@Override
-//			public void run() {
-//
-//				try {
-//					String url = Constant.IP_URL + "/Api.ashx?req=PrenticeDetail" + CONSTANT_URL();
-//					JSONObject jsonUrl = new JSONObject();
-//					jsonUrl.put("loginCode", loginCode);
-//					jsonUrl.put("id", id);
-//					jsonUrl.put("pageTag", pageTag);
-//					jsonUrl.put("pageSize", pageSize);
-//					url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-//					L.i("getPrenticeDetail:" + url);
-//					MyJSONObject data = getDataFromSer(url);
-//					if(data != null){
-//						int resultCode = data.getInt("resultCode");
-//						if (resultCode == 1) {
-//							int status = data.getInt("status");
-//							if (status == 1) {
-//								MyJSONObject json = data.getJSONObject("resultData");
-//								Bundle extra = null;
-//								if(pageTag == 0){
-//									extra = new Bundle();
-//									extra.putString("name", json.getString("userName"));
-//									extra.putString("time", TimeUtil.FormatterTimeToDay(json.getString("time")));
-//									extra.putInt("contri", json.getInt("totalScore"));
-//								}
-//								JSONArray array = json.getJSONArray("list");
-//								int length = array.length();
-//								PrenticeContriData[] results = new PrenticeContriData[length];
-//								for(int i = 0; i < length; i++){
-//									MyJSONObject tip = (MyJSONObject) array.getJSONObject(i);
-//									PrenticeContriData item = new PrenticeContriData();
-//									item.id = tip.getInt("flowId");
-//									item.time = TimeUtil.FormatterTimeToDay(tip.getString("time"));
-//									item.contri = Util.opeDouble(tip.getDouble("score"));//tip.getInt("score");
-//									results[i] = item;
-//								}
-//								listener.onDataFinish(BusinessDataListener.DONE_GET_PRENTICE_DETAIL, null, results, extra);
-//							}else{
-//								listener.onDataFailed(BusinessDataListener.ERROR_GET_PRENTICE_DETAIL, data.getString("tip"), null);
-//							}
-//						}else{
-//							String description = data.getString("description");
-//							listener.onDataFailed(BusinessDataListener.ERROR_GET_PRENTICE_DETAIL, description, null);
-//						}
-//					}else
-//						listener.onDataFailed(BusinessDataListener.ERROR_GET_PRENTICE_DETAIL, ERROR_NET, null);
-//
-//				} catch (Exception e) {
-//					listener.onDataFailed(BusinessDataListener.ERROR_GET_PRENTICE_DETAIL, ERROR_DATA, null);
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 	/**
 	 *
 	 * @param loginCode
@@ -1256,6 +374,16 @@ public class UserService extends BaseService{
 					jsonUrl.put("pageTag", pageTag);
 					jsonUrl.put("pageSize", pageSize);
 					jsonUrl.put("orderType", orderType);
+					jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("loginCode", loginCode);
+					paramMap.put("pageTag", pageTag);
+					paramMap.put("pageSize", String.valueOf(pageSize));
+					paramMap.put("orderType", String.valueOf(orderType));
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
 					url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 					L.i("getPrenticeList:" + url);
 
@@ -1322,6 +450,15 @@ public class UserService extends BaseService{
 					jsonUrl.put("loginCode", loginCode);
 					jsonUrl.put("pageTag", pageTag);
 					jsonUrl.put("pageSize", pageSize);
+					jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("loginCode", loginCode);
+					paramMap.put("pageTag", pageTag);
+					paramMap.put("pageSize", String.valueOf(pageSize));
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
 					url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 					L.i("getPrentice:" + url);
 					MyJSONObject data = getDataFromSer(url);
@@ -1410,6 +547,15 @@ public class UserService extends BaseService{
 					jsonUrl.put("loginCode", loginCode);
 					jsonUrl.put("type", type);
 					jsonUrl.put("date", date);
+					jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("loginCode", loginCode);
+					paramMap.put("type", String.valueOf(type));
+					paramMap.put("date", date);
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
 					try {
 						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 					} catch (UnsupportedEncodingException e) {
@@ -1579,6 +725,15 @@ public class UserService extends BaseService{
 					jsonUrl.put("loginCode", loginCode);
 					jsonUrl.put("pageSize", pageSize);
 					jsonUrl.put("date", pageDate);
+					jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("loginCode", loginCode);
+					paramMap.put("pageSize", String.valueOf(pageSize));
+					paramMap.put("date", pageDate);
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
 					try {
 						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 					} catch (UnsupportedEncodingException e) {
@@ -1586,22 +741,6 @@ public class UserService extends BaseService{
 					}
 					L.i("NewTotalScoreList:" + url);
 
-//					//test
-//					try {
-//						Thread.sleep(3000);
-//					} catch (InterruptedException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//					//首页时获取max,min
-//					Bundle extra2 = null;
-//					if(TextUtils.isEmpty(pageDate)){
-//						extra2 = new Bundle();
-//						extra2.putInt("totalScore",1000);
-//						extra2.putInt("maxScore", 90);
-//						extra2.putInt("minScore", -80);
-//					}
-//					listener.onDataFinish(BusinessDataListener.DONE_GET_ALLSCORE_TREND, null, getTestData(), extra2);
 					MyJSONObject data = getDataFromSer(url);
 					if(data != null){
 						int resultCode = data.getInt("resultCode");
@@ -1657,39 +796,6 @@ public class UserService extends BaseService{
 										results.add(awardData);
 									}
 								}
-
-
-//								//test
-//								for(int i = 0; i < 10; i ++){
-//									AllScoreData scoreData = new AllScoreData();
-//									scoreData.scanCount = i;
-//									scoreData.score = i;
-//									scoreData.date = "2013-10-1"+i;
-//									allScoreDatas.add(scoreData);
-//									//scoreData.extra = tip.getString("extra").replaceAll(":", "").replaceAll("\\^", "\n");
-//									//results[i] = scoreData;
-////									scoreDatas.put(scoreData.date, scoreData);
-////									if(!allScoreDatas.contains(scoreData))
-////
-//
-//									//AwardData[] results = new AwardData[length2];
-//									for(int j = 0; j < 2; j ++){
-//										AwardData awardData = new AwardData();
-//										awardData.id = j;
-//										awardData.type = 0;
-//										awardData.titile = "title" + j;
-//										awardData.des = "description" + j;
-//										awardData.imgUrl = null;
-//										awardData.date = scoreData.date;
-//										awardData.dateDes = "";//TimeUtil.FormatterTimeToMinute(tip2.getString("date"));
-//										awardData.scanCount = j;//tip2.getInt("browseAmount");
-//										awardData.score = j;//tip2.getInt("totalScore");
-//										awardData.dayScanCount = scoreData.scanCount;
-//										awardData.dayScore = scoreData.score;
-//										results.add(awardData);
-//									}
-//								}
-//								//test end
 
 								listener.onDataFinish(BusinessDataListener.DONE_GET_ALLSCORE_TREND, null, results.toArray(new AwardData[]{}), extra);
 							}else{
@@ -1769,7 +875,13 @@ public class UserService extends BaseService{
 				JSONObject jsonUrl = new JSONObject();
 
 					jsonUrl.put("loginCode", loginCode);
-
+					jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("loginCode", loginCode);
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
 				try {
 					url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 				} catch (UnsupportedEncodingException e) {
@@ -1810,134 +922,6 @@ public class UserService extends BaseService{
 			}
 		});
 	}
-	/**
-	 *
-	 * @param loginCode
-	 * @param pageSize
-	 * @param autoId
-	 */
-	public void FeedbackList(final String loginCode, final int pageSize, final String autoId) {
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-
-			@Override
-			public void run() {
-
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=FeedbackList" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					jsonUrl.put("loginCode", loginCode);
-					jsonUrl.put("pageSize", pageSize);
-					jsonUrl.put("autoId", autoId);
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					L.i("Feedbacklist:" + url);
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								//更新内存量
-								UserData.getUserData().hasNewFeedback = false;
-								JSONArray array = data.getJSONArray("resultData");
-								int length = array.length();
-								FeedbackData[] resultDatas = new FeedbackData[length];
-								for(int i = 0; i < length; i++){
-									MyJSONObject item = (MyJSONObject) array.get(i);
-									FeedbackData feedbackData = new FeedbackData();
-									feedbackData.id = item.getString("autoId");
-									feedbackData.commitContent = item.getString("content");
-									feedbackData.commitTime = Util.DateFormat(item.getString("time"));
-									feedbackData.statusName = item.getString("statusName");
-									feedbackData.status = item.getInt("status");
-									feedbackData.backContent = item.getString("doContent");
-									feedbackData.backTime = Util.DateFormat(item.getString("doTime"));
-
-									resultDatas[i] = feedbackData;
-								}
-
-								listener.onDataFinish(BusinessDataListener.DONE_FEEDBACK_LIST, null, resultDatas, null);
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK_LIST, data.getString("tip"), null);
-							}
-						}else{
-							String description = data.getString("description");
-							listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK_LIST, description, null);
-						}
-					}else
-						listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK_LIST, ERROR_NET, null);
-
-				} catch (JSONException e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK_LIST, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-
-
-
-			}
-		});
-	}
-
-
-	/**
-	 *
-	 * @param name
-	 * @param contact
-	 * @param content
-	 */
-	public void Feedback(final String loginCode, final String name, final String contact, final String content) {
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-
-			@Override
-			public void run() {
-
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=Feedback" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					jsonUrl.put("loginCode", loginCode);
-					jsonUrl.put("name", name);
-					jsonUrl.put("contact", contact);
-					jsonUrl.put("content", content);
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					L.i("Feedback:" + url);
-					MyJSONObject data = getDataFromSer(url);
-
-
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-
-								listener.onDataFinish(BusinessDataListener.DONE_FEEDBACK, null, null, null);
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK, data.getString("tip"), null);
-							}
-						}else{
-							String description = data.getString("description");
-							listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK, description, null);
-						}
-					}else
-						listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK, ERROR_NET, null);
-
-				} catch (JSONException e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_FEEDBACK, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-
-
-
-			}
-		});
-	}
-
 
 
 	/**
@@ -1964,6 +948,18 @@ public class UserService extends BaseService{
 					jsonUrl.put("autoId", autoId);
 					jsonUrl.put("type", type);
 					jsonUrl.put("date", date);
+					jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("loginCode", loginCode);
+					paramMap.put("taskId", String.valueOf(taskId));
+					paramMap.put("pageSize", String.valueOf(pageSize));
+					paramMap.put("autoId", autoId);
+					paramMap.put("type", String.valueOf(type));
+					paramMap.put("date", date);
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
 					try {
 						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 					} catch (UnsupportedEncodingException e) {
@@ -2045,6 +1041,16 @@ public class UserService extends BaseService{
 					jsonUrl.put("type", type);
 					jsonUrl.put("pageSize", pageSize);
 					jsonUrl.put("autoId", autoId);
+					jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("loginCode", loginCode);
+					paramMap.put("type", String.valueOf(type));
+					paramMap.put("pageSize", String.valueOf(pageSize));
+					paramMap.put("autoId", String.valueOf(autoId));
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
 					try {
 						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 					} catch (UnsupportedEncodingException e) {
@@ -2102,6 +1108,13 @@ public class UserService extends BaseService{
 					String url = Constant.IP_URL + "/Api.ashx?req=UserInfo" + CONSTANT_URL();
 					JSONObject jsonUrl = new JSONObject();
 					jsonUrl.put("loginCode", loginCode);
+					jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("loginCode", loginCode);
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
 					url = url + URLEncoder.encode(jsonUrl.toString(), "UTF-8");
 					L.i("getUserBaseInfo>>>>>" + url);
 					MyJSONObject data = getDataFromSer(url);
@@ -2200,11 +1213,15 @@ public class UserService extends BaseService{
 					jsonUrl.put("loginCode", loginCode);
 					jsonUrl.put("name", name);
 					jsonUrl.put("sex", sex);
-					jsonUrl.put("birth", age);
-					jsonUrl.put("industry", job);
-					jsonUrl.put("favorite", fav);
-					jsonUrl.put("income", income);
-
+					jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("loginCode", loginCode);
+					paramMap.put("name", name);
+					paramMap.put("sex", sex);
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
 					url = url + URLEncoder.encode(jsonUrl.toString(), "UTF-8");
 					L.i("commit>>>>>" + url);
 					MyJSONObject data = getDataFromSer(url);
@@ -2216,17 +1233,7 @@ public class UserService extends BaseService{
 								Bundle extra = new Bundle();
 								extra.putSerializable("type", type);
 								extra.putSerializable("data", selectData);
-//								extra.putString("name", data.getString("name"));
-//								extra.putInt("sex", data.getInt("sex"));
-//								extra.putString("birth", data.getString("birth"));
-//								extra.putString("industry", data.getString("industry"));
-//								extra.putString("favorite", data.getString("favorite"));
-//								extra.putString("income", data.getString("income"));
-//								extra.putString("area", data.getString("area"));
-//								extra.putString("industryList", data.getString("industryList"));
-//								extra.putString("favoriteList", data.getString("favoriteList"));
-//								extra.putString("incomeList", data.getString("incomeList"));
-//								String description = data.getString("description");
+
 								listener.onDataFinish(BusinessDataListener.DONE_MODIFY_USER_INFO, null, null, extra);
 							}else
 								listener.onDataFailed(BusinessDataListener.ERROR_MODIFY_USER_INFO, data.getString("tip"), null);
@@ -2265,6 +1272,15 @@ public class UserService extends BaseService{
 					jsonUrl.put("taskId", taskId);
 					jsonUrl.put("loginCode", loginCode);
 					jsonUrl.put("type", type);
+					jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("taskId", String.valueOf(taskId));
+					paramMap.put("loginCode", loginCode);
+					paramMap.put("type", String.valueOf(type));
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
 					url = url + URLEncoder.encode(jsonUrl.toString(), "UTF-8");
 					L.i("commit>>>>>" + url);
 					MyJSONObject data = getDataFromSer(url);
@@ -2304,555 +1320,6 @@ public class UserService extends BaseService{
 		});
 	}
 
-
-	/**
-	 * 我的收藏列表
-	 * @param loginCode
-	 * @param pageSize
-	 * @param autoId 最早的收藏id
-	 */
-	public void getFavList(final String loginCode, final int pageSize, final String autoId){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-
-			@Override
-			public void run() {
-
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=MyFavoriteStoreList" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					//{"loginCode":"000","pageIndex":"1","pageSize":"5"}
-					jsonUrl.put("loginCode", loginCode);
-					jsonUrl.put("pageSize", pageSize);
-					jsonUrl.put("autoId", autoId);
-					url = url + URLEncoder.encode(jsonUrl.toString(), "UTF-8");
-					L.i("getFavList:" + url);
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if(resultCode == 1){
-							int status = data.getInt("status");
-							if(status == 1){
-								JSONArray jArray = data.getJSONArray("resultData");
-								int length = jArray.length();
-								StoreData[] results = new StoreData[length];
-								for (int i = 0; i < length; i++) {
-									MyJSONObject tip = (MyJSONObject) jArray.get(i);
-									StoreData item = new StoreData();
-									//item.opentId = tip.getString("Openid");
-									item.taskCount = tip.getString("taskCount");
-									item.id = tip.getString("id");
-									item.name = tip.getString("name");
-									item.imgUrl = tip.getString("logo");
-									item.pageTag = tip.getString("autoId");
-									results[i] = item;
-								}
-								listener.onDataFinish(BusinessDataListener.DONE_GET_MY_FAV_LIST, null, results, null);
-							}else
-								listener.onDataFailed(BusinessDataListener.ERROR_GET_MY_FAV_LIST, data.getString("tip"), null);
-						}else{
-							String description = data.getString("description");
-							listener.onDataFailed(BusinessDataListener.ERROR_GET_MY_FAV_LIST, description, null);
-						}
-					}else
-						listener.onDataFailed(BusinessDataListener.ERROR_GET_MY_FAV_LIST, ERROR_NET, null);
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_GET_MY_FAV_LIST, ERROR_DATA, null);
-				}
-//				MySendData[] results = new MySendData[10];
-//				for (int i = 0; i < results.length; i++) {
-//					MySendData item = new MySendData();
-//					item.taskId = i;
-//					item.name ="任务" +i;
-//					item.time ="2013-12-05 15:00:00";
-//					item.url = ImageUrls[i];
-//					results[i] = item;
-//				}
-//				listener.onDataFinish(BusinessDataListener.DONE_GET_MY_SEND_LIST, null, results, null);
-
-
-
-			}
-		});
-	}
-	/**
-	 * 我的收藏详情
-	 * @param loginCode
-	 * @param pageSize
-	 * @param oldTaskId 客户端现有最早分布任务id
-	 */
-	public void getFavDetail(final String loginCode, final String storeId, final int pageSize, final int oldTaskId){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-
-			@Override
-			public void run() {
-
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=MyFavoriteTaskDetail" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					//{"loginCode":"000","pageIndex":"1","pageSize":"5"}
-					jsonUrl.put("loginCode", loginCode);
-					jsonUrl.put("storeId", storeId);
-					jsonUrl.put("pageSize", pageSize);
-					jsonUrl.put("oldTaskId", oldTaskId);
-
-					url = url + URLEncoder.encode(jsonUrl.toString(), "UTF-8");
-					L.i("getFavDetail:" + url);
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if(resultCode == 1){
-							int status = data.getInt("status");
-							if(status == 1){
-								MyJSONObject myData = data.getJSONObject("resultData");
-								//task
-								JSONArray jArrayTask = myData.getJSONArray("taskData");
-								int length = jArrayTask.length();
-								TaskData[] taskResults = new TaskData[length];
-								for (int i = 0; i < length; i++) {
-									MyJSONObject tip = (MyJSONObject) jArrayTask.get(i);
-									taskResults[i] = setTaskData(tip);
-								}
-								//store
-								MyJSONObject myStore = myData.getJSONObject("storeInfo");
-								Bundle extra = new Bundle();
-								extra.putString("name", myStore.getString("name"));
-								extra.putString("taskCount", myStore.getString("taskAmuont"));
-								extra.putString("imgUrl", myStore.getString("logo"));
-								extra.putString("contact", myStore.getString("contact"));
-								extra.putString("industry", myStore.getString("industry"));
-								extra.putString("storeDes", myStore.getString("storeDes"));
-								extra.putSerializable("taskData", taskResults);
- 								listener.onDataFinish(BusinessDataListener.DONE_GET_MY_FAV_DETAIL, null, null, extra);
-							}else
-								listener.onDataFailed(BusinessDataListener.ERROR_GET_MY_FAV_DETAIL, data.getString("tip"), null);
-						}else{
-							String description = data.getString("description");
-							listener.onDataFailed(BusinessDataListener.ERROR_GET_MY_FAV_DETAIL, description, null);
-						}
-					}else
-						listener.onDataFailed(BusinessDataListener.ERROR_GET_MY_FAV_DETAIL, ERROR_NET, null);
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_GET_MY_FAV_DETAIL, ERROR_DATA, null);
-				}
-			}
-		});
-	}
-
-
-	public void userCommitToCrashPwd(final String loginCode, final String pwd, final String oldPwd){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-
-			@Override
-			public void run() {
-
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=SetWithdrawalPassword" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					//System.out.println(loginCode);
-					jsonUrl.put("loginCode",loginCode );
-					jsonUrl.put("withdrawalPassword", pwd);
-					jsonUrl.put("oldWithdrawalPassword", oldPwd);
-
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					L.i("userCommitToCrashPwd:"+url);
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								UserData.getUserData().toCrashPwd = pwd;
-								listener.onDataFinish(BusinessDataListener.DONE_COMMIT_TOCRASHPWD, data.getString("tip"), null, null);
-								}else{
-									listener.onDataFailed(BusinessDataListener.ERROR_COMMIT_TOCRASHPWD, data.getString("tip"), null);
-								}
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_COMMIT_TOCRASHPWD, data.getString("description"), null);
-							}
-
-					}else{
-						listener.onDataFailed(BusinessDataListener.ERROR_COMMIT_TOCRASHPWD, ERROR_NET, null);
-					}
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_COMMIT_TOCRASHPWD, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-
-
-			}
-		});
-
-
-
-	}
-	/**
-	 * 解除手机号绑定
-	 * @param loginCode
-	 * @param phone
-	 * @param code
-	 */
-	public void userUnBindPhone(final String loginCode, final String phone, final String code){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=ReleaseBindMobile" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					//System.out.println(loginCode);
-					jsonUrl.put("loginCode",loginCode );
-					jsonUrl.put("phone", phone);
-					jsonUrl.put("code", code);
-
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								UserData.getUserData().phone = "";
-								listener.onDataFinish(BusinessDataListener.DONE_UNBIND_PHONE, data.getString("tip"), null, null);
-								}else{
-									listener.onDataFailed(BusinessDataListener.ERROR_UNBIND_PHONE, data.getString("tip"), null);
-								}
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_UNBIND_PHONE, data.getString("description"), null);
-							}
-
-					}else{
-						listener.onDataFailed(BusinessDataListener.ERROR_UNBIND_PHONE, ERROR_NET, null);
-					}
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_UNBIND_PHONE, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-			}
-		});
-
-
-	}
-
-
-	/**
-	 * 我的兑换
-	 * @param loginCode
-	 * @param pageTag
-	 * @param pageSize 提现表自增id（分页用）
-	 */
-	public void userCashHistory(final String loginCode, final String pageTag, final int pageSize){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=CashHistory" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					//System.out.println(loginCode);
-					jsonUrl.put("loginCode",loginCode );
-					jsonUrl.put("pageSize", pageSize);
-					jsonUrl.put("autoId", pageTag);
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					System.out.println("userCashHistory:"+url);
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								JSONArray jArray = data.getJSONArray("resultData");
-								int size = jArray.length();
-								HistoryData[] results = new HistoryData[size];
-								for(int i = 0; i < size; i ++){
-									MyJSONObject tip = (MyJSONObject) jArray.get(i);
-									HistoryData item = new HistoryData();
-									item.pageTag = tip.getString("autoId");
-									item.action = String.format("兑换%s元, 消耗%s积分",Util.opeDouble(tip.getDouble("money")), Util.opeDouble(tip.getDouble("score")));
-									item.time = Util.DateFormatFull(tip.getString("time"));
-									item.status = tip.getString("statusName");
-									item.extra = Util.replaceBlank(tip.getString("extraMsg"));
-									results[i] = item;
-								}
-
-
-//								MoneyChangeData[] results = new MoneyChangeData[size];
-//								for(int i = 0; i < size; i++){
-//									MyJSONObject tip = (MyJSONObject) jArray.get(i);
-//									MoneyChangeData item = new MoneyChangeData();
-//									item.tagId = tip.getInt("autoId");
-//									item.money = tip.getString("money");
-//									item.time = Util.DateFormatFull(tip.getString("time"));
-//									item.score = tip.getString("score");
-//									item.status = tip.getInt("status");
-//
-//									item.des = tip.getString("statusName");
-//
-//									item.extras = Util.replaceBlank(tip.getString("extraMsg"));
-//									results[i] = item;
-//
-//								}
-								listener.onDataFinish(BusinessDataListener.DONE_GET_MONEY_CHANGE_LIST, null, results, null);
-								}else{
-									listener.onDataFailed(BusinessDataListener.ERROR_GET_MONEY_CHANGE_LIST, data.getString("tip"), null);
-								}
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_GET_MONEY_CHANGE_LIST, data.getString("description"), null);
-							}
-
-					}else{
-						listener.onDataFailed(BusinessDataListener.ERROR_GET_MONEY_CHANGE_LIST, ERROR_NET, null);
-					}
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_GET_MONEY_CHANGE_LIST, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-
-			}
-		});
-
-
-
-	}
-
-			/**
-			 * 收藏/取消收藏商家
-			 * @param loginCode
-			 * @param storeId 商家id
-			 * @param isFav 0：收藏;1：取消收藏
-			 */
-	public void userFavOrNotStore(final String loginCode, final String storeId, final boolean isFav){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-
-			@Override
-			public void run() {
-				int type = isFav ? 1 : 0;
-				int doneType = isFav ? BusinessDataListener.DONE_CANCEL_FAV :   BusinessDataListener.DONE_FAV;
-				int errorType = isFav ? BusinessDataListener.ERROR_CANCEL_FAV :   BusinessDataListener.ERROR_FAV;
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=OperFavorite" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					//System.out.println(loginCode);
-					jsonUrl.put("loginCode",loginCode );
-					jsonUrl.put("storeId", storeId);
-					jsonUrl.put("type", type);
-
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-
-								listener.onDataFinish(doneType, data.getString("tip"), null, null);
-								}else{
-									listener.onDataFailed(errorType, data.getString("tip"), null);
-								}
-							}else{
-								listener.onDataFailed(errorType, data.getString("description"), null);
-							}
-
-					}else{
-						listener.onDataFailed(errorType, ERROR_NET, null);
-					}
-				} catch (Exception e) {
-					listener.onDataFailed(errorType, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-
-			}
-		});
-	}
-	/**
-	 * 修改密码
-	 * @param mContext
-	 * @param loginCode
-	 * @param newPwd
-	 */
-	public void userModifyPwd(final Context mContext, final String loginCode, final String newPwd){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=ModifyPwd" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					//System.out.println(loginCode);
-					jsonUrl.put("loginCode",loginCode );
-					jsonUrl.put("newPwd", newPwd);
-
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								UserData.getUserData().pwd = newPwd;
-								UserData.getUserData().loginCode = data.getString("newLoginCode");
-
-								//本地保存
-								//SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME, userName);
-								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, newPwd);
-								listener.onDataFinish(BusinessDataListener.DONE_MODIFY_PWD, data.getString("tip"), null, null);
-								}else{
-									listener.onDataFailed(BusinessDataListener.ERROR_MODIFY_PWD, data.getString("tip"), null);
-								}
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_MODIFY_PWD, data.getString("description"), null);
-							}
-
-					}else{
-						listener.onDataFailed(BusinessDataListener.ERROR_MODIFY_PWD, ERROR_NET, null);
-					}
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_MODIFY_PWD, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-			}
-		});
-
-	}
-	public void intGoldInfo(final String loginCode,final String score){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=IntegralGoldInfo" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					//System.out.println(loginCode);
-					jsonUrl.put("loginCode",loginCode );
-					jsonUrl.put("score",score);
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					System.out.println("MyWallet:"+url);
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								MyJSONObject json = data.getJSONObject("resultData");
-								//UserData.getUserData().score = Util.opeDouble(json.getDouble("ApplyScore"));
-								UserData.getUserData().wallet = Util.opeDouble(json.getDouble("money"));
-								UserData.getUserData().scorerate=json.getDouble("scorerate");
-								Bundle extra = new Bundle();
-								extra.putString("des", json.getString("desc"));
-								try {
-
-									MyJSONObject ajson = json.getJSONObject("lastApply");
-									extra.putString("recordTime", ajson.getString("ApplyTime"));
-									extra.putString("recordDes", ajson.getString("ApplyMoney"));
-									extra.putInt("recordResult", ajson.getInt("ApplyScore"));
-									extra.putString("recordResultDes", json.getString("recordResultDes"));
-								}catch (Exception ex){}
-
-								listener.onDataFinish(BusinessDataListener.DONE_GET_WALLET, null, null, extra);
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_GET_WALLET, data.getString("tip"), null);
-							}
-						}else{
-							listener.onDataFailed(BusinessDataListener.ERROR_GET_WALLET, data.getString("description"), null);
-						}
-
-					}else{
-						listener.onDataFailed(BusinessDataListener.ERROR_GET_WALLET, ERROR_NET, null);
-					}
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_GET_WALLET, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-
-			}
-		});
-
-
-
-
-
-
-	}
-
-
-
-//	public void userToCrash(final String loginCode, final String crashPwd){
-//		ThreadPoolManager.getInstance().addTask(new Runnable() {
-//
-//			@Override
-//			public void run() {
-//
-//				try {
-//					String url = Constant.IP_URL + "/Api.ashx?req=ScoreCash" + CONSTANT_URL();
-//					JSONObject jsonUrl = new JSONObject();
-//					//System.out.println(loginCode);
-//					jsonUrl.put("loginCode",loginCode );
-//					jsonUrl.put("pwd", crashPwd);
-//
-//					try {
-//						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-//					} catch (UnsupportedEncodingException e) {
-//						e.printStackTrace();
-//					}
-//					MyJSONObject data = getDataFromSer(url);
-//					if(data != null){
-//						int resultCode = data.getInt("resultCode");
-//						if (resultCode == 1) {
-//							int status = data.getInt("status");
-//							if (status == 1) {
-//								//设置内存量
-//								UserData userData = UserData.getUserData();
-////								userData.lockScore = userData.score;
-////								userData.score = "0";
-//								double total = Double.parseDouble(userData.score);
-//								int useScore = ((int)total/10)*10;
-//								userData.lockScore = String.valueOf(useScore);
-//								userData.score = Util.opeDouble(total - useScore);
-//
-//
-//								listener.onDataFinish(BusinessDataListener.DONE_TO_CRASH, data.getString("tip"), null, null);
-//								}else{
-//									listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, data.getString("tip"), null);
-//								}
-//							}else{
-//								listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, data.getString("description"), null);
-//							}
-//
-//					}else{
-//						listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, ERROR_NET, null);
-//					}
-//				} catch (Exception e) {
-//					listener.onDataFailed(BusinessDataListener.ERROR_TO_CRASH, ERROR_DATA, null);
-//					e.printStackTrace();
-//				}
-//
-//
-//			}
-//		});
-//	}
 	public void GetUserList(final Context mContext,final String loginCode,final String unionId ){
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
 
@@ -2865,7 +1332,14 @@ public class UserService extends BaseService{
 					//System.out.println(loginCode);
 					jsonUrl.put("loginCode",loginCode );
 					jsonUrl.put("unionId",unionId);
-
+					jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("loginCode", loginCode);
+					paramMap.put("unionId",unionId);
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
 
 					try {
 						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
@@ -2914,175 +1388,8 @@ public class UserService extends BaseService{
 			}
 		});
 	}
-	public void userchange(final String loginCode,final String mallUserId  ,final String score, final String crashPwd){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-
-			@Override
-			public void run() {
-
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=Recharge" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					//System.out.println(loginCode);
-					jsonUrl.put("loginCode",loginCode );
-					jsonUrl.put("mallUserId",mallUserId);
-					jsonUrl.put("score",score);
-					jsonUrl.put("cashpassword", crashPwd);
-
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								//设置内存量
-								UserData userData = UserData.getUserData();
-//								userData.lockScore = userData.score;
-//								userData.score = "0";
-								BigDecimal total =new BigDecimal( userData.score);
-								BigDecimal scorerate=new BigDecimal( userData.scorerate);
-								BigDecimal scorerate1=new BigDecimal(1);
-								BigDecimal useScore = (total.remainder((scorerate1.divide(scorerate))));
-								userData.lockScore = String.valueOf(useScore);
-								DecimalFormat df = new DecimalFormat("0.00");
-								userData.score = String.valueOf(df.format(useScore));
 
 
-								listener.onDataFinish(BusinessDataListener.DONE_TO_RECHANGE, data.getString("tip"), null, null);
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_TO_RECHANGE, data.getString("tip"), null);
-							}
-						}else{
-							listener.onDataFailed(BusinessDataListener.ERROR_TO_RECHANGE, data.getString("description"), null);
-						}
-
-					}else{
-						listener.onDataFailed(BusinessDataListener.ERROR_TO_RECHANGE, ERROR_NET, null);
-					}
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_TO_RECHANGE, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-
-
-			}
-		});
-	}
-	/**
-	 * 绑定手机号
-	 * @param loginCode
-	 * @param phone
-	 * @param code
-	 */
-	public void userBindPhone(final String loginCode, final String phone, final String code){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=BindMobile" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					//System.out.println(loginCode);
-					jsonUrl.put("loginCode",loginCode );
-					jsonUrl.put("phone", phone);
-					jsonUrl.put("code", code);
-
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								UserData.getUserData().phone = phone;
-								listener.onDataFinish(BusinessDataListener.DONE_BIND_PHONE, data.getString("tip"), null, null);
-								}else{
-									listener.onDataFailed(BusinessDataListener.ERROR_BIND_PHONE, data.getString("tip"), null);
-								}
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_BIND_PHONE, data.getString("description"), null);
-							}
-
-					}else{
-						listener.onDataFailed(BusinessDataListener.ERROR_BIND_PHONE, ERROR_NET, null);
-					}
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_BIND_PHONE, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-			}
-		});
-
-
-	}
-	/**
-	 * 绑定支付宝账号
-	 * @param loginCode
-	 * @param phone
-	 * @param payAccount
-	 * @param name
-	 * @param code
-	 *
-	 */
-
-	public void userBindPayAccount(final String loginCode, final String phone, final String payAccount,final String name, final String code){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=BindAlipay" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					//System.out.println(loginCode);
-					jsonUrl.put("loginCode",loginCode );
-					jsonUrl.put("phone", phone);
-					jsonUrl.put("alipayAccount", payAccount);
-					jsonUrl.put("alipayName", name);
-					jsonUrl.put("code", code);
-
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								UserData.getUserData().payAccount = payAccount;
-								listener.onDataFinish(BusinessDataListener.DONE_BIND_PAYACCOUNT, data.getString("tip"), null, null);
-								}else{
-									listener.onDataFailed(BusinessDataListener.ERROR_BIND_PAYACCOUNT, data.getString("tip"), null);
-								}
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_BIND_PAYACCOUNT, data.getString("description"), null);
-							}
-
-					}else{
-						listener.onDataFailed(BusinessDataListener.ERROR_BIND_PAYACCOUNT, ERROR_NET, null);
-					}
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_BIND_PAYACCOUNT, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-			}
-		});
-
-	}
-	/**
-	 * 检查验证码是否有效
-	 */
 	public void checkverifyCode(final String verifycode, final String mobile){
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
 
@@ -3093,6 +1400,14 @@ public class UserService extends BaseService{
 					JSONObject jsonUrl = new JSONObject();
 					jsonUrl.put("verifyCode",verifycode);
 					jsonUrl.put("mobile", mobile);
+					jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("verifyCode",verifycode);
+					paramMap.put("mobile", mobile);
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
 					try {
 						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 					} catch (UnsupportedEncodingException e) {
@@ -3137,7 +1452,13 @@ public class UserService extends BaseService{
 					JSONObject jsonUrl = new JSONObject();
 
 					jsonUrl.put("mobile", mobile);
-
+					jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("mobile", mobile);
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
 					try {
 						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 					} catch (UnsupportedEncodingException e) {
@@ -3172,7 +1493,7 @@ public class UserService extends BaseService{
 	 * 获取验证码
 	 * @param type 1：手机号相关;2：支付宝相关,3注册相关，4登录密码相关
 	 */
-	public void getAuthCode(final String loginCode, final String phone, final int type){
+	public void getAuthCode(final String loginCode, final String phone, final int type ,final long timestamp){
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
 
 			@Override
@@ -3181,11 +1502,15 @@ public class UserService extends BaseService{
 					String url = Constant.IP_URL + "/Api.ashx?req=SMS" + CONSTANT_URL();
 					JSONObject jsonUrl = new JSONObject();
 
-					//jsonUrl.put("loginCode",loginCode );
 					jsonUrl.put("mobile", phone);
-					//jsonUrl.put("type", type);
-
-					try {
+					jsonUrl.put("timestamp",timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("mobile", phone);
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
+						try {
 						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 					} catch (UnsupportedEncodingException e) {
 						e.printStackTrace();
@@ -3215,123 +1540,6 @@ public class UserService extends BaseService{
 			}
 		});
 	}
-	/**
-	 *
-	 */
-	public void userReset(final Context mContext, final String userName, final String pwd, final String code){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=ResetPwd" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					//System.out.println(loginCode);
-					jsonUrl.put("phone",userName );
-					jsonUrl.put("newPwd", pwd);
-					jsonUrl.put("code", code);
-
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					L.i(">>>>>>>reset:" + url);
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								//setUserData(userName, pwd, data.getJSONObject("resultData"));
-
-								listener.onDataFinish(BusinessDataListener.DONE_USER_RESET, null, null, null);
-								}else{
-									listener.onDataFailed(BusinessDataListener.ERROR_USER_RESET, data.getString("tip"), null);
-								}
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_USER_RESET, data.getString("description"), null);
-							}
-
-					}else{
-						listener.onDataFailed(BusinessDataListener.ERROR_USER_RESET, ERROR_NET, null);
-					}
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_USER_RESET, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	/**
-	 *
-	 */
-	public void userReg(final Context mContext, final String userName, final String psd, final String code,
-						final String invitationCode,final String unionid,final String openid,final String picUrl,
-						final String nickname){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=register" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					//System.out.println(loginCode);
-
-
-					jsonUrl.put("userName",userName );
-					jsonUrl.put("psd", psd);
-					jsonUrl.put("code", code);
-					jsonUrl.put("invitationCode", invitationCode);
-					jsonUrl.put("unionId",unionid);
-					jsonUrl.put("openid",openid);
-					jsonUrl.put("picUrl",picUrl);
-					jsonUrl.put("nickname",nickname);
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					L.i(">>>>>>>register:" + url);
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								String loginCode= data.getJSONObject("resultData").getString("loginCode");
-								String loginUsername = data.getJSONObject("resultData").getString("userName");
-								String unionId = data.getJSONObject("resultData").getString("unionId");
-								loginCode = loginCode.split("\\^")[1];
-								setUserData(loginUsername, loginCode, data.getJSONObject("resultData"));
-								//本地保存
-
-								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME, loginUsername);
-								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, loginCode);
-								SPUtil.saveStringToSpByName(mContext,Constant.SP_NAME_NORMAL,Constant.SP_NAME_UnionId,unionId);
-								listener.onDataFinish(BusinessDataListener.DONE_USER_REG, null, null, null);
-								}else if (status==56000){
-								listener.onDataFail(BusinessDataListener.NOT_USER_REG,null,null);
-							}
-							else{
-									L.i(">>>tip:" + data.getString("tip"));
-									listener.onDataFailed(BusinessDataListener.ERROR_USER_REG, data.getString("tip"), null);
-								}
-							}else{
-								listener.onDataFailed(BusinessDataListener.ERROR_USER_REG, data.getString("description"), null);
-							}
-
-					}else{
-						listener.onDataFailed(BusinessDataListener.ERROR_USER_REG, ERROR_NET, null);
-					}
-				} catch (Exception e) {
-					listener.onDataFailed(BusinessDataListener.ERROR_USER_REG, ERROR_DATA, null);
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	public void userMoblieReg(final Context mContext, final String mobile, final String verifyCode,
 							  final String password,final int isUpdate,final String invitationCode,final String token){
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
@@ -3347,6 +1555,18 @@ public class UserService extends BaseService{
 					jsonUrl.put("isUpdate",isUpdate);
 					jsonUrl.put("invitationCode",invitationCode);
 					jsonUrl.put("token",token);
+					jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("mobile",mobile );
+					paramMap.put("verifyCode", verifyCode);
+					paramMap.put("password", password);
+					paramMap.put("isUpdate", String.valueOf(isUpdate));
+					paramMap.put("invitationCode",invitationCode);
+					paramMap.put("token",token);
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
 					try {
 						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 					} catch (UnsupportedEncodingException e) {
@@ -3392,57 +1612,6 @@ public class UserService extends BaseService{
 			}
 		});
 	}
-	public void userLogin(final Context mContext, final String userName, final String pwd, final boolean needCallBack){
-		ThreadPoolManager.getInstance().addTask(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					String url = Constant.IP_URL + "/Api.ashx?req=Login" + CONSTANT_URL();
-					JSONObject jsonUrl = new JSONObject();
-					jsonUrl.put("userName",userName );
-					jsonUrl.put("pwd", pwd);
-
-					try {
-						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					L.i(">>>>>>>Login:" + url);
-					MyJSONObject data = getDataFromSer(url);
-					if(data != null){
-						int resultCode = data.getInt("resultCode");
-						if (resultCode == 1) {
-							int status = data.getInt("status");
-							if (status == 1) {
-								setUserData(userName, pwd, data.getJSONObject("resultData"));
-								//本地保存
-								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME, userName);
-								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, pwd);
-
-								if(needCallBack)
-									listener.onDataFinish(BusinessDataListener.DONE_USER_LOGIN, null, null, null);
-								}else{
-									if(needCallBack)
-										listener.onDataFailed(BusinessDataListener.ERROR_USER_LOGIN, data.getString("tip"), null);
-								}
-							}else{
-								if(needCallBack)
-									listener.onDataFailed(BusinessDataListener.ERROR_USER_LOGIN, data.getString("description"), null);
-							}
-
-					}else{
-						if(needCallBack)
-							listener.onDataFailed(BusinessDataListener.ERROR_USER_LOGIN, ERROR_NET, null);
-					}
-				} catch (Exception e) {
-					if(needCallBack)
-						listener.onDataFailed(BusinessDataListener.ERROR_USER_LOGIN, ERROR_DATA, null);
-				}
-
-			}
-		});
-	}
 
 	public void MobileLogin(final Context mContext, final String pwd, final String userName ){
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
@@ -3454,7 +1623,14 @@ public class UserService extends BaseService{
 					JSONObject jsonUrl = new JSONObject();
 					jsonUrl.put("pwd",pwd );
 					jsonUrl.put("userName", userName);
-
+					jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("pwd",pwd );
+					paramMap.put("userName", userName);
+					paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
 					try {
 						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 					} catch (UnsupportedEncodingException e) {

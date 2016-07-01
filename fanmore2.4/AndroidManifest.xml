@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="cy.com.morefan"
-    android:versionCode="4"
-    android:versionName="1.2.1">
+    android:versionCode="1"
+    android:versionName="1.0.0">
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -416,30 +416,30 @@
         <receiver
             android:name=".listener.AlamrReceiver"
             android:process=":remote" />
-        <!--&lt;!&ndash; QZone &ndash;&gt;-->
+        <!-- QZone -->
 
-        <!--<activity-->
-            <!--android:name="com.wensli.fanmore.wxapi.QzoneActivity"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
-        <!--<activity-->
-            <!--android:name="com.tencent.connect.common.AssistActivity"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
-        <!--<activity-->
-            <!--android:name="com.tencent.tauth.AuthActivity"-->
-            <!--android:launchMode="singleTask"-->
-            <!--android:noHistory="true">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
+        <activity
+            android:name="com.wensli.fanmore.wxapi.QzoneActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-                <!--<category android:name="android.intent.category.BROWSABLE" />-->
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-                <!--<data android:scheme="tencent1104949609" />-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
-        <!--&lt;!&ndash; Qzone end &ndash;&gt;-->
+                <data android:scheme="tencent1104949609" />
+            </intent-filter>
+        </activity>
+        <!-- Qzone end -->
 
 
         <!-- umeng -->

@@ -315,9 +315,7 @@ public static String getDeviceInfo(Context context) {
 
 			所以迟3秒后再获取token并提交
 		 */
-		mHandler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
+
 				//String tokens = UmengRegistrar.getRegistrationId(LoadingActivity.this);
 				String	token= JPushInterface.getRegistrationID(LoadingActivity.this);
 				L.i(">>>>>token:" + token);
@@ -328,8 +326,7 @@ public static String getDeviceInfo(Context context) {
 
 				}
 
-			}
-		}, 3000);
+
 
 		//String loginCode = SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_LOGINCODE);
 		initData();
@@ -344,7 +341,6 @@ public static String getDeviceInfo(Context context) {
 		if(loader == null)
 			loader = new SyncImageLoaderHelper(this);
 		taskService.init(this, userName, pwd,size[0], size[1], loader);
-
 		taskService.PayConfig(this);
 		userService.getScanCount();
 		userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);

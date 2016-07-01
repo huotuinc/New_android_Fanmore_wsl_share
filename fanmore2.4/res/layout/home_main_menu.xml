@@ -157,14 +157,15 @@
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_below="@+id/layHome_icon"
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:background="@color/gray_list_bg"
+                android:layout_marginLeft="30dp"/>
         </RelativeLayout>
 
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="1px"
-            android:background="@color/gray_list_bg"
-            android:layout_marginLeft="30dp"/>
 
         <RelativeLayout
             android:id="@+id/layHistoryReturn"
@@ -204,15 +205,18 @@
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_below="@+id/layHistoryReturn_icon"
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:background="@color/gray_list_bg"
+                android:layout_marginLeft="30dp"/>
         </RelativeLayout>
 
-                <ImageView
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:background="@color/gray_list_bg"
-                    android:layout_marginLeft="30dp"/>
+
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:id="@+id/layRank"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -250,14 +254,17 @@
                         android:layout_centerVertical="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
+                    <ImageView
+                        android:layout_below="@+id/layRank_icon"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1px"
+                        android:background="@color/gray_list_bg"
+                        android:layout_marginLeft="30dp"/>
                 </RelativeLayout>
-                <ImageView
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:background="@color/gray_list_bg"
-                    android:layout_marginLeft="30dp"/>
+
 
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/layTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -295,12 +302,14 @@
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_below="@+id/layTask_icon"
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:background="@color/white" />
         </RelativeLayout>
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="1px"
-            android:background="@color/white" />
+
 
 
         <RelativeLayout
@@ -355,11 +364,7 @@
                 android:layout_height="wrap_content"/>
         </RelativeLayout>
 
-                <ImageView
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:background="@color/gray_list_bg"
-                    android:layout_marginLeft="30dp"/>
+
 
         <RelativeLayout
             android:id="@+id/layPrentice"
@@ -396,12 +401,14 @@
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_below="@+id/layPrentice_icon"
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:background="@color/gray_list_bg"
+                android:layout_marginLeft="30dp"/>
         </RelativeLayout>
-                <ImageView
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:background="@color/gray_list_bg"
-                    android:layout_marginLeft="30dp"/>
+
 
                 <RelativeLayout
                     android:id="@+id/layMall"
@@ -441,12 +448,14 @@
                         android:layout_centerVertical="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
+                    <ImageView
+                        android:layout_below="@+id/layMall_icon"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1px"
+                        android:background="@color/gray_list_bg"
+                        android:layout_marginLeft="30dp"/>
+
                 </RelativeLayout>
-                <ImageView
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:background="@color/gray_list_bg"
-                    android:layout_marginLeft="30dp"/>
 
                 <RelativeLayout
                     android:id="@+id/layMore"
@@ -483,12 +492,14 @@
                         android:layout_centerVertical="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
+                    <ImageView
+                        android:layout_below="@+id/layMore_icon"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1px"
+                        android:background="@color/gray_list_bg"
+                        android:layout_marginLeft="30dp"/>
                 </RelativeLayout>
-                <ImageView
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:background="@color/gray_list_bg"
-                    android:layout_marginLeft="30dp"/>
+
                 <RelativeLayout
                     android:id="@+id/laySupervision"
                     android:layout_width="wrap_content"

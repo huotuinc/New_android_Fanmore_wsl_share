@@ -177,7 +177,7 @@ public class WalletActivity extends BaseActivity implements Callback{
 				startActivity(intentlogin);
 				return;
 			}
-			mUserService.getDuiBaUrl(UserData.getUserData().loginCode);
+			//mUserService.getDuiBaUrl(UserData.getUserData().loginCode);
 			showProgress();
 			break;
 

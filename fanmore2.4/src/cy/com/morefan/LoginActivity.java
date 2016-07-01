@@ -214,11 +214,11 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
             {
                 dismissProgress();
                 BusinessStatic.getInstance().accountModel  = ( AccountModel ) msg.obj;
-                userService.userReg(LoginActivity.this,
-                        BusinessStatic.getInstance().accountModel.getAccountName(), null,
-                        BusinessStatic.getInstance().accountModel.getAccountId(), "LOGINOAUTHOR",
-                        BusinessStatic.getInstance().accountModel.getAccountUnionId(), BusinessStatic.getInstance().accountModel.getOpenid(),
-                        BusinessStatic.getInstance().accountModel.getAccountIcon(), BusinessStatic.getInstance().accountModel.getNickname());
+//                userService.userReg(LoginActivity.this,
+//                        BusinessStatic.getInstance().accountModel.getAccountName(), null,
+//                        BusinessStatic.getInstance().accountModel.getAccountId(), "LOGINOAUTHOR",
+//                        BusinessStatic.getInstance().accountModel.getAccountUnionId(), BusinessStatic.getInstance().accountModel.getOpenid(),
+//                        BusinessStatic.getInstance().accountModel.getAccountIcon(), BusinessStatic.getInstance().accountModel.getNickname());
                 //AuthParamUtils paramUtils = new AuthParamUtils ( application, System.currentTimeMillis (), "", LoginActivity.this );
                 //paramUtils.obtainParams ( BusinessStatic.getInstance().accountModel );
 
@@ -281,7 +281,7 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
             String loginCode= SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD);
             String username= SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME);
 
-            userService.userLogin(this, username, loginCode, true);
+            //.userLogin(this, username, loginCode, true);
 
         }
     }

@@ -151,7 +151,7 @@ public class UserExchangeActivity extends BaseActivity implements UserInfoView.O
     }
 
     private void refresh() {
-        userService.intGoldInfo(UserData.getUserData().loginCode, UserData.getUserData().score);
+        //userService.intGoldInfo(UserData.getUserData().loginCode, UserData.getUserData().score);
 
         showProgress();
 

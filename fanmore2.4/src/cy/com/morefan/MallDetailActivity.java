@@ -76,7 +76,7 @@ public class MallDetailActivity extends BaseActivity implements BroadcastListene
 		String orderNo = getIntent().getExtras().getString("orderNo");
 		mBuyData.orderNo = orderNo;
 
-		mUserService.getMallDetail(mBuyData, UserData.getUserData().loginCode);
+		//mUserService.getMallDetail(mBuyData, UserData.getUserData().loginCode);
 		showProgress();
 		myBroadcastReceiver = new MyBroadcastReceiver(this, this, MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE);
 

@@ -91,7 +91,7 @@ public class FeedBackActivity extends BaseActivity implements Callback, OnEditor
 				+ "系统:"  + android.os.Build.VERSION.RELEASE + "\n"
 				+ "网络:" + NetworkUtil.getNetworkType(this);
 		UserService userService = new UserService(this);
-		userService.Feedback(UserData.getUserData().loginCode, name, contact, content);
+		//userService.Feedback(UserData.getUserData().loginCode, name, contact, content);
 		showProgress();
 
 	}

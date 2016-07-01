@@ -9,7 +9,9 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cy.com.morefan.bean.GroupData;
 import cy.com.morefan.bean.GroupPersonData;
@@ -19,6 +21,7 @@ import cy.com.morefan.bean.TaskData;
 import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.listener.BusinessDataListener;
+import cy.com.morefan.util.AuthParamUtils;
 import cy.com.morefan.util.JJSONUtil;
 import cy.com.morefan.util.JsonUtil;
 import cy.com.morefan.util.L;
@@ -27,6 +30,7 @@ import cy.com.morefan.util.L;
  * Created by Administrator on 2016/3/9.
  */
 public class SupervisionService extends BaseService {
+     long timestamp = System.currentTimeMillis();
 
     public SupervisionService(BusinessDataListener listener){
         super(listener);
@@ -49,6 +53,15 @@ public void AllTask(final String loginCode, final String keyword,final int pageI
                 jsonUrl.put("loginCode",loginCode);
                 jsonUrl.put("keyword", keyword);
                 jsonUrl.put("pageIndex", pageIndex);
+                jsonUrl.put("timestamp", timestamp);
+                AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+                Map< String, String > paramMap = new HashMap< String, String >( );
+                paramMap.put("loginCode",loginCode);
+                paramMap.put("keyword", keyword);
+                paramMap.put("pageIndex", String.valueOf(pageIndex));
+                paramMap.put("timestamp",String.valueOf(timestamp));
+                String url2 = authParamUtils.getMapSign1(paramMap);
+                jsonUrl.put("sign",url2);
                 try {
                     url = url + URLEncoder.encode(jsonUrl.toString(), "UTF-8");
                 } catch (UnsupportedEncodingException e) {
@@ -106,6 +119,15 @@ public void AllTask(final String loginCode, final String keyword,final int pageI
                     jsonUrl.put("loginCode", logincode);
                     jsonUrl.put("orid", orid);
                     jsonUrl.put("taskId", taskId);
+                    jsonUrl.put("timestamp", timestamp);
+                    AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+                    Map< String, String > paramMap = new HashMap< String, String >( );
+                    paramMap.put("loginCode",logincode);
+                    paramMap.put("orid", String.valueOf(orid));
+                    paramMap.put("taskId", String.valueOf(taskId));
+                    paramMap.put("timestamp",String.valueOf(timestamp));
+                    String url2 = authParamUtils.getMapSign1(paramMap);
+                    jsonUrl.put("sign",url2);
                     url += URLEncoder.encode(jsonUrl.toString(), "UTF-8");
                     L.i("UserOrganize:" + url);
                     MyJSONObject data = getDataFromSer(url);
@@ -157,7 +179,16 @@ public void AllTask(final String loginCode, final String keyword,final int pageI
                     JSONObject jsonUrl=new JSONObject();
                     jsonUrl.put("loginCode",loginCode);
                     jsonUrl.put("masterId", masterId);
+                    jsonUrl.put("timestamp", timestamp);
                     jsonUrl.put("pageIndex", pageIndex);
+                    AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+                    Map< String, String > paramMap = new HashMap< String, String >( );
+                    paramMap.put("loginCode",loginCode);
+                    paramMap.put("masterId", String.valueOf(masterId));
+                    paramMap.put("pageIndex", String.valueOf(pageIndex));
+                    paramMap.put("timestamp",String.valueOf(timestamp));
+                    String url2 = authParamUtils.getMapSign1(paramMap);
+                    jsonUrl.put("sign",url2);
                     try {
                         url += URLEncoder.encode(jsonUrl.toString(), "UTF-8");
                     } catch (UnsupportedEncodingException e) {
@@ -228,6 +259,17 @@ public void AllTask(final String loginCode, final String keyword,final int pageI
                     jsonUrl.put("pid", pid);
                     jsonUrl.put("sort",sort);
                     jsonUrl.put("taskId", taskId);
+                    jsonUrl.put("timestamp", timestamp);
+                    AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+                    Map< String, String > paramMap = new HashMap< String, String >( );
+                    paramMap.put("loginCode",loginCode);
+                    paramMap.put("pid", String.valueOf(pid));
+                    paramMap.put("sort", String.valueOf(sort));
+                    paramMap.put("taskId", String.valueOf(taskId));
+                    paramMap.put("pageIndex", String.valueOf(pageIndex));
+                    paramMap.put("timestamp",String.valueOf(timestamp));
+                    String url2 = authParamUtils.getMapSign1(paramMap);
+                    jsonUrl.put("sign",url2);
                     url += URLEncoder.encode(jsonUrl.toString(), "UTF-8");
                     L.i("GetGroupPerson:" + url);
                     MyJSONObject data = getDataFromSer(url);

@@ -39,7 +39,6 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -58,7 +57,6 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	private FragManager fragManager;
 	private UserService userService;
 	//private TextView txtMine;
-	private ImageView imgPhoto;
 	private TextView txtName;
 	private TextView txtScore;
 	private TextView txttodayScanCount;
@@ -82,8 +80,10 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	private TextView txtCheckDes;
 	private TextView count;
 	private TextView mylevel;
-	private CircleImageView btnLeft;
+	private ImageView btnLeft;
 	private Button btnBack;
+	private RelativeLayout layTask;
+
 
 	//private PopCheckIn popCheckIn;
 	private SyncImageLoaderHelper helper;
@@ -158,15 +158,15 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	private void initView() {
 		img = (CircleImageView) findViewById(R.id.img);
 		btnRight = (CyButton) findViewById(R.id.btnRight);
-		btnLeft =(CircleImageView) findViewById(R.id.btnLeft);
+		btnLeft =(ImageView) findViewById(R.id.btnLeft);
 		btnBack = (Button)findViewById(R.id.btnBack);
 		imgTag = (ImageView) findViewById(R.id.imgTag);
 		txtRight=(TextView)findViewById(R.id.txtRight);
 		txtTitle = (TextView) findViewById(R.id.txtTitle);
 		layTab = (LinearLayout) findViewById(R.id.layTab);
+		layTask =(RelativeLayout)findViewById(R.id.layTask);
 		layMiddle = (LinearLayout) findViewById(R.id.layMiddle);
 		mDragLayout	 = (DrawerLayout) findViewById(R.id.dragLayout);
-		imgPhoto 	 = (ImageView) findViewById(R.id.imgPhoto);
 		txtName		 = (TextView) findViewById(R.id.txtName);
 		txtScore	 = (TextView) findViewById(R.id.txtScore);
 		txttodayScanCount		 = (TextView) findViewById(R.id.txttodayScanCount);
@@ -174,8 +174,6 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		laySupervision =(RelativeLayout)findViewById(R.id.laySupervision);
 		layRank=(RelativeLayout)findViewById(R.id.layRank);
 		mylevel= (TextView)findViewById(R.id.mylevel);
-		btnLeft.setBorderColor(getResources().getColor(R.color.white));
-		btnLeft.setBorderWidth((int)getResources().getDimension(R.dimen.head_width));
 		img.setBorderColor(getResources().getColor(R.color.white));
 		img.setBorderWidth((int)getResources().getDimension(R.dimen.head_width));
 //		txtTodayScan = (TextView) findViewById(R.id.txtTodayScan);
@@ -480,7 +478,6 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		switch (type) {
 		case Task:
 			btnBack.setVisibility(View.GONE);
-			imgPhoto.setVisibility(View.VISIBLE);
 			btnLeft.setVisibility(View.VISIBLE);
 			layMiddle.setVisibility(View.GONE);
 			layTab.setVisibility(View.VISIBLE);
@@ -494,7 +491,6 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			txtTitle.setText("乐享资讯");
 			btnBack.setVisibility(View.GONE);
 			btnLeft.setVisibility(View.VISIBLE);
-			imgPhoto.setVisibility(View.VISIBLE);
 			btnRight.setVisibility(View.VISIBLE);
 			btnRight.setBackgroundResource(R.drawable.title_query_normal);
 			imgTag.setVisibility(View.VISIBLE);
@@ -504,7 +500,6 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		case My:
 			btnBack.setVisibility(View.VISIBLE);
 			btnLeft.setVisibility(View.GONE);
-			imgPhoto.setVisibility(View.GONE);
 			txtRight.setVisibility(View.GONE);
 			imgTag.setVisibility(View.GONE);
 			txtTitle.setText("个人中心");
@@ -519,7 +514,6 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			break;
 
 		case More:
-			imgPhoto.setVisibility(View.GONE);
 			btnBack.setVisibility(View.VISIBLE);
 			btnLeft.setVisibility(View.GONE);
 			txtRight.setVisibility(View.GONE);
@@ -529,7 +523,6 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			btnRight.setVisibility(View.GONE);
 			break;
 		case Prentice:
-			imgPhoto.setVisibility(View.GONE);
 			btnBack.setVisibility(View.VISIBLE);
 			btnLeft.setVisibility(View.GONE);
 			imgTag.setVisibility(View.GONE);
@@ -643,6 +636,16 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			}else {
 				laySupervision.setVisibility(View.GONE);
 			}
+			if (BusinessStatic.getInstance().AppEnableWeekTask==1){
+				layTask.setVisibility(View.VISIBLE);
+			}else {
+				layTask.setVisibility(View.GONE);
+			}
+			if (BusinessStatic.getInstance().AppEnableRank==1){
+				layRank.setVisibility(View.VISIBLE);
+			}else {
+				layRank.setVisibility(View.GONE);
+			}
 			if (TextUtils.isEmpty(userName))
 				userName = userData.UserNickName;
 			else if (TextUtils.isEmpty(userName)){
@@ -660,11 +663,9 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		L.i(">>>>>>>>>picUrl:" + userData.picUrl);
 		if(TextUtils.isEmpty(userData.picUrl)){
 			img.setImageResource(R.drawable.user_icon);
-			btnLeft.setImageResource(R.drawable.user_icon);
 		}else{
 			//helper.loadImage(-1, img, null, userData.picUrl, Constant.BASE_IMAGE_PATH);
 			ImageLoad.loadLogo(userData.picUrl, img, this);
-			ImageLoad.loadLogo(userData.picUrl, btnLeft, this);
 
 		}
 

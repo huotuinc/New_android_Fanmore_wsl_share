@@ -248,11 +248,11 @@ public class AuthCodeReceiverActivity extends BaseActivity implements BusinessDa
 		}
 	}
 	public void bindPhone(String code){
-		userService.userBindPhone(UserData.getUserData().loginCode, phone, code);
+		//userService.userBindPhone(UserData.getUserData().loginCode, phone, code);
 		showProgress();
 	}
 	public void unBindPhone(String code){
-		userService.userBindPhone(UserData.getUserData().loginCode, phone, code);
+		//.userBindPhone(UserData.getUserData().loginCode, phone, code);
 		showProgress();
 	}
 	public void bindAli(String code){
@@ -282,7 +282,7 @@ public class AuthCodeReceiverActivity extends BaseActivity implements BusinessDa
 			//toast("请输入支付宝账号!");
 			return;
 		}
-		userService.userBindPayAccount(UserData.getUserData().loginCode, UserData.getUserData().phone, account, realName,  code);
+		//userService.userBindPayAccount(UserData.getUserData().loginCode, UserData.getUserData().phone, account, realName,  code);
 		showProgress();
 	}
 	public void bind(){

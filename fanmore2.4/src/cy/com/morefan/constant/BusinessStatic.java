@@ -40,6 +40,8 @@ public class BusinessStatic implements Serializable {
 	public  int AWARD_LINK;
 	public  String ADIMG;
 	public  String adclick;
+	public  int AppEnableRank;
+	public  int AppEnableWeekTask;
 	public  String URL_RULE;
 	public  String URL_WEBSITE;
 	public  Integer customerId;

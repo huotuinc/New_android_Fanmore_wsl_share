@@ -127,7 +127,7 @@ public class RankAdapter extends BaseAdapter{
 		}else {
 			ImageLoad.loadLogo(data.logo, imgRankuser, mContext);
 		}
-		imgIndex.setBackgroundResource(getIndexImage(position ));
+		imgIndex.setBackgroundResource(getIndexImage(data.rankValue ));
 		lay.setBackgroundResource(getBgRes(position));
 		txtDes.setText(String.valueOf((data.value))+"次");
 		txtName1.setText(data.name);

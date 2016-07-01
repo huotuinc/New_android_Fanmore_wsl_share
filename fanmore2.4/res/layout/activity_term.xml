@@ -29,6 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text=""
+            android:maxLines="1"
+            android:maxLength="9"
             android:textSize="18dp"
             android:textColor="@color/white"
             android:textIsSelectable="false" />

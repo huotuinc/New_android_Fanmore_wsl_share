@@ -121,7 +121,6 @@ public class PushMsgActivity extends BaseActivity implements OnRefreshOrLoadList
 		getDataFromSer(0);
 	}
 	private void getDataFromSer(int pageIndex){
-		mUserService.getPushMsg(UserData.getUserData().loginCode, pageIndex, Constant.PAGESIZE);
 		showProgress();
 	}
 

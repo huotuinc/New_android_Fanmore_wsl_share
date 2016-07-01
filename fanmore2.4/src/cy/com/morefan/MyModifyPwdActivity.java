@@ -117,7 +117,7 @@ public class MyModifyPwdActivity extends BaseActivity implements OnEditorActionL
 			edtNewPwdRe.requestFocusFromTouch();
 			return;
 		}
-		userService.userModifyPwd(this, UserData.getUserData().loginCode, SecurityUtil.MD5Encryption(newPwdRe));
+		//userService.userModifyPwd(this, UserData.getUserData().loginCode, SecurityUtil.MD5Encryption(newPwdRe));
 		showProgress();
 
 

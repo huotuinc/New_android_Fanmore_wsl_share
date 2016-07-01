@@ -268,10 +268,10 @@ public class BaseActivity extends SwipeBackActivity implements BusinessDataListe
 	 * @param name 用户名
 	 * @param pwd 密码
 	 * @param needProgress 是否需要进度条
-	 * @param needCallBack 是否需要回调
+	 *
 	 */
-	public void login(String name, String pwd, boolean needProgress, boolean needCallBack){
-		userService.userLogin(this, name, SecurityUtil.MD5Encryption(pwd), needCallBack);
+	public void login(String name, String pwd, boolean needProgress){
+		userService.MobileLogin(this, name, SecurityUtil.MD5Encryption(pwd));
 		if(needProgress)
 			showProgress();
 	}

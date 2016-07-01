@@ -298,7 +298,7 @@ public class ForgetLoginPwdActivity extends BaseActivity implements Callback, Br
 			}
 			//test logincode,正式不需要logincode
 			//String logincode = "test01^" + SecurityUtil.MD5Encryption("123456");
-			userService.getAuthCode("", phone, 4);
+			//userService.getAuthCode("", phone, 4);
 			showProgress();
 
 			recLen = 90;
@@ -364,7 +364,7 @@ public class ForgetLoginPwdActivity extends BaseActivity implements Callback, Br
 			edtRePwd.requestFocusFromTouch();
 			return;
 		}
-		userService.userReset(this, userName, SecurityUtil.MD5Encryption(userPwd), code );
+		//userService.userReset(this, userName, SecurityUtil.MD5Encryption(userPwd), code );
 		showProgress();
 
 

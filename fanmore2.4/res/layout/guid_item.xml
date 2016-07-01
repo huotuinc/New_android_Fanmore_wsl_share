@@ -3,20 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/skipText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="跳过>>"
+
+
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/btn_tohome"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:text="立即体验"
         android:textColor="@color/white"
-        android:textSize="14sp"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="30dp"
-        android:background="@drawable/member_shape"/>
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_tohome"
+        android:layout_margin="40dp"/>
 </RelativeLayout>

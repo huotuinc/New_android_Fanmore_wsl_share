@@ -40,7 +40,7 @@ public class PushMsgHandleActivity extends BaseActivity implements Callback, pro
 					"重试", "取消", null, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							mTaskService.checkTaskStatus(pushMsg.taskId);
+							//mTaskService.checkTaskStatus(pushMsg.taskId);
 							showProgress();
 						}
 					}, new DialogInterface.OnClickListener() {
@@ -133,7 +133,7 @@ public class PushMsgHandleActivity extends BaseActivity implements Callback, pro
 					startApp();
 				}
 			}else{//查询任务状态
-				mTaskService.checkTaskStatus(pushMsg.taskId);
+				//mTaskService.checkTaskStatus(pushMsg.taskId);
 				showProgress();
 			}
 

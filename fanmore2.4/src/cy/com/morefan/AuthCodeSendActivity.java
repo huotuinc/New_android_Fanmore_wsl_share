@@ -186,7 +186,7 @@ public class AuthCodeSendActivity extends BaseActivity implements OnEditorAction
 		}
 		//1：手机号相关;2：支付宝相关
 		int type = (currentType == AuthType.Ali || currentType == AuthType.ModifyAli) ? 2 : 1;
-		userService.getAuthCode(UserData.getUserData().loginCode, phone, type);
+		//userService.getAuthCode(UserData.getUserData().loginCode, phone, type);
 		showProgress();
 	}
 	private void goToNext() {

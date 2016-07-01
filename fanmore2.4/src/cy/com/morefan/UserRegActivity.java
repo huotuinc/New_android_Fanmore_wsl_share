@@ -92,7 +92,7 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 			dismissProgress();
 			toast("验证码错误");
 		}else if (msg.what == BusinessDataListener.DONE_VERIFY_MOBILE){
-			userService.getAuthCode("",edtPhone.getText().toString(),3);
+			userService.getAuthCode("",edtPhone.getText().toString(),3,System.currentTimeMillis());
 			showProgress();
 
 			recLen = 60;
@@ -140,7 +140,7 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 					return;
 				}
 				if (isUpdate==1) {
-					userService.getAuthCode("", edtPhone.getText().toString(), 3);
+					userService.getAuthCode("", edtPhone.getText().toString(), 3,System.currentTimeMillis());
 					showProgress();
 
 					recLen = 60;

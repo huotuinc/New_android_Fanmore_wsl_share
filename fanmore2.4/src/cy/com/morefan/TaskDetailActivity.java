@@ -285,7 +285,7 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						//购买提前道具
-						userService.buyTool(UserData.getUserData().loginCode, 3, statusData.advanceToolExp, null, null);
+						//userService.buyTool(UserData.getUserData().loginCode, 3, statusData.advanceToolExp, null, null);
 						showProgress();
 					}
 				});

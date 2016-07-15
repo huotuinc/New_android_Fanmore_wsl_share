@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -70,9 +71,30 @@ public class MasterActivity extends BaseActivity implements View.OnClickListener
                 ImageLoad.loadLogo(groupData.getLogo(), imguser, this);
             }
             userid = groupData.getUserid();
-            browseCount.setText(String.valueOf(groupData.getTotalBrowseCount())+"次");
-            turnAmount.setText(String.valueOf(groupData.getTotalTurnCount())+"次");
-            prenticeAmount.setText(String.valueOf(groupData.getPrenticeCount())+"人");
+            if (groupData.getTotalBrowseCount()>=10000){
+                double browsecount1 =(double)groupData.getTotalBrowseCount()/10000;
+                BigDecimal  b   =   new   BigDecimal(browsecount1);
+                double   browsecount2   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+                browseCount.setText(String.valueOf(browsecount2) + "万次");
+            }else {
+                browseCount.setText(String.valueOf(groupData.getTotalBrowseCount()) + "次");
+            }
+            if (groupData.getTotalTurnCount()>=10000){
+                double browsecount1 =(double)groupData.getTotalTurnCount()/10000;
+                BigDecimal  b   =   new   BigDecimal(browsecount1);
+                double   browsecount2   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+                turnAmount.setText(String.valueOf(browsecount2) + "万次");
+            }else {
+                turnAmount.setText(String.valueOf(groupData.getTotalTurnCount()) + "次");
+            }
+            if (groupData.getPrenticeCount()>=10000){
+                double browsecount1 =(double)groupData.getPrenticeCount()/10000;
+                BigDecimal  b   =   new   BigDecimal(browsecount1);
+                double   browsecount2   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+                prenticeAmount.setText(String.valueOf(browsecount2) + "万人");
+            }else {
+                prenticeAmount.setText(String.valueOf(groupData.getPrenticeCount()) + "人");
+            }
         }
 
 
@@ -82,6 +104,7 @@ public class MasterActivity extends BaseActivity implements View.OnClickListener
         bd.putInt("userid",userid);
 
         hb.setArguments(bd);
+        rw.setArguments(bd);
 
         ArrayList<Fragment> fragments = new ArrayList<Fragment>();
         fragments.add(rw);

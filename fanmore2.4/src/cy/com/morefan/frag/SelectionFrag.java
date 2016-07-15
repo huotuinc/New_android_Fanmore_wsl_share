@@ -176,6 +176,7 @@ public class SelectionFrag extends BaseFragment implements View.OnClickListener,
 
     @Override
     public void onDataFailed(int type, String des, Bundle extra) {
+        frag.onDataFailed(type, des, extra);
         handler.obtainMessage(type, datas).sendToTarget();
     }
 

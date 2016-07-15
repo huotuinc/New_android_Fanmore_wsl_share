@@ -7,7 +7,6 @@ import cy.com.morefan.R;
 import cy.com.morefan.bean.TaskData;
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.frag.TaskFrag.TabType;
-import cy.com.morefan.util.L;
 import cy.com.morefan.util.ShareUtil;
 import cy.com.morefan.util.ViewHolderUtil;
 import android.content.Context;
@@ -141,7 +140,7 @@ public class TaskAdapter extends BaseAdapter{
         	imgTagSina.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_SINA + "") ? R.drawable.share_wechat : R.drawable.share_wechat);
         	imgTagQzone.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_QZONE + "") ? R.drawable.share_ico_qzone : R.drawable.share_ico_qzone);
 			browseCount.setText(data.browseCount);
-			sendCount.setText(data.sendCount);
+			sendCount.setText(String.valueOf(data.sendCount));
         	//layScan.setVisibility(adapterType == TaskAdapterType.Normal ? View.GONE : View.VISIBLE);
         	//bar.setProgress(position *10);
         	txtTaskName.setText(data.taskName);
@@ -150,7 +149,7 @@ public class TaskAdapter extends BaseAdapter{
 //			txtScan.setText(data.awardScan);
 //			txtLink .setText(data.awardLink);
 			txtTimeDis.setText(data.dayDisDes);
-			txtSendCount .setText(data.sendCount + "人已转发" );
+			txtSendCount .setText(String.valueOf(data.sendCount) + "人已转发" );
 			txtDate.setText(data.creatTime.split(" ")[0]);
 			if(data.type == 1001000){
 				txtTotalScore.setText("无上限");

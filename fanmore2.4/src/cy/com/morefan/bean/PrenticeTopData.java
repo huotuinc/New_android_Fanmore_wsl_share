@@ -26,6 +26,8 @@ public class PrenticeTopData implements BaseData{
 	// 历史总转发量
 	public String historyTotalTurnAmount;
 
+	public String shareTitle;
+
 	@Override
 	public String getPageTag() {
 		// TODO Auto-generated method stub

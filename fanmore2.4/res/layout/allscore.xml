@@ -18,9 +18,9 @@
             android:layout_marginLeft="10dp"
             android:text="返回"
             android:gravity="center"
+            android:onClick="onClick"
             android:layout_height="20dp"
             android:textSize="15sp"
-            android:onClick="onClickButton"
             android:textColor="@color/white"
             android:drawableLeft="@drawable/title_back_normal" />
 

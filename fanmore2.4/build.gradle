@@ -2,20 +2,17 @@ apply plugin: 'com.android.application'
 
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
-    //compile project(':lib:CyLibEditText')
     compile project(':lib:CyLibApkPatch')
     compile project(':lib:CyLibImageDownload')
     compile project(':lib:CyLibLocation')
     compile project(':lib:TestSyncListView')
     compile project(':lib:cropper')
     compile project(':lib:CyLibHttpClient')
-    //compile project(':lib:WeiboSDK')
     compile project(':lib:main')
     compile files('libs/gson-2.2.4.jar')
     compile files('libs/alipaySDK-20150818.jar')
-    //compile 'com.android.support:design:23.2.0'
-    //compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile files('libs/jpush-android-2.1.5.jar')
+    compile files('libs/ShareSDK-Core-2.7.3.jar')
     compile 'com.handmark.library:pulltorefresh:1.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.huotu.android.library:libedittext:1.6'
@@ -23,7 +20,12 @@ dependencies {
     compile 'com.android.support:support-v4:21.0.3'
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha1'
-    compile files('libs/ShareSDK-Core-2.7.3.jar')
+    compile('com.github.satyan:sugar:1.5') {
+
+        exclude module: 'support-v4'
+    }
+    compile 'com.mcxiaoke.volley:library:1.0.19'
+    compile 'com.facebook.fresco:fresco:0.9.0'
 }
 
 android {
@@ -72,7 +74,7 @@ android {
         fanmore {
             applicationId 'hz.huotu.wsl.aifenxiang'
             signingConfig signingConfigs.huotu
-            minSdkVersion 9
+            minSdkVersion 11
             targetSdkVersion 21
         }
     }

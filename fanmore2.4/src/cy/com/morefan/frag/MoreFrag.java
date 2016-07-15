@@ -1,30 +1,20 @@
 package cy.com.morefan.frag;
 
 import com.lib.cylibimagedownload.ImageUtil;
-import com.umeng.message.PushAgent;
 
 import cy.com.morefan.AppUpdateActivity;
-import cy.com.morefan.FeedBackActivity;
 import cy.com.morefan.HomeActivity;
-import cy.com.morefan.DataListActivity;
-import cy.com.morefan.DataListActivity.ActivityType;
-import cy.com.morefan.PushMsgActivity;
 import cy.com.morefan.R;
-import cy.com.morefan.UserGuideActivity;
 import cy.com.morefan.AppUpdateActivity.UpdateType;
 import cy.com.morefan.UserRegActivity;
 import cy.com.morefan.WebViewActivity;
 import cy.com.morefan.bean.BaseData;
-import cy.com.morefan.bean.UserData;
 import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.service.TaskService;
 import cy.com.morefan.service.ThreadPoolManager;
 import cy.com.morefan.util.ActivityUtils;
-import cy.com.morefan.util.L;
-import cy.com.morefan.util.SPUtil;
-import cy.com.morefan.util.Util;
 import cy.com.morefan.view.CustomDialog;
 
 import android.content.DialogInterface;
@@ -33,13 +23,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
-import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MoreFrag extends BaseFragment implements OnClickListener, Callback, BusinessDataListener{

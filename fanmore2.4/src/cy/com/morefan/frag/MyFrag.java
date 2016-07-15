@@ -188,7 +188,6 @@ public class MyFrag extends BaseFragment implements OnUserInfoBackListener,OnCli
 		showProgress();
 
 		application = (MainApplication) this.getActivity().getApplication ();
-		myBroadcastReceiver = new MyBroadcastReceiver(getActivity(), this, MyBroadcastReceiver.ACTION_USER_MAINDATA_UPDATE, MyBroadcastReceiver.ACTION_USER_LOGOUT);
 	}
 	@Override
 	public void onDestroy() {

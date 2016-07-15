@@ -46,10 +46,14 @@ public class BusinessStatic implements Serializable {
 	public  String URL_WEBSITE;
 	public  Integer customerId;
 	public  String URL_ABOUTUS;
+	public  String weixinKey;
+	public  String weixinAppSecret;
 	public  String URL_PUTIN;//投放指南
 	public  String URL_TOOL;//投放指南
 	public  String URL_MANUALSERVICE;//人工服务
 	public  String URL_SERVICE;
+	public  String guide;
+	public  int adTime;
 	public  double USER_LAT;
 	public  double USER_LNG;
 	public  int API_LEVEL;
@@ -59,7 +63,7 @@ public class BusinessStatic implements Serializable {
 	/**
 	 * 0,非灾难;1、灾难
 	 */
-	public  boolean disasterFlag;
+	public  int disasterFlag;
 	public  String disasterUrl;
 	/**
 	 * 是否为模拟器

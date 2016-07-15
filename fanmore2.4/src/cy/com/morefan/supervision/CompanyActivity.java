@@ -28,6 +28,7 @@ import cy.com.morefan.R;
 import cy.com.morefan.adapter.GroupDataAdapter;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.GroupData;
+import cy.com.morefan.bean.GroupPersonData;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.service.SupervisionService;
@@ -65,9 +66,10 @@ public class CompanyActivity extends BaseActivity implements Handler.Callback ,A
     public CyButton btnQuery;
     @Bind(R.id.layEmpty)
     EmptyView layEmpty;
-
+    GroupPersonData groupPersonData;
     GroupData groupData;
     List<GroupData> datas;
+    List<GroupPersonData> personData;
     Handler handler;
     GroupDataAdapter groupDataAdapter;
     SupervisionService supervisionService;
@@ -102,7 +104,8 @@ public class CompanyActivity extends BaseActivity implements Handler.Callback ,A
         supervisionService = new SupervisionService(this);
         handler = new Handler(this);
         datas=new ArrayList<GroupData>();
-        groupDataAdapter = new GroupDataAdapter(this,datas);
+        personData = new ArrayList<GroupPersonData>();
+        groupDataAdapter = new GroupDataAdapter(this,datas,personData);
         listView.setAdapter(groupDataAdapter);
         listView.setOnItemClickListener(this);
         listView.setOnRefreshOrLoadListener(this);
@@ -122,11 +125,18 @@ public class CompanyActivity extends BaseActivity implements Handler.Callback ,A
     @Override
     public boolean handleMessage(Message msg) {
         if( msg.what == BusinessDataListener.DONE_GET_GROUP_DATA ){
-            GroupData[] results = (GroupData[]) msg.obj;
+            Bundle bundle = (Bundle) msg.obj;
+            GroupData[] results = (GroupData[])bundle.getSerializable("Data") ;
             int length = results.length;
             for (int i = 0; i < length; i++) {
                 if(!datas.contains(results[i]))
                     datas.add(results[i]);
+            }
+            GroupPersonData[] results1 = (GroupPersonData[])bundle.getSerializable("PersonData") ;
+            int length1 = results1.length;
+            for (int i = 0; i < length1; i++) {
+                if(!personData.contains(results1[i]))
+                    personData.add(results1[i]);
             }
             layEmpty.setVisibility(datas.size() < 1 ? View.VISIBLE : View.GONE);
             if (tag==1){
@@ -173,6 +183,7 @@ public class CompanyActivity extends BaseActivity implements Handler.Callback ,A
     protected void loadData(){
         showProgress();
         datas.clear();
+        personData.clear();
         String loginCode = UserData.getUserData().loginCode;
         supervisionService.getGroupData( loginCode, pid, taskId);
     }
@@ -250,25 +261,35 @@ public class CompanyActivity extends BaseActivity implements Handler.Callback ,A
     public void onDataFinish(int type, String des, BaseData[] datas, Bundle extra) {
         super.onDataFinish(type, des, datas, extra);
         if( type == BusinessDataListener.DONE_GET_GROUP_DATA ) {
-           handler.obtainMessage(type, datas).sendToTarget();
+           handler.obtainMessage(type, extra).sendToTarget();
         }
     }
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        GroupData data = datas.get(position-1);
-        if(data.getChildren()==0) {
-            Intent intent = new Intent(CompanyActivity.this, DepartmentActivity.class);
-            intent.putExtra("name", data.getName());
-            intent.putExtra("pid", data.getId());
-            intent.putExtra("taskId",taskId);
-            intent.putExtra("data", data);
-            startActivity(intent);
-        }else {
-            Intent intent = new Intent(CompanyActivity.this, CompanyActivity.class);
-            intent.putExtra("name", data.getName());
-            intent.putExtra("pid", data.getId());
-            intent.putExtra("taskId",taskId);
-            intent.putExtra("data", data);
-            startActivity(intent);
+
+
+        if (position<=datas.size()) {
+            GroupData data = datas.get(position-1);
+            if (data.getChildren() == 0) {
+                Intent intent = new Intent(CompanyActivity.this, DepartmentActivity.class);
+                intent.putExtra("name", data.getName());
+                intent.putExtra("pid", data.getId());
+                intent.putExtra("taskId", taskId);
+                intent.putExtra("data", data);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(CompanyActivity.this, CompanyActivity.class);
+                intent.putExtra("name", data.getName());
+                intent.putExtra("pid", data.getId());
+                intent.putExtra("taskId", taskId);
+                intent.putExtra("data", data);
+                startActivity(intent);
+            }
+        }
+        else {
+            GroupPersonData persondata = personData.get(position-datas.size()-1);
+            Intent intent = new Intent(this, MasterActivity.class);
+            intent.putExtra("data", persondata);
+            this.startActivity(intent);
         }
     }
 

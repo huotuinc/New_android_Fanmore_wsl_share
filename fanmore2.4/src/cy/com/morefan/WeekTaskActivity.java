@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -18,6 +19,7 @@ import cy.com.morefan.adapter.WeekTaskAdapter;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.bean.WeekTaskData;
+import cy.com.morefan.frag.FragManager;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.service.UserService;
@@ -106,6 +108,19 @@ public boolean handleMessage(Message msg) {
         initData();
         listView.setAdapter(adapter);
 
+    }
+
+
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnBack:
+                finish();
+                FragManager fragManager= new FragManager(this,R.id.layContent);
+                fragManager.setCurrentFrag(FragManager.FragType.Task);
+                break;
+            default:
+                break;
+        }
     }
     public void initData(){
       String  logincode= UserData.getUserData().loginCode;

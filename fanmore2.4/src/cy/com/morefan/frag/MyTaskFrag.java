@@ -39,6 +39,7 @@ public class MyTaskFrag extends BaseFragment implements OnRefreshOrLoadListener,
     AwardAdapter adapter;
     UserService userService;
     private String pageDate;
+    private int userId;
     private MyBroadcastReceiver myBroadcastReceiver;
     private Handler mHandler = new Handler(this);
 
@@ -50,6 +51,10 @@ public class MyTaskFrag extends BaseFragment implements OnRefreshOrLoadListener,
         super.onCreate(savedInstanceState);
         pageDate = "";
         userService = new UserService(this);
+        Bundle bundle = getArguments();
+        if(bundle!=null){
+            userId=(bundle.getInt("userid"));
+        }
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,7 +80,7 @@ public class MyTaskFrag extends BaseFragment implements OnRefreshOrLoadListener,
         getDataFromSer();
     }
     public void getDataFromSer(){
-        userService.getAllScoreTrendList(datas, UserData.getUserData().loginCode, Constant.PAGESIZE, pageDate);
+        userService.getAllScoreTrendList(userId,datas, UserData.getUserData().loginCode, Constant.PAGESIZE, pageDate);
         showProgress();
     }
 

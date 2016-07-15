@@ -10,6 +10,7 @@ import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.wechat.favorite.WechatFavorite;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 import cy.com.morefan.AppUpdateActivity.UpdateType;
@@ -19,6 +20,7 @@ import cy.com.morefan.bean.TaskData;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
+import cy.com.morefan.frag.TaskFrag;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
@@ -76,7 +78,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 @SuppressLint("SetJavaScriptEnabled")
-public class TaskDetailActivity extends BaseActivity implements BusinessDataListener, Callback, BroadcastListener, OnClickListener{
+public class TaskDetailActivity extends BaseActivity implements BusinessDataListener, Callback, BroadcastListener{
 	public enum StatusType{
 		/**
 		 * 未转发
@@ -218,11 +220,7 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 
 			dismissProgress();
 			if(!isFree()){
-				if(BusinessStatic.getInstance().disasterFlag){
-					toast("转发成功!");
-					copy();
-				}else
-					toast("转发成功!");
+
 			}
 
 			taskData.isSend = true;
@@ -311,33 +309,34 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 
 	@Override
 	protected void onCreate(Bundle arg0) {
-		// TODO Auto-generated method stub
-		super.onCreate(arg0);
-		Util.isAppRunning(this);
-		setContentView(R.layout.task_detail);
+        // TODO Auto-generated method stub
+        super.onCreate(arg0);
+        Util.isAppRunning(this);
+        setContentView(R.layout.task_detail);
 
-		initView();
-		isLoadWeb = false;
-		wxNotBack = false;
-		statusType = StatusType.Normal;
-		userService = new UserService(this);
-		//mViewPager = (ViewPager) findViewById(R.id.viewPager);
-		btnShare = (Button) findViewById(R.id.btnShare);
-		taskData = (TaskData) getIntent().getExtras().getSerializable("taskData");
-		refreshList = getIntent().getBooleanExtra("refreshList", false);
-		advTime = getIntent().getStringExtra("advTime");
-		fromPre = getIntent().getExtras().getBoolean("fromPre");
+        initView();
+        isLoadWeb = false;
+        wxNotBack = false;
+        statusType = StatusType.Normal;
+        userService = new UserService(this);
+        //mViewPager = (ViewPager) findViewById(R.id.viewPager);
+        btnShare = (Button) findViewById(R.id.btnShare);
+        taskData = (TaskData) getIntent().getExtras().getSerializable("taskData");
+        refreshList = getIntent().getBooleanExtra("refreshList", false);
+        advTime = getIntent().getStringExtra("advTime");
+        fromPre = getIntent().getExtras().getBoolean("fromPre");
 
-		taskService = new TaskService(this);
-		taskService.getTaskDetail(taskData, UserData.getUserData().loginCode);
+        taskService = new TaskService(this);
+        taskService.getTaskDetail(taskData, UserData.getUserData().loginCode);
 //		if(fromPre)
 //			taskService.checkTaskStatus(taskData.id);
-		if(!layProgress.isShowing())
-			showProgress();
-		myBroadcastReceiver = new MyBroadcastReceiver(this, this, MyBroadcastReceiver.ACTION_USER_LOGIN, MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS,MyBroadcastReceiver.ACTION_SHARE_TO_QZONE_SUCCESS, MyBroadcastReceiver.ACTION_SHARE_TO_SINA_SUCCESS, MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE, MyBroadcastReceiver.ACTION_WX_NOT_BACK);
-		//showUserGuide(R.drawable.user_guide_task_detail);
-		fromOncreate = true;
-	}
+        if (!layProgress.isShowing())
+            showProgress();
+        myBroadcastReceiver = new MyBroadcastReceiver(this, this, MyBroadcastReceiver.ACTION_USER_LOGIN, MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS, MyBroadcastReceiver.ACTION_SHARE_TO_QZONE_SUCCESS, MyBroadcastReceiver.ACTION_SHARE_TO_SINA_SUCCESS, MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE, MyBroadcastReceiver.ACTION_WX_NOT_BACK);
+        //showUserGuide(R.drawable.user_guide_task_detail);
+        fromOncreate = true;
+
+    }
 	private boolean fromOncreate;
 	@Override
 	protected void onResume() {
@@ -367,8 +366,6 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 		layProgress = (CyLoadingProgress) findViewById(R.id.layProgress);
 		btnShare = (Button) findViewById(R.id.btnShare);
 		mWebView = (WebView) findViewById(R.id.webView);
-
-
 //		ViewTreeObserver vto = layTop.getViewTreeObserver();
 //		vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 //            public void onGlobalLayout() {
@@ -516,9 +513,6 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 	private void initPopupWindow() {
 		LayoutInflater mInflater = LayoutInflater.from(this);
 		View layout = mInflater.inflate(R.layout.pop_share, null);
-		layout.findViewById(R.id.layWeiXin).setOnClickListener(this);
-		layout.findViewById(R.id.layQQ).setOnClickListener(this);
-		layout.findViewById(R.id.layWeiXin1).setOnClickListener(this);
 		layout.findViewById(R.id.layAll).getBackground().setAlpha(220);
 		imgWeiXin = (ImageView) layout.findViewById(R.id.imgWeiXin);
 		imgSina = (ImageView) layout.findViewById(R.id.imgSina);
@@ -638,69 +632,6 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 				txtExtraDes.setText(taskData.extraDes);
 		}
 
-//
-//		//转发按钮显示与否
-//		if(taskData.flagShowSend == 1){
-//			btnShare.setVisibility(View.VISIBLE);
-//
-//			//闪购时，转发在右上角
-//			if(taskData.type == 1000300){
-//				//showUserGuide(R.drawable.user_guide_mall_send);
-//				 btnShare.setVisibility(View.GONE);
-//				 if(taskData.channelIds.size() == 3){
-//					 //btnBuySend.setVisibility(View.GONE);
-//					}
-//					//更新pop上状态
-//					if(popupWindow != null && popupWindow.isShowing())
-//						updatePopView();
-//				 return;
-//			}
-//			UserData userData = UserData.getUserData();
-//			if(!userData.isLogin)
-//				return;
-//
-//			calCount = true;
-//			btnShare.setClickable(true);
-////			if(userData.completeTaskCount >= userData.totalTaskCount && taskData.channelIds.size() == 0){
-////				btnShare.setBackgroundResource(R.drawable.shape_yellow_sel);
-////				//if(!fromPre)
-////				btnShare.setText(taskData.sendstatus == 1 || (taskData.sendstatus == 0 && fromPre) ? "火眼金睛" : "再来一发");
-////				//不计算转发次数的，显示立即转发
-////				if(taskData.type == 1000300 || taskData.type == 1001000){
-////					btnShare.setText("立即转发");
-			btnShare.setBackgroundResource(R.drawable.btn_red_sel);
-////				}
-//////				if(taskData.sendstatus == 1)
-//////					btnShare.setText("再来一发");
-////				//btnShare.setClickable(false);
-////			}
-//			if(Double.parseDouble(taskData.lastScore) == 0){
-////				btnShare.setBackgroundResource(R.drawable.btn_gray);
-////				btnShare.setText("抢光了");
-////				btnShare.setClickable(false);
-//			}
-//			//无偿转发，任务为抢光了，且未进行过转发
-//			if(isFree()){
-////				btnShare.setBackgroundResource(R.drawable.btn_green_sel);
-////				calCount = false;
-////				btnShare.setText("无偿转发");
-////				btnShare.setClickable(true);
-//			}
-//			if(taskData.channelIds.size() == 3){
-////				btnShare.setBackgroundResource(R.drawable.btn_gray);
-////				btnShare.setText("已转发");
-////				btnShare.setClickable(false);
-//			}
-//			//更新pop上状态
-//			if(popupWindow != null && popupWindow.isShowing())
-//				updatePopView();
-//		}else{
-//			btnShare.setVisibility(View.GONE);
-//		}
-//		//预告过来，已上线的/未登录 不显示按钮
-//		if(fromPre && taskData.sendstatus == 2 ){
-//			btnShare.setVisibility(View.GONE);
-//		}
 
 	}
 
@@ -739,54 +670,11 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 					toast("模拟器不支持该操作!");
 					return;
 				}
-				//帐号切换进行验证
-//				String preUserName = SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_PRE_USERNAME);
-//				if(!TextUtils.isEmpty(preUserName) && !preUserName.equals(UserData.getUserData().userName)){
-//					View view2 = LayoutInflater.from(this).inflate(R.layout.verify, null);
-//					final VerifyView mVerifyView = (VerifyView) view2.findViewById(R.id.txt);
-//					final EditText edt = (EditText) view2.findViewById(R.id.edt);
-//					final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//					mDialog = CustomDialog.showChooiceDialg(this, null, null, "确定", "换一个", view2,
-//							new DialogInterface.OnClickListener() {
-//
-//								@Override
-//								public void onClick(DialogInterface dialog, int which) {
-//									//验证是否通过
-//									try {
-//										int vaule = Integer.valueOf(edt.getText().toString().trim());
-//										if(vaule == mVerifyView.getResult()){
-//											SPUtil.saveStringToSpByName(TaskDetailActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_PRE_USERNAME, UserData.getUserData().userName);
-//											mDialog.setDialogDismissAfterClick();
-//											share();
-//											imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-//										}else{
-//											toast("验证错误!请重试");
-//										}
-//									} catch (Exception e) {
-//										toast("验证错误!请重试");
-//									}
-//								}
-//							} ,
-//							new DialogInterface.OnClickListener() {
-//
-//								@Override
-//								public void onClick(DialogInterface dialog, int which) {
-//									mVerifyView.refresh();
-//								}
-//							});
-//					mDialog.setDialogShowAfterClick();
-
-
-//					mHandler.postDelayed(new Runnable() {
-//						@Override
-//						public void run() {
-//							imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-//						}
-//					}, 10);
-//
-//				}else{
-					share();
-
+                if(BusinessStatic.getInstance().disasterFlag==1){
+                    copy();
+                }else {
+                    share();
+                }
 
 
 
@@ -794,26 +682,11 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 
 			}
 
-			//test
-//			userService.commitSend(taskData.id,UserData.getUserData().loginCode, 1);
-//			showProgress();
-
 			break;
-//		case R.id.btnAttention:
-//			if(TextUtils.isEmpty(taskData.openId)){
-//				T.show(this, "暂无微信公众号!");
-//				return;
-//			}
-//			Util.WxAttention(this, taskData.openId);
-//			break;
 
 		default:
 			break;
 		}
-//		//test
-//		throw new NullPointerException();
-//		//test end
-
 	}
 
 	/**
@@ -826,12 +699,12 @@ private boolean isFree(){
 }
 private void share(){
 
-	String imgUrl = "http://taskapi.fhsilk.com/resource/app/104X104.png";
+	String imgUrl = taskData.largeImgUrl;
 	String shareDes =taskData.taskName;
-	String shareUrl =taskData.smallImgUrl;
+	String shareUrl =taskData.content;
 	String fullPath1 = Constant.IMAGE_PATH_TASK + File.separator + taskData.smallImgUrl.substring(taskData.smallImgUrl.lastIndexOf("/") + 1);
-	ShareSDK.initSDK(this);
 	OnekeyShare oks = new OnekeyShare();
+
 	//关闭sso授权
 	oks.disableSSOWhenAuthorize();
 
@@ -839,21 +712,21 @@ private void share(){
 	// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
 	oks.setTitle(shareDes);
 	// titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-	oks.setTitleUrl("http://sharesdk.cn");
+	oks.setTitleUrl(shareUrl);
 	// text是分享文本，所有平台都需要这个字段
 	oks.setText(shareDes);
 	// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-	oks.setImagePath(fullPath1);//确保SDcard下面存在此张图片
+	oks.setImageUrl(imgUrl);//确保SDcard下面存在此张图片
 	// url仅在微信（包括好友和朋友圈）中使用
-	oks.setUrl(taskData.content);
+	oks.setUrl(shareUrl);
 	// comment是我对这条分享的评论，仅在人人网和QQ空间使用
-	oks.setComment("我是测试评论文本");
+	oks.setComment("");
 	// site是分享此内容的网站名称，仅在QQ空间使用
 	oks.setSite(getString(R.string.app_name));
 	// siteUrl是分享此内容的网站地址，仅在QQ空间使用
-	oks.setSiteUrl("http://sharesdk.cn");
+	oks.setSiteUrl(shareUrl);
 
-// 启动分享GUI
+// 启动分享GUIfem
 	oks.show(this);
 }
 
@@ -948,182 +821,9 @@ private void share(){
 		// 得到剪贴板管理器
 		ClipboardManager cmb = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
 		cmb.setText(taskData.content);
+        toast("复制链接 转发到朋友圈/好友");
 
 	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.layWeiXin1:
-				if(BusinessStatic.getInstance().disasterFlag){
-					Intent intentWeb = new Intent(this, WebViewActivity.class);
-					intentWeb.putExtra("url", BusinessStatic.getInstance().disasterUrl);
-					intentWeb.putExtra("title", "转发给朋友");
-					intentWeb.putExtra("disasterFlag", true);
-					intentWeb.putExtra("isSend", taskData.isSend);
-					startActivityForResult(intentWeb, 0);
-					return;
-				}
-				if(!BusinessStatic.getInstance().CHANNEL_LIST.contains(ShareUtil.CHANNEL_WEIXIN + "")){
-					return;
-				}
-				if(taskData.channelIds.contains(ShareUtil.CHANNEL_WEIXIN + "")){
-					return;
-				}
-				showProgress();
-				String fullPath1 = Constant.IMAGE_PATH_TASK + File.separator + taskData.smallImgUrl.substring(taskData.smallImgUrl.lastIndexOf("/") + 1);
-				Platform platform1 = new Wechat(this);
-				wx2(this, taskData.taskName, fullPath1, taskData.content + getResources().getString(R.string.channel_weixin), platform1);
-				//ShareUtil.share2WeiXin(this, taskData.taskName, fullPath, taskData.content + getResources().getString(R.string.channel_weixin));
-				break;
-		case R.id.layWeiXin:
-			//微信灾难
-			if(BusinessStatic.getInstance().disasterFlag){
-				Intent intentWeb = new Intent(this, WebViewActivity.class);
-				intentWeb.putExtra("url", BusinessStatic.getInstance().disasterUrl);
-				intentWeb.putExtra("title", "转发朋友圈");
-				intentWeb.putExtra("disasterFlag", true);
-				intentWeb.putExtra("isSend", taskData.isSend);
-				startActivityForResult(intentWeb, 0);
-				return;
-			}
-			if(!BusinessStatic.getInstance().CHANNEL_LIST.contains(ShareUtil.CHANNEL_WEIXIN + "")){
-				return;
-			}
-			if(taskData.channelIds.contains(ShareUtil.CHANNEL_WEIXIN + "")){
-				return;
-			}
-			showProgress();
-			String fullPath2 = Constant.IMAGE_PATH_TASK + File.separator + taskData.smallImgUrl.substring(taskData.smallImgUrl.lastIndexOf("/") + 1);
-			Platform platform2 = new WechatMoments(this);
-			wx(this,  taskData.taskName, fullPath2, taskData.content + getResources().getString(R.string.channel_weixin), platform2);
-			//ShareUtil.share2WeiXin(this, taskData.taskName, fullPath, taskData.content + getResources().getString(R.string.channel_weixin));
-			break;
-		case R.id.layQQ:
-			if(!BusinessStatic.getInstance().CHANNEL_LIST.contains(ShareUtil.CHANNEL_QZONE + "")){
-				return;
-			}
-			if(taskData.channelIds.contains(ShareUtil.CHANNEL_QZONE + "")){
-				toast("转发成功");
-				return;
-			}
-			showProgress();
-			ShareUtil.share2Qzone(this, taskData.taskName, taskData.smallImgUrl, taskData.content + getResources().getString(R.string.channel_qzone));
-			break;
-//		case R.id.layXinLang:
-//			popupWindow.dismiss();
-//			if(!BusinessStatic.getInstance().CHANNEL_LIST.contains(ShareUtil.CHANNEL_SINA + "")){
-//				toast("Sorry!新浪微博暂不支持转发!");
-//				return;
-//			}
-//			if(taskData.channelIds.contains(ShareUtil.CHANNEL_SINA + "")){
-//				toast("新浪微博已转发!");
-//				return;
-//			}
-//			showProgress();
-//
-//			String fullPath2 = taskData.smallImgUrl;
-//			//ShareUtil.share2Sina(this, taskData.taskName, fullPath2, taskData.content + getResources().getString(R.string.channel_sina));
-//			Platform platform2 = new SinaWeibo(this);
-//			platform2.SSOSetting(true);
-//			sinaWeibo(this, taskData.taskName, fullPath2, taskData.content + getResources().getString(R.string.channel_sina), platform2);
-//
-//			break;
-
-		default:
-			break;
-		}
-
-
-	}
-	private void wx2(final Context context , String Title ,String imgUrl,String shareUrl,Platform platform)
-	{
-		Platform.ShareParams sp = new Platform.ShareParams();
-		sp.setShareType(Platform.SHARE_WEBPAGE);
-		sp.setTitle(Title);
-		sp.setText(Title);
-		sp.setUrl(shareUrl);
-		//sp.setImageUrl(imgUrl);
-		sp.setImagePath(imgUrl);
-		// platform = new Wechat(context);
-		platform.setPlatformActionListener(new PlatformActionListener() {
-			@Override
-			public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-				String msg = "";
-				if (platform.getName().equals(Wechat.NAME)) {
-					toast("转发成功");
-					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
-				} else if (platform.getName().equals(WechatMoments.NAME)) {
-					toast("转发成功");
-					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
-
-				}
-			}
-
-			@Override
-			public void onError(Platform platform, int i, Throwable throwable) {
-				if (platform.getName().equals(Wechat.NAME)) {
-					toast("转发失败111");
-				} else if (platform.getName().equals(WechatMoments.NAME)) {
-					toast("转发失败111");
-				}
-			}
-
-			@Override
-			public void onCancel(Platform platform, int i) {
-				if (platform.getName().equals(Wechat.NAME)) {
-					toast("取消转发");
-				} else if (platform.getName().equals(WechatMoments.NAME)) {
-					toast("取消转发");
-				}
-			}
-		});
-		platform.share(sp);
-	}
-    protected void wx(final Context context , String Title ,String imgUrl, final String shareUrl,Platform platform ){
-        Platform.ShareParams sp = new Platform.ShareParams();
-        sp.setShareType(Platform.SHARE_WEBPAGE);
-        sp.setTitle(Title);
-        sp.setText(Title);
-        sp.setUrl(shareUrl);
-        //sp.setImageUrl(imgUrl);
-        sp.setImagePath(imgUrl);
-        // platform = new Wechat(context);
-        platform.setPlatformActionListener(new PlatformActionListener() {
-            @Override
-            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-                String msg = "";
-                if (platform.getName().equals(Wechat.NAME)) {
-					toast("转发成功111");
-					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
-                } else if (platform.getName().equals(WechatMoments.NAME)) {
-					toast("转发成功111");
-					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
-
-				}
-            }
-
-            @Override
-            public void onError(Platform platform, int i, Throwable throwable) {
-                if (platform.getName().equals(Wechat.NAME)) {
-					toast("转发失败111");
-                } else if (platform.getName().equals(WechatMoments.NAME)) {
-					toast("转发失败111");
-                }
-            }
-
-            @Override
-            public void onCancel(Platform platform, int i) {
-                if (platform.getName().equals(Wechat.NAME)) {
-					toast("取消转发");
-                } else if (platform.getName().equals(WechatMoments.NAME)) {
-					toast("取消转发");
-                }
-            }
-        });
-        platform.share(sp);
-
-    }
 
 
     public void shareCompleteToSave(){

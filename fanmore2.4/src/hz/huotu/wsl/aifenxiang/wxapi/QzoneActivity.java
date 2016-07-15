@@ -1,22 +1,22 @@
-//package hz.huotu.wsl.aifenxiang.wxapi;
-//
-//import android.os.Bundle;
-//
-//import com.tencent.connect.share.QzoneShare;
-//import com.tencent.tauth.IUiListener;
-//import com.tencent.tauth.Tencent;
-//import com.tencent.tauth.UiError;
-//
-//import java.util.ArrayList;
-//
-//import cy.com.morefan.BaseActivity;
-//import cy.com.morefan.listener.MyBroadcastReceiver;
-//
-//public class QzoneActivity extends BaseActivity{
+package hz.huotu.wsl.aifenxiang.wxapi;
+
+import android.os.Bundle;
+
+import com.tencent.connect.share.QzoneShare;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
+
+import java.util.ArrayList;
+
+import cy.com.morefan.BaseActivity;
+import cy.com.morefan.listener.MyBroadcastReceiver;
+
+public class QzoneActivity extends BaseActivity{
 //	/**
 //	 * QZONE appid
 //	 */
-//	 public static String APP_ID="101066268";
+//	 public static String APP_ID="1105426863";
 //	private Tencent tencent;
 //	public enum Qtype{
 //		QQ, Qzone
@@ -92,6 +92,6 @@
 ////			showProgress();
 //		}
 //	};
-//
-//
-//}
+
+
+}

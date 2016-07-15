@@ -187,7 +187,7 @@ public class ShareFrag extends BaseFragment implements OnClickListener{
 		case R.id.layQQ:
 			//只能分享网络图片
 			showProgress();
-			ShareUtil.share2Qzone( getActivity(), UserData.getUserData().shareDes, imgUrl, UserData.getUserData().shareContent);
+			//ShareUtil.share2Qzone( getActivity(), UserData.getUserData().shareDes, imgUrl, UserData.getUserData().shareContent);
 			break;
 
 

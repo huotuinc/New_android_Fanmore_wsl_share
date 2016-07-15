@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -133,9 +134,11 @@ public void AllTask(final String loginCode, final String keyword,final int pageI
                     MyJSONObject data = getDataFromSer(url);
                     if (data != null) {
                         int resultCode = data.getInt("resultCode");
+
                         if (resultCode == 1) {
                             int status = data.getInt("status");
                             if (status == 1) {
+                                Bundle extra = new Bundle();
                                 JSONArray jArray = data.getJSONArray("resultData");
                                 int length = jArray.length();
                                 GroupData[] results = new GroupData[length];
@@ -144,8 +147,17 @@ public void AllTask(final String loginCode, final String keyword,final int pageI
                                     GroupData item = setGroupData(obj);
                                     results[i] = item;
                                 }
-
-                                listener.onDataFinish(BusinessDataListener.DONE_GET_GROUP_DATA, null, results, null);
+                                JSONArray jsonArray = data.getJSONArray("resultPersonData");
+                                int length1 = jsonArray.length();
+                                GroupPersonData[] results1 = new GroupPersonData[length1];
+                                for (int i = 0; i < length1; i++) {
+                                    MyJSONObject obj = (MyJSONObject) jsonArray.get(i);
+                                    GroupPersonData item = setGroupPersonData(obj);
+                                    results1[i] = item;
+                                }
+                                extra.putSerializable("Data",results);
+                                extra.putSerializable("PersonData",results1);
+                                listener.onDataFinish(BusinessDataListener.DONE_GET_GROUP_DATA, null, null, extra);
                             } else {
                                 listener.onDataFailed(BusinessDataListener.ERROR_GET_GROUP_DATA, data.getString("tip"), null);
                             }
@@ -311,7 +323,7 @@ public void AllTask(final String loginCode, final String keyword,final int pageI
     }
 
 
-    protected GroupData setGroupData(MyJSONObject obj){
+    protected GroupData setGroupData(MyJSONObject obj) throws JSONException {
         GroupData data = new GroupData();
         data.setChildren(obj.getInt("children"));
         data.setId(obj.getInt("orgid"));

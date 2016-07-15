@@ -9,12 +9,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/theme_back"
-                android:orientation="horizontal"
+                android:orientation="vertical"
+                android:gravity="center"
                 android:paddingTop="15dp" >
 
                 <FrameLayout
                     android:id="@+id/ffprentice"
-                    android:layout_margin="10dp"
+                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" 
                     >
@@ -33,7 +34,8 @@
                         android:background="@drawable/photo_circle_pre" />
                 </FrameLayout>
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
@@ -79,7 +81,8 @@
                 android:layout_height="40dp"
 
                 >
-                <ImageView 
+
+                <ImageView
                     android:id="@+id/apprenticeicon"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="5dp"
@@ -88,7 +91,8 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/img_huoban"
                     />
-                <TextView 
+
+                <TextView
                     android:id="@+id/tvapprentice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

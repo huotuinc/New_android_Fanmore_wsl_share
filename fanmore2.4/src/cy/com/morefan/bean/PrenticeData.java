@@ -10,6 +10,7 @@ public class PrenticeData implements BaseData{
 	 */
 	public String invitationCode;
 	public String prenticeDes;
+	public String shareTitle;
 	public String prenticeShareDes;
 	public String prenticeShareUrl;
 	public int 	prenticeAmount;

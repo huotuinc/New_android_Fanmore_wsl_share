@@ -81,7 +81,7 @@ public class UserInfoView {
 			// lp.height = (int) (size[1]*0.8);
 			 window.setAttributes(lp);
 		}
-		titleNames.put(Type.Name, "姓名");
+		titleNames.put(Type.Name, "昵称");
 		titleNames.put(Type.Sex, "性别");
 		titleNames.put(Type.Age, "出生年份");
 		titleNames.put(Type.Job, "职业");

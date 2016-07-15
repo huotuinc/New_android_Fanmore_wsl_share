@@ -1,13 +1,9 @@
 package cy.com.morefan.service;
 
 import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
-import java.net.InterfaceAddress;
 import java.net.URLEncoder;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,31 +18,19 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import cy.com.morefan.MainApplication;
 import cy.com.morefan.bean.AllScoreData;
 import cy.com.morefan.bean.AwardData;
-import cy.com.morefan.bean.BuyData;
-import cy.com.morefan.bean.BuyItemData;
-import cy.com.morefan.bean.FeedbackData;
-import cy.com.morefan.bean.HistoryData;
 import cy.com.morefan.bean.MyJSONObject;
 import cy.com.morefan.bean.PartInItemData;
 import cy.com.morefan.bean.PartnerData;
 import cy.com.morefan.bean.PrenticeData;
-import cy.com.morefan.bean.PushMsgData;
 import cy.com.morefan.bean.RankData;
-import cy.com.morefan.bean.ShakePrenticeData;
-import cy.com.morefan.bean.StoreData;
 import cy.com.morefan.bean.TaskData;
-import cy.com.morefan.bean.TicketData;
-import cy.com.morefan.bean.ToolData;
 import cy.com.morefan.bean.UserBaseInfoList;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.bean.UserSelectData;
-import cy.com.morefan.bean.WalletData;
 import cy.com.morefan.bean.WeekTaskData;
 import cy.com.morefan.constant.Constant;
-import cy.com.morefan.frag.PartnerFrag;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.util.AuthParamUtils;
 import cy.com.morefan.util.L;
@@ -67,19 +51,19 @@ public class UserService extends BaseService{
 			@Override
 			public void run() {
 			    try {
-			    	String url = Constant.IP_URL + "/Api.ashx?req=UploadPicture" + CONSTANT_URL();
+			    	String url = Constant.IP_URL + "/Api.ashx?req=UploadPicture" + CONSTANT_URL2();
 			    	JSONObject jsonUrl = new JSONObject();
 					//System.out.println(loginCode);
 					jsonUrl.put("loginCode",loginCode );
 					jsonUrl.put("pic", imgs);
-					jsonUrl.put("timestamp", timestamp);
-					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
-					Map< String, String > paramMap = new HashMap< String, String >( );
-					paramMap.put("loginCode",loginCode);
-					paramMap.put("pic", imgs);
-					paramMap.put("timestamp",String.valueOf(timestamp));
-					String url2 = authParamUtils.getMapSign1(paramMap);
-					jsonUrl.put("sign",url2);
+//					jsonUrl.put("timestamp", timestamp);
+//					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+//					Map< String, String > paramMap = new HashMap< String, String >( );
+//					paramMap.put("loginCode",loginCode);
+//					paramMap.put("pic", imgs);
+//					paramMap.put("timestamp",String.valueOf(timestamp));
+//					String url2 = authParamUtils.getMapSign1(paramMap);
+//					jsonUrl.put("sign",url2);
 					String	p = URLEncoder.encode(jsonUrl.toString(),"UTF-8");
 
 			    	NameValuePair imgs1 = new BasicNameValuePair("p",p);
@@ -354,11 +338,9 @@ public class UserService extends BaseService{
 	/**
 	 *
 	 * @param loginCode
-	 * @param orderType (0、拜师时间1、总贡献值)
-	 * @param pageTag
-	 * @param pageSize
+	 * @param pageIndex (0、拜师时间1、总贡献值)
 	 */
-	public void getPrenticeList(final String loginCode, final int orderType, final String pageTag, final int pageSize){
+	public void getPrenticeList(final String loginCode,final int pageIndex){
 
 
 
@@ -371,16 +353,12 @@ public class UserService extends BaseService{
 					String url = Constant.IP_URL + "/Api.ashx?req=PrenticeList" + CONSTANT_URL();
 					JSONObject jsonUrl = new JSONObject();
 					jsonUrl.put("loginCode", loginCode);
-					jsonUrl.put("pageTag", pageTag);
-					jsonUrl.put("pageSize", pageSize);
-					jsonUrl.put("orderType", orderType);
+					jsonUrl.put("pageIndex", pageIndex);
 					jsonUrl.put("timestamp", timestamp);
 					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
 					Map< String, String > paramMap = new HashMap< String, String >( );
 					paramMap.put("loginCode", loginCode);
-					paramMap.put("pageTag", pageTag);
-					paramMap.put("pageSize", String.valueOf(pageSize));
-					paramMap.put("orderType", String.valueOf(orderType));
+					paramMap.put("pageIndex", String.valueOf(pageIndex));
 					paramMap.put("timestamp",String.valueOf(timestamp));
 					String url2 = authParamUtils.getMapSign1(paramMap);
 					jsonUrl.put("sign",url2);
@@ -390,13 +368,16 @@ public class UserService extends BaseService{
 					MyJSONObject data = getDataFromSer(url);
 					if(data != null){
 						int resultCode = data.getInt("resultCode");
+						Bundle extra = null;
+						extra = new Bundle();
+						extra.putInt("pageIndex", data.getInt("pageIndex"));
 						if (resultCode == 1) {
 							int status = data.getInt("status");
 							if (status == 1) {
 								MyJSONObject json = data.getJSONObject("resultData");
-								Bundle extra = null;
-								if(pageTag.equals("0")){
-									extra = new Bundle();
+
+								if(pageIndex==0){
+
 									extra.putInt("prenticeCount", json.getInt("totalCount"));
 								}
 								JSONArray array = json.getJSONArray("list");
@@ -482,6 +463,7 @@ public class UserService extends BaseService{
 									extra.putString("historyTotalBrowseAmount",Util.opeDouble(json.getDouble("historyTotalBrowseAmount")));
 									extra.putString("yesterdayTurnAmount",Util.opeDouble(json.getDouble("yesterdayTurnAmount")));
 									extra.putString("historyTotalTurnAmount",Util.opeDouble(json.getDouble("historyTotalTurnAmount")));
+									extra.putString("shareTitle",json.getString("shareTitle"));
 								}
 								JSONArray array = json.getJSONArray("list");
 								int length = array.length();
@@ -500,6 +482,7 @@ public class UserService extends BaseService{
 									item.historyTotalBrowseAmount=Util.opeDouble(tip.getDouble("historyTotalBrowseAmount"));
 									item.yesterdayTurnAmount=Util.opeDouble(tip.getDouble("yesterdayTurnAmount"));
 									item.historyTotalTurnAmount=Util.opeDouble(tip.getDouble("historyTotalTurnAmount"));
+									item.shareTitle = tip.getString("shareTitle");
 
 									results[i] = item;
 								}
@@ -666,7 +649,7 @@ public class UserService extends BaseService{
 									taskData.creatTime = Util.DateFormat(time);
 									taskData.dayCount = Util.getDayCount(time);
 									taskData.dayDisDes = Util.getDayDisDes(time);
-									taskData.sendCount = tip.getString("sendAmount");
+									taskData.sendCount = tip.getInt("sendAmount");
 									String sendList = tip.getString("sendList");
 									if(TextUtils.isEmpty(sendList)){
 										taskData.channelIds = new ArrayList<String>();
@@ -712,7 +695,7 @@ public class UserService extends BaseService{
 	 * @param pageSize
 	 * @param pageDate 上一页最后date
 	 */
-	public void getAllScoreTrendList(final ArrayList<AllScoreData> allScoreDatas, final String loginCode, final int pageSize, final String pageDate){
+	public void getAllScoreTrendList(final int userId, final ArrayList<AllScoreData> allScoreDatas, final String loginCode, final int pageSize, final String pageDate){
 
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
 
@@ -722,12 +705,14 @@ public class UserService extends BaseService{
 				try {
 					String url = Constant.IP_URL + "/Api.ashx?req=NewTotalScoreList" + CONSTANT_URL();
 					JSONObject jsonUrl = new JSONObject();
+					jsonUrl.put("currentUserId",userId);
 					jsonUrl.put("loginCode", loginCode);
 					jsonUrl.put("pageSize", pageSize);
 					jsonUrl.put("date", pageDate);
 					jsonUrl.put("timestamp", timestamp);
 					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
 					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("currentUserId",String.valueOf(userId));
 					paramMap.put("loginCode", loginCode);
 					paramMap.put("pageSize", String.valueOf(pageSize));
 					paramMap.put("date", pageDate);

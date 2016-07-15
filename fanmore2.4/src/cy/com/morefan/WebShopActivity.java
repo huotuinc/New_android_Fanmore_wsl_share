@@ -2,10 +2,10 @@ package cy.com.morefan;
 
 
 
-import cn.sharesdk.framework.Platform;
 import cy.com.morefan.constant.BusinessStatic;
 
 import cy.com.morefan.constant.Constant;
+import cy.com.morefan.frag.FragManager;
 import cy.com.morefan.util.L;
 import cy.com.morefan.util.UrlFilterUtils;
 
@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -241,6 +240,8 @@ public class WebShopActivity extends BaseActivity implements Handler.Callback  {
                     webView.goBack();
                 }else {
                     finish();
+                    FragManager fragManager= new FragManager(this,R.id.layContent);
+                    fragManager.setCurrentFrag(FragManager.FragType.Task);
                 }
 
                 break;

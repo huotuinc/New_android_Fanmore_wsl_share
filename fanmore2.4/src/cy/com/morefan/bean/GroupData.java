@@ -1,6 +1,7 @@
 package cy.com.morefan.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/3/9.
@@ -48,6 +49,16 @@ public class GroupData implements BaseData ,Serializable {
      * 总转发数量
      */
     private int  totalTurnCount;
+
+    public List<GroupPersonData> getPersonData() {
+        return PersonData;
+    }
+
+    public void setPersonData(List<GroupPersonData> personData) {
+        PersonData = personData;
+    }
+
+    private List<GroupPersonData> PersonData;
 
     @Override
     public String getPageTag() {

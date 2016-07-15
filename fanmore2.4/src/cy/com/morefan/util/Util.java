@@ -30,9 +30,9 @@ import javax.crypto.spec.SecretKeySpec;
 
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.wensli.fanmore.wxapi.WXEntryActivity;
 
 import cy.com.morefan.listener.AlamrReceiver;
+import hz.huotu.wsl.aifenxiang.wxapi.WXEntryActivity;
 
 import android.R.integer;
 import android.app.Activity;
@@ -327,7 +327,7 @@ public class Util {
 
     /**
      * 微信压缩图片
-     * @param path
+     * @param
      */
     public static void compressImage(String srcPath){
     	File file = new File(srcPath);
@@ -642,24 +642,24 @@ public class Util {
 
 
 
-	public static boolean WxAttention(final Context context, final String openId){
-		if(context == null)
-			return false;
-					IWXAPI api = WXAPIFactory.createWXAPI(context, WXEntryActivity.WX_APP_ID, true);
-					if(!api.isWXAppInstalled()){
-						return false;
-					}
-					try {
-						Intent localIntent2 = Intent.parseUri("#Intent;action=" + openId + ";launchFlags=0x4000000;component=com.tencent.mm/.ui.LauncherUI;B.LauncherUI_From_Biz_Shortcut=true;end", 0);
-						localIntent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-						context.startActivity(localIntent2);
-					} catch (URISyntaxException e) {
-						e.printStackTrace();
-						return false;
-					}
-
-					return true;
-	}
+//	public static boolean WxAttention(final Context context, final String openId){
+//		if(context == null)
+//			return false;
+//					IWXAPI api = WXAPIFactory.createWXAPI(context, WXEntryActivity.WX_APP_ID, true);
+//					if(!api.isWXAppInstalled()){
+//						return false;
+//					}
+//					try {
+//						Intent localIntent2 = Intent.parseUri("#Intent;action=" + openId + ";launchFlags=0x4000000;component=com.tencent.mm/.ui.LauncherUI;B.LauncherUI_From_Biz_Shortcut=true;end", 0);
+//						localIntent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//						context.startActivity(localIntent2);
+//					} catch (URISyntaxException e) {
+//						e.printStackTrace();
+//						return false;
+//					}
+//
+//					return true;
+//	}
 	public static int getCurrentTime(){
 		 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.CHINA);
 		Calendar calendar = new GregorianCalendar();

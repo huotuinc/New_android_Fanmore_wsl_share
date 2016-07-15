@@ -74,6 +74,7 @@ public class AwardAdapter extends TrendAdapter{
 		ProgressBar bar			= ViewHolderUtil.get(convertView, R.id.load_pb);
 		TextView txtDes			= ViewHolderUtil.get(convertView, R.id.txtTaskName);
 		TextView txtName		= ViewHolderUtil.get(convertView, R.id.txtStoreName);
+		TextView txtStore       = ViewHolderUtil.get(convertView,R.id.txtStore);
 		TextView txtDate		= ViewHolderUtil.get(convertView, R.id.txtDate);
 		//LinearLayout layScan	= ViewHolderUtil.get(convertView, R.id.layScan);
 		TextView txtScore		= ViewHolderUtil.get(convertView, R.id.txtScore);
@@ -110,7 +111,8 @@ public class AwardAdapter extends TrendAdapter{
 
         	//bar.setProgress(position *10);
         	txtName.setText(data.titile);
-			txtDes .setText(data.des);
+			txtDes .setText(data.titile);
+			txtStore.setText(data.des);
 			txtDate.setText(data.dateDes);
 			layAward.setVisibility(data.type == 2 ? View.VISIBLE : View.GONE);
 			layDate.setVisibility(data.type == 1 ? View.VISIBLE : View.GONE);

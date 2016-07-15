@@ -82,12 +82,22 @@ public class SetPassWordActivity extends BaseActivity implements View.OnClickLis
         String invitationCode =edtinvitationCode.getText().toString();
         if(TextUtils.isEmpty(password)){
             edtPassword.requestFocus();
-            edtPassword.setError("密码密码密码密码不能为空");
+            edtPassword.setError("密码不能为空");
+            return;
+        }
+        if(password.length() <6 || password.length() > 12){
+            edtPassword.requestFocus();
+            edtPassword.setError("密码为6-12位");
             return;
         }
         if(TextUtils.isEmpty(psw)){
             edtpsw.requestFocus();
             edtpsw.setError("密码不能为空");
+            return;
+        }
+        if(psw.length() <6 || psw.length() > 12){
+            edtpsw.requestFocus();
+            edtpsw.setError("密码为6-12位");
             return;
         }
 

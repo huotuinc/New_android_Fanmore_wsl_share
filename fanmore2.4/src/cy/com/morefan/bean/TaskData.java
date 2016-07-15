@@ -138,7 +138,7 @@ public class TaskData implements BaseData, Serializable {
 	/**
 	 * 转发量
 	 */
-	public String sendCount;
+	public int sendCount;
 	/**
 	 * 微信公众号原始id
 	 */

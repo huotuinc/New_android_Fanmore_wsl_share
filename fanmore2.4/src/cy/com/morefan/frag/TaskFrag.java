@@ -1,6 +1,8 @@
 package cy.com.morefan.frag;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import cy.com.morefan.BaseActivity;
@@ -350,6 +352,13 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 			View item = layGroup.getChildAt(i);
 			item.setBackgroundColor(item.getId() == id ? 0xff999999 : Color.WHITE);
 		}
+
+	}
+
+	public void Refresh(TaskData taskData){
+		taskData.sendCount=taskData.sendCount+1;
+		taskData.isSend=true;
+		adapter.notifyDataSetChanged();
 
 	}
 	public void reLoadData(){

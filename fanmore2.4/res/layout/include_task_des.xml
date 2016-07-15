@@ -88,6 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
+            android:maxLines="2"
             android:layout_marginTop="5dp"
             android:textColor="@color/gray4"
             android:textIsSelectable="false"/>
@@ -111,7 +112,7 @@
                 android:id="@+id/browseCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1"
+                android:text=""
                 android:layout_marginRight="5dp"
                 android:textColor="@color/gray"/>
             <ImageView
@@ -126,7 +127,7 @@
                 android:textColor="@color/gray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1"/>
+                android:text=""/>
         </LinearLayout>
     </LinearLayout>
 

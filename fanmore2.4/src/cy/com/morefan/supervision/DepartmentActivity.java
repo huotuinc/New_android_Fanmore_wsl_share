@@ -168,6 +168,7 @@ public class DepartmentActivity extends BaseActivity implements Handler.Callback
     }
     protected void loadData(){
         datas.clear();
+        groupPersonDataAdapter.notifyDataSetChanged();
         pageIndex = 0;
         getDataFromSer();
     }

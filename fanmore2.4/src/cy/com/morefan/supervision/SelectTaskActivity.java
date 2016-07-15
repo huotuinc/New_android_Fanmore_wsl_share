@@ -22,6 +22,7 @@ import cy.com.morefan.R;
 import cy.com.morefan.adapter.GroupDataAdapter;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.GroupData;
+import cy.com.morefan.bean.GroupPersonData;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.service.SupervisionService;
@@ -38,6 +39,7 @@ public class    SelectTaskActivity extends BaseActivity implements Handler.Callb
     @Bind(R.id.layEmpty)
     ImageView layEmpty;
     List<GroupData> datas;
+    List<GroupPersonData> personDatas;
     int taskID=0;
     Handler handler;
     GroupDataAdapter adapter;
@@ -47,7 +49,8 @@ public class    SelectTaskActivity extends BaseActivity implements Handler.Callb
     public boolean handleMessage(Message msg) {
         if( msg.what == BusinessDataListener.DONE_GET_GROUP_DATA ){
 
-            GroupData[] results = (GroupData[]) msg.obj;
+            Bundle bundle = (Bundle) msg.obj;
+            GroupData[] results = (GroupData[]) bundle.getSerializable("Data");
             int length = results.length;
             for (int i = 0; i < length; i++) {
                 if(!datas.contains(results[i]))
@@ -74,7 +77,8 @@ public class    SelectTaskActivity extends BaseActivity implements Handler.Callb
         supervisionService = new SupervisionService(this);
         handler = new Handler(this);
         datas=new ArrayList<GroupData>();
-        adapter = new GroupDataAdapter(this,datas);
+        personDatas =new ArrayList<GroupPersonData>();
+        adapter = new GroupDataAdapter(this,datas,personDatas);
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(this);
 
@@ -107,7 +111,7 @@ public class    SelectTaskActivity extends BaseActivity implements Handler.Callb
     public void onDataFinish(int type, String des, BaseData[] datas, Bundle extra) {
         super.onDataFinish(type, des, datas, extra);
         if( type == BusinessDataListener.DONE_GET_GROUP_DATA ) {
-            handler.obtainMessage(type, datas).sendToTarget();
+            handler.obtainMessage(type, extra).sendToTarget();
         }
     }
 

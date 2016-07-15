@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:textSize="15sp"
-            android:onClick="onClickButton"
+            android:onClick="onClick"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:text="返回"

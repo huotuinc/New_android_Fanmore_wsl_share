@@ -167,11 +167,11 @@ public class WebViewActivity extends BaseActivity implements BroadcastListener{
 		case R.id.layQQ:
 			//只能分享网络图片
 			showProgress();
-			ShareUtil.share2Qzone( this, UserData.getUserData().shareDes, imgUrl, UserData.getUserData().shareContent);
+			//ShareUtil.share2Qzone( this, UserData.getUserData().shareDes, imgUrl, UserData.getUserData().shareContent);
 			break;
 		case R.id.layXinLang:
 			showProgress();
-			ShareUtil.share2Sina(this, UserData.getUserData().shareDes, imgPath, UserData.getUserData().shareContent);
+			//ShareUtil.share2Sina(this, UserData.getUserData().shareDes, imgPath, UserData.getUserData().shareContent);
 			break;
 
 		default:

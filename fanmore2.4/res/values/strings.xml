@@ -37,7 +37,7 @@
     <!-- task detail -->
     <string name="btn_attention">关注</string>
     <string name="btn_fav">收藏</string>
-    <string name="btn_share">立即转发</string>
+    <string name="btn_share">分享资讯</string>
     <string name="btn_back">返回</string>
     <string name="btn_next">下一步</string>
     <string name="btn_cancel">取消</string>

@@ -44,7 +44,8 @@ public class Constant {
 	//public static final String QD = "dm";
 
 	//使用mainfest中的version_name
-	public static final String APP_VERSION = "1.0.0";
+	public static final int CAROUSE_URL = 0x00000041;
+	public static final String APP_VERSION = "1.0.3";
 	//标准时间
 	public final static String TIME_FORMAT   = "yyyy-MM-dd HH:mm:ss";
 	//标准时间01
@@ -55,7 +56,6 @@ public class Constant {
 	public static final String ALIPAY_KEY         = "alipay_key";
 	//支付宝商家编号
 	public static final String ALIPAY_MERCHANT_ID = "alipay_merchant_id";
-	//public static final int APP_VERSION_NO = 1;
 
 	/**
 	 * 预告web跳转标识

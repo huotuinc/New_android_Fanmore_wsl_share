@@ -1,49 +1,34 @@
 package cy.com.morefan;
 
 
-import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
-
-import com.umeng.message.PushAgent;
-import com.umeng.message.UmengNotificationClickHandler;
-import com.umeng.message.entity.UMessage;
-
-import cy.com.morefan.bean.BaseData;
-import cy.com.morefan.bean.TaskData;
-import cy.com.morefan.bean.TempPushMsgData;
 import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
-import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
 import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
-import cy.com.morefan.service.TaskService;
 import cy.com.morefan.util.CrashHandler;
 import cy.com.morefan.util.L;
 import cy.com.morefan.util.PreferenceHelper;
 import cy.com.morefan.util.SPUtil;
-import cy.com.morefan.util.Util;
 import cy.com.morefan.util.VolleyUtil;
-import cy.com.morefan.view.CustomDialog;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Looper;
 import android.text.TextUtils;
-import android.widget.Toast;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.orm.SugarContext;
 
 public class MainApplication extends Application implements BroadcastListener{
 	private static ActivityManager activityManager;
@@ -57,165 +42,23 @@ public class MainApplication extends Application implements BroadcastListener{
 	    @Override
 	    public void onCreate() {
 	    	super.onCreate();
-	    	ShareSDK.initSDK(getApplicationContext());
+			Fresco.initialize(getApplicationContext());
+			ShareSDK.initSDK(getApplicationContext());
 			VolleyUtil.init(getApplicationContext());
 			CrashHandler crashHandler = CrashHandler.getInstance ();
 			crashHandler.init(getApplicationContext());
-			PushAgent.getInstance(this).setNotificationClickHandler(notificationClickHandler);
 			JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
 			JPushInterface.init(this);
 			myBroadcastReceiver = new MyBroadcastReceiver(this.getApplicationContext(), this, MyBroadcastReceiver.ACTION_ALARM_UP);
-
+			SugarContext.init(getApplicationContext());
 	    }
 
 
-	    //private TaskService taskService;
-	    /**
-		 * 该Handler是在BroadcastReceiver中被调用，故
-		 * 如果需启动Activity，需添加Intent.FLAG_ACTIVITY_NEW_TASK
-		 * */
-		UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler(){
-			@Override
-			public void launchApp(Context context, UMessage msg) {
-
-				//app是否在运行
-				final boolean isRunning = Util.isAppRunning(getApplicationContext());
-				L.i(">>isAppRunning:" + isRunning);
-				HashMap<String, String> configs = (HashMap<String, String>) msg.extra;
-				String mapType = configs.get("type");
-				String mapTaskId = configs.get("taskid");
-				final String webUrl = configs.get("url");
-
-				TempPushMsgData pushMsg = TempPushMsgData.getIns();
-				pushMsg.isRunning  = isRunning;
-				pushMsg.fromNotify = true;
-				pushMsg.type = TextUtils.isEmpty(mapType) ? 0 : Integer.valueOf(mapType);
-				pushMsg.taskId = TextUtils.isEmpty(mapTaskId) ? 0 : Integer.valueOf(mapTaskId);
-				pushMsg.webUrl = webUrl;
-
-				Intent intent = new Intent(getApplicationContext(), PushMsgHandleActivity.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(intent);
-
-
-
-
-			//final TempPushMsgData pushMsg = TempPushMsgData.getIns();
-
-//			//是否需要检查任务状态
-//			if(pushMsg.type == 1){//普通推送
-//				if(isRunning){//直接打开web
-//					Intent intentWeb = new Intent(getApplicationContext(), WebViewActivity.class);
-//					intentWeb.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//					intentWeb.putExtra("url", webUrl);
-//					startActivity(intentWeb);
-//				}else{//初始化
-//					Intent intent = new Intent(getApplicationContext(),LoadingActivity.class);
-//					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//					startActivity(intent);
-//				}
-//			}else{//任务推送
-//				//查询任务状态
-//				taskService = new TaskService(new BusinessDataListener() {
-//					@Override
-//					public void onDataFinish(int type, String des, BaseData[] datas, Bundle extra) {
-//						if(type == BusinessDataListener.DONE_CHECK_TASK_STATUS){
-//
-////							msg.fromNotify = true;
-//							pushMsg.status = extra.getInt("status");
-//							pushMsg.webUrl = extra.getString("webUrl");
-////							msg.type = 0;
-////							msg.taskId = taskId;
-//							if(isRunning){
-//								if(pushMsg.status == 0){//到task detail
-//									//to task detail,得刷新任务列表
-//									Intent intentDetail = new Intent(getApplicationContext(), TaskDetailActivity.class);
-//									intentDetail.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//									TaskData taskData = new TaskData();
-//									taskData.id = pushMsg.taskId;
-//									intentDetail.putExtra("taskData", taskData);
-//									intentDetail.putExtra("refreshList", true);
-//									getApplicationContext().startActivity(intentDetail);
-//								}else if(pushMsg.status == 1){//任务预告
-//									Intent intentWeb = new Intent(getApplicationContext(), WebViewActivity.class);
-//									intentWeb.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//									intentWeb.putExtra("url", pushMsg.webUrl);
-//									intentWeb.putExtra("title", "任务预告");
-//									startActivity(intentWeb);
-//								}else{
-//									Looper.prepare();
-//									Toast.makeText(getApplicationContext(), "任务已下架!", Toast.LENGTH_SHORT).show();
-//									Looper.loop();
-//								}
-//							}else{
-//								//启动app
-//								Intent intent = new Intent(getApplicationContext(),LoadingActivity.class);
-//								intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//								startActivity(intent);
-//							}
-//
-//						}
-//
-//					}
-//
-//					@Override
-//					public void onDataFailed(int type, String des, Bundle extra) {
-//						if(type == BusinessDataListener.ERROR_CHECK_TASK_STATUS){
-//							Looper.prepare();
-//							Toast.makeText(getApplicationContext(), des, Toast.LENGTH_SHORT).show();
-////							CustomDialog.showChooiceDialg(getApplicationContext(), null, "请求失败!请重试...",
-////									"重试", "取消", null, new DialogInterface.OnClickListener() {
-////										@Override
-////										public void onClick(DialogInterface dialog, int which) {
-////											taskService.checkTaskStatus(pushMsg.taskId);
-////										}
-////									}, null);
-//							Looper.loop();
-//						}
-//					}
-//				});
-//				taskService.checkTaskStatus(pushMsg.taskId);
-//
-//
-//			}
-
-//			if(isRunning){//无需初始化
-//				if(type == 1){//直接打开web
-//					Intent intentWeb = new Intent(getApplicationContext(), WebViewActivity.class);
-//					intentWeb.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//					intentWeb.putExtra("url", webUrl);
-//					startActivity(intentWeb);
-//				}else{
-//
-//				}
-//
-//			}else{
-//				Intent intent = new Intent(getApplicationContext(),LoadingActivity.class);
-//				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//				intent.putExtra("isFromNotify", true);
-//				intent.putExtra("type", type);//推送ID：  0=任务推送， 1=web推送
-//				intent.putExtra("taskId", taskId);//任务ID，如果推送类型为1时，任务ID为0
-//				intent.putExtra("webUrl", configs.get("url"));//跳转地址
-//				startActivity(intent);
-//			}
-
-//
-			//	super.launchApp(context, msg);
-			//	Toast.makeText(context, msg.extra.toString() + Util.isAppRunning(getApplicationContext()), Toast.LENGTH_LONG).show();
-			//	super.launchApp(context, msg);
-
-
-
-				//Toast.makeText(context, msg.extra.toString() + , Toast.LENGTH_LONG).show();
-
-			}
-			 @Override
-			    public void dealWithCustomAction(Context context, UMessage msg) {
-			        Toast.makeText(context, msg.custom, Toast.LENGTH_LONG).show();
-			    }
-
-		};
-
+	@Override
+	public void onTerminate() {
+		super.onTerminate();
+		SugarContext.terminate();
+	}
 
 
 	    public static ActivityManager getActivityManager(){
@@ -259,32 +102,7 @@ public class MainApplication extends Application implements BroadcastListener{
 	    	}
 	    }
 
-	   /* class CrashHandler implements UncaughtExceptionHandler{
-	    	public CrashHandler(){
-	    		Thread.setDefaultUncaughtExceptionHandler(this);// 设置该CrashHandler为程序的默认处理器
-	    	}
 
-			@Override
-			public void uncaughtException(Thread thread, final Throwable ex) {
-				new Thread(){
-					public void run() {
-						System.err.println("froce close!" + ex.getMessage());
-						Looper.prepare();
-						finshApp();
-						restartApp(getApplicationContext());
-						Looper.loop();
-				            //MyBroadcastReceiver.sendBroadcast(getApplicationContext(), MyBroadcastReceiver.);
-//				            Intent intent = new Intent(MainApplication.this, LoadingActivity.class);
-//				            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//				            startActivity(intent);
-
-					};
-				}.start();
-
-
-			}
-
-	    }*/
 	public String readAlipayAppKey()
 	{
 		return PreferenceHelper.readString (

@@ -2,6 +2,10 @@ package cy.com.morefan;
 
 
 import cindy.android.test.synclistview.SyncImageLoaderHelper;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.wechat.favorite.WechatFavorite;
+import cn.sharesdk.wechat.friends.Wechat;
+import cn.sharesdk.wechat.moments.WechatMoments;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.PrenticeTopData;
 import cy.com.morefan.bean.TaskData;
@@ -44,6 +48,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.HashMap;
 
 
 /**
@@ -70,6 +75,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	private LinearLayout layTab;
 	private RelativeLayout laySupervision;
 	private RelativeLayout layRank;
+	private RelativeLayout layhelp;
 	private LinearLayout layMiddle;
 	private TextView txtRight;
 	private TextView txtTitle;
@@ -173,9 +179,16 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		count        = (TextView) findViewById(R.id.count);
 		laySupervision =(RelativeLayout)findViewById(R.id.laySupervision);
 		layRank=(RelativeLayout)findViewById(R.id.layRank);
+		layhelp=(RelativeLayout)findViewById(R.id.layhelp);
 		mylevel= (TextView)findViewById(R.id.mylevel);
 		img.setBorderColor(getResources().getColor(R.color.white));
 		img.setBorderWidth((int)getResources().getDimension(R.dimen.head_width));
+		HashMap<String,Object> n = new HashMap<>();
+		n.put("AppId",BusinessStatic.getInstance().weixinKey);
+		n.put("AppSecret",BusinessStatic.getInstance().weixinAppSecret);
+		ShareSDK.setPlatformDevInfo( Wechat.NAME , n );
+		ShareSDK.setPlatformDevInfo(WechatMoments.NAME , n );
+		ShareSDK.setPlatformDevInfo(WechatFavorite.NAME , n );
 //		txtTodayScan = (TextView) findViewById(R.id.txtTodayScan);
 //		txtYesScore	 = (TextView) findViewById(R.id.txtYesScore);
 		//userLogin();
@@ -283,9 +296,9 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			case R.id.btnBack:
 				userService.getScanCount();
 				userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
-				openOrCloseMenu();
-				setScores();
-
+				fragManager.setCurrentFrag(FragType.Task);
+				setTitleButton(FragType.Task);
+			break;
 		case R.id.btnLeft:
 			userService.getScanCount();
 			userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
@@ -297,12 +310,17 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			setTitleButton(FragType.Task);
 			openOrCloseMenu();
 			break;
-		case R.id.layPre:
-			//任务提前预览
-			Intent intentPre = new Intent(this, TaskActivity.class);
-			intentPre.putExtra(Constant.TYPE_FROM, FromType.PreTask);
-	        startActivity(intentPre);
+		case R.id.layhelp:
+			openOrCloseMenu();
+			Intent intenthelp = new Intent(this, WebHelpActivity.class);
+			startActivity(intenthelp);
 			break;
+//		case R.id.layPre:
+//			//任务提前预览
+//			Intent intentPre = new Intent(this, TaskActivity.class);
+//			intentPre.putExtra(Constant.TYPE_FROM, FromType.PreTask);
+//	        startActivity(intentPre);
+//			break;
 		case R.id.img://头像
 			trendToMy = false;
 			if(UserData.getUserData().isLogin){
@@ -409,12 +427,15 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 // 	        }
 //			break;
 			case R.id.layTask:
+				openOrCloseMenu();
 				ActivityUtils.getInstance().showActivity(HomeActivity.this,WeekTaskActivity.class);
 				break;
 			case R.id.layRank:
+				openOrCloseMenu();
 				ActivityUtils.getInstance().showActivity(HomeActivity.this,RankActivity.class);
 				break;
 			case R.id.layHistoryReturn://历史收益
+				openOrCloseMenu();
 				if(UserData.getUserData().isLogin){
 					Intent intent = new Intent(HomeActivity.this, AllScoreActivity.class);
 					startActivity(intent);
@@ -424,7 +445,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 					openOrCloseMenu();
 				}
 			break;
-			case R.id.layMall://进入商城
+			case R.id.layMall:
+				openOrCloseMenu();//进入商城
 				inMall();
 				break;
 //			case R.id.laySorceExchange://积分兑换
@@ -432,6 +454,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 //				startActivity(intentGoods);
 //				break;
 			case R.id.laySupervision://监督管理
+				openOrCloseMenu();
 				Intent intent = new Intent(this, GroupActivity.class);
 				startActivity(intent);
 				break;
@@ -657,7 +680,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		txtName.setText(userName);
 		txtScore.setVisibility(View.GONE);
 		//txtScore.setText("可用分红." + total);
-		txttodayScanCount.setText("今日浏览量." + todayScanCount);
+		txttodayScanCount.setText("今日浏览量:" + todayScanCount);
 		//txtTodayScan.setText(scanCount);
 		//txtYesScore.setText(yes);
 		L.i(">>>>>>>>>picUrl:" + userData.picUrl);

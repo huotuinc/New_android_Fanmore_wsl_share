@@ -43,11 +43,11 @@ public class ShareActivity extends BaseActivity{
 		switch (v.getId()) {
 		case R.id.layQQ:
 			showProgress();
-			ShareUtil.share2QQ(this, shareDes , imgUrl, shareUrl);
+			//ShareUtil.share2QQ(this, shareDes , imgUrl, shareUrl);
 			break;
 		case R.id.layQzone:
 			showProgress();
-			ShareUtil.share2Qzone(this, shareDes , imgUrl, shareUrl);
+			//ShareUtil.share2Qzone(this, shareDes , imgUrl, shareUrl);
 			break;
 
 		case R.id.layWX:

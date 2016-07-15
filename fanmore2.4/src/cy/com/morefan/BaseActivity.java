@@ -6,7 +6,6 @@ import java.util.List;
 import cn.jpush.android.api.JPushInterface;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
-import com.umeng.message.PushAgent;
 
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.UserData;
@@ -59,10 +58,6 @@ public class BaseActivity extends SwipeBackActivity implements BusinessDataListe
 
 	@Override
 	protected void onCreate(Bundle arg0) {
-		PushAgent mPushAgent = PushAgent.getInstance(this);
-		mPushAgent.onAppStart();
-		mPushAgent.setDebugMode(true);
-
 		MainApplication.getActivityManager().pushActivity(this);
 		userService = new UserService(this);
 		 mGestureDetector = new GestureDetector(this, new MyOnGestureListener());

@@ -1,6 +1,7 @@
 package cy.com.morefan.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,11 @@ public class PartnerAdapter extends BaseAdapter {
         TextView historyTotalAmount=ViewHolderUtil.get(convertView,R.id.historyTotalAmount);
         TextView time=ViewHolderUtil.get(convertView,R.id.time);
         PartnerData partnerData=datas.get(position);
-        ImageLoad.loadLogo(partnerData.headFace,imgPhoto,mContext);
+        if (TextUtils.isEmpty(partnerData.headFace)){
+            imgPhoto.setImageResource(R.drawable.user_icon);
+        }else {
+            ImageLoad.loadLogo(partnerData.headFace, imgPhoto, mContext);
+        }
         txtName.setText("我的伙伴:"+partnerData.userName);
         yesterdayBrowseAmount.setText(partnerData.yesterdayBrowseAmount+"/"+partnerData.historyTotalBrowseAmount+"次");
         historyTotalAmount.setText(partnerData.yesterdayTurnAmount+"/"+partnerData.historyTotalTurnAmount+"次");

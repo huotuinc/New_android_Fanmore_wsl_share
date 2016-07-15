@@ -48,7 +48,7 @@ public class DataListActivity extends BaseActivity implements BusinessDataListen
 	private ListView listView;
 	private ListAdapter adapter;
 	private List<BaseData> datas;
-	private String pageTag;//分页标识
+	private int pageIndex;//分页标识
 	private UserService userService;
 	private ImageView layEmpty;
 	private MyBroadcastReceiver myBroadcastReceiver;
@@ -78,8 +78,6 @@ public class DataListActivity extends BaseActivity implements BusinessDataListen
 							datas.add(item);
 					}
 
-					if(i== length -1)
-						pageTag = item.getPageTag();
 				}
 				adapter.setDatas(datas);
 			}
@@ -223,11 +221,11 @@ public class DataListActivity extends BaseActivity implements BusinessDataListen
 	public void initData(){
 		datas.clear();
 		adapter.setDatas(datas);
-		pageTag = null;
+		pageIndex = 0;
 		getDataFromSer();
 	}
 	public void getDataFromSer(){
-		pageTag = TextUtils.isEmpty(pageTag) ? "0" : pageTag;
+		pageIndex =pageIndex+1;
 		switch (curActivityType) {
 //		case WalletHistory:
 //			userService.getWalletList(UserData.getUserData().loginCode,pageTag, Constant.PAGESIZE);
@@ -250,7 +248,7 @@ public class DataListActivity extends BaseActivity implements BusinessDataListen
 //			showProgress();
 //			break;
 		case PrenticeList:
-			userService.getPrenticeList(UserData.getUserData().loginCode, orderType, pageTag, Constant.PAGESIZE);
+			userService.getPrenticeList(UserData.getUserData().loginCode, pageIndex);
 			showProgress();
 			break;
 
@@ -287,6 +285,7 @@ public class DataListActivity extends BaseActivity implements BusinessDataListen
 			});
 		}else if(type == BusinessDataListener.DONE_GET_PRENTICE_LIST && extra != null){
 				final int prenticeCount = extra.getInt("prenticeCount");
+				pageIndex = extra.getInt("pageIndex");
 				SPUtil.saveIntToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_PRENTICE_COUNT, prenticeCount);
 				mHandler.post(new Runnable() {
 					@Override

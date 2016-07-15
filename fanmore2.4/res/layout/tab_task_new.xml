@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="乐享资讯"
+                android:text="即时资讯"
                 android:padding="10dp"
                 android:textColor="@color/black"
                 android:textSize="13sp" />

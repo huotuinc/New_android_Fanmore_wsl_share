@@ -87,7 +87,7 @@ public class TaskTodayAdapter extends BaseAdapter{
 			txtStoreName .setText(data.store);
 			txtDayScanCount.setText(data.dayScanCount + "");
 			txtTotalScanCount .setText(data.totalScanCount + "");
-			txtSendCount .setText(data.sendCount + "人已转发" );
+			txtSendCount .setText(String.valueOf(data.sendCount) + "人已转发" );
 			txtTimeDis.setText(data.dayDisDes);
 			txtDate .setText(data.creatTime.split(" ")[0]);
 

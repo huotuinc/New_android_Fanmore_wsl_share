@@ -194,6 +194,7 @@ public class PrenticeFrag extends BaseFragment implements OnClickListener, Busin
 			 String imgUrl = "http://taskapi.fhsilk.com/resource/app/104X104.png";
 			 String shareDes =topData.prenticeShareDes;
 			 String shareUrl =topData.prenticeShareUrl;
+			 String sharetitle = topData.shareTitle;
 			ShareSDK.initSDK(getActivity());
 			OnekeyShare oks = new OnekeyShare();
 			//关闭sso授权
@@ -201,9 +202,9 @@ public class PrenticeFrag extends BaseFragment implements OnClickListener, Busin
 
 
 			// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-			oks.setTitle(shareDes);
+			oks.setTitle(sharetitle);
 			// titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-			oks.setTitleUrl("http://sharesdk.cn");
+			oks.setTitleUrl(shareUrl);
 			// text是分享文本，所有平台都需要这个字段
 			oks.setText(shareDes);
 			// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
@@ -211,11 +212,11 @@ public class PrenticeFrag extends BaseFragment implements OnClickListener, Busin
 			// url仅在微信（包括好友和朋友圈）中使用
 			oks.setUrl(shareUrl);
 			// comment是我对这条分享的评论，仅在人人网和QQ空间使用
-			oks.setComment("我是测试评论文本");
+			oks.setComment("");
 			// site是分享此内容的网站名称，仅在QQ空间使用
 			oks.setSite(getString(R.string.app_name));
 			// siteUrl是分享此内容的网站地址，仅在QQ空间使用
-			oks.setSiteUrl("http://sharesdk.cn");
+			oks.setSiteUrl(shareUrl);
 
 // 启动分享GUI
 			oks.show(getActivity());
@@ -288,6 +289,7 @@ public class PrenticeFrag extends BaseFragment implements OnClickListener, Busin
 			topData.historyTotalBrowseAmount=extra.getString("historyTotalBrowseAmount");
 			topData.yesterdayTurnAmount=extra.getString("yesterdayTurnAmount");
 			topData.historyTotalTurnAmount=extra.getString("historyTotalTurnAmount");
+			topData.shareTitle = extra.getString("shareTitle");
 		}
 		mHandler.obtainMessage(type, datas).sendToTarget();
 

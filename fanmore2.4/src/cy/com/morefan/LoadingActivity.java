@@ -1,6 +1,8 @@
 package cy.com.morefan;
 
 import java.io.File;
+import java.io.Serializable;
+import java.util.List;
 
 
 import cindy.android.test.synclistview.SyncImageLoaderHelper;
@@ -8,11 +10,9 @@ import cindy.android.test.synclistview.SyncImageLoaderHelper;
 
 import com.lib.cylibimagedownload.ImageUtil;
 import com.lib.cyliblocation.LibLocation;
-import com.umeng.message.PushAgent;
-import com.umeng.message.UmengRegistrar;
-
 import cn.jpush.android.api.JPushInterface;
 import cy.com.morefan.AppUpdateActivity.UpdateType;
+import cy.com.morefan.bean.AdlistModel;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.constant.BusinessStatic;
@@ -42,7 +42,6 @@ import android.os.Handler.Callback;
 import android.os.Message;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.widget.TextView;
 
 public class LoadingActivity extends BaseActivity implements
 		BusinessDataListener, OnkeyBackListener, Callback, BroadcastListener{
@@ -52,16 +51,20 @@ public class LoadingActivity extends BaseActivity implements
 	private boolean isCompleteUserInfo;
 	private long time;
 	private int alarmId;
+	List<AdlistModel> datas;
+
 
 	@Override
 	public boolean handleMessage(Message msg) {
 
 		if (msg.what == BusinessDataListener.DONE_INIT) {
+
 			Bundle bundle = (Bundle) msg.obj;
 			int updateType = bundle.getInt("updateType");
 			String updateMd5 = bundle.getString("updateMd5");
 			String updateUrl = bundle.getString("updateUrl");
 			String updateTips = bundle.getString("updateTips");
+			datas=(List<AdlistModel>) bundle.getSerializable("adlist");
 			// 是否完善个人信息
 			isCompleteUserInfo = bundle.getInt("isCompleteUserInfo") == 1;
 			switch (updateType) {
@@ -187,6 +190,7 @@ public class LoadingActivity extends BaseActivity implements
 			Intent intent = new Intent(LoadingActivity.this, AdActivity.class);
 			intent.putExtra("isCompleteUserInfo", isCompleteUserInfo);
 			intent.putExtra("alarmId", alarmId);
+			intent.putExtra("data", (Serializable) datas);
 			startActivity(intent);
 			finish();
 		}
@@ -205,29 +209,10 @@ public class LoadingActivity extends BaseActivity implements
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		setContentView(R.layout.loading);
-		//((TextView)findViewById(R.id.txtVersion)).setText(String.format("V %s Beta", Constant.APP_VERSION));
-		//推送：1、enable ;2、BaseActivity_oncreate:onAppStart
-		boolean pushSwitch = SPUtil.getBooleanFromSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_PUSH_SWITCH, true);
-		if(pushSwitch){
-			PushAgent.getInstance(this).enable();
-		}else{
-			PushAgent.getInstance(this).disable();
-		}
 
 		if(null != getIntent().getExtras())
 			alarmId = getIntent().getExtras().getInt("alarmId");
 		broadcastReceiver = new MyBroadcastReceiver(this, this,  Intent.ACTION_BATTERY_CHANGED);
-
-		//JsonUtil.convertToObj(null, StoreData.class);
-		// toast(getPackageName() + "1.0.1");
-//>>>>>>>>>>>uuid:29ff36e3-b2b5-48bc-8a3c-684fec8f1cdf
-
-//		System.out.println(getDeviceInfo(this));
-//		//06-20 15:00:25.633: I/System.out(8046): >>>>token:AktcOBC1j1Em9FseNgAo19zhSuhdvZsd_YLZdXOb-Se2
-//		String device_token = UmengRegistrar.getRegistrationId(this);
-//		System.out.println(">>>>token:" + device_token);
-//		L.i(">>>>>>uuid:" + IMEIUtil.getUUID(this));
-		//06-20 14:46:06.384: I/System.out(5201): {"device_id":"359836042904932","mac":"1c:b0:94:14:b1:18"}
 
 
 		// check file
@@ -283,7 +268,7 @@ public static String getDeviceInfo(Context context) {
 		BusinessStatic.getInstance().IMEI = telMgr.getDeviceId();
 
 		if(TextUtils.isEmpty(BusinessStatic.getInstance().IMEI))
-			BusinessStatic.getInstance().IMEI = UmengRegistrar.getRegistrationId(this);
+			BusinessStatic.getInstance().IMEI = JPushInterface.getRegistrationID(this);
 		L.i(">>>>>>>>>imei:" + BusinessStatic.getInstance().IMEI);
 
 		/**

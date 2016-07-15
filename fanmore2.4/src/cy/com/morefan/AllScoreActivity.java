@@ -10,6 +10,7 @@ import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.constant.Constant.FromType;
+import cy.com.morefan.frag.FragManager;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
@@ -26,13 +27,14 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class AllScoreActivity extends BaseActivity implements BroadcastListener, OnLoadMoreListener, Callback, OnItemClickListener {
+public class AllScoreActivity extends BaseActivity implements BroadcastListener, OnLoadMoreListener, Callback {
     private TrendView trendView;
     private UserService userService;
     private ArrayList<AllScoreData> datas;
@@ -84,9 +86,7 @@ public class AllScoreActivity extends BaseActivity implements BroadcastListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.allscore);
         pageDate = "";
-
         listView = (ListView) findViewById(R.id.listView);
-        listView.setOnItemClickListener(this);
         trendView = (TrendView) findViewById(R.id.trendView);
         layEmpty = (ImageView) findViewById(R.id.layEmpty);
         img_arrow = (ImageView) findViewById(R.id.img_arrow);
@@ -127,7 +127,7 @@ public class AllScoreActivity extends BaseActivity implements BroadcastListener,
     }
 
     public void getDataFromSer() {
-        userService.getAllScoreTrendList(datas, UserData.getUserData().loginCode, Constant.PAGESIZE, pageDate);
+        userService.getAllScoreTrendList(0,datas, UserData.getUserData().loginCode, Constant.PAGESIZE, pageDate);
         showProgress();
     }
 
@@ -145,7 +145,11 @@ public class AllScoreActivity extends BaseActivity implements BroadcastListener,
             case R.id.btnRefresh:
                 initData();
                 break;
-
+            case R.id.btnBack:
+                finish();
+                FragManager fragManager= new FragManager(this,R.id.layContent);
+                fragManager.setCurrentFrag(FragManager.FragType.Task);
+                break;
             default:
                 break;
         }
@@ -177,25 +181,7 @@ public class AllScoreActivity extends BaseActivity implements BroadcastListener,
         super.onDataFinish(type, des, datas, extra);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-//        L.i(">>>>>>onItemClick");
-//        //intentDetail.putExtra("taskData", datas.get(position - 1));
-//        AwardData awardData = awardDatas.get(arg2);
-//        if (awardData.type == 2) {
-//            Intent intentDetail = new Intent(this, AwardDetailActivity.class);
-//            intentDetail.putExtra(Constant.TYPE_FROM, FromType.TotalScore);
-//            intentDetail.putExtra(AwardDetailActivity.TASK_ID, awardData.id);
-//            intentDetail.putExtra(AwardDetailActivity.DATE, awardData.date);
-//            startActivity(intentDetail);
-//        }
 
-//		Intent intent = new Intent(this, TaskActivity.class);
-//     	intent.putExtra(Constant.TYPE_FROM, FromType.TotalScore);
-//     	intent.putExtra(AwardDetailActivity.DATE, awardDatas.get(arg2).date);
-//     	startActivity(intent);
-
-    }
 
     @Override
     protected void onDestroy() {

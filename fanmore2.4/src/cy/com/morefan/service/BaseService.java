@@ -152,7 +152,7 @@ public class BaseService {
 		item.storeId = tip.getString("storeId");
 		item.store = tip.getString("storeName");
 		item.content = tip.getString("taskInfo");
-		item.sendCount = tip.getString("sendCount");
+		item.sendCount = tip.getInt("sendCount");
 		item.browseCount = tip.getString("browseCount");
 		item.ShowTurnButton=tip.getInt("ShowTurnButton");
 		item.status = tip.getInt("status");

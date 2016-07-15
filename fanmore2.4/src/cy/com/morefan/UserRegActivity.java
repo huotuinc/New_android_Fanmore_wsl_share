@@ -99,7 +99,7 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 			handler.postDelayed(runnable, 1000);
 			btnGetcode.setClickable(false);
 		}else if (msg.what == BusinessDataListener.ERROR_VERIFY_MOBILE){
-			toast("该手机已注册");
+			toast(msg.obj.toString());
 		}
 		return false;
 	}
@@ -210,9 +210,14 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 	public void userupdata() {
 		String phone = edtPhone.getText().toString();
 		String code = edtCode.getText().toString().trim();
-		if(!Util.isPhoneNum(phone)){
+		if (TextUtils.isEmpty(phone)){
 			edtPhone.requestFocus();
 			edtPhone.setError("手机号不能为空");
+			return;
+		}
+		else if(!Util.isPhoneNum(phone)){
+			edtPhone.requestFocus();
+			edtPhone.setError("手机号错误");
 			return;
 		}
 		if(BusinessStatic.getInstance().SMS_ENALBE && edtCode.getVisibility() == View.VISIBLE && TextUtils.isEmpty(code)){

@@ -1,6 +1,7 @@
 package cy.com.morefan.service;
 
 import java.io.File;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ import org.json.JSONObject;
 import cindy.android.test.synclistview.SyncImageLoaderHelper;
 
 import com.lib.cylibimagedownload.ImageUtil;
-import com.wensli.fanmore.wxapi.WXEntryActivity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -24,6 +24,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import cy.com.morefan.MainApplication;
+import cy.com.morefan.bean.AdlistModel;
 import cy.com.morefan.bean.MyJSONObject;
 import cy.com.morefan.bean.PreTaskStatusData;
 import cy.com.morefan.bean.SendData;
@@ -36,6 +37,7 @@ import cy.com.morefan.util.AuthParamUtils;
 import cy.com.morefan.util.L;
 import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.util.Util;
+import hz.huotu.wsl.aifenxiang.wxapi.WXEntryActivity;
 
 
 public class TaskService extends BaseService {
@@ -231,7 +233,7 @@ public class TaskService extends BaseService {
                                 taskData.smallImgUrl = myJSONObject.getString("taskSmallImgUrl");
                                 taskData.largeImgUrl = myJSONObject.getString("taskLargeImgUrl");
                                 taskData.type = myJSONObject.getInt("type");
-                                taskData.sendCount = myJSONObject.getString("sendCount");
+                                taskData.sendCount = myJSONObject.getInt("sendCount");
                                 taskData.status = myJSONObject.getInt("status");
                                 taskData.content = myJSONObject.getString("taskInfo");
                                 taskData.awardSend = myJSONObject.getString("awardSend");
@@ -330,16 +332,16 @@ public class TaskService extends BaseService {
                                 }
 
                             } else {
-                                listener.onDataFailed(BusinessDataListener.ERROR_INIT, data.getString("tip"), null);
+
                             }
                         } else {
-                            listener.onDataFailed(BusinessDataListener.ERROR_INIT, data.getString("description"), null);
+
                         }
                     } else {
-                        listener.onDataFailed(BusinessDataListener.ERROR_INIT, ERROR_NET, null);
+
                     }
                 } catch (Exception e) {
-                    listener.onDataFailed(BusinessDataListener.ERROR_INIT, ERROR_DATA, null);
+
                     e.printStackTrace();
                 }
 
@@ -420,7 +422,7 @@ public class TaskService extends BaseService {
                                  * 2其他
                                  */
                                 BusinessStatic.getInstance().grenadeRewardInfo = myJSONObject.getString("grenadeRewardInfo");
-                                BusinessStatic.getInstance().disasterFlag = myJSONObject.getInt("disasterFlag") == 1;
+                                BusinessStatic.getInstance().disasterFlag = myJSONObject.getInt("disasterFlag");
                                 BusinessStatic.getInstance().disasterUrl = myJSONObject.getString("disasterUrl");
                                 BusinessStatic.getInstance().URL_PUTIN = myJSONObject.getString("putInUrl");
                                 BusinessStatic.getInstance().URL_TOOL = myJSONObject.getString("toolUrl");
@@ -428,7 +430,6 @@ public class TaskService extends BaseService {
                                 BusinessStatic.getInstance().CRASH_TYPE = myJSONObject.getInt("CashType");
                                 BusinessStatic.getInstance().WEIXIN_IGNORE_VERSION = myJSONObject.getString("wxVersionCode");
                                 //是否完善个人信息z
-                                WXEntryActivity.WX_APP_ID = myJSONObject.getString("weixinKey");
                                 extra.putInt("isCompleteUserInfo", myJSONObject.getInt("isCompleteUserInfo"));
                                 BusinessStatic.getInstance().SMS_TAG = myJSONObject.getString("smsTag");
                                 BusinessStatic.getInstance().CHANGE_BOUNDARY = myJSONObject.getInt("changeBoundary");
@@ -447,10 +448,14 @@ public class TaskService extends BaseService {
                                 int smsEnable = myJSONObject.getInt("smsEnable");
                                 //smsEnable	     0，正常;-1短信灾难
                                 BusinessStatic.getInstance().SMS_ENALBE = !(smsEnable == -1);
-                                BusinessStatic.getInstance().ADIMG= myJSONObject.getString("adimg");
-                                BusinessStatic.getInstance().adclick=myJSONObject.getString("adclick");
+                                //BusinessStatic.getInstance().ADIMG= myJSONObject.getString("adimg");
+                                //BusinessStatic.getInstance().adclick=myJSONObject.getString("adclick");
                                 BusinessStatic.getInstance().AppEnableRank= myJSONObject.getInt("AppEnableRank");
                                 BusinessStatic.getInstance().AppEnableWeekTask = myJSONObject.getInt("AppEnableWeekTask");
+                                BusinessStatic.getInstance().guide = myJSONObject.getString("guide");
+                                BusinessStatic.getInstance().adTime = myJSONObject.getInt("adTime");
+                                BusinessStatic.getInstance().weixinKey = myJSONObject.getString("weixinKey");
+                                BusinessStatic.getInstance().weixinAppSecret = myJSONObject.getString("weixinAppSecret");
                                 /**
                                  *3用户信息
                                  */
@@ -462,26 +467,24 @@ public class TaskService extends BaseService {
                                 /**
                                  * 4开机图
                                  */
+                                JSONArray jsonArray = null;
 
-//
-//                                SPUtil.clearSpByName(mContext, Constant.SP_NAME_LOADING);
-//                                deleteSDCardFolder(new File(Constant.IMAGE_PATH_LOADING));
-//
-//									String loadUrl = myJSONObject.getString("adimg");
-//									if(!TextUtils.isEmpty(loadUrl)){
-//										loader.loadImage( loadUrl, Constant.IMAGE_PATH_LOADING);
-//										try {
-//											String[] showTime = myJSONObject.getString("showTime").split(",");
-//											String start = showTime[0];
-//											String end = showTime[1];
-//											//save tosp
-//											String fileName = loadUrl.substring(loadUrl.lastIndexOf("/") + 1);
-//											String time = Util.getIntTime(start) + "," + Util.getIntTime(end);
-//											SPUtil.saveStringToSpByName(mContext,Constant.SP_NAME_LOADING, fileName,time);
-//										} catch (Exception e) {
-//											// TODO: handle exception
-//										}
-//									}
+                                    jsonArray = myJSONObject.getJSONArray("AdList");
+
+                                int length = jsonArray.length();
+                                List<AdlistModel> results = new ArrayList<AdlistModel>();
+                                for (int i = 0; i < length; i++) {
+                                    MyJSONObject tip = (MyJSONObject) jsonArray.get(i);
+                                    AdlistModel item = new AdlistModel();
+                                    item.setItemCreateTime(tip.getString("itemCreateTime"));
+                                    item.setItemId(tip.getInt("itemId"));
+                                    item.setItemImgDescLink(tip.getString("itemImgDescLink"));
+                                    item.setItemImgUrl(tip.getString("itemImgUrl"));
+                                    item.setItemShowSort(tip.getInt("itemShowSort"));
+                                    item.setItemShowTime(tip.getInt("itemShowTime"));
+                                    results.add(item);
+                                }
+                                extra.putSerializable("adlist", (Serializable) results);
 
                                 listener.onDataFinish(BusinessDataListener.DONE_INIT, null, null, extra);
 

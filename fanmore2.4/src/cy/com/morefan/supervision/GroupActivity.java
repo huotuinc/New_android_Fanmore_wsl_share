@@ -16,6 +16,7 @@ import cy.com.morefan.BaseActivity;
 import cy.com.morefan.R;
 import cy.com.morefan.adapter.FragAdapter;
 import cy.com.morefan.frag.ArchitectureFrag;
+import cy.com.morefan.frag.FragManager;
 import cy.com.morefan.frag.GroupTaskFrag;
 import cy.com.morefan.view.CyButton;
 
@@ -105,6 +106,8 @@ public class GroupActivity extends BaseActivity implements SegmentControl.OnSegm
     public void onClick(View view){
         if(view.getId()==R.id.btnBack){
             this.finish();
+            FragManager fragManager= new FragManager(this,R.id.layContent);
+            fragManager.setCurrentFrag(FragManager.FragType.Task);
         }else if(view.getId()==R.id.btnQuery){
 
         }

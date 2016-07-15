@@ -54,7 +54,8 @@ class NewWebActivity extends BaseActivity implements MyBroadcastReceiver.Broadca
         application = ( MainApplication ) this.getApplication ( );
 
         myBroadcastReceiver = new MyBroadcastReceiver(NewWebActivity.this,this, MyBroadcastReceiver.ACTION_PAY_SUCCESS);
-        url = BusinessStatic.getInstance().adclick;
+        Bundle bundle=getIntent().getExtras();
+        url = bundle.getString("url");
         if (TextUtils.isEmpty(url)){
             if(!TextUtils.isEmpty(SPUtil.getStringToSpByName(NewWebActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME)) &&
                     !TextUtils.isEmpty(SPUtil.getStringToSpByName(NewWebActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD))) {

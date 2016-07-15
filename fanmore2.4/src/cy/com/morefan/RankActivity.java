@@ -8,6 +8,7 @@ import cy.com.morefan.adapter.RankAdapter;
 import cy.com.morefan.adapter.ViewPagerAdapter;
 import cy.com.morefan.bean.RankData;
 import cy.com.morefan.constant.Constant;
+import cy.com.morefan.frag.FragManager;
 import cy.com.morefan.frag.RankItemFrag;
 import cy.com.morefan.frag.RankItemFrag.TabType;
 import cy.com.morefan.listener.MyBroadcastReceiver;
@@ -154,6 +155,18 @@ public class RankActivity extends BaseActivity implements BroadcastListener{
 
 		}
 
+	}
+
+	public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.btnBack:
+				finish();
+				FragManager fragManager= new FragManager(this,R.id.layContent);
+				fragManager.setCurrentFrag(FragManager.FragType.Task);
+				break;
+			default:
+				break;
+		}
 	}
 	@Override
 		protected void onDestroy() {

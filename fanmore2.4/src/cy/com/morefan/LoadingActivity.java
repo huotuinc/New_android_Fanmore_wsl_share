@@ -199,7 +199,6 @@ public class LoadingActivity extends BaseActivity implements
 	}
 
 	private TaskService taskService;
-	private UserService userService;
 	private SyncImageLoaderHelper loader;
 	private MyBroadcastReceiver broadcastReceiver;
 	
@@ -216,12 +215,12 @@ public class LoadingActivity extends BaseActivity implements
 
 
 		// check file
-		Bitmap bitmap = checkLoadingImage();
-		if (bitmap != null) {
-			BitmapDrawable drawable = new BitmapDrawable(getResources(), bitmap);
-			findViewById(R.id.lay).setBackgroundDrawable(drawable);
-			L.i(">>>>>setBitmap:"+ bitmap );
-		}
+//		Bitmap bitmap = checkLoadingImage();
+//		if (bitmap != null) {
+//			BitmapDrawable drawable = new BitmapDrawable(getResources(), bitmap);
+//			findViewById(R.id.lay).setBackgroundDrawable(drawable);
+//			L.i(">>>>>setBitmap:"+ bitmap );
+//		}
 		time = System.currentTimeMillis();
 
 	}
@@ -323,12 +322,12 @@ public static String getDeviceInfo(Context context) {
 		String userName = SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME);
 		String pwd = SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD);
 		int[] size = DensityUtil.getSize(this);
-		if(loader == null)
-			loader = new SyncImageLoaderHelper(this);
+//		if(loader == null)
+//			loader = new SyncImageLoaderHelper(this);
 		taskService.init(this, userName, pwd,size[0], size[1], loader);
 		taskService.PayConfig(this);
-		userService.getScanCount();
-		userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
+		//userService.getScanCount();
+		//userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
 	}
 
 	private Bitmap checkLoadingImage() {

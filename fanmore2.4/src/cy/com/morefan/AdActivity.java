@@ -74,7 +74,6 @@ public class AdActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad);
         ButterKnife.bind(this);
-        handler.postDelayed(runnable, 0);
         adDataList = (List<AdlistModel>) getIntent().getSerializableExtra("data");
         itemtime =adDataList.get(homeViewPager.getCurrentItem()).getItemShowTime();
         skipText.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +91,7 @@ public class AdActivity extends BaseActivity {
             }
         });
         asyncGetScrollImage();
+        handler.postDelayed(runnable, 0);
     }
 
 

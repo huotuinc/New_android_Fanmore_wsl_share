@@ -360,11 +360,11 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 				finish();
 			}
 			break;
-		case R.id.layRule:
-			fragManager.setCurrentFrag(FragType.Rule);
-			setTitleButton(FragType.Rule);
-			openOrCloseMenu();
-			break;
+//		case R.id.layRule:
+//			fragManager.setCurrentFrag(FragType.Rule);
+//			setTitleButton(FragType.Rule);
+//			openOrCloseMenu();
+//			break;
 		case R.id.layMore://更多选项
 			fragManager.setCurrentFrag(FragType.More);
 			setTitleButton(FragType.More);

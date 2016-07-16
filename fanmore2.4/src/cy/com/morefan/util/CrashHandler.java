@@ -32,7 +32,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
     // 用于格式化日期,作为日志文件名的一部分
     private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-    private String nameString="分红";
+    private String nameString="乐享头条";
     //系统默认的UncaughtException处理类
     private Thread.UncaughtExceptionHandler mDefaultHandler;
     private static class Holder
@@ -141,7 +141,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                     + ".log";
             if (Environment.getExternalStorageState().equals(
                     Environment.MEDIA_MOUNTED)) {
-                String path = Environment.getExternalStorageDirectory()+"/fenhong";
+                String path = Environment.getExternalStorageDirectory()+"/lexiang";
                 File dir = new File(path);
                 if (!dir.exists()) {
                     dir.mkdirs();

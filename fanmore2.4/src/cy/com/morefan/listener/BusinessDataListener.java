@@ -142,5 +142,7 @@ public interface BusinessDataListener {
 	public static final int ERROR_CHECK_VERIFYCODE  = -8002;// 检查验证码是否有效
 	public static final int DONE_GET_WEEKTASK  = 8003;
 	public static final int ERROR_GET_WEEKTASK  = -8003;
+	public static final int DONE_PAYCONFIG = 9000;
+	public static final int ERROR_PAYCONFIG = -9000;
 }
 

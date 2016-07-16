@@ -142,7 +142,7 @@ public class BaseService {
 		String time = tip.getString("orderTime");
 		item.startTime = Util.DateFormatFull(time);
 		//s
- 		item.advTime = Util.DateFormatFull(tip.getString("advancedseconds"));//tip.getInt("advancedseconds") + "";
+ 		//item.advTime = Util.DateFormatFull(tip.getString("advancedseconds"));//tip.getInt("advancedseconds") + "";
 		item.creatTime = Util.DateFormat(time);
 		item.dayCount = Util.getDayCount(time);
 		item.dayDisDes = Util.getDayDisDes(time);

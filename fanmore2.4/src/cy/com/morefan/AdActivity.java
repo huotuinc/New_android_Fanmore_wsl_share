@@ -60,9 +60,18 @@ public class AdActivity extends BaseActivity {
             }
             break;
                 case Constant.CAROUSE_URL:
-                Bundle bundle=new Bundle();
+                    handler.removeCallbacks(runnable);
+                    mHandler.removeMessages(0);
+                    Bundle bundle=new Bundle();
                  bundle.putString("url" ,  adDataList.get(homeViewPager.getCurrentItem()).getItemImgDescLink() );
-                ActivityUtils.getInstance().showActivity(AdActivity.this,NewWebActivity.class,bundle);
+                    if(!TextUtils.isEmpty(SPUtil.getStringToSpByName(AdActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME)) &&
+                            !TextUtils.isEmpty(SPUtil.getStringToSpByName(AdActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD))) {
+
+                        ActivityUtils.getInstance().skipActivity(AdActivity.this,HomeActivity.class,bundle);
+                    } else {
+                        ActivityUtils.getInstance().skipActivity(AdActivity.this, MoblieLoginActivity.class,bundle);
+                    }
+
                 default:
                     break;
             }

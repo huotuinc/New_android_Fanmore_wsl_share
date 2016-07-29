@@ -14,7 +14,7 @@ public class TaskData implements BaseData, Serializable {
 	/**
 	 * 任务浏览量
 	 */
-	public String browseCount;
+	public int browseCount;
 	/**
 	 * 总积分
 	 */

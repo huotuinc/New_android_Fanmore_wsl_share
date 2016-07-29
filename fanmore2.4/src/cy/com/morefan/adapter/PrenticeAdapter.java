@@ -94,8 +94,8 @@ public class PrenticeAdapter extends BaseAdapter{
 			TextView txtTopTotal	= ViewHolderUtil.get(convertView, R.id.txtTotalContri);
 			TextView txtTopLast		= ViewHolderUtil.get(convertView, R.id.txtLastContri);
 			TextView prenticeAmount = ViewHolderUtil.get(convertView, R.id.prenticeAmount);
-			TextView BrowseAmount   = ViewHolderUtil.get(convertView, R.id.BrowseAmount);
-			TextView TurnAmount     = ViewHolderUtil.get(convertView, R.id.TurnAmount);
+			//TextView BrowseAmount   = ViewHolderUtil.get(convertView, R.id.BrowseAmount);
+			//TextView TurnAmount     = ViewHolderUtil.get(convertView, R.id.TurnAmount);
 			CircleImageView imgPhoto	= ViewHolderUtil.get(convertView, R.id.imgPhoto);
 			TextView btnCopy     =ViewHolderUtil.get(convertView,R.id.btnCopy);
 			LinearLayout apprentice = ViewHolderUtil.get(convertView, R.id.apprentice);
@@ -128,8 +128,8 @@ public class PrenticeAdapter extends BaseAdapter{
 			txtTopCode.setText(topData.invitationCode);
 			txtTopDes.setText(topData.prenticeDes);
 			prenticeAmount.setText( String.valueOf( topData.prenticeAmount)+"人");
-			BrowseAmount.setText( topData.yesterdayBrowseAmount+"/"+ topData.historyTotalBrowseAmount+"次");
-			TurnAmount.setText(topData.yesterdayTurnAmount+"/"+topData.historyTotalTurnAmount+"次");
+			//BrowseAmount.setText( topData.yesterdayBrowseAmount+"/"+ topData.historyTotalBrowseAmount+"次");
+			//TurnAmount.setText(topData.yesterdayTurnAmount+"/"+topData.historyTotalTurnAmount+"次");
 		}else{
 			if(convertView == null){
 				convertView = LayoutInflater.from(mContext).inflate(R.layout.tab_prentice_item, null);

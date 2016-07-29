@@ -12,14 +12,12 @@ dependencies {
     compile files('libs/gson-2.2.4.jar')
     compile files('libs/alipaySDK-20150818.jar')
     compile files('libs/jpush-android-2.1.5.jar')
-    compile files('libs/ShareSDK-Core-2.7.3.jar')
     compile 'com.handmark.library:pulltorefresh:1.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.huotu.android.library:libedittext:1.6'
     compile 'com.huibin.androidsegmentcontrol:androidsegmentcontrol:1.2'
     compile 'com.android.support:support-v4:21.0.3'
     compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha1'
     compile('com.github.satyan:sugar:1.5') {
 
         exclude module: 'support-v4'
@@ -67,7 +65,7 @@ android {
     defaultConfig {
         signingConfig signingConfigs.huotu
         minSdkVersion 8
-        targetSdkVersion 21
+        targetSdkVersion 23
     }
 
     productFlavors {
@@ -75,7 +73,7 @@ android {
             applicationId 'hz.huotu.wsl.aifenxiang'
             signingConfig signingConfigs.huotu
             minSdkVersion 11
-            targetSdkVersion 21
+            targetSdkVersion 23
         }
     }
 

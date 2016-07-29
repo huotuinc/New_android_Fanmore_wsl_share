@@ -365,6 +365,7 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 		getDataFromSer();
 	}
 	public void getDataFromSer(){
+		adapter.notifyDataSetChanged();
 	int taskType = 0;
 //		//0全部;1文章（任务）;2活动;3推荐;4热门;5有分
 //		switch (tabType) {

@@ -1,10 +1,10 @@
 package cy.com.morefan;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +38,8 @@ public class MoblieLoginActivity extends BaseActivity implements Handler.Callbac
     TextView Txt_forget_psw;
     @Bind(R.id.Txt_reg)
     TextView Txt_reg;
+    @Bind(R.id.txtInformation)
+    TextView txtInformation;
     private UserService userService;
     private Handler mHandler = new Handler(this);
 
@@ -47,6 +49,10 @@ public class MoblieLoginActivity extends BaseActivity implements Handler.Callbac
         setContentView(R.layout.activity_moblie_login);
         ButterKnife.bind(this);
         userService = new UserService(this);
+        Bundle bundle=getIntent().getExtras();
+        if(bundle!=null){
+            ActivityUtils.getInstance().showActivity(MoblieLoginActivity.this,NewWebActivity.class,bundle);
+        }
     }
     @OnClick(R.id.Txt_reg)
     void reg(){
@@ -58,9 +64,15 @@ public class MoblieLoginActivity extends BaseActivity implements Handler.Callbac
     @OnClick(R.id.Txt_forget_psw)
     void forgetpsw(){
         Bundle bundle=new Bundle();
-        bundle.putString("title","忘记密码");
+        bundle.putString("title","设置密码");
         bundle.putInt("isUpdate",1);
         ActivityUtils.getInstance().showActivity(this,UserRegActivity.class,bundle);
+    }
+    @OnClick(R.id.txtInformation)
+    void phone(){
+         String callphone = txtInformation.getText().toString();
+        Intent intent =new Intent("android.intent.action.CALL", Uri.parse("tel:"+callphone));
+        startActivity(intent);
     }
     @OnClick(R.id.btnLogin)
     void login() {

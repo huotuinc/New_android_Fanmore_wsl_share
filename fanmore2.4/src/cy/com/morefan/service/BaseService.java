@@ -76,41 +76,41 @@ public class BaseService {
 		userData.PrenticeAmount  = myUserData.getString("PrenticeAmount");
 		userData.levelName   = myUserData.getString("levelName");
 		userData.completeInfo = myUserData.getBoolean("completeInfo");
-		userData.dayCheckIn = myUserData.getInt("dayCheckIn") == 1;
-		userData.checkInDays = myUserData.getInt("checkInDays");
-		userData.exp = myUserData.getInt("exp");
+//		userData.dayCheckIn = myUserData.getInt("dayCheckIn") == 1;
+//		userData.checkInDays = myUserData.getInt("checkInDays");
+//		userData.exp = myUserData.getInt("exp");
 		userData.picUrl = myUserData.getString("userHead"); // myUserData.getString("picUrl");
 		userData.isLogin = true;
 		userData.loginCode = myUserData.getString("loginCode");
 		userData.phone = myUserData.getString("mobile");
 		userData.userName = userName;
 		userData.pwd = pwd;
-		userData.totalScore = Util.opeDouble(myUserData.getDouble("totalScore"));//myUserData.getInt("totalScore");
+//		userData.totalScore = Util.opeDouble(myUserData.getDouble("totalScore"));//myUserData.getInt("totalScore");
 		userData.shareDes = myUserData.getString("shareDes");
 		userData.UserNickName=myUserData.getString("UserNickName");
 		userData.RealName=myUserData.getString("RealName");
 		userData.shareContent = myUserData.getString("shareContent");
-		userData.lockScore = Util.opeDouble(myUserData.getDouble("lockScore"));//myUserData.getInt("lockScore");
+//		userData.lockScore = Util.opeDouble(myUserData.getDouble("lockScore"));//myUserData.getInt("lockScore");
 		userData.completeTaskCount = myUserData.getInt("completeTaskCount");
 		userData.totalTaskCount = myUserData.getInt("totalTaskCount");
 		userData.payAccount = myUserData.getString("alipayId");
 		userData.toCrashPwd = myUserData.getString("withdrawalPassword");
 		userData.regTime = Util.DateFormatFull(myUserData.getString("regTime"));
-		userData.yesScore = Util.opeDouble(myUserData.getDouble("yesScore"));//myUserData.getInt("yesScore");
-		userData.score = Util.opeDouble(myUserData.getDouble("score"));//myUserData.getInt("score");
-		userData.favCount = myUserData.getInt("favoriteAmount");
+		//userData.yesScore = Util.opeDouble(myUserData.getDouble("yesScore"));//myUserData.getInt("yesScore");
+		//userData.score = Util.opeDouble(myUserData.getDouble("score"));//myUserData.getInt("score");
+		//userData.favCount = myUserData.getInt("favoriteAmount");
 		userData.sendCount = myUserData.getInt("turnAmount");
-		userData.crashCount = myUserData.getString("crashCount");
-		userData.welfareCount = myUserData.getInt("welfareCount");
+		//userData.crashCount = myUserData.getString("crashCount");
+		//userData.welfareCount = myUserData.getInt("welfareCount");
 		userData.todayScanCount = myUserData.getInt("todayBrowseCount");
 		//judgeEmulator是否进行模拟器判断，0进行;1不进行
 		userData.ignoreJudgeEmulator = myUserData.getInt("judgeEmulator") == 1;
 		userData.isSuper =myUserData.getBoolean("isSuper");
-		try {
-			JSONArray msg = myUserData.getJSONArray("msg");
-			if (msg != null)
-				userData.hasNewFeedback = msg.length() != 0;
-		}catch (Exception ex){}
+//		try {
+//			JSONArray msg = myUserData.getJSONArray("msg");
+//			if (msg != null)
+//				userData.hasNewFeedback = msg.length() != 0;
+//		}catch (Exception ex){}
 	}
 
 	public TaskData setTaskData(MyJSONObject tip) throws JSONException {
@@ -124,11 +124,11 @@ public class BaseService {
 		item.id = tip.getInt("taskId");
 		item.taskName = tip.getString("taskName");
 		item.smallImgUrl = tip.getString("taskSmallImgUrl");
-		NumberFormat nf=NumberFormat.getInstance();
-		nf.setGroupingUsed(false);
-		item.totalScore = nf.format(tip.getDouble("totalScore"));//tip.getInt("totalScore");
-		item.lastScore = nf.format(tip.getDouble("lastScore"));//tip.getInt("lastScore");
-		item.lastScore = Double.parseDouble(item.lastScore) < 0 ? "0" : item.lastScore;
+//		NumberFormat nf=NumberFormat.getInstance();
+//		nf.setGroupingUsed(false);
+//		item.totalScore = nf.format(tip.getDouble("totalScore"));//tip.getInt("totalScore");
+//		item.lastScore = nf.format(tip.getDouble("lastScore"));//tip.getInt("lastScore");
+//		item.lastScore = Double.parseDouble(item.lastScore) < 0 ? "0" : item.lastScore;
 		String sendList = tip.getString("sendList");
 		if(TextUtils.isEmpty(sendList)){
 			item.channelIds = new ArrayList<String>();
@@ -153,7 +153,7 @@ public class BaseService {
 		item.store = tip.getString("storeName");
 		item.content = tip.getString("taskInfo");
 		item.sendCount = tip.getInt("sendCount");
-		item.browseCount = tip.getString("browseCount");
+		item.browseCount = tip.getInt("browseCount");
 		item.ShowTurnButton=tip.getInt("ShowTurnButton");
 		item.status = tip.getInt("status");
 		item.type = tip.getInt("type");

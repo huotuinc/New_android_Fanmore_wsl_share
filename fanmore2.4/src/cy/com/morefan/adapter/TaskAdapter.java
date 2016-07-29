@@ -106,19 +106,19 @@ public class TaskAdapter extends BaseAdapter{
 		TextView txtLastScoreDes	= ViewHolderUtil.get(convertView, R.id.txtLastScoreDes);
 		TextView txtStore           = ViewHolderUtil.get(convertView,R.id.txtStore);
 		TextView browseCount        = ViewHolderUtil.get(convertView,R.id.browseCount);
-		TextView sendCount        = ViewHolderUtil.get(convertView,R.id.sendCount);
+		//TextView sendCount        = ViewHolderUtil.get(convertView,R.id.sendCount);
 
 
         	 TaskData data = datas.get(position);
         	 //日期分组
-        	 if(position < datas.size() - 1){
-        		 if(data.dayCount == datas.get(position + 1).dayCount){
+        	 if(position < 1) {
+				 txtDate.setVisibility(View.VISIBLE);
+			 }else {
+        		 if(data.dayCount == datas.get(position -1).dayCount){
         			 txtDate.setVisibility(View.GONE);
         		 }else{
         			 txtDate.setVisibility(View.VISIBLE);
         		 }
-        	 }else{
-        		 txtDate.setVisibility(View.VISIBLE);
         	 }
 				if (data.isSend){
 					imgStatusTag.setVisibility(View.VISIBLE);
@@ -139,8 +139,12 @@ public class TaskAdapter extends BaseAdapter{
         	imgTagWeiXin.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_WEIXIN + "") ? R.drawable.share_ico_weixin : R.drawable.share_ico_weixin);
         	imgTagSina.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_SINA + "") ? R.drawable.share_wechat : R.drawable.share_wechat);
         	imgTagQzone.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_QZONE + "") ? R.drawable.share_ico_qzone : R.drawable.share_ico_qzone);
-			browseCount.setText(data.browseCount);
-			sendCount.setText(String.valueOf(data.sendCount));
+			if(data.browseCount>=100000) {
+				browseCount.setText("10万+");
+			}else {
+				browseCount.setText(String.valueOf(data.browseCount));
+			}
+			//sendCount.setText(String.valueOf(data.sendCount));
         	//layScan.setVisibility(adapterType == TaskAdapterType.Normal ? View.GONE : View.VISIBLE);
         	//bar.setProgress(position *10);
         	txtTaskName.setText(data.taskName);

@@ -16,7 +16,6 @@ import org.json.JSONObject;
 
 import cindy.android.test.synclistview.SyncImageLoaderHelper;
 
-import com.lib.cylibimagedownload.ImageUtil;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -388,11 +387,11 @@ public class TaskService extends BaseService {
                                 /**
                                  * 设置栏目数据
                                  */
-                                JSONArray groups = myJSONObject.getJSONArray("groups");
-                                for (int i = 0, length = groups.length(); i < length; i++) {
-                                    MyJSONObject tip = (MyJSONObject) groups.get(i);
-                                    BusinessStatic.getInstance().GROUPS.put(tip.getString("name"), tip.getInt("type"));
-                                }
+//                                JSONArray groups = myJSONObject.getJSONArray("groups");
+//                                for (int i = 0, length = groups.length(); i < length; i++) {
+//                                    MyJSONObject tip = (MyJSONObject) groups.get(i);
+//                                    BusinessStatic.getInstance().GROUPS.put(tip.getString("name"), tip.getInt("type"));
+//                                }
                                 //BusinessStatic.getInstance().checkExps = myJSONObject.getString("checkExps").split("\\|");
 //								//test
 //								for(int i = 0, length = 6; i < length; i++){
@@ -421,26 +420,26 @@ public class TaskService extends BaseService {
                                 /**
                                  * 2其他
                                  */
-                                BusinessStatic.getInstance().grenadeRewardInfo = myJSONObject.getString("grenadeRewardInfo");
+                                //BusinessStatic.getInstance().grenadeRewardInfo = myJSONObject.getString("grenadeRewardInfo");
                                 BusinessStatic.getInstance().disasterFlag = myJSONObject.getInt("disasterFlag");
                                 BusinessStatic.getInstance().disasterUrl = myJSONObject.getString("disasterUrl");
-                                BusinessStatic.getInstance().URL_PUTIN = myJSONObject.getString("putInUrl");
-                                BusinessStatic.getInstance().URL_TOOL = myJSONObject.getString("toolUrl");
-                                BusinessStatic.getInstance().URL_MANUALSERVICE = myJSONObject.getString("manualServiceUrl");
+                                //BusinessStatic.getInstance().URL_PUTIN = myJSONObject.getString("putInUrl");
+                                //BusinessStatic.getInstance().URL_TOOL = myJSONObject.getString("toolUrl");
+                                //BusinessStatic.getInstance().URL_MANUALSERVICE = myJSONObject.getString("manualServiceUrl");
                                 BusinessStatic.getInstance().CRASH_TYPE = myJSONObject.getInt("CashType");
                                 BusinessStatic.getInstance().WEIXIN_IGNORE_VERSION = myJSONObject.getString("wxVersionCode");
                                 //是否完善个人信息z
                                 extra.putInt("isCompleteUserInfo", myJSONObject.getInt("isCompleteUserInfo"));
                                 BusinessStatic.getInstance().SMS_TAG = myJSONObject.getString("smsTag");
-                                BusinessStatic.getInstance().CHANGE_BOUNDARY = myJSONObject.getInt("changeBoundary");
-                                BusinessStatic.getInstance().AWARD_SEND = myJSONObject.getInt("taskTurnScore");
-                                BusinessStatic.getInstance().AWARD_SCAN = myJSONObject.getInt("taskBrowseScore");
-                                BusinessStatic.getInstance().AWARD_LINK = myJSONObject.getInt("taskLinkScore");
-                                BusinessStatic.getInstance().URL_RULE = myJSONObject.getString("ruleUrl");
+                                //BusinessStatic.getInstance().CHANGE_BOUNDARY = myJSONObject.getInt("changeBoundary");
+//                                BusinessStatic.getInstance().AWARD_SEND = myJSONObject.getInt("taskTurnScore");
+//                                BusinessStatic.getInstance().AWARD_SCAN = myJSONObject.getInt("taskBrowseScore");
+//                                BusinessStatic.getInstance().AWARD_LINK = myJSONObject.getInt("taskLinkScore");
+                                //BusinessStatic.getInstance().URL_RULE = myJSONObject.getString("ruleUrl");
                                 BusinessStatic.getInstance().URL_WEBSITE = myJSONObject.getString("website");
                                 BusinessStatic.getInstance().customerId = myJSONObject.getInt("customerId");
-                                BusinessStatic.getInstance().URL_ABOUTUS = myJSONObject.getString("aboutUsUrl");
-                                BusinessStatic.getInstance().URL_SERVICE = myJSONObject.getString("serviceUrl");
+                                //BusinessStatic.getInstance().URL_ABOUTUS = myJSONObject.getString("aboutUsUrl");
+                                //BusinessStatic.getInstance().URL_SERVICE = myJSONObject.getString("serviceUrl");
                                 BusinessStatic.getInstance().TASK_TIME_LAG = myJSONObject.getInt("taskTimeLag");
                                 String[] channels = myJSONObject.getString("channelList").split(",");
                                 BusinessStatic.getInstance().CHANNEL_LIST = Arrays.asList(channels);

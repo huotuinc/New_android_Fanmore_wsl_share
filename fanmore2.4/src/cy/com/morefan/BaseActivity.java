@@ -24,8 +24,6 @@ import cy.com.morefan.util.WindowProgress.progressOnKeyBack;
 import cy.com.morefan.view.CustomDialog;
 import cy.com.morefan.view.PopExpUp;
 import cy.com.morefan.view.PopGuide;
-import cy.com.morefan.view.PopUserLogin;
-import cy.com.morefan.view.PopUserLogin.OnPopLoginListener;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.content.BroadcastReceiver;

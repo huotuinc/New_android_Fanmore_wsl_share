@@ -13,6 +13,7 @@
     <TextView
         android:id="@+id/group_data_item_name"
         android:textSize="18sp"
+        android:maxLines="1"
         android:layout_toLeftOf="@+id/group_data_item_count"
         android:layout_width="wrap_content"
         android:layout_marginLeft="10dp"

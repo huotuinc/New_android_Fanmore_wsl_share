@@ -137,6 +137,11 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		//userReg();
 		//userLogin();
 
+		Bundle bundle=getIntent().getExtras();
+		if(bundle!=null){
+			ActivityUtils.getInstance().showActivity(HomeActivity.this,NewWebActivity.class,bundle);
+		}
+
 
 	}
 	@Override
@@ -271,7 +276,6 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 					}
 					//任务列表
 					((TaskNewFrag)fragManager.getFragmentByType(FragType.Task)).initData();
-					setScores();
 					//refreshMyData();
 					}
 				});
@@ -294,13 +298,13 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		}
 		switch (v.getId()) {
 			case R.id.btnBack:
-				userService.getScanCount();
+				//userService.getScanCount();
 				userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
 				fragManager.setCurrentFrag(FragType.Task);
 				setTitleButton(FragType.Task);
 			break;
 		case R.id.btnLeft:
-			userService.getScanCount();
+			//userService.getScanCount();
 			userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
 			openOrCloseMenu();
 			setScores();
@@ -332,7 +336,6 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 				fragManager.setCurrentFrag(FragType.My);
 				setTitleButton(FragType.My);
 				openOrCloseMenu();
-				setScores();
 			}else{
 				trendToMy = true;
 				Intent intentlogin = new Intent(HomeActivity.this, MoblieLoginActivity.class);
@@ -481,7 +484,6 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	}
 
 	public void openOrCloseMenu(){
-		setScores();
 		boolean isOpen = mDragLayout.isDrawerOpen(Gravity.LEFT);
 		if(isOpen){
 			mDragLayout.closeDrawer(Gravity.LEFT);
@@ -528,13 +530,13 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			txtTitle.setText("个人中心");
 			btnRight.setVisibility(View.GONE);
 			break;
-		case Rule:
-			txtRight.setVisibility(View.GONE);
-			imgTag.setVisibility(View.GONE);
-			txtTitle.setText("规则说明");
-			//btnLeft.setVisibility(View.GONE);
-			btnRight.setVisibility(View.GONE);
-			break;
+//		case Rule:
+//			txtRight.setVisibility(View.GONE);
+//			imgTag.setVisibility(View.GONE);
+//			txtTitle.setText("规则说明");
+//			//btnLeft.setVisibility(View.GONE);
+//			btnRight.setVisibility(View.GONE);
+//			break;
 
 		case More:
 			btnBack.setVisibility(View.VISIBLE);
@@ -652,7 +654,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			todayScanCount = String.valueOf(userData.todayScanCount);
 			yes = userData.yesScore;//Util.MoneyFormat(userData.yesScore);
 			total = userData.score;//Util.MoneyFormat(userData.totalScore);
-			count.setText(String.valueOf(userData.TaskCount));
+			//count.setText(String.valueOf(userData.TaskCount));
 			userName = userData.RealName;
 			if (userData.isSuper){
 				laySupervision.setVisibility(View.VISIBLE);
@@ -795,15 +797,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 						setScores();
 					}
 				});
-		}else if(type == BusinessDataListener.DONE_GET_SCANCOUNT){
-			runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					setScores();
-				}
-			});
-
-		}else if( type == BusinessDataListener.DONE_TO_GETUSERLIST){
+		}
+		else if( type == BusinessDataListener.DONE_TO_GETUSERLIST){
 			handler.obtainMessage(type).sendToTarget();
 		}
 
@@ -844,13 +839,6 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	@Override
 	public boolean handleMessage(Message msg) {
 		if( msg.what ==  BusinessDataListener.DONE_TO_GETUSERLIST) {
-//			Intent intentshop = new Intent( this , WebShopActivity.class);
-//			AuthParamUtils paramUtils = new AuthParamUtils( (MainApplication)this.getApplication() , System.currentTimeMillis(), BusinessStatic.getInstance().URL_WEBSITE, this );
-//			String url = paramUtils.obtainUrl();
-//			intentshop.putExtra("url", url);
-//			intentshop.putExtra("title", "商城");
-//			startActivity(intentshop);
-//			dismissProgress();
 			inMall();
 		}else if(msg.what == BusinessDataListener.ERROR_TO_GETUSERLIST){
 			dismissProgress();
@@ -858,8 +846,6 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			//head.onRefreshComplete();
 			//dismissProgress();
 			toast(msg.obj.toString());
-		}else if (msg.what==BusinessDataListener.DONE_GET_SCANCOUNT){
-			setScores();
 		}
 		return false;
 	}

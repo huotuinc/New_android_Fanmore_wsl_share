@@ -115,7 +115,7 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
 
 
@@ -168,6 +168,7 @@
 
 
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/layHistoryReturn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -431,7 +432,7 @@
 
                     <TextView
                         android:layout_toLeftOf="@+id/layMall_arrow"
-                        android:layout_toRightOf="@id/layMall_icon"
+                        android:layout_toRightOf="@+id/layMall_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="内购商城"
@@ -581,17 +582,19 @@
                         android:layout_centerVertical="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
+
+                    <ImageView
+                        android:layout_below="@+id/laySupervision_icon"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1px"
+                        android:background="@color/gray_list_bg"
+                        android:layout_marginLeft="30dp"/>
                 </RelativeLayout>
 
 
 
 
 
-                <ImageView
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:background="@color/gray_list_bg"
-                    android:layout_marginLeft="30dp"/>
 
 
 

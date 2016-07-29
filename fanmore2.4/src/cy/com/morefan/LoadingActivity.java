@@ -209,8 +209,8 @@ public class LoadingActivity extends BaseActivity implements
 		super.onCreate(arg0);
 		setContentView(R.layout.loading);
 
-		if(null != getIntent().getExtras())
-			alarmId = getIntent().getExtras().getInt("alarmId");
+//		if(null != getIntent().getExtras())
+//			alarmId = getIntent().getExtras().getInt("alarmId");
 		broadcastReceiver = new MyBroadcastReceiver(this, this,  Intent.ACTION_BATTERY_CHANGED);
 
 
@@ -301,14 +301,7 @@ public static String getDeviceInfo(Context context) {
 		 */
 
 				//String tokens = UmengRegistrar.getRegistrationId(LoadingActivity.this);
-				String	token= JPushInterface.getRegistrationID(LoadingActivity.this);
-				L.i(">>>>>token:" + token);
-				if(!TextUtils.isEmpty(token) && (!SPUtil.getBooleanFromSpByName(LoadingActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_TOKEN, false)
-					||  !token.equals(SPUtil.getStringToSpByName(LoadingActivity.this,  Constant.SP_NAME_NORMAL, Constant.SP_NAME_TOKEN_VALUE)))){
-					L.i(">>>>commitToken:" + token);
-					taskService.commitToken(LoadingActivity.this,UserData.getUserData().loginCode, token,1);
 
-				}
 
 
 
@@ -322,10 +315,19 @@ public static String getDeviceInfo(Context context) {
 		String userName = SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME);
 		String pwd = SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD);
 		int[] size = DensityUtil.getSize(this);
+		String	token= JPushInterface.getRegistrationID(LoadingActivity.this);
+		L.i(">>>>>token:" + token);
+		if(!TextUtils.isEmpty(token) && (!SPUtil.getBooleanFromSpByName(LoadingActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_TOKEN, false)
+				||  !token.equals(SPUtil.getStringToSpByName(LoadingActivity.this,  Constant.SP_NAME_NORMAL, Constant.SP_NAME_TOKEN_VALUE)))){
+			L.i(">>>>commitToken:" + token);
+			taskService.commitToken(LoadingActivity.this,UserData.getUserData().loginCode, token,1);
+
+		}
 //		if(loader == null)
 //			loader = new SyncImageLoaderHelper(this);
-		taskService.init(this, userName, pwd,size[0], size[1], loader);
 		taskService.PayConfig(this);
+		taskService.init(this, userName, pwd,size[0], size[1], loader);
+
 		//userService.getScanCount();
 		//userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
 	}

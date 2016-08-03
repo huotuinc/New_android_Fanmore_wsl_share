@@ -2,6 +2,7 @@ package cy.com.morefan.adapter;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -55,13 +56,13 @@ public class SelectionAdapter extends BaseAdapter {
         if(convertView == null){
             convertView = LayoutInflater.from(mContext).inflate(R.layout.selection_item, null);
         }
-        ImageView itemImage= ViewHolderUtil.get(convertView, R.id.itemImage);
+        com.facebook.drawee.view.SimpleDraweeView itemImage= ViewHolderUtil.get(convertView, R.id.itemImage);
         TextView itemText=ViewHolderUtil.get(convertView, R.id.itemText);
         StoreListData storeListData = datas.get(position);
         if(TextUtils.isEmpty(storeListData.getLogo())){
             itemImage.setImageResource(R.drawable.user_icon);
         }else{
-            ImageLoad.loadLogo(storeListData.getLogo(), itemImage, mContext);
+            itemImage.setImageURI(Uri.parse(storeListData.getLogo()));
         }
         itemText.setText(storeListData.getUserNickName());
         return convertView;

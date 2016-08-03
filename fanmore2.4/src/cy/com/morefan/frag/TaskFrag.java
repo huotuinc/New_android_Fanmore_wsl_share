@@ -180,9 +180,9 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 		txtTitle = (TextView) getActivity().findViewById(R.id.txtTitle);
 		layEmpty = (ImageView) mRootView.findViewById(R.id.layEmpty);
 		// 奖励设置
-		((TextView) mRootView.findViewById(R.id.txtSend)).setText(String.format("转发奖励￥%.1f/个", BusinessStatic.getInstance().AWARD_SEND/10.0));  ;
-		((TextView) mRootView.findViewById(R.id.txtScan)).setText(String.format("好友浏览￥%.1f/次", BusinessStatic.getInstance().AWARD_SCAN/10.0));;
-		((TextView) mRootView.findViewById(R.id.txtLink)).setText(String.format("￥%.1f/次", BusinessStatic.getInstance().AWARD_LINK/10.0));;
+//		((TextView) mRootView.findViewById(R.id.txtSend)).setText(String.format("转发奖励￥%.1f/个", BusinessStatic.getInstance().AWARD_SEND/10.0));  ;
+//		((TextView) mRootView.findViewById(R.id.txtScan)).setText(String.format("好友浏览￥%.1f/次", BusinessStatic.getInstance().AWARD_SCAN/10.0));;
+//		((TextView) mRootView.findViewById(R.id.txtLink)).setText(String.format("￥%.1f/次", BusinessStatic.getInstance().AWARD_LINK/10.0));;
 
 
 

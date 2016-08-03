@@ -149,7 +149,7 @@ public class TaskService extends BaseService {
                                     taskData.pageIndex = pageIndex;
                                     //标记top任务
                                     if (tops.contains(taskData.id + ""))
-                                        taskData.isTop = true;
+                                        taskData.isTop = 1;
                                     results[i] = taskData;
                                 }
                                 listener.onDataFinish(BusinessDataListener.DONE_GET_TASK_LIST, null, results, null);

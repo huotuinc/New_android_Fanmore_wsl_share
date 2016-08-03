@@ -141,6 +141,7 @@ public class BaseService {
 //		item.endDate = Util.DateFormatFull(tip.getString("endTime"));
 		String time = tip.getString("orderTime");
 		item.startTime = Util.DateFormatFull(time);
+		item.isTop = tip.getInt("IsTopTask");
 		//s
  		//item.advTime = Util.DateFormatFull(tip.getString("advancedseconds"));//tip.getInt("advancedseconds") + "";
 		item.creatTime = Util.DateFormat(time);

@@ -10,20 +10,20 @@ dependencies {
     compile project(':lib:CyLibHttpClient')
     compile project(':lib:main')
     compile files('libs/gson-2.2.4.jar')
-    compile files('libs/alipaySDK-20150818.jar')
     compile files('libs/jpush-android-2.1.5.jar')
+    compile('com.github.satyan:sugar:1.5') {
+
+        exclude module: 'support-v4'
+    }
     compile 'com.handmark.library:pulltorefresh:1.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.huotu.android.library:libedittext:1.6'
     compile 'com.huibin.androidsegmentcontrol:androidsegmentcontrol:1.2'
     compile 'com.android.support:support-v4:21.0.3'
     compile 'com.android.support:appcompat-v7:21.0.3'
-    compile('com.github.satyan:sugar:1.5') {
-
-        exclude module: 'support-v4'
-    }
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.facebook.fresco:fresco:0.9.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha1'
 }
 
 android {

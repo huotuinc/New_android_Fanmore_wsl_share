@@ -31,13 +31,13 @@ public class Constant {
 	/**
 	 * 正式url
 	 */
-	public static final String IP_URL ="http://taskapi.fhsilk.com";
-	public static final String APP_SECRET = "2a5577a6792d46eb984580e5591467f7";
-	public static final String SMS_SECRET = "0ad8abe244331aacf89c9231848c9f49";
+//	public static final String IP_URL ="http://taskapi.fhsilk.com";
+//	public static final String APP_SECRET = "2a5577a6792d46eb984580e5591467f7";
+//	public static final String SMS_SECRET = "0ad8abe244331aacf89c9231848c9f49";
 	//测试
-//	public static final String IP_URL ="http://api.guo.fancat.cn:8084";
-//	public static final String APP_SECRET = "1165a8d240b29af3f418b8d10599d0dc";
-//	public static final String SMS_SECRET = "483686ad1fe2bd8a02bbdca24e109953a4a96c";
+	public static final String IP_URL ="http://api.guo.fancat.cn:8084";
+	public static final String APP_SECRET = "1165a8d240b29af3f418b8d10599d0dc";
+	public static final String SMS_SECRET = "483686ad1fe2bd8a02bbdca24e109953a4a96c";
 
 	public static final String OPERATION = "HuoTu2013AD";
 	public static final String QD = "huotu";

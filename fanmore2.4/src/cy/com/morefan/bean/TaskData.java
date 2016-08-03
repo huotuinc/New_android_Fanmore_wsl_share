@@ -81,7 +81,7 @@ public class TaskData implements BaseData, Serializable {
 	/**
 	 * 是否为置顶任务
 	 */
-	public boolean isTop;
+	public int isTop;
 	/**
 	 * 已转发渠道
 	 */

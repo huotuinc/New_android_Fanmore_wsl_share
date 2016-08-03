@@ -9,9 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.ValueCallback;
@@ -27,15 +24,11 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshWebView;
 
-import java.util.HashMap;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.sharesdk.framework.Platform;
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.listener.MyBroadcastReceiver;
-import cy.com.morefan.util.AliPayUtil;
 import cy.com.morefan.util.SubUrlFilterUtils;
 import cy.com.morefan.util.SystemTools;
 import cy.com.morefan.util.ToastUtil;
@@ -371,24 +364,24 @@ class WebActivity extends BaseActivity implements Handler.Callback, MyBroadcastR
 //                }
 //            }
 //            break;
-            case AliPayUtil.SDK_PAY_FLAG: {
-                PayGoodBean payGoodBean = ( PayGoodBean ) msg.obj;
-                String tag = payGoodBean.getTag ( );
-                String[] tags = tag.split ( ";" );
-                for ( String str:tags )
-                {
-                    if(str.contains ( "resultStatus" ))
-                    {
-                        String code = str.substring ( str.indexOf ( "{" )+1, str.indexOf ( "}" ) );
-                        if(!"9000".equals ( code ))
-                        {
-                            //支付宝支付信息提示
-                            ToastUtil.show(WebActivity.this, "支付宝支付失败，code:" + code);
-                        }
-                    }
-                }
-            }
-            break;
+//            case AliPayUtil.SDK_PAY_FLAG: {
+//                PayGoodBean payGoodBean = ( PayGoodBean ) msg.obj;
+//                String tag = payGoodBean.getTag ( );
+//                String[] tags = tag.split ( ";" );
+//                for ( String str:tags )
+//                {
+//                    if(str.contains ( "resultStatus" ))
+//                    {
+//                        String code = str.substring ( str.indexOf ( "{" )+1, str.indexOf ( "}" ) );
+//                        if(!"9000".equals ( code ))
+//                        {
+//                            //支付宝支付信息提示
+//                            ToastUtil.show(WebActivity.this, "支付宝支付失败，code:" + code);
+//                        }
+//                    }
+//                }
+//            }
+//            break;
             case Constant.PAY_NET:
             {
                 PayModel payModel = ( PayModel ) msg.obj;

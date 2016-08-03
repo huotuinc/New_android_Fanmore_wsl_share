@@ -8,7 +8,6 @@ import cy.com.morefan.FMPrepareBuy;
 import cy.com.morefan.MainApplication;
 import cy.com.morefan.PayModel;
 import cy.com.morefan.WXPayAsyncTask;
-import cy.com.morefan.util.AliPayUtil;
 import cy.com.morefan.util.WindowProgress;
 
 
@@ -56,16 +55,7 @@ class PayFunc {
 
     public void aliPay()
     {
-        AliPayUtil aliPay = new AliPayUtil(aty, handler, application);
-        //根据订单号获取订单信息
-        String body = payModel.getDetail ( );
-        String price = String.valueOf(payModel.getAmount());
-        String subject = payModel.getDetail ();
-        int productType= 0;
-        long productId= 0;
-        prepareBuy = new FMPrepareBuy ();
-        progress.dismissProgress ();
-        aliPay.pay(subject, body, price, payModel.getNotifyurl (), productType, productId);
+
     }
 }
 

@@ -144,49 +144,6 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 		}else if(msg.what == BusinessDataListener.ERROR_BUY_TOOL){
 			dismissProgress();
 			toast(msg.obj.toString());
-		}else if(msg.what == BusinessDataListener.DONE_CHECK_PRE_TASK_STATUS){
-			dismissProgress();
-			/**
-			 * taskType	0不可转发;1提前转发;2正常转发
-			 * forwardLimit	是否达到转发次数上限：0未;1已达到
-			 * advanceTool	提前转发道具0无;1有
- 			 * advanceUseTip	提前转发道具使用提示
-			 * advanceBuyTip	提前转发道具购买提示
-			 * addOneTool	+1道具0无;1有
-			 * addOneUseTip	+1道具使用提示
-			 * addOneBuyTip	＋1道具购买提示
-			 */
-			 if(statusData.taskType == 1){
-				//是否有提前道具
-				if(statusData.advanceTool == 1){//使用提示
-//					showTipDialog(1, 0, statusData.advanceUseTip, "使用", new DialogInterface.OnClickListener() {
-//						@Override
-//						public void onClick(DialogInterface dialog, int which) {
-//							if(statusData.forwardLimit == 0){//未达转发上限
-//								showPopup();
-//							}else{
-//								//checkSendCount(statusData);
-//							}
-//						}
-//					});
-				}else{//购买提示
-//						showTipDialog(1, statusData.advanceToolExp, statusData.advanceBuyTip, "购买", new DialogInterface.OnClickListener() {
-//							@Override
-//							public void onClick(DialogInterface dialog, int which) {
-//								//购买提前道具
-//								userService.buyTool(UserData.getUserData().loginCode, 4, statusData.advanceToolExp, null, null);
-//								showProgress();
-//							}
-//						});
-						}
-			}else if(statusData.taskType == 2){
-					//checkSendCount(statusData);
-			}
-
-
-		}else if(msg.what == BusinessDataListener.ERROR_CHECK_PRE_TASK_STATUS){
-			dismissProgress();
-			toast(msg.obj.toString());
 		}else if(msg.what == BusinessDataListener.DONE_GET_TASK_DETAIL){
 			layProgress.dismiss();
 			dismissProgress();

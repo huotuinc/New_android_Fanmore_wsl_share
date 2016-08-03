@@ -116,7 +116,7 @@ public class PreTaskAdapter extends BaseAdapter{
 
         	imgTask.setBackgroundResource(R.drawable.picreviewre_fresh_bg);
         	mImageLoader.loadImage(position, imgTask, bar, data.smallImgUrl, Constant.IMAGE_PATH_TASK);
-        	imgTagTop.setVisibility(data.isTop ? View.GONE : View.GONE);
+        	imgTagTop.setVisibility(data.isTop==0 ? View.GONE : View.GONE);
 
         	//bar.setProgress(position *10);
         	txtTaskName.setText(data.taskName);

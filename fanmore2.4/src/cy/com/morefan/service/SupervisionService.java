@@ -37,7 +37,65 @@ public class SupervisionService extends BaseService {
         super(listener);
     }
 
+    /**
+     * 获取个人信息
+     */
+public void OrganizeSum(final String loginCode){
+    ThreadPoolManager.getInstance().addTask(new Runnable() {
+        @Override
+        public void run() {
+            try {
+                String url =Constant.IP_URL+"/Api.ashx?req=OrganizeSum"+CONSTANT_URL();
+                JSONObject jsonUrl = new JSONObject();
+                jsonUrl.put("loginCode",loginCode);
+                jsonUrl.put("timestamp", timestamp);
+                AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+                Map< String, String > paramMap = new HashMap< String, String >( );
+                paramMap.put("loginCode",loginCode);
+                paramMap.put("timestamp",String.valueOf(timestamp));
+                String url2 = authParamUtils.getMapSign1(paramMap);
+                jsonUrl.put("sign",url2);
+                try {
+                    url = url + URLEncoder.encode(jsonUrl.toString(), "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                MyJSONObject data = getDataFromSer(url);
+                if (data != null) {
+                    int resultCode = data.getInt("resultCode");
+                    if (resultCode == 1) {
+                        int status = data.getInt("status");
+                        if (status == 1) {
+                            Bundle extra = new Bundle();
+                            MyJSONObject myJSONObject = data.getJSONObject("resultData");
+                            String TurnAmount = myJSONObject.getString(("TurnAmount"));
+                            String BrowseAmount = myJSONObject.getString(("BrowseAmount"));
+                            String Logo = myJSONObject.getString(("Logo"));
+                            String Name = myJSONObject.getString(("Name"));
+                            extra.putString("TurnAmount",TurnAmount);
+                            extra.putString("BrowseAmount",BrowseAmount);
+                            extra.putString("Logo",Logo);
+                            extra.putString("Name",Name);
+                            listener.onDataFinish(BusinessDataListener.DONE_GET_TASK_LIST, null, null, extra);
+                        }
+                        else {
+                            listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, data.getString("tip"), null);
+                        }
+                    } else {
+                        String description = data.getString("description");
+                        listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, description, null);
+                    }
+                } else
+                    listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, ERROR_NET, null);
 
+            } catch (JSONException e) {
+                listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, ERROR_DATA, null);
+                e.printStackTrace();
+            }
+
+        }
+    });
+}
     /**
      * 获取平台所有的任务（按任务查看）
      * @param loginCode

@@ -24,6 +24,7 @@ import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
 import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.UserService;
 import cy.com.morefan.supervision.GroupActivity;
+import cy.com.morefan.supervision.VipActivity;
 import cy.com.morefan.util.ActivityUtils;
 import cy.com.morefan.util.AuthParamUtils;
 import cy.com.morefan.util.L;
@@ -458,7 +459,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 //				break;
 			case R.id.laySupervision://监督管理
 				openOrCloseMenu();
-				Intent intent = new Intent(this, GroupActivity.class);
+				Intent intent = new Intent(this, VipActivity.class);
 				startActivity(intent);
 				break;
 		default:

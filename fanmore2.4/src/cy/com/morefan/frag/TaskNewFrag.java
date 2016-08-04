@@ -451,7 +451,9 @@ public class TaskNewFrag extends BaseFragment  {
         switch (v.getId()) {
             case R.id.btnRight:
                 //搜索
-                ActivityUtils.getInstance().showActivity(getActivity(), SearchActivity.class);
+                Bundle bundle =new Bundle();
+                bundle.putInt("type",0);
+                ActivityUtils.getInstance().showActivity(getActivity(), SearchActivity.class,bundle);
                 break;
             case R.id.listView:
                 if (getActivity() != null && ((HomeActivity) getActivity()).isOpened())

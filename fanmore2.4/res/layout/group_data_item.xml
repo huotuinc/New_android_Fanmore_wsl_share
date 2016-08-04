@@ -30,7 +30,7 @@
         android:id="@+id/group_data_item_count"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
-        android:textSize="17sp"
+        android:textSize="13sp"
         android:layout_centerVertical="true"
         android:textColor="@color/black"
         android:layout_width="wrap_content"

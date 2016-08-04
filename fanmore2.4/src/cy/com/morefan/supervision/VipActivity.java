@@ -1,22 +1,25 @@
 package cy.com.morefan.supervision;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cy.com.morefan.BaseActivity;
 import cy.com.morefan.R;
 import cy.com.morefan.bean.BaseData;
-import cy.com.morefan.bean.GroupPersonData;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.service.SupervisionService;
+import cy.com.morefan.util.ActivityUtils;
 import cy.com.morefan.view.CircleImageView;
+import cy.com.morefan.view.ImageLoad;
 
 public class VipActivity extends BaseActivity implements Handler.Callback{
 
@@ -33,9 +36,9 @@ public class VipActivity extends BaseActivity implements Handler.Callback{
     @Bind(R.id.BrowseAmount)
     TextView BrowseAmount;
     @Bind(R.id.taskLL)
-    TextView taskLL;
+    LinearLayout taskLL;
     @Bind(R.id.groupLL)
-    TextView groupLL;
+    LinearLayout groupLL;
     SupervisionService supervisionService;
     Handler handler;
     @Override
@@ -46,13 +49,26 @@ public class VipActivity extends BaseActivity implements Handler.Callback{
         supervisionService = new SupervisionService(this);
         handler = new Handler(this);
         txtTitle.setText("监督管理");
-        loadData();
         imglogo.setBorderColor(getResources().getColor(R.color.white));
         imglogo.setBorderWidth((int)getResources().getDimension(R.dimen.head_width));
+        loadData();
     }
     public void loadData() {
         String loginCode = UserData.getUserData().loginCode;
         supervisionService.OrganizeSum(loginCode);
+    }
+    @OnClick({R.id.taskLL,R.id.groupLL})
+    public void OnClick(View view) {
+        switch (view.getId()) {
+            case R.id.taskLL:
+                ActivityUtils.getInstance().showActivity(VipActivity.this,ByTaskActivity.class);
+                break;
+            case R.id.groupLL:
+                ActivityUtils.getInstance().showActivity(VipActivity.this,GroupActivity.class);
+                break;
+            default:
+                break;
+        }
     }
     @Override
     protected void onDestroy() {
@@ -61,37 +77,34 @@ public class VipActivity extends BaseActivity implements Handler.Callback{
     }
         @Override
         public void onDataFinish(int type, String des, BaseData[] datas,Bundle extra) {
-            if( null != this)
-                this.onDataFinish(type, des, datas, extra);
-            if(extra != null){
-
-            }
+            super.onDataFinish(type, des, datas, extra);
             handler.obtainMessage(type, extra).sendToTarget();
-        }
-        @Override
-        public void onDataFailed(int type, String des, Bundle extra) {
-            if( null != this)
-               this.onDataFailed(type, des, extra);
-            handler.obtainMessage(type, des).sendToTarget();
-        }
-
-        @Override
-        public void onDataFail(int type, String des, Bundle extra) {
-            if( null != this)
-                this.onDataFailed(type, des, extra);
-            handler.obtainMessage(type, des).sendToTarget();
         }
 
     @Override
+    public void onDataFailed(int type, String des, Bundle extra) {
+        super.onDataFailed(type, des, extra);
+        handler.obtainMessage(type, des).sendToTarget();
+    }
+
+    @Override
     public boolean handleMessage(Message msg) {
-        if( msg.what == BusinessDataListener.DONE_GET_TASK_LIST ){
+        if( msg.what == BusinessDataListener.DONE_GET_ORGANIZESUM){
              dismissProgress();
             Bundle ex=(Bundle) msg.obj;
-            tv_name.setText(ex.getString("Name"));
-            imglogo.setImageURI(Uri.parse(ex.getString("logo")));
-
-            }else if( msg.what == BusinessDataListener.ERROR_GET_TASK_LIST ){
-
+            if (ex!=null) {
+                tv_name.setText(ex.getString("Name"));
+                if (ex.getString("Logo") == null || ex.getString("Logo").equals("")) {
+                    imglogo.setImageResource(R.drawable.user_icon);
+                } else {
+                    ImageLoad.loadLogo(ex.getString("Logo"), imglogo, this);
+                }
+                TurnAmount.setText(ex.getString("TurnAmount"));
+                BrowseAmount.setText(ex.getString("BrowseAmount"));
+            }
+            }else if( msg.what == BusinessDataListener.ERROR_GET_ORGANIZESUM ){
+            dismissProgress();
+            toast(msg.obj.toString());
         }
         return false;
     }

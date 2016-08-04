@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import cindy.android.test.synclistview.SyncImageLoaderHelper;
@@ -73,8 +74,14 @@ public class GroupDataAdapter extends BaseAdapter {
             TextView txttb = ViewHolderUtil.get(convertView, R.id.txttb);
             GroupData data = datas.get(position);
             txtName.setText(data.getName());
-            txtCount.setText(String.valueOf(data.getPersonCount()) + "人");
-            txttb.setText("总转发" + data.getTotalTurnCount() + "/" + "总浏览" + data.getTotalBrowseCount());
+            if (data.getTotalTurnCount()>=10000){
+
+                BigDecimal turnCount = new BigDecimal(data.getTotalTurnCount()/10000);
+                double  turnCount1 = turnCount.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+                txtCount.setText("总转发量" + turnCount1+"万");
+            }
+            txtCount.setText("总转发量" + data.getTotalTurnCount());
+            //txttb.setText("总转发" + data.getTotalTurnCount() + "/" + "总浏览" + data.getTotalBrowseCount());
 
         }
         else if (position>=datas.size()){

@@ -76,20 +76,20 @@ public void OrganizeSum(final String loginCode){
                             extra.putString("BrowseAmount",BrowseAmount);
                             extra.putString("Logo",Logo);
                             extra.putString("Name",Name);
-                            listener.onDataFinish(BusinessDataListener.DONE_GET_TASK_LIST, null, null, extra);
+                            listener.onDataFinish(BusinessDataListener.DONE_GET_ORGANIZESUM, null, null, extra);
                         }
                         else {
-                            listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, data.getString("tip"), null);
+                            listener.onDataFailed(BusinessDataListener.ERROR_GET_ORGANIZESUM, data.getString("tip"), null);
                         }
                     } else {
                         String description = data.getString("description");
-                        listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, description, null);
+                        listener.onDataFailed(BusinessDataListener.ERROR_GET_ORGANIZESUM, description, null);
                     }
                 } else
-                    listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, ERROR_NET, null);
+                    listener.onDataFailed(BusinessDataListener.ERROR_GET_ORGANIZESUM, ERROR_NET, null);
 
             } catch (JSONException e) {
-                listener.onDataFailed(BusinessDataListener.ERROR_GET_TASK_LIST, ERROR_DATA, null);
+                listener.onDataFailed(BusinessDataListener.ERROR_GET_ORGANIZESUM, ERROR_DATA, null);
                 e.printStackTrace();
             }
 

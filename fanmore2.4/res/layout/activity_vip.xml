@@ -48,8 +48,6 @@
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:background="@drawable/user_icon"
-                android:clickable="true"
-                android:onClick="onClick"
                 android:layout_gravity="center" />
 
             <ImageView
@@ -91,13 +89,13 @@
     <LinearLayout
         android:background="@color/white"
         android:layout_weight="1"
+        android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/TurnAmount"
-            android:padding="10dp"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -106,11 +104,10 @@
             />
 
         <TextView
-            android:padding="10dp"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="昨日总转发次数"/>
+            android:text="总转发次数"/>
     </LinearLayout>
         <TextView
             android:layout_width="1px"
@@ -119,6 +116,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/line_gray_bg_h"/>
         <LinearLayout
+            android:padding="10dp"
             android:background="@color/white"
             android:layout_weight="1"
             android:layout_width="wrap_content"
@@ -127,7 +125,6 @@
 
             <TextView
                 android:id="@+id/BrowseAmount"
-                android:padding="10dp"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -137,11 +134,10 @@
                 />
 
             <TextView
-                android:padding="10dp"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="昨日总浏览量"/>
+                android:text="总浏览量"/>
         </LinearLayout>
     </LinearLayout>
 <ImageView

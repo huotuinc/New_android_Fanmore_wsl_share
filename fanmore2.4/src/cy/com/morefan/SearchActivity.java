@@ -30,6 +30,9 @@ import cy.com.morefan.bean.TaskData;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.service.TaskService;
+import cy.com.morefan.supervision.ByTaskActivity;
+import cy.com.morefan.supervision.SelectTaskActivity;
+import cy.com.morefan.util.ActivityUtils;
 import cy.com.morefan.view.EmptyView;
 import cy.com.morefan.view.PullDownUpListView;
 import cy.com.morefan.view.PullDownUpListView.OnRefreshOrLoadListener;
@@ -48,6 +51,7 @@ public class SearchActivity extends BaseActivity implements Handler.Callback ,Bu
     private List<TaskData> datas;
     TaskData taskData;
     Handler handler;
+    Bundle bundle;
     String keyword;
     public boolean handleMessage(Message msg){
         if (msg.what == BusinessDataListener.DONE_GET_TASK_LIST) {
@@ -95,6 +99,7 @@ public class SearchActivity extends BaseActivity implements Handler.Callback ,Bu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
+        bundle =getIntent().getExtras();
         listView.setOnRefreshOrLoadListener(this);
         listView.setOnItemClickListener(itemListener);
         btn_cancel.setOnClickListener(this);
@@ -147,11 +152,21 @@ public class SearchActivity extends BaseActivity implements Handler.Callback ,Bu
             //head不能点击
             if (position < 1 || datas.size() == 0)
                 return;
-            Intent intentDetail = new Intent(SearchActivity.this, TaskDetailActivity.class);
-            TaskData taskData = datas.get(position - 1);
-            taskData.position = position - 1;
-            intentDetail.putExtra("taskData", taskData);
-            startActivityForResult(intentDetail, 0);
+            if (getIntent().getExtras()==null)
+                return;
+
+            if (bundle.getInt("type")==0) {
+                Intent intentDetail = new Intent(SearchActivity.this, TaskDetailActivity.class);
+                TaskData taskData = datas.get(position - 1);
+                taskData.position = position - 1;
+                intentDetail.putExtra("taskData", taskData);
+                startActivityForResult(intentDetail, 0);
+            }else if (bundle.getInt("type")==1){
+                TaskData taskData =datas.get(position);
+                Bundle bundle =new Bundle();
+                bundle.putInt("taskId",taskData.id);
+                ActivityUtils.getInstance().showActivity(SearchActivity.this, SelectTaskActivity.class,bundle);
+            }
 
         }
     };

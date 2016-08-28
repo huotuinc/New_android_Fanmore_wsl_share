@@ -54,6 +54,7 @@ import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -180,8 +181,7 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 			if(!isFree()){
 
 			}
-
-			taskData.isSend = true;
+			TaskFrag.newInstance().Refresh(taskData);
 			refreshView();
 			taskService.getTaskDetail(taskData, UserData.getUserData().loginCode);
 			showProgress();
@@ -687,6 +687,15 @@ private void share(){
 // 启动分享GUIfem
 	oks.show(this);
 }
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK ) {
+			finish();
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
 
 
 	public void onClickButton(View view){

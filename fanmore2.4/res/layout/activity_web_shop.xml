@@ -30,7 +30,16 @@
             android:textColor="@color/white"
             android:textIsSelectable="false"
             android:textSize="18dp" />
-
+        <!--<Button-->
+            <!--android:visibility="visible"-->
+            <!--android:id="@+id/btnRight"-->
+            <!--android:layout_width="25dp"-->
+            <!--android:layout_height="25dp"-->
+            <!--android:layout_gravity="right|center_vertical"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:background="@drawable/home_title_right_share"-->
+            <!--android:clickable="true"-->
+            <!--android:onClick="onClick" />-->
 
     </FrameLayout>
 

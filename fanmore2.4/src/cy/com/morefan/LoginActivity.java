@@ -53,13 +53,6 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
         mHandler = new Handler ( this );
         setContentView ( R.layout.login );
         application = ( MainApplication ) this.getApplication ();
-       
-       
-      //  wManager = this.getWindowManager ( );
-//        progress = new ProgressPopupWindow ( LoginActivity.this, LoginActivity.this, wManager );
-        //progress = (CyLoadingProgress) findViewById(R.id.layProgress);
-//        successProgress = new ProgressPopupWindow ( LoginActivity.this, LoginActivity.this, wManager );
-//    
         btn_wxlogin = ( TextView ) this.findViewById ( R.id.btn_wxlogin );
         btn_wxlogin.setOnClickListener ( this );
         btn_moblielogin=(TextView)this.findViewById(R.id.btn_moblielogin);

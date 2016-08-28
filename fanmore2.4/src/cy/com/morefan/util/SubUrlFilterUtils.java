@@ -20,6 +20,7 @@ import cy.com.morefan.MainApplication;
 import cy.com.morefan.MoblieLoginActivity;
 import cy.com.morefan.PayModel;
 import cy.com.morefan.WebActivity;
+import cy.com.morefan.WebShopActivity;
 import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
 
@@ -68,6 +69,19 @@ class SubUrlFilterUtils {
             Bundle bundle = new Bundle( );
             bundle.putString ( Constant.INTENT_URL, urlStr );
             ActivityUtils.getInstance ( ).showActivity ( aty, WebActivity.class, bundle );
+            return true;
+        }
+        else if (url.contains("index.aspx")){
+            String urlStr=url;
+            Bundle bundle = new Bundle( );
+            bundle.putString ( "url", urlStr );
+            ActivityUtils.getInstance ( ).skipActivity ( aty , WebShopActivity.class ,bundle);
+            return true;
+        }else if (url.contains("/UserCenter/")){
+            String urlStr=url;
+            Bundle bundle = new Bundle( );
+            bundle.putString ( "url", urlStr );
+            ActivityUtils.getInstance ( ).skipActivity ( aty , WebShopActivity.class, bundle );
             return true;
         }
         else if ( url.contains ( Constant.WEB_TAG_USERINFO ) ) {

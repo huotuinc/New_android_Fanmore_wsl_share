@@ -474,12 +474,12 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		if (TextUtils.isEmpty( SPUtil.getStringToSpByName( this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_BuserId))) {
 			userService.GetUserList(this , UserData.getUserData().loginCode, SPUtil.getStringToSpByName(this , Constant.SP_NAME_NORMAL, Constant.SP_NAME_UnionId));
 		}else{
-			Intent intentshop = new Intent( this , WebShopActivity.class);
+			Bundle bundle = new Bundle();
 			AuthParamUtils paramUtils = new AuthParamUtils ( (MainApplication)this.getApplication() , System.currentTimeMillis(),BusinessStatic.getInstance().URL_WEBSITE, this );
 			String url = paramUtils.obtainUrl();
-			intentshop.putExtra("url", url);
-			intentshop.putExtra("title", "商城");
-			startActivity(intentshop);
+			bundle.putString("url", url);
+			bundle.putString("title", "商城");
+			ActivityUtils.getInstance().showActivity(HomeActivity.this,WebShopActivity.class, bundle);
 			dismissProgress();
 		}
 	}

@@ -16,6 +16,8 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -55,17 +57,15 @@ class WebActivity extends BaseActivity implements Handler.Callback, MyBroadcastR
     private MyBroadcastReceiver myBroadcastReceiver;
 
     //tilte组件
-    @Bind(R.id.newtitleLayout)
-    RelativeLayout newtitleLayout;
+    @Bind(R.id.ff1)
+    FrameLayout newtitleLayout;
     //标题栏左侧图标
-    @Bind(R.id.titleLeftImage)
-    ImageView titleLeftImage;
+    @Bind(R.id.btnBack)
+    Button titleLeftImage;
     //标题栏标题文字
-    @Bind(R.id.titleText)
+    @Bind(R.id.txtTitle)
     TextView titleText;
     //标题栏右侧图标
-    @Bind(R.id.titleRightImage)
-    ImageView titleRightImage;
     @Bind(R.id.viewPage)
     PullToRefreshWebView refreshWebView;
     public static ValueCallback< Uri > mUploadMessage;
@@ -130,6 +130,8 @@ class WebActivity extends BaseActivity implements Handler.Callback, MyBroadcastR
         viewPage.getSettings().setLoadWithOverviewMode(false);
         viewPage.getSettings().setSavePassword(true);
         viewPage.getSettings().setLoadsImagesAutomatically(true);
+        viewPage.getSettings().setDomStorageEnabled(true);
+
         viewPage.loadUrl(url);
 
         viewPage.setWebViewClient(
@@ -211,7 +213,7 @@ class WebActivity extends BaseActivity implements Handler.Callback, MyBroadcastR
 
     }
 
-    @OnClick(R.id.titleLeftImage)
+    @OnClick(R.id.btnBack)
     void doBack()
     {
         if(viewPage.canGoBack ())

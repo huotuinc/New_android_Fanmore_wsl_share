@@ -4,18 +4,46 @@
                 android:layout_height="match_parent"
                 android:background="#f8f8f8"
     >
-    <RelativeLayout
-        android:id="@+id/newtitleLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-            <include layout="@layout/title_index"></include>
-        </RelativeLayout>
+    <FrameLayout android:id="@+id/ff1" style="@style/TitleStyle" >
+
+        <Button
+            android:id="@+id/btnBack"
+            android:background="@color/theme_back"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:textSize="15sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:text="返回"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:drawableLeft="@drawable/title_back_normal" />
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textIsSelectable="false"
+            android:textSize="18dp" />
+        <!--<Button-->
+        <!--android:visibility="visible"-->
+        <!--android:id="@+id/btnRight"-->
+        <!--android:layout_width="25dp"-->
+        <!--android:layout_height="25dp"-->
+        <!--android:layout_gravity="right|center_vertical"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:background="@drawable/home_title_right_share"-->
+        <!--android:clickable="true"-->
+        <!--android:onClick="onClick" />-->
+
+    </FrameLayout>
     <RelativeLayout
         android:id="@+id/webViewLayout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/newtitleLayout">
+        android:layout_below="@id/ff1">
         <include layout="@layout/page_load_view"></include>
     </RelativeLayout>
 </RelativeLayout>

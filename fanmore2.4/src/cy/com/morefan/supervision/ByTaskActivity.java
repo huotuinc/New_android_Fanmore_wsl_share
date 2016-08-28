@@ -15,6 +15,7 @@ import cindy.android.test.synclistview.SyncImageLoaderHelper;
 import cy.com.morefan.BaseActivity;
 import cy.com.morefan.R;
 import cy.com.morefan.SearchActivity;
+import cy.com.morefan.adapter.SuperTaskAdapter;
 import cy.com.morefan.adapter.TaskAdapter;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.bean.TaskData;
@@ -35,7 +36,7 @@ public class ByTaskActivity extends BaseActivity implements Handler.Callback,Ada
     private int pageIndex;//客户端现有发布时间最早任务id（做分页用）
     private SupervisionService supervisionService;
     private PullDownUpListView listView;
-    private TaskAdapter adapter;
+    private SuperTaskAdapter adapter;
     private List<TaskData> datas;
     private EmptyView layEmpty;
     private Handler mHandler = new Handler(this);
@@ -53,7 +54,7 @@ public class ByTaskActivity extends BaseActivity implements Handler.Callback,Ada
         layEmpty = (EmptyView) findViewById(R.id.layEmpty);
         datas = new ArrayList<TaskData>();
         SyncImageLoaderHelper syncImageLoader = new SyncImageLoaderHelper(this);
-        adapter = new TaskAdapter(syncImageLoader, this, datas, TaskAdapter.TaskAdapterType.Normal);
+        adapter = new SuperTaskAdapter(syncImageLoader, this, datas, SuperTaskAdapter.TaskAdapterType.Normal);
         listView.setAdapter(adapter);
         initData();
 
@@ -154,7 +155,7 @@ public class ByTaskActivity extends BaseActivity implements Handler.Callback,Ada
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        TaskData taskData =datas.get(position);
+        TaskData taskData =datas.get(position-1);
         Bundle bundle =new Bundle();
         bundle.putInt("taskId",taskData.id);
         ActivityUtils.getInstance().showActivity(ByTaskActivity.this, SelectTaskActivity.class,bundle);

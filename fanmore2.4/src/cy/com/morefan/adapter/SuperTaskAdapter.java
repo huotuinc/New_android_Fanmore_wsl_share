@@ -1,15 +1,5 @@
 package cy.com.morefan.adapter;
 
-import java.math.BigDecimal;
-import java.util.List;
-
-import cindy.android.test.synclistview.SyncImageLoaderHelper;
-import cy.com.morefan.R;
-import cy.com.morefan.bean.TaskData;
-import cy.com.morefan.constant.Constant;
-import cy.com.morefan.frag.TaskFrag.TabType;
-import cy.com.morefan.util.ShareUtil;
-import cy.com.morefan.util.ViewHolderUtil;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -21,7 +11,18 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class TaskAdapter extends BaseAdapter{
+import java.math.BigDecimal;
+import java.util.List;
+
+import cindy.android.test.synclistview.SyncImageLoaderHelper;
+import cy.com.morefan.R;
+import cy.com.morefan.bean.TaskData;
+import cy.com.morefan.constant.Constant;
+import cy.com.morefan.frag.TaskFrag.TabType;
+import cy.com.morefan.util.ShareUtil;
+import cy.com.morefan.util.ViewHolderUtil;
+
+public class SuperTaskAdapter extends BaseAdapter{
 	private Context mContext;
 	private List<TaskData> datas;
 	SyncImageLoaderHelper mImageLoader;
@@ -37,7 +38,7 @@ public class TaskAdapter extends BaseAdapter{
 	}
 	private TaskAdapterType adapterType;
 
-	public TaskAdapter(SyncImageLoaderHelper mImageLoader, Context mContext, List<TaskData> datas, TaskAdapterType adapterType){
+	public SuperTaskAdapter(SyncImageLoaderHelper mImageLoader, Context mContext, List<TaskData> datas, TaskAdapterType adapterType){
 		this.mContext = mContext;
 		this.datas = datas;
 		this.mImageLoader = mImageLoader;
@@ -66,7 +67,7 @@ public class TaskAdapter extends BaseAdapter{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = LayoutInflater.from(mContext).inflate(R.layout.tab_task_item, null);
+			convertView = LayoutInflater.from(mContext).inflate(R.layout.tab_supertask_item, null);
 		}
 		TextView txtShopDes			= ViewHolderUtil.get(convertView, R.id.txtShopDes);
 		ImageView imgTask 			= ViewHolderUtil.get(convertView, R.id.imgTask);
@@ -77,6 +78,7 @@ public class TaskAdapter extends BaseAdapter{
 		ImageView imgTagWeiXin		= ViewHolderUtil.get(convertView, R.id.imgTagWeiXin);
 		ImageView imgTagSina		= ViewHolderUtil.get(convertView, R.id.imgTagSina);
 		ImageView imgTagQzone		= ViewHolderUtil.get(convertView, R.id.imgTagQzone);
+		ImageView img_look          = ViewHolderUtil.get(convertView,R.id.img_look);
 //		TextView txtSend			= ViewHolderUtil.get(convertView, R.id.txtSend);
 //		TextView txtScan			= ViewHolderUtil.get(convertView, R.id.txtScan);
 //		TextView txtLink			= ViewHolderUtil.get(convertView, R.id.txtLink);
@@ -108,7 +110,7 @@ public class TaskAdapter extends BaseAdapter{
 		TextView txtStore           = ViewHolderUtil.get(convertView,R.id.txtStore);
 		TextView browseCount        = ViewHolderUtil.get(convertView,R.id.browseCount);
 		//TextView sendCount        = ViewHolderUtil.get(convertView,R.id.sendCount);
-
+		img_look.setVisibility(View.GONE);
 
         	 TaskData data = datas.get(position);
         	 //日期分组
@@ -122,7 +124,7 @@ public class TaskAdapter extends BaseAdapter{
         		 }
         	 }
 				if (data.isSend){
-					imgStatusTag.setVisibility(View.VISIBLE);
+					imgStatusTag.setVisibility(View.GONE);
 				}else {
 					imgStatusTag.setVisibility(View.GONE);
 				}
@@ -140,10 +142,10 @@ public class TaskAdapter extends BaseAdapter{
         	imgTagWeiXin.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_WEIXIN + "") ? R.drawable.share_ico_weixin : R.drawable.share_ico_weixin);
         	imgTagSina.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_SINA + "") ? R.drawable.share_wechat : R.drawable.share_wechat);
         	imgTagQzone.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_QZONE + "") ? R.drawable.share_ico_qzone : R.drawable.share_ico_qzone);
-			if(data.browseCount>=100000) {
-				browseCount.setText("10万+");
+			if(data.sendCount>=100000) {
+				browseCount.setText("转发量10万+");
 			}else {
-				browseCount.setText(String.valueOf(data.browseCount));
+				browseCount.setText("转发量"+String.valueOf(data.sendCount));
 			}
 			//sendCount.setText(String.valueOf(data.sendCount));
         	//layScan.setVisibility(adapterType == TaskAdapterType.Normal ? View.GONE : View.VISIBLE);

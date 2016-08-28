@@ -55,7 +55,7 @@ public class PartnerFrag extends BaseFragment implements PullDownUpListView.OnRe
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.tab_architecture, container, false);
+        mRootView = inflater.inflate(R.layout.tab_partner, container, false);
         listView = (PullDownUpListView) mRootView.findViewById(R.id.listView);
         layEmpty = (ImageView) mRootView.findViewById(R.id.layEmpty);
         listView.setOnRefreshOrLoadListener(this);

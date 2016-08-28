@@ -45,7 +45,7 @@ public class Constant {
 
 	//使用mainfest中的version_name
 	public static final int CAROUSE_URL = 0x00000041;
-	public static final String APP_VERSION = "1.0.4";
+	public static final String APP_VERSION = "1.0.7";
 	//标准时间
 	public final static String TIME_FORMAT   = "yyyy-MM-dd HH:mm:ss";
 	//标准时间01
@@ -95,7 +95,7 @@ public class Constant {
 	public static final String BASE_IMAGE_PATH = Environment.getExternalStorageDirectory().toString() + File.separator + ".mfimage";
 	public static final String IMAGE_PATH_TASK = BASE_IMAGE_PATH + File.separator + "task";
 	public static final String IMAGE_PATH_STORE = BASE_IMAGE_PATH + File.separator + "store";
-	public static final String IMAGE_PATH_LOADING = BASE_IMAGE_PATH + File.separator + ".loading";
+	public static final String IMAGE_PATH_LOADING = BASE_IMAGE_PATH + File.separator + ".anim_loading";
 	public static final String PATH_PKG_TEMP = BASE_IMAGE_PATH + File.separator + "pkgtemp";
 	//微信登录:用户存在
 		public static final int MSG_USERID_FOUND    = 1;

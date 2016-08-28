@@ -12,8 +12,8 @@
         android:layout_height="50dp"/>
     <TextView
         android:id="@+id/group_data_item_name"
-        android:textSize="18sp"
-        android:maxLines="1"
+        android:textSize="15sp"
+        android:maxLines="2"
         android:layout_toLeftOf="@+id/group_data_item_count"
         android:layout_width="wrap_content"
         android:layout_marginLeft="10dp"
@@ -28,11 +28,17 @@
         android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/group_data_item_count"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/arrows_right"
         android:textSize="13sp"
         android:layout_centerVertical="true"
         android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+    <ImageView
+        android:id="@+id/arrows_right"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/arrows_right" />
 </RelativeLayout>

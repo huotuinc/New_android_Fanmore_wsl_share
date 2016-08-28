@@ -36,7 +36,6 @@
                 android:id="@+id/imgPhoto"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:background="@drawable/user_icon"
                 android:clickable="true"
                 android:onClick="onClick" />
 

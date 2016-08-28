@@ -27,7 +27,7 @@
 
         <TextView
             android:id="@+id/txtTitle"
-            android:text="构架"
+            android:text="架构"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

@@ -369,7 +369,7 @@ public abstract class OnekeyShareThemeImpl implements PlatformActionListener, Ca
 				// 成功
 				int resId = R.getStringRes(context, "ssdk_oks_share_completed");
 				if (resId > 0) {
-					toast(context.getString(resId));
+					//toast(context.getString(resId));
 				MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
 				}
 			} break;

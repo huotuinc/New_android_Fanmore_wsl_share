@@ -74,6 +74,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -172,9 +173,9 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 			//
 			MyBroadcastReceiver.sendBroadcast(this, MyBroadcastReceiver.ACTION_USER_LOGIN);
 		}else if(msg.what == BusinessDataListener.DONE_COMMIT_SEND){
+			toast("分享成功");
 			statusType = StatusType.Commit;
 			int type = ((Bundle)msg.obj).getInt("type");
-
 			dismissProgress();
 			if(!isFree()){
 

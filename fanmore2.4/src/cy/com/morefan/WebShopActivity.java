@@ -2,12 +2,20 @@ package cy.com.morefan;
 
 
 
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cy.com.morefan.bean.ShareModel;
 import cy.com.morefan.constant.BusinessStatic;
 
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.frag.FragManager;
+import cy.com.morefan.listener.PoponDismissListener;
 import cy.com.morefan.util.L;
+import cy.com.morefan.util.SystemTools;
+import cy.com.morefan.util.ToastUtil;
 import cy.com.morefan.util.UrlFilterUtils;
+import cy.com.morefan.util.WindowUtils;
+import cy.com.morefan.view.SharePopupWindow;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
@@ -16,14 +24,21 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import java.util.HashMap;
+
 
 
 
@@ -34,6 +49,8 @@ public class WebShopActivity extends BaseActivity implements Handler.Callback  {
     private WebView underwebView;
     private ProgressBar bar;
     private TextView txtTitle;
+    private Button btnRight;
+    private SharePopupWindow share;
     public MainApplication application;
     //handler对象
     public Handler mHandler;
@@ -42,7 +59,6 @@ public class WebShopActivity extends BaseActivity implements Handler.Callback  {
     //private MyBroadcastReceiver myBroadcastReceiver;
     //private String imgPath;
    // private String imgUrl = "http://task.fanmore.cn/images/28def407415841a7ada5a0b0377895e7_104X104.jpg";
-    //private boolean isSend;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +80,6 @@ public class WebShopActivity extends BaseActivity implements Handler.Callback  {
         underwebView=(WebView)findViewById(R.id.underwebView);
         bar = (ProgressBar) findViewById(R.id.progressBar);
         txtTitle = (TextView) findViewById(R.id.txtTitle);
-
         underwebView.getSettings().setJavaScriptEnabled(true);
         underwebView.getSettings().setDomStorageEnabled(true);
 
@@ -75,6 +90,7 @@ public class WebShopActivity extends BaseActivity implements Handler.Callback  {
 
         webView.getSettings().setUseWideViewPort(true);
         webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setDomStorageEnabled(true);
        // CyButton btnShare = (CyButton) findViewById(R.id.btnShare);
 
 //		 Message msg = new Message();
@@ -96,8 +112,8 @@ public class WebShopActivity extends BaseActivity implements Handler.Callback  {
 //	          }else if (mDensity == 240) {
 //	        	  webView.getSettings().setDefaultZoom(ZoomDensity.FAR);
 //	          }
-
-        String url = getIntent().getExtras().getString("url");
+        Bundle bundle = getIntent().getExtras();
+        String url = bundle.getString("url");
         String underurl= BusinessStatic.getInstance().URL_WEBSITE +"/bottom.aspx?customerid="+ application.readMerchantId();
         underwebView.loadUrl(underurl);
         underwebView.setWebViewClient(
@@ -245,74 +261,12 @@ public class WebShopActivity extends BaseActivity implements Handler.Callback  {
                 }
 
                 break;
-//            case R.id.btnShare:
-//                if (isSend)
-//                    toast("复制成功!");
-//                setResult(1);
-//                finish();
-//                break;
-//            case R.id.layWeiXin:
-//                showProgress();
-//                Platform platform1 = new WechatMoments(this);
-//                wx(this,  UserData.getUserData().shareDes, imgPath, UserData.getUserData().shareContent, platform1);
-//                //ShareUtil.share2WeiXin(this, UserData.getUserData().shareDes, imgPath, UserData.getUserData().shareContent);
-//                break;
-//            case R.id.layQQ:
-//                //只能分享网络图片
-//                showProgress();
-//                ShareUtil.share2Qzone( this, UserData.getUserData().shareDes, imgUrl, UserData.getUserData().shareContent);
-//                break;
-//            case R.id.layXinLang:
-//                showProgress();
-//                ShareUtil.share2Sina(this, UserData.getUserData().shareDes, imgPath, UserData.getUserData().shareContent);
-//                break;
 
             default:
                 break;
         }
 
     }
-//    protected void wx(final Context context , String Title ,String imgUrl,String shareUrl,Platform platform ){
-//        Platform.ShareParams sp = new Platform.ShareParams();
-//        sp.setShareType(Platform.SHARE_WEBPAGE);
-//        sp.setTitle(Title);
-//        sp.setText(Title);
-//        sp.setUrl(shareUrl);
-//        //sp.setImageUrl(imgUrl);
-//        sp.setImagePath(imgUrl);
-//        // platform = new Wechat(context);
-//        platform.setPlatformActionListener(new PlatformActionListener() {
-//            @Override
-//            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-//                String msg = "";
-//                if (platform.getName().equals(Wechat.NAME)) {
-//                    ToastUtil.show(context, "微信分享成功");
-//                } else if (platform.getName().equals(WechatMoments.NAME)) {
-//                    ToastUtil.show(context, "微信朋友圈分享成功");
-//                }
-//            }
-//
-//            @Override
-//            public void onError(Platform platform, int i, Throwable throwable) {
-//                if (platform.getName().equals(Wechat.NAME)) {
-//                    ToastUtil.show(context, "微信分享失败");
-//                } else if (platform.getName().equals(WechatMoments.NAME)) {
-//                    ToastUtil.show(context, "微信朋友圈分享失败");
-//                }
-//            }
-//
-//            @Override
-//            public void onCancel(Platform platform, int i) {
-//                if (platform.getName().equals(Wechat.NAME)) {
-//                    ToastUtil.show(context, "取消微信分享");
-//                } else if (platform.getName().equals(WechatMoments.NAME)) {
-//                    ToastUtil.show(context, "取消微信朋友圈分享");
-//                }
-//            }
-//        });
-//        platform.share(sp);
-//
-//    }
 
     @Override
     protected void onDestroy() {

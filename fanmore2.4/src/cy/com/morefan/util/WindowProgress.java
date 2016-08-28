@@ -119,7 +119,7 @@ public class WindowProgress {
 			LinearLayout.LayoutParams lp1=new LinearLayout.LayoutParams(-2,-2);
 		    bar.setLayoutParams(lp1);
 		    bar.setIndeterminate(false);
-		    bar.setIndeterminateDrawable(mActivity.getResources().getDrawable(R.anim.loading));
+		    bar.setIndeterminateDrawable(mActivity.getResources().getDrawable(R.drawable.anim_loading));
 			progressLay.setGravity(Gravity.CENTER);
 			progressLay.setOrientation(LinearLayout.VERTICAL);
 			progressLay.addView(bar);

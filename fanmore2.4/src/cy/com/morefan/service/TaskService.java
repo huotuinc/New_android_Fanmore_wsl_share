@@ -248,7 +248,7 @@ public class TaskService extends BaseService {
                                 taskData.myAwardSend = myJSONObject.getString("myAwardSend");
                                 taskData.myAwardScan = myJSONObject.getString("myAwardScan");
                                 taskData.myAwardLink = myJSONObject.getString("myAwardLink");
-                                taskData.isSend = myJSONObject.getBoolean("isSend");
+                                //taskData.isSend = myJSONObject.getBoolean("isSend");
                                 taskData.isFav = myJSONObject.getBoolean("isFav");
                                 taskData.isAccount = myJSONObject.getBoolean("isAccount");
 

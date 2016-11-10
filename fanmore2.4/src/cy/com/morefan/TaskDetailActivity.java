@@ -143,9 +143,6 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 			if(fromPre && !isPre){
 				btnShare.setVisibility(View.GONE);
 			}
-		}else if(msg.what == BusinessDataListener.ERROR_BUY_TOOL){
-			dismissProgress();
-			toast(msg.obj.toString());
 		}else if(msg.what == BusinessDataListener.DONE_GET_TASK_DETAIL){
 			layProgress.dismiss();
 			dismissProgress();
@@ -176,23 +173,13 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 		}else if(msg.what == BusinessDataListener.DONE_COMMIT_SEND){
 			toast("分享成功");
 			statusType = StatusType.Commit;
-			int type = ((Bundle)msg.obj).getInt("type");
+			taskData.sendCount=taskData.sendCount+1;
+			taskData.isSend=true;
 			dismissProgress();
 			if(!isFree()){
 
 			}
-			TaskFrag.newInstance().Refresh(taskData);
 			refreshView();
-			taskService.getTaskDetail(taskData, UserData.getUserData().loginCode);
-			showProgress();
-			//用完信息改变,且计算转发次数,(闪购,联盟不计算次数)
-			if( taskData.channelIds.size() == 0 && taskData.flagLimitCount == 1 && calCount && taskData.type != 1000300 && taskData.type != 1001000){
-				shareCompleteToSave();
-				UserData.getUserData().completeTaskCount += 1;
-				UserData.getUserData().sendCount += 1;
-				MyBroadcastReceiver.sendBroadcast(this, MyBroadcastReceiver.ACTION_USER_MAINDATA_UPDATE);
-			}
-			taskData.channelIds.add(type + "");
 		}else if (msg.what == BusinessDataListener.ERROR_COMMIT_SEND
 				|| msg.what == BusinessDataListener.ERROR_USER_LOGIN) {
 			dismissProgress();
@@ -203,23 +190,6 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 			dismissProgress();
 			reCommit(msg.obj.toString());
 		}
-//		else if(msg.what == BusinessDataListener.DONE_FAV){
-//			dismissProgress();
-//			toast("收藏成功!");
-//			taskData.isFav = true;
-//			btnFav.setBackgroundResource(R.drawable.fav_on);
-//			//用完信息改变
-//			UserData.getUserData().favCount += 1;
-//			MyBroadcastReceiver.sendBroadcast(this, MyBroadcastReceiver.ACTION_USER_MAINDATA_UPDATE);
-//		}else if(msg.what == BusinessDataListener.DONE_CANCEL_FAV){
-//			dismissProgress();
-//			toast("取消收藏成功!");
-//			taskData.isFav = false;
-//			btnFav.setBackgroundResource(R.drawable.fav_off);
-//			//用完信息改变
-//			UserData.getUserData().favCount -= 1;
-//			MyBroadcastReceiver.sendBroadcast(this, MyBroadcastReceiver.ACTION_USER_MAINDATA_UPDATE);
-//		}
 		return false;
 	}
 

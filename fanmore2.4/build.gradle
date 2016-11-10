@@ -65,7 +65,7 @@ android {
     defaultConfig {
         signingConfig signingConfigs.huotu
         minSdkVersion 8
-        targetSdkVersion 22
+        targetSdkVersion 23
     }
 
     productFlavors {
@@ -73,7 +73,7 @@ android {
             applicationId 'hz.huotu.wsl.aifenxiang'
             signingConfig signingConfigs.huotu
             minSdkVersion 11
-            targetSdkVersion 22
+            targetSdkVersion 23
         }
     }
 

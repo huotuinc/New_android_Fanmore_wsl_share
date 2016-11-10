@@ -299,48 +299,6 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 		/**
 		 * 设置栏目数据
 		 */
-//		if(layGroup.getChildCount() == 0){
-//			Iterator<String> groups = BusinessStatic.getInstance().GROUPS.keySet().iterator();
-//			int i = 0;
-//			while(groups.hasNext()){
-//				final String name = groups.next();
-//				final int type = BusinessStatic.getInstance().GROUPS.get(name);
-//				if(null == getActivity())
-//					break;
-//				View view = getActivity().getLayoutInflater().inflate(R.layout.pop_dis_view_item, null);
-//				view.setId(i);
-//				i ++;
-//				TextView txtName = (TextView) view.findViewById(R.id.txtName);
-//				txtName.setText(name);
-//				layGroup.addView(view);
-//				setPopBg(0);
-//
-//
-//				view.setOnClickListener(new View.OnClickListener() {
-//
-//					@Override
-//					public void onClick(View v) {
-//						if(type == 0)
-//							currentTitle = "粉猫";
-//						else
-//							currentTitle = name;
-//
-//						setPopBg(v.getId());
-//
-//						txtTitle.setText(currentTitle);
-//						//currentTaskType = TaskType.Scoreful;
-//						taskType = type;
-//						initData();
-//						popupWindow.dismiss();
-//
-//					}
-//				});
-//
-//			}
-//		}
-		//layGroup.removeAllViews();
-
-
 		datas.clear();
 		adapter.notifyDataSetChanged();
 		pageIndex = 0;
@@ -355,36 +313,13 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 
 	}
 
-	public void Refresh(TaskData taskData){
-		taskData.sendCount=taskData.sendCount+1;
-		taskData.isSend=true;
-		adapter.notifyDataSetChanged();
 
-	}
 	public void reLoadData(){
 		getDataFromSer();
 	}
 	public void getDataFromSer(){
 		adapter.notifyDataSetChanged();
-	int taskType = 0;
-//		//0全部;1文章（任务）;2活动;3推荐;4热门;5有分
-//		switch (tabType) {
-//		case mr:
-//			taskType = 0;
-//			break;
-//		case syjf:
-//			taskType = 1;
-//			break;
-//		case jljf:
-//			taskType = 2;
-//			break;
-//		case zfrs:
-//			taskType = 3;
-//			break;
-//		default:
-//			break;
-//		}
-
+		int taskType = 0;
 		taskService.getTaskList("",UserData.getUserData().loginCode,1,pageIndex+1, taskType,userId,taskStaus);
 
 		showProgress();

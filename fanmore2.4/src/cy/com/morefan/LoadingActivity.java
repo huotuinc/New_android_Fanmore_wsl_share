@@ -33,6 +33,7 @@ import cy.com.morefan.view.CustomDialog.OnkeyBackListener;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build.VERSION;
@@ -40,6 +41,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
@@ -52,6 +56,7 @@ public class LoadingActivity extends BaseActivity implements
 	private long time;
 	private int alarmId;
 	List<AdlistModel> datas;
+	int REQUEST_STORAGE_PERMISSION=11;
 
 
 	@Override
@@ -212,7 +217,7 @@ public class LoadingActivity extends BaseActivity implements
 //		if(null != getIntent().getExtras())
 //			alarmId = getIntent().getExtras().getInt("alarmId");
 		broadcastReceiver = new MyBroadcastReceiver(this, this,  Intent.ACTION_BATTERY_CHANGED);
-
+		PhoneRequest();
 
 		// check file
 //		Bitmap bitmap = checkLoadingImage();
@@ -255,6 +260,31 @@ public static String getDeviceInfo(Context context) {
     }
   return null;
 }
+	void PhoneRequest() {
+
+		int checkSelfPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_PHONE_STATE);
+
+		if (checkSelfPermission != PackageManager.PERMISSION_GRANTED) {
+			ActivityCompat.requestPermissions(this, new String[]{ android.Manifest.permission.READ_PHONE_STATE}, REQUEST_STORAGE_PERMISSION);
+		} else {
+			//有权限了，获取
+			TelephonyManager telMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+			BusinessStatic.getInstance().IMEI = telMgr.getDeviceId();
+		}
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if (requestCode==REQUEST_STORAGE_PERMISSION){
+			if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
+				TelephonyManager telMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+				BusinessStatic.getInstance().IMEI = telMgr.getDeviceId();
+			}else {
+				toast("您没有授权访问电话权限。");
+			}
+		}
+	}
 
 	@Override
 	protected void onResume() {
@@ -263,8 +293,8 @@ public static String getDeviceInfo(Context context) {
 
 
 
-		TelephonyManager telMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-		BusinessStatic.getInstance().IMEI = telMgr.getDeviceId();
+
+
 
 		if(TextUtils.isEmpty(BusinessStatic.getInstance().IMEI))
 			BusinessStatic.getInstance().IMEI = JPushInterface.getRegistrationID(this);

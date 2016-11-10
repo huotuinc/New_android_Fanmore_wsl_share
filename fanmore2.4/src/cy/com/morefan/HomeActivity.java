@@ -683,7 +683,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		txtName.setText(userName);
 		txtScore.setVisibility(View.GONE);
 		//txtScore.setText("可用分红." + total);
-		txttodayScanCount.setText("今日浏览量:" + todayScanCount);
+		txttodayScanCount.setText("今日转发量:" + todayScanCount);
 		//txtTodayScan.setText(scanCount);
 		//txtYesScore.setText(yes);
 		L.i(">>>>>>>>>picUrl:" + userData.picUrl);

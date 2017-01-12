@@ -11,15 +11,12 @@ package cn.sharesdk.onekeyshare.themes.classic;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.sharesdk.framework.CustomPlatform;
@@ -90,29 +87,6 @@ public abstract class PlatformPage extends OnekeySharePage {
 		vInd.onScreenChange(0, 0);
 		adapter.setIndicator(vInd);
 		mvp.setAdapter(adapter);
-		///////////////增加取消按钮layout
-		lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,150);
-		lp.setMargins(0,10,0,0);
-		LinearLayout buttonLayout2 = new LinearLayout(activity);
-		buttonLayout2.setBackgroundColor(Color.WHITE);
-
-		LinearLayout.LayoutParams lp22 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,150);
-		lp22.setMargins(20, 20, 20, 20);
-		Button button2 = new Button(activity);
-		button2.setText("取消");
-		button2.setTextSize(16);
-		button2.setTextColor(Color.BLUE);
-		button2.setBackgroundColor(Color.WHITE);
-		button2.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				finish();
-			}
-		});
-		buttonLayout2.addView(button2,lp22);
-		llPanel.addView(buttonLayout2,lp);
 	}
 
 	protected abstract PlatformPageAdapter newAdapter(ArrayList<Object> cells);

@@ -106,7 +106,7 @@ public abstract class OnekeyShareThemeImpl implements PlatformActionListener, Ca
 		String name = platform.getName();
 		if ("Wechat".equals(name) || "WechatMoments".equals(name)
 				|| "WechatFavorite".equals(name) || "ShortMessage".equals(name)
-				|| "Email".equals(name) || "GooglePlus".equals(name)
+				|| "Email".equals(name) || "Qzone".equals(name)
 				|| "QQ".equals(name) || "Pinterest".equals(name)
 				|| "Instagram".equals(name) || "Yixin".equals(name)
 				|| "YixinMoments".equals(name) || "QZone".equals(name)
@@ -115,7 +115,8 @@ public abstract class OnekeyShareThemeImpl implements PlatformActionListener, Ca
 				|| "Bluetooth".equals(name) || "WhatsApp".equals(name)
 				|| "BaiduTieba".equals(name) || "Laiwang".equals(name)
 				|| "LaiwangMoments".equals(name) || "Alipay".equals(name)
-				|| "FacebookMessenger".equals(name)
+				|| "AlipayMoments".equals(name)|| "FacebookMessenger".equals(name)
+				|| "GooglePlus".equals(name)
 				) {
 			return true;
 		} else if ("Evernote".equals(name)) {
@@ -124,10 +125,17 @@ public abstract class OnekeyShareThemeImpl implements PlatformActionListener, Ca
 			}
 		} else if ("SinaWeibo".equals(name)) {
 			if ("true".equals(platform.getDevinfo("ShareByAppClient"))) {
+
 				Intent test = new Intent(Intent.ACTION_SEND);
 				test.setPackage("com.sina.weibo");
 				test.setType("image/*");
 				ResolveInfo ri = platform.getContext().getPackageManager().resolveActivity(test, 0);
+				if(ri == null) {
+					test = new Intent(Intent.ACTION_SEND);
+					test.setPackage("com.sina.weibog3");
+					test.setType("image/*");
+					ri = platform.getContext().getPackageManager().resolveActivity(test, 0);
+				}
 				return (ri != null);
 			}
 		}
@@ -139,6 +147,7 @@ public abstract class OnekeyShareThemeImpl implements PlatformActionListener, Ca
 		if (formateShareData(platform)) {
 			ShareParams sp = shareDataToShareParams(platform);
 			if (sp != null) {
+				toast("ssdk_oks_sharing");
 				if (customizeCallback != null) {
 					customizeCallback.onShare(platform, sp);
 				}
@@ -168,13 +177,7 @@ public abstract class OnekeyShareThemeImpl implements PlatformActionListener, Ca
 	final boolean formateShareData(Platform plat) {
 		String name = plat.getName();
 
-		boolean isGooglePlus = "GooglePlus".equals(name);
-		if (isGooglePlus && !plat.isClientValid()) {
-			toast("ssdk_google_plus_client_inavailable");
-			return false;
-		}
-
-		boolean isAlipay = "Alipay".equals(name);
+		boolean isAlipay = "Alipay".equals(name) || "AlipayMoments".equals(name);
 		if (isAlipay && !plat.isClientValid()) {
 			toast("ssdk_alipay_client_inavailable");
 			return false;
@@ -212,6 +215,11 @@ public abstract class OnekeyShareThemeImpl implements PlatformActionListener, Ca
 
 		if ("Instagram".equals(name) && !plat.isClientValid()) {
 			toast("ssdk_instagram_client_inavailable");
+			return false;
+		}
+
+		if ("QZone".equals(name) && !plat.isClientValid()) {
+			toast("ssdk_qq_client_inavailable");
 			return false;
 		}
 
@@ -370,7 +378,7 @@ public abstract class OnekeyShareThemeImpl implements PlatformActionListener, Ca
 				int resId = R.getStringRes(context, "ssdk_oks_share_completed");
 				if (resId > 0) {
 					//toast(context.getString(resId));
-				MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
+					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
 				}
 			} break;
 			case 2: {

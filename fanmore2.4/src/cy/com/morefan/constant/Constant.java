@@ -35,7 +35,7 @@ public class Constant {
 	public static final String APP_SECRET = "2a5577a6792d46eb984580e5591467f7";
 	public static final String SMS_SECRET = "0ad8abe244331aacf89c9231848c9f49";
 	//测试
-//	public static final String IP_URL ="http://api.guo.fancat.cn:8084";
+//	public static final String IP_URL = "http://wslapi.fancat.cn"; //"http://api.guo.fancat.cn:8084";
 //	public static final String APP_SECRET = "1165a8d240b29af3f418b8d10599d0dc";
 //	public static final String SMS_SECRET = "483686ad1fe2bd8a02bbdca24e109953a4a96c";
 
@@ -45,7 +45,7 @@ public class Constant {
 
 	//使用mainfest中的version_name
 	public static final int CAROUSE_URL = 0x00000041;
-	public static final String APP_VERSION = "1.0.7";
+	public static final String APP_VERSION = "1.0.9";
 	//标准时间
 	public final static String TIME_FORMAT   = "yyyy-MM-dd HH:mm:ss";
 	//标准时间01

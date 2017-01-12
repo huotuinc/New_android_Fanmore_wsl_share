@@ -62,7 +62,6 @@ public class MyBroadcastReceiver extends BroadcastReceiver{
 	 * 注册广播
 	 * @param context
 	 * @param listener
-	 * @param action
 	 */
 	public MyBroadcastReceiver(Context context, BroadcastListener listener, String... actions){
 		this.listener = listener;

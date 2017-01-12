@@ -40,6 +40,7 @@ import android.os.Handler.Callback;
 import android.os.Message;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -199,6 +200,28 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 //		txtYesScore	 = (TextView) findViewById(R.id.txtYesScore);
 		//userLogin();
 
+		mDragLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+			@Override
+			public void onDrawerSlide(View drawerView, float slideOffset) {
+
+			}
+
+			@Override
+			public void onDrawerOpened(View drawerView) {
+				userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
+			}
+
+			@Override
+			public void onDrawerClosed(View drawerView) {
+
+			}
+
+			@Override
+			public void onDrawerStateChanged(int newState) {
+
+			}
+		});
+
 	}
 	
 	private void operationAlarm() {
@@ -306,7 +329,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			break;
 		case R.id.btnLeft:
 			//userService.getScanCount();
-			userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
+			//userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
 			openOrCloseMenu();
 			setScores();
 			break;
@@ -679,11 +702,15 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			}
 		}
 
-		mylevel.setText(UserData.getUserData().levelName);
+		try {
+			mylevel.setText(UserData.getUserData().levelName);
+		}catch (Exception ex){
+			Log.e("error",ex.getMessage());
+		}
 		txtName.setText(userName);
 		txtScore.setVisibility(View.GONE);
 		//txtScore.setText("可用分红." + total);
-		txttodayScanCount.setText("今日浏览量:" + todayScanCount);
+		txttodayScanCount.setText("今日转发量:" + todayScanCount);
 		//txtTodayScan.setText(scanCount);
 		//txtYesScore.setText(yes);
 		L.i(">>>>>>>>>picUrl:" + userData.picUrl);
@@ -801,8 +828,9 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		}
 		else if( type == BusinessDataListener.DONE_TO_GETUSERLIST){
 			handler.obtainMessage(type).sendToTarget();
+		}else if( type == BusinessDataListener.DONE_GET_SCANCOUNT){
+			handler.obtainMessage(type).sendToTarget();
 		}
-
 	}
 	@Override
 	public void onDataFailed(int type, String des, Bundle extra) {
@@ -847,6 +875,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			//head.onRefreshComplete();
 			//dismissProgress();
 			toast(msg.obj.toString());
+		}else if( msg.what == BusinessDataListener.DONE_GET_SCANCOUNT){
+			setScores();
 		}
 		return false;
 	}

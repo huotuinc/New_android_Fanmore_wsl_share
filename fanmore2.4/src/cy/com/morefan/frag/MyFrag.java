@@ -3,6 +3,7 @@ package cy.com.morefan.frag;
 import cindy.android.test.synclistview.SyncImageLoaderHelper;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.wechat.friends.Wechat;
+import cy.com.morefan.AllScoreActivity;
 import cy.com.morefan.HomeActivity;
 import cy.com.morefan.MainApplication;
 import cy.com.morefan.MoblieLoginActivity;
@@ -21,6 +22,7 @@ import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
 import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.UserService;
+import cy.com.morefan.util.ActivityUtils;
 import cy.com.morefan.util.AuthParamUtils;
 import cy.com.morefan.util.Base64;
 import cy.com.morefan.util.L;
@@ -85,6 +87,7 @@ public class MyFrag extends BaseFragment implements OnUserInfoBackListener,OnCli
 	public TextView txtmylevel;
 	public TextView txtTurnAmount;
 	public TextView txtBrowseAmount;
+	public TextView txtHistoryBrowseAmount;
 	public TextView txthuoban;
 	public TextView txtTime;
 	public ImageView img;
@@ -298,6 +301,10 @@ public class MyFrag extends BaseFragment implements OnUserInfoBackListener,OnCli
 
 				}
 			}, null);
+			break;
+		case R.id.layHistoryBrowseAmount:
+			Intent intent = new Intent( getActivity() , AllScoreActivity.class);
+			startActivity(intent);
 			break;
 
 		default:

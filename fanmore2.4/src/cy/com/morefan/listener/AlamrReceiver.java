@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+
 public class AlamrReceiver extends BroadcastReceiver{
 
 	@Override
@@ -39,22 +40,42 @@ public class AlamrReceiver extends BroadcastReceiver{
 			MyBroadcastReceiver.sendBroadcast(context, MyBroadcastReceiver.ACTION_ALARM_UP, extra);
 		}
 		 Notification n = new Notification();
-         n.icon = R.drawable.icon;
-         n.tickerText = title;
-         n.when = System.currentTimeMillis();
+         //n.icon = R.drawable.icon;
+         //n.tickerText = title;
+         //n.when = System.currentTimeMillis();
          //设置声音
-         n.defaults = Notification.DEFAULT_SOUND;
+         //n.defaults = Notification.DEFAULT_SOUND;
          //设置 如果通知被点击 则通知自动取消
-         n.flags = Notification.FLAG_AUTO_CANCEL;
+         //n.flags = Notification.FLAG_AUTO_CANCEL;
          //n.flags=Notification.FLAG_ONGOING_EVENT;
        //app是否在运行
          Intent appIntent = new Intent(context, PushMsgHandleActivity.class);
          appIntent.putExtra("alarmId", id);
          appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
+
+
          PendingIntent pi = PendingIntent.getActivity(context, id, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-         n.setLatestEventInfo(context, title, "小粉提醒", pi);
-         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE); // get system service
+
+		//n.setLatestEventInfo(context, title, "小粉提醒", pi);
+
+
+
+
+		Notification.Builder builder = new Notification.Builder(context)
+				.setAutoCancel(true)
+				.setContentTitle(title)
+				.setContentText(title)
+				.setContentIntent(pi)
+				.setSmallIcon(R.drawable.icon)
+				.setWhen(System.currentTimeMillis())
+				.setDefaults( Notification.DEFAULT_SOUND)
+				.setOngoing(true);
+		n=builder.getNotification();
+
+
+
+		NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE); // get system service
          nm.notify(id, n);
 	}
 

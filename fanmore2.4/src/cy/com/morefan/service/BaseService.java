@@ -365,7 +365,7 @@ public class BaseService {
 		//operation=HuoTu2013AD/HuoTu2013IP&version=appVersion&imei=*****
 		//BusinessStatic.IMEI = BusinessStatic.IMEI + 2;
 		 String url = "&operation=" + Constant.OPERATION + "&qd=" + Constant.QD +"&version="
-		 + Constant.APP_VERSION + "&citycode=" + BusinessStatic.getInstance().CITY_CODE
+		 + Constant.APP_VERSION() + "&citycode=" + BusinessStatic.getInstance().CITY_CODE
 		 + "&imei=" + BusinessStatic.getInstance().IMEI + "&lat=" + BusinessStatic.getInstance().USER_LAT + "&lng=" + BusinessStatic.getInstance().USER_LNG
 		 + "&sign="+ getSign() + "&p=";
 		return url;
@@ -374,7 +374,7 @@ public class BaseService {
 		//operation=HuoTu2013AD/HuoTu2013IP&version=appVersion&imei=*****
 		//BusinessStatic.IMEI = BusinessStatic.IMEI + 2;
 		 String url = "&operation=" + Constant.OPERATION + "&qd=" + Constant.QD +"&version="
-		 + Constant.APP_VERSION + "&citycode=" + BusinessStatic.getInstance().CITY_CODE
+		 + Constant.APP_VERSION() + "&citycode=" + BusinessStatic.getInstance().CITY_CODE
 		 + "&imei=" + BusinessStatic.getInstance().IMEI + "&lat=" + BusinessStatic.getInstance().USER_LAT + "&lng=" + BusinessStatic.getInstance().USER_LNG
 		 + "&sign="+ getSign() + "&";
 		return url;

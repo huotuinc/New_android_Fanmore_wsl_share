@@ -86,7 +86,7 @@ public class FeedBackActivity extends BaseActivity implements Callback, OnEditor
 		}
 		//追加信息
 		content = content + "\n"
-				+ "客户端版本:" + Constant.APP_VERSION + "\n"
+				+ "客户端版本:" + Constant.APP_VERSION() + "\n"
 				+ "手机型号:" + android.os.Build.MODEL + "\n"
 				+ "系统:"  + android.os.Build.VERSION.RELEASE + "\n"
 				+ "网络:" + NetworkUtil.getNetworkType(this);

@@ -423,7 +423,17 @@
         <activity android:name=".supervision.SelectTaskActivity" />
         <activity android:name=".WebHelpActivity" />
         <activity android:name=".supervision.VipActivity" />
-        <activity android:name=".supervision.ByTaskActivity"></activity>
+        <activity android:name=".supervision.ByTaskActivity"/>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+
     </application>
 
 </manifest>

@@ -130,7 +130,7 @@ public class MoreFrag extends BaseFragment implements OnClickListener, Callback,
 		mRootView.findViewById(R.id.laypsw).setOnClickListener(this);
 
 	
-		((TextView)mRootView.findViewById(R.id.txtVersion)).setText(Constant.APP_VERSION);
+		((TextView)mRootView.findViewById(R.id.txtVersion)).setText(Constant.APP_VERSION());
 		refreshCacheSize();
 		
 

@@ -17,6 +17,8 @@ import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
 import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.L;
+import cy.com.morefan.view.CircleImageView;
+import cy.com.morefan.view.ImageLoad;
 import cy.com.morefan.view.TrendView;
 import cy.com.morefan.view.TrendView.OnLoadMoreListener;
 
@@ -25,6 +27,7 @@ import android.os.Handler;
 import android.os.Handler.Callback;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -50,6 +53,12 @@ public class AllScoreActivity extends BaseActivity implements BroadcastListener,
     private ImageView img_arrow;
     private MyBroadcastReceiver myBroadcastReceiver;
     private Handler mHandler = new Handler(this);
+
+    private CircleImageView imglogo;
+    private TextView tv_name;
+    private TextView TurnAmount;
+    private TextView BrowseAmount;
+    private View headerView;
 
     @Override
     public boolean handleMessage(android.os.Message msg) {
@@ -87,11 +96,22 @@ public class AllScoreActivity extends BaseActivity implements BroadcastListener,
         setContentView(R.layout.allscore);
         pageDate = "";
         listView = (ListView) findViewById(R.id.listView);
-        trendView = (TrendView) findViewById(R.id.trendView);
+//        trendView = (TrendView) findViewById(R.id.trendView);
         layEmpty = (ImageView) findViewById(R.id.layEmpty);
         img_arrow = (ImageView) findViewById(R.id.img_arrow);
+//        imglogo = (CircleImageView)findViewById(R.id.imglogo);
+//        tv_name = (TextView)findViewById(R.id.tv_name);
+//        TurnAmount = (TextView)findViewById(R.id.TurnAmount);
+//        BrowseAmount=(TextView)findViewById(R.id.BrowseAmount);
+//        imglogo.setBorderColor(getResources().getColor(R.color.white));
+//        imglogo.setBorderWidth((int)getResources().getDimension(R.dimen.head_width));
+
+        initHeader();
+
 
         userService = new UserService(this);
+
+
 
 
         awardDatas = new ArrayList<AwardData>();
@@ -108,7 +128,44 @@ public class AllScoreActivity extends BaseActivity implements BroadcastListener,
         initData();
         myBroadcastReceiver = new MyBroadcastReceiver(this, this, MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE);
 
+        setLogo();
+    }
 
+    private void initHeader(){
+
+        headerView = LayoutInflater.from(this).inflate(R.layout.layout_allscore_header,null);
+        imglogo = (CircleImageView)headerView.findViewById(R.id.imglogo);
+        tv_name = (TextView)headerView.findViewById(R.id.tv_name);
+        TurnAmount = (TextView)headerView.findViewById(R.id.TurnAmount);
+        BrowseAmount=(TextView)headerView.findViewById(R.id.BrowseAmount);
+        imglogo.setBorderColor(getResources().getColor(R.color.white));
+        imglogo.setBorderWidth((int)getResources().getDimension(R.dimen.head_width));
+        trendView = (TrendView) headerView.findViewById(R.id.trendView);
+
+        listView.addHeaderView(headerView);
+
+    }
+
+    private void setLogo(){
+        UserData userData = UserData.getUserData();
+        if (userData.isLogin) {
+            String userName = userData.RealName;
+            if (TextUtils.isEmpty(userName))
+                userName = userData.UserNickName;
+            else if (TextUtils.isEmpty(userName)){
+                userName =userData.userName;
+            }
+            tv_name.setText( userName );
+
+            if(TextUtils.isEmpty(userData.picUrl)){
+                imglogo.setImageResource(R.drawable.user_icon);
+            }else{
+                //helper.loadImage(-1, img, null, userData.picUrl, Constant.BASE_IMAGE_PATH);
+                ImageLoad.loadLogo(userData.picUrl, imglogo , this);
+            }
+        }else{
+
+        }
     }
 
     public void refreshView() {
@@ -168,11 +225,15 @@ public class AllScoreActivity extends BaseActivity implements BroadcastListener,
             minScore = Double.parseDouble(extra.getString("minScore"));
             final String totalScore = extra.getString("totalScore");
             totalCount = extra.getInt("totalCount");
+            final String totalBrowseAmount = extra.getString("totalBrowseAmount");
+            final String totalTurnAmount = extra.getString("totalTurnAmount");
             mHandler.post(new Runnable() {
 
                 @Override
                 public void run() {
                     ((TextView) findViewById(R.id.txtTotal)).setText(totalScore);
+                    TurnAmount.setText(  totalTurnAmount==null?"0":totalTurnAmount);
+                    BrowseAmount.setText(totalBrowseAmount==null?"0":totalBrowseAmount);
                 }
             });
 

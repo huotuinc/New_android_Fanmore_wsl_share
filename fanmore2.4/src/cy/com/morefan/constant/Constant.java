@@ -353,6 +353,8 @@ public class Constant {
 	//商家微信编号
 	public static final String MERCHANT_WEIXIN_ID = "merchant_weixin_id";
 
+	public static final String IS_POP_SHARE_DIALOG="is_pop_share_dialog";
+
 		
 
 }

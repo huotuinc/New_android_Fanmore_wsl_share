@@ -131,6 +131,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		if(null == arg0){
 			fragManager = new FragManager(this, R.id.layContent);
 			fragManager.setCurrentFrag(FragType.Task);
+			((MainApplication)this.getApplication()).fragManager = fragManager;
 		}
 
 		myBroadcastReceiver = new MyBroadcastReceiver(this, this, MyBroadcastReceiver.ACTION_USER_LOGIN, MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE,MyBroadcastReceiver.ACTION_REFRESH_USEDATA);
@@ -156,6 +157,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		L.i("<<<<<<<<<<<<<<<<<<onSaveInstanceState");
 		super.onRestoreInstanceState(savedInstanceState);
+
 	}
 	@Override
 	protected void onResume() {

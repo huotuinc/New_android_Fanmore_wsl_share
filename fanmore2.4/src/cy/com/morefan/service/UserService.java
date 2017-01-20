@@ -741,6 +741,8 @@ public class UserService extends BaseService{
 									extra.putString("totalScore", Util.opeDouble(resultData.getDouble("totalScore")));
 									extra.putString("maxScore", Util.opeDouble(resultData.getDouble("maxScore")));
 									extra.putString("minScore", Util.opeDouble(resultData.getDouble("minScore")));
+									extra.putString("totalBrowseAmount", resultData.getString("totalBrowseAmount"));
+									extra.putString("totalTurnAmount",resultData.getString("totalTurnAmount"));
 								}
 
 								JSONArray jsonArray = resultData.getJSONArray("itemData");

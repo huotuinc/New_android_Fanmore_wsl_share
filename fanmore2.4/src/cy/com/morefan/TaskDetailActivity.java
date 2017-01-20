@@ -39,6 +39,8 @@ import cy.com.morefan.util.TimeUtil;
 import cy.com.morefan.view.CustomDialog;
 import cy.com.morefan.view.CyButton;
 import cy.com.morefan.view.CyLoadingProgress;
+import cy.com.morefan.view.TipDialog;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -64,6 +66,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -593,7 +596,8 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
                 if(BusinessStatic.getInstance().disasterFlag==1){
                     copy();
                 }else {
-                    share();
+                    //share();
+					popAskInfo();
                 }
 
 
@@ -762,5 +766,31 @@ private void share(){
 		String timeName = UserData.getUserData().userName + "_lastTime";
 		SPUtil.saveIntToSpByName(this, Constant.SP_NAME_NORMAL, idName, taskData.id);
 		SPUtil.saveLongToSpByName(this, Constant.SP_NAME_NORMAL, timeName, System.currentTimeMillis());
+	}
+
+	/***
+	 *  分享前先弹出提示框
+	 */
+	private void popAskInfo(){
+		boolean showPop = ((MainApplication)getApplication()).readShareTipDialog();
+		if(!showPop){
+			share();
+			return;
+		}
+
+
+		String content="转发给好友需点击返回App才能计入转发。\r\n已转发文章再次分享不计入转发。";
+
+		TipDialog.show(this, "提示", content, "知道了", new DialogInterface.OnClickListener(){
+			@Override
+			public void onClick(DialogInterface dialogInterface, int i) {
+				share();
+			}
+		}, new CompoundButton.OnCheckedChangeListener(){
+			@Override
+			public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+				((MainApplication)TaskDetailActivity.this.getApplication()).writeShareTipDialog(!b);
+			}
+		});
 	}
 }

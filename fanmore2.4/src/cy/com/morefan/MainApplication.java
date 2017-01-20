@@ -9,6 +9,7 @@ import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
+import cy.com.morefan.frag.FragManager;
 import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
 import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
@@ -36,8 +37,8 @@ public class MainApplication extends Application implements BroadcastListener{
 	private static final String TAG = "JPush";
 	public Platform plat;
 	public Typeface font;
-	 public
-	    AssetManager am;
+	public  AssetManager am;
+	public FragManager fragManager;
 
 	    @Override
 	    public void onCreate() {
@@ -326,4 +327,12 @@ public class MainApplication extends Application implements BroadcastListener{
 
 
 		}
+
+
+	public void writeShareTipDialog(boolean share){
+		PreferenceHelper.writeBoolean( getApplicationContext() , Constant.MERCHANT_INFO , Constant.IS_POP_SHARE_DIALOG, share);
+	}
+	public boolean readShareTipDialog(){
+		return PreferenceHelper.readBoolean(getApplicationContext(),Constant.MERCHANT_INFO,Constant.IS_POP_SHARE_DIALOG,true);
+	}
 }

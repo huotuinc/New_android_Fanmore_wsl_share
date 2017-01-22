@@ -27,6 +27,7 @@ import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.DensityUtil;
 import cy.com.morefan.util.L;
 import cy.com.morefan.util.SPUtil;
+import cy.com.morefan.util.ToastUtil;
 import cy.com.morefan.util.Util;
 import cy.com.morefan.view.CustomDialog;
 import cy.com.morefan.view.CustomDialog.OnkeyBackListener;
@@ -270,7 +271,12 @@ public static String getDeviceInfo(Context context) {
 	void StorageRequest(){
 		int checkSelfPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 		if (checkSelfPermission != PackageManager.PERMISSION_GRANTED) {
-			ActivityCompat.requestPermissions(this, new String[]{ android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION2);
+			if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+				ToastUtil.show(getApplication(), "请授权应用使用存储权限，否则将无法使用应用。");
+			}
+
+			ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION2);
+
 		} else {
 			//有权限了，获取
 			initData();
@@ -294,18 +300,17 @@ public static String getDeviceInfo(Context context) {
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		if (requestCode==REQUEST_STORAGE_PERMISSION){
-			if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
+			if ( grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
 				TelephonyManager telMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
 				BusinessStatic.getInstance().IMEI = telMgr.getDeviceId();
 			}else {
 				toast("您没有授权访问电话权限。");
 			}
 		}else if( requestCode == REQUEST_STORAGE_PERMISSION2){
-			if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
+			if ( grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
 				initData();
 			}else{
 				toast("由于您没有授权应用使用存储权限，因此应用无法使用");
-				//finish();
 			}
 		}
 	}

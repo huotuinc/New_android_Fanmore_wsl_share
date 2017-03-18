@@ -4,6 +4,7 @@ import cindy.android.test.synclistview.SyncImageLoaderHelper;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.wechat.friends.Wechat;
 import cy.com.morefan.AllScoreActivity;
+import cy.com.morefan.BuildConfig;
 import cy.com.morefan.HomeActivity;
 import cy.com.morefan.MainApplication;
 import cy.com.morefan.MoblieLoginActivity;
@@ -49,12 +50,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -499,7 +502,13 @@ public class MyFrag extends BaseFragment implements OnUserInfoBackListener,OnCli
 		String imageName = "fm" + sdf.format(date) + ".jpg";
 		imgPath = Environment.getExternalStorageDirectory()+ "/"+ imageName;
 		File out = new File(imgPath);
-		Uri uri = Uri.fromFile(out);
+		Uri uri;
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			uri = FileProvider.getUriForFile(getContext(), BuildConfig.APPLICATION_ID + ".provider", out);
+		}else{
+			uri = Uri.fromFile(out);
+		}
+
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
 		intent.putExtra("fileName", imageName);
 		intent.putExtra("return-data", true);

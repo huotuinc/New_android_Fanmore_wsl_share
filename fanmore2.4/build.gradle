@@ -23,6 +23,8 @@ dependencies {
     //compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.facebook.fresco:fresco:0.14.1'
+
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }
 
 android {
@@ -76,8 +78,8 @@ android {
             signingConfig signingConfigs.huotu
             minSdkVersion 11
             targetSdkVersion 25
-            versionCode 11
-            versionName '1.1.1'
+            versionCode 13
+            versionName '1.1.3'
         }
     }
 

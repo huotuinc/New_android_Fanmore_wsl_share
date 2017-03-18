@@ -41,6 +41,8 @@ import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.umeng.analytics.MobclickAgent;
+
 public class BaseActivity extends SwipeBackActivity implements BusinessDataListener{
 	protected static final String NULL_NETWORK = "无网络或当前网络不可用!";
 
@@ -110,11 +112,16 @@ public class BaseActivity extends SwipeBackActivity implements BusinessDataListe
 		isMarkedHomeLong = false;
 		JPushInterface.onResume(this);
 		super.onResume();
+
+		MobclickAgent.onResume(this);
 	}
 	@Override
 	protected void onPause() {
 		JPushInterface.onPause(this);
 		super.onPause();
+
+		MobclickAgent.onPause(this);
+
 	}
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {

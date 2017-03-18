@@ -22,6 +22,7 @@ public class AwardAdapter extends TrendAdapter{
 	SyncImageLoaderHelper mImageLoader;
 	private boolean changeDes;
 	private int trendAddCount;
+	private String subTitle;
 
 	public AwardAdapter(SyncImageLoaderHelper mImageLoader, Context mContext, List<AwardData> datas){
 		this.mContext = mContext;
@@ -29,6 +30,15 @@ public class AwardAdapter extends TrendAdapter{
 		this.mImageLoader = mImageLoader;
 
 	}
+
+	public AwardAdapter(SyncImageLoaderHelper mImageLoader, Context mContext, List<AwardData> datas , String subTitle){
+		this.mContext = mContext;
+		this.datas = datas;
+		this.mImageLoader = mImageLoader;
+		this.subTitle=subTitle;
+	}
+
+
 	@Override
 	public int getCount() {
 		return datas.size() + trendAddCount;
@@ -90,6 +100,11 @@ public class AwardAdapter extends TrendAdapter{
 		//TextView txtGroupScore	= ViewHolderUtil.get(convertView, R.id.txtGroupScore);
 		LinearLayout layBottom	= ViewHolderUtil.get(convertView, R.id.layBottom);
 		LinearLayout lay_turn_browse = ViewHolderUtil.get(convertView,R.id.lay_turn_browse);
+		TextView tvSubTitle = ViewHolderUtil.get(convertView,R.id.tvSubTitle);
+		if(subTitle!=null&& !subTitle.isEmpty()){
+			tvSubTitle.setText(subTitle);
+		}
+
 		lay_turn_browse.setVisibility(View.GONE);
 
 		if(changeDes){

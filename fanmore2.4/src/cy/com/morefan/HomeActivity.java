@@ -490,7 +490,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		default:
 			break;
 		}
-		if(null != fragManager.getCurrentFrag())
+		if( null != fragManager && null != fragManager.getCurrentFrag())
 			fragManager.getCurrentFrag().onClick(v);
 	}
 

@@ -117,7 +117,7 @@ public class AllScoreActivity extends BaseActivity implements BroadcastListener,
         awardDatas = new ArrayList<AwardData>();
         datas = new ArrayList<AllScoreData>();
         SyncImageLoaderHelper mImageLoader = new SyncImageLoaderHelper(this);
-        adapter = new AwardAdapter(mImageLoader, this, awardDatas);
+        adapter = new AwardAdapter(mImageLoader, this, awardDatas , "转发");
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 

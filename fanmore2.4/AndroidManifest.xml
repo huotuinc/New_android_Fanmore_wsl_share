@@ -199,6 +199,12 @@
             android:name="JPUSH_APPKEY"
             android:value="88d262e559be8cd7d6bec30c" />
         <!-- jpushend -->
+
+
+        <meta-data android:value="58cb84d0a40fa325370014b0" android:name="UMENG_APPKEY"/>
+        <meta-data android:value="huotu_lexiang" android:name="UMENG_CHANNEL"/>
+
+
         <!-- ShareSDK分享 -->
         <activity
             android:name="com.mob.tools.MobUIShell"

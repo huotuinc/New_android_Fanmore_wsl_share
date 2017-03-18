@@ -30,6 +30,7 @@ import android.text.TextUtils;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orm.SugarContext;
+import com.umeng.analytics.MobclickAgent;
 
 public class MainApplication extends Application implements BroadcastListener{
 	private static ActivityManager activityManager;
@@ -52,6 +53,8 @@ public class MainApplication extends Application implements BroadcastListener{
 			JPushInterface.init(this);
 			myBroadcastReceiver = new MyBroadcastReceiver(this.getApplicationContext(), this, MyBroadcastReceiver.ACTION_ALARM_UP);
 			SugarContext.init(getApplicationContext());
+
+			MobclickAgent.setScenarioType(getApplicationContext(), MobclickAgent.EScenarioType.E_UM_NORMAL);
 	    }
 
 

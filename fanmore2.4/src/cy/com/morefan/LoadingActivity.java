@@ -25,6 +25,7 @@ import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.TaskService;
 import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.DensityUtil;
+import cy.com.morefan.util.IMEIUtil;
 import cy.com.morefan.util.L;
 import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.util.ToastUtil;
@@ -63,6 +64,7 @@ public class LoadingActivity extends BaseActivity implements
 	List<AdlistModel> datas;
 	int REQUEST_STORAGE_PERMISSION=11;
 	int REQUEST_STORAGE_PERMISSION2 = 12;
+    int REQUEST_STORAGE_PERMISSION3 = 13;
 
 
 	@Override
@@ -224,7 +226,8 @@ public class LoadingActivity extends BaseActivity implements
 //		if(null != getIntent().getExtras())
 //			alarmId = getIntent().getExtras().getInt("alarmId");
 		broadcastReceiver = new MyBroadcastReceiver(this, this,  Intent.ACTION_BATTERY_CHANGED);
-		PhoneRequest();
+		//PhoneRequest();
+        SDRequest();
 
 		// check file
 //		Bitmap bitmap = checkLoadingImage();
@@ -268,6 +271,20 @@ public static String getDeviceInfo(Context context) {
   return null;
 }
 
+
+void SDRequest(){
+    int checkSelfPremission = ContextCompat.checkSelfPermission(this , Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    if(  checkSelfPremission != PackageManager.PERMISSION_GRANTED ){
+        if(ActivityCompat.shouldShowRequestPermissionRationale(this , Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+            ToastUtil.show(getApplication(),"请授权应用使用存储权限，否则将无法使用应用。");
+        }
+        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION3);
+    }else{
+        PhoneRequest();
+    }
+}
+
+
 	void StorageRequest(){
 		int checkSelfPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 		if (checkSelfPermission != PackageManager.PERMISSION_GRANTED) {
@@ -291,8 +308,9 @@ public static String getDeviceInfo(Context context) {
 			ActivityCompat.requestPermissions(this, new String[]{ android.Manifest.permission.READ_PHONE_STATE}, REQUEST_STORAGE_PERMISSION);
 		} else {
 			//有权限了，获取
-			TelephonyManager telMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-			BusinessStatic.getInstance().IMEI = telMgr.getDeviceId();
+			//TelephonyManager telMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+			//BusinessStatic.getInstance().IMEI = telMgr.getDeviceId();
+			BusinessStatic.getInstance().IMEI = IMEIUtil.getIMEI(getApplicationContext());
 		}
 	}
 
@@ -301,8 +319,9 @@ public static String getDeviceInfo(Context context) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		if (requestCode==REQUEST_STORAGE_PERMISSION){
 			if ( grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
-				TelephonyManager telMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-				BusinessStatic.getInstance().IMEI = telMgr.getDeviceId();
+				//TelephonyManager telMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+				//BusinessStatic.getInstance().IMEI = telMgr.getDeviceId();
+				BusinessStatic.getInstance().IMEI = IMEIUtil.getIMEI(getApplicationContext());
 			}else {
 				toast("您没有授权访问电话权限。");
 			}
@@ -312,7 +331,13 @@ public static String getDeviceInfo(Context context) {
 			}else{
 				toast("由于您没有授权应用使用存储权限，因此应用无法使用");
 			}
-		}
+		}else if( requestCode == REQUEST_STORAGE_PERMISSION3 ){
+            if ( grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                PhoneRequest();
+            }else{
+                toast("由于您没有授权应用使用存储权限，因此应用无法使用");
+            }
+        }
 	}
 
 	@Override

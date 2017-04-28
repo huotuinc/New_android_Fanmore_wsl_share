@@ -76,6 +76,7 @@ class NewWebActivity extends BaseActivity implements MyBroadcastReceiver.Broadca
         refreshWebView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<WebView>() {
             @Override
             public void onRefresh(PullToRefreshBase<WebView> pullToRefreshBase) {
+                if(viewPage==null)return;
                 viewPage.reload();
             }
         });
@@ -111,7 +112,7 @@ class NewWebActivity extends BaseActivity implements MyBroadcastReceiver.Broadca
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-                if (100 == newProgress) {
+                if (100 == newProgress && refreshWebView !=null ) {
                     refreshWebView.onRefreshComplete();
                 }
                 super.onProgressChanged(view, newProgress);

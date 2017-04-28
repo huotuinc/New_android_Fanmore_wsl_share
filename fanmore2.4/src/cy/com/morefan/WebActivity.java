@@ -180,12 +180,13 @@ class WebActivity extends BaseActivity implements Handler.Callback, MyBroadcastR
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
+                if(titleText==null)return;
                 titleText.setText(title);
             }
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-                if (100 == newProgress) {
+                if (100 == newProgress && refreshWebView !=null ) {
                     refreshWebView.onRefreshComplete();
                 }
                 super.onProgressChanged(view, newProgress);

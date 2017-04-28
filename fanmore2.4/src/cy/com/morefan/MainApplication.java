@@ -29,7 +29,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.orm.SugarContext;
+//import com.orm.SugarContext;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainApplication extends Application implements BroadcastListener{
@@ -49,10 +49,10 @@ public class MainApplication extends Application implements BroadcastListener{
 			VolleyUtil.init(getApplicationContext());
 			CrashHandler crashHandler = CrashHandler.getInstance ();
 			crashHandler.init(getApplicationContext());
-			JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+			JPushInterface.setDebugMode(false); 	// 设置开启日志,发布时请关闭日志
 			JPushInterface.init(this);
 			myBroadcastReceiver = new MyBroadcastReceiver(this.getApplicationContext(), this, MyBroadcastReceiver.ACTION_ALARM_UP);
-			SugarContext.init(getApplicationContext());
+			//SugarContext.init(getApplicationContext());
 
 			MobclickAgent.setScenarioType(getApplicationContext(), MobclickAgent.EScenarioType.E_UM_NORMAL);
 	    }
@@ -61,7 +61,7 @@ public class MainApplication extends Application implements BroadcastListener{
 	@Override
 	public void onTerminate() {
 		super.onTerminate();
-		SugarContext.terminate();
+		//SugarContext.terminate();
 	}
 
 

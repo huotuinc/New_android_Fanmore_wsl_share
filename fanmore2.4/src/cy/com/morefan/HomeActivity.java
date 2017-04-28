@@ -151,6 +151,12 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	protected void onSaveInstanceState(Bundle outState) {
 		L.i("<<<<<<<<<<<<<<<<<<onSaveInstanceState");
 		outState.putInt("test", 2);
+
+		if(fragManager!=null) {
+			FragType fragType = fragManager.getCurrentFragType();
+			outState.putSerializable("curFragType", fragType);
+		}
+
 		super.onSaveInstanceState(outState);
 	}
 	@Override
@@ -158,7 +164,25 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		L.i("<<<<<<<<<<<<<<<<<<onSaveInstanceState");
 		super.onRestoreInstanceState(savedInstanceState);
 
+		FragType fragType = FragType.Task;
+		if( savedInstanceState.containsKey("curFragType") ){
+			fragType = (FragType) savedInstanceState.getSerializable("curFragType");
+		}
+
+		setCurrentFrag(fragType);
 	}
+
+	private void setCurrentFrag( FragType fragType ){
+		if( fragManager == null ){
+			fragManager = new FragManager(this , R.id.layContent);
+			fragManager.setCurrentFrag(fragType);
+			((MainApplication)this.getApplication()).fragManager = fragManager;
+		}else {
+			fragManager.setCurrentFrag(fragType);
+		}
+		//return fragManager;
+	}
+
 	@Override
 	protected void onResume() {
 		L.i("<<<<<<<<<<<<<<<<<<onResume");
@@ -319,6 +343,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	}
 
 	public void onClick(View v){
+		if(fragManager==null)return;
+
 		if (Utils.isFastClick()) {
 			return ;
 		}

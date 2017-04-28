@@ -83,8 +83,7 @@ public class MyFrag extends BaseFragment implements OnUserInfoBackListener,OnCli
 	private HeadView head;
 	private ElasticScrollView scrollView;
 	private Handler mHandler = new Handler(this);
-	public
-	MainApplication application;
+	public MainApplication application;
 	public TextView txtSex;
 	public TextView txtName;
 	public TextView txtmylevel;

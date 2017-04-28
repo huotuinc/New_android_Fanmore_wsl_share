@@ -107,10 +107,10 @@ public class AdActivity extends BaseActivity {
 
     protected void asyncGetScrollImage(){
                 //读取轮播图片实体
-                Iterator<AdlistModel> iterator = AdlistModel.findAll(AdlistModel.class);
-                while (iterator.hasNext()) {
-                    adDataList.add(iterator.next());
-                }
+//                Iterator<AdlistModel> iterator = AdlistModel.findAll(AdlistModel.class);
+//                while (iterator.hasNext()) {
+//                    adDataList.add(iterator.next());
+//                }
                 initSwitchImg();
     }
     private void initSwitchImg() {

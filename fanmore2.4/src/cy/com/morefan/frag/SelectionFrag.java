@@ -127,6 +127,8 @@ public class SelectionFrag extends BaseFragment implements View.OnClickListener,
         }
     };
     protected void initData(){
+        if( listView ==null ) return;
+
         listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {

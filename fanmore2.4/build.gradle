@@ -11,10 +11,10 @@ dependencies {
     compile project(':lib:main')
     //compile files('libs/gson-2.2.4.jar')
     //compile files('libs/jpush-android-2.1.5.jar')
-    compile('com.github.satyan:sugar:1.5') {
-
-        exclude module: 'support-v4'
-    }
+//    compile('com.github.satyan:sugar:1.5') {
+//
+//        exclude module: 'support-v4'
+//    }
     compile 'com.handmark.library:pulltorefresh:1.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.huotu.android.library:libedittext:1.6'
@@ -78,8 +78,8 @@ android {
             signingConfig signingConfigs.huotu
             minSdkVersion 11
             targetSdkVersion 25
-            versionCode 13
-            versionName '1.1.3'
+            versionCode 16
+            versionName '1.1.6'
         }
     }
 

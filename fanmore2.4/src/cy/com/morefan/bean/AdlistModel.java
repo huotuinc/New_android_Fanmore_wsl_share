@@ -1,6 +1,6 @@
 package cy.com.morefan.bean;
 
-import com.orm.SugarRecord;
+//import com.orm.SugarRecord;
 
 import java.io.Serializable;
 
@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by 47483 on 2016/7/7.
  */
 
-public class AdlistModel extends SugarRecord implements BaseData,Serializable {
+public class AdlistModel   implements BaseData,Serializable {
 
     int itemId;
     String itemCreateTime;

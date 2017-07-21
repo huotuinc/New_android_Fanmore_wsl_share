@@ -72,8 +72,11 @@ public class VipActivity extends BaseActivity implements Handler.Callback{
     }
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         ButterKnife.unbind(this);
+        if(handler!=null) {
+            handler.removeCallbacksAndMessages(null);
+        }
+        super.onDestroy();
     }
         @Override
         public void onDataFinish(int type, String des, BaseData[] datas,Bundle extra) {

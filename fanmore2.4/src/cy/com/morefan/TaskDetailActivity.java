@@ -46,6 +46,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
@@ -73,6 +74,9 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import static android.R.attr.type;
+import static cy.com.morefan.R.id.viewPage;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class TaskDetailActivity extends BaseActivity implements BusinessDataListener, Callback, BroadcastListener{
@@ -273,9 +277,20 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 			wxNotBack = false;
 			commit();
 		}
+
+		if(mWebView!=null){
+			mWebView.onResume();//mWebView.resumeTimers();
+		}
 		super.onResume();
 	}
 
+	@Override
+	protected void onPause() {
+		if(mWebView!=null){
+			mWebView.onPause();
+		}
+		super.onPause();
+	}
 
 	private void initView() {
 		layTop = (LinearLayout) findViewById(R.id.layTop);
@@ -312,10 +327,18 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 		mWebView.getSettings().setPluginState(WebSettings.PluginState.ON);
 		mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 		mWebView.getSettings().setAllowFileAccess(true);
+		mWebView.getSettings().setAppCacheEnabled(true);
+		mWebView.getSettings().setDatabaseEnabled(true);
 		mWebView.getSettings().setDefaultTextEncodingName("UTF-8");
 		mWebView.getSettings().setLoadWithOverviewMode(true);
 		mWebView.getSettings().setUseWideViewPort(true);
+		mWebView.getSettings().setSaveFormData(false);
 		mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+		// android 5.0以上默认不支持Mixed Content
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
+			mWebView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
+		}
+
 		mWebView.setWebChromeClient(new WebChromeClient() {
 			public void onProgressChanged(WebView view, int progress) {
 				mWebView.setVisibility(View.VISIBLE);
@@ -687,6 +710,11 @@ private void share(){
 			timeRunner.stop();
 		dismissProgress();
 		myBroadcastReceiver.unregisterReceiver();
+
+		if(mWebView!=null) {
+			mWebView.destroy();
+		}
+
 		super.onDestroy();
 	}
 	private int channleType;

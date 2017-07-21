@@ -10,7 +10,6 @@
         android:targetSdkVersion="17" />
 
     <supports-screens
-        android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
         android:smallScreens="true" />
@@ -319,6 +318,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/ThemeActivity" />
         <activity
+            android:hardwareAccelerated="true"
             android:name=".TaskDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeActivity" />

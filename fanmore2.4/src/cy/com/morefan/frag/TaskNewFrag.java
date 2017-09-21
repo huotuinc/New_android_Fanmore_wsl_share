@@ -372,9 +372,11 @@ public class TaskNewFrag extends BaseFragment  {
 
             currPosition = arg0;
 
-            ta.setDuration(300);
-            ta.setFillAfter(true);
-            iv_bottom_line.startAnimation(ta);
+            if(ta!=null) {
+                ta.setDuration(300);
+                ta.setFillAfter(true);
+                iv_bottom_line.startAnimation(ta);
+            }
 
         }
 

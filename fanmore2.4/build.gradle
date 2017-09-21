@@ -70,6 +70,10 @@ android {
         signingConfig signingConfigs.huotu
         minSdkVersion 8
         targetSdkVersion 25
+
+        ndk {
+            abiFilters 'x86', 'armeabi-v7a', 'armeabi'
+        }
     }
 
     productFlavors {
@@ -78,8 +82,8 @@ android {
             signingConfig signingConfigs.huotu
             minSdkVersion 11
             targetSdkVersion 25
-            versionCode 17
-            versionName '1.1.7'
+            versionCode 18
+            versionName '1.1.8'
         }
     }
 

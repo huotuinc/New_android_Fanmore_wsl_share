@@ -715,6 +715,10 @@ private void share(){
 			mWebView.destroy();
 		}
 
+		if(this.mHandler !=null){
+			mHandler.removeCallbacksAndMessages(null);
+		}
+
 		super.onDestroy();
 	}
 	private int channleType;

@@ -158,6 +158,7 @@ class WebActivity extends BaseActivity implements Handler.Callback, MyBroadcastR
                     @Override
                     public void onPageFinished(WebView view, String url) {
                         super.onPageFinished(view, url);
+                        if(titleText==null) return;
                         titleText.setText(view.getTitle());
                     }
 

@@ -13,7 +13,8 @@ import android.widget.TextView;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cy.com.morefan.BaseActivity;
 import cy.com.morefan.R;
@@ -27,25 +28,25 @@ import cy.com.morefan.view.ImageLoad;
 
 
 public class MasterActivity extends BaseActivity implements View.OnClickListener, MyBroadcastReceiver.BroadcastListener {
-    @Bind(R.id.btnBack)
+    @BindView(R.id.btnBack)
     public Button btnBack;
-    @Bind(R.id.imguser)
+    @BindView(R.id.imguser)
     public CircleImageView imguser;
     TextView txt_partner;
-    @Bind(R.id.txtTitle)
+    @BindView(R.id.txtTitle)
     TextView txtTitle;
-    @Bind(R.id.rw)
+    @BindView(R.id.rw)
     TextView rw;
-    @Bind(R.id.hb)
+    @BindView(R.id.hb)
     TextView hb;
-    @Bind(R.id.viewPager)
+    @BindView(R.id.viewPager)
     ViewPager viewPager;
-    @Bind(R.id.browseCount) TextView browseCount;
-    @Bind(R.id.TurnAmount) TextView turnAmount;
-    @Bind(R.id.prenticeAmount) TextView prenticeAmount;
-    @Bind(R.id.rw_bottom_line)
+    @BindView(R.id.browseCount) TextView browseCount;
+    @BindView(R.id.TurnAmount) TextView turnAmount;
+    @BindView(R.id.prenticeAmount) TextView prenticeAmount;
+    @BindView(R.id.rw_bottom_line)
             ImageView rw_bottom_line;
-    @Bind(R.id.hb_bottom_line)
+    @BindView(R.id.hb_bottom_line)
             ImageView hb_bottom_line;
     GroupPersonData groupData;
     private FragAdapter adapter;
@@ -55,7 +56,7 @@ public class MasterActivity extends BaseActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         hb.setOnClickListener(this);
         rw.setOnClickListener(this);
         imguser.setBorderColor(getResources().getColor(R.color.white));
@@ -169,7 +170,7 @@ public class MasterActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+
         myBroadcastReceiver.unregisterReceiver();
     }
 

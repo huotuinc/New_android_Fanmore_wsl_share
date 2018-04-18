@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cy.com.morefan.R;
 import cy.com.morefan.bean.WeekTaskData;
@@ -72,11 +73,11 @@ public class WeekTaskAdapter extends BaseAdapter {
 
 
     static class ViewHolder {
-        @Bind(R.id.title)
+        @BindView(R.id.title)
         TextView title;
-        @Bind(R.id.finishCount) TextView finishCount;
-        @Bind(R.id.target) TextView target;
-        @Bind(R.id.Progress)
+        @BindView(R.id.finishCount) TextView finishCount;
+        @BindView(R.id.target) TextView target;
+        @BindView(R.id.Progress)
         ProgressBar progress;
 
         ViewHolder(View view) {

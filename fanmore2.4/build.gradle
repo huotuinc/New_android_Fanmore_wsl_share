@@ -1,38 +1,39 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile fileTree(include: '*.jar', dir: 'libs')
-    compile project(':lib:CyLibApkPatch')
-    compile project(':lib:CyLibImageDownload')
-    compile project(':lib:CyLibLocation')
-    compile project(':lib:TestSyncListView')
-    compile project(':lib:cropper')
-    compile project(':lib:CyLibHttpClient')
-    compile project(':lib:main')
+    implementation fileTree(include: '*.jar', dir: 'libs')
+    implementation project(':lib:CyLibApkPatch')
+    implementation project(':lib:CyLibImageDownload')
+    implementation project(':lib:CyLibLocation')
+    implementation project(':lib:TestSyncListView')
+    implementation project(':lib:cropper')
+    implementation project(':lib:CyLibHttpClient')
+    implementation project(':lib:main')
     //compile files('libs/gson-2.2.4.jar')
     //compile files('libs/jpush-android-2.1.5.jar')
 //    compile('com.github.satyan:sugar:1.5') {
 //
 //        exclude module: 'support-v4'
 //    }
-    compile 'com.handmark.library:pulltorefresh:1.1'
-    compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.huotu.android.library:libedittext:1.6'
-    compile 'com.huibin.androidsegmentcontrol:androidsegmentcontrol:1.2'
-    compile 'com.android.support:support-v4:25.3.1'
+    implementation 'com.handmark.library:pulltorefresh:1.1'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.huotu.android.library:libedittext:1.6'
+    implementation 'com.huibin.androidsegmentcontrol:androidsegmentcontrol:1.2'
+    implementation 'com.android.support:support-v4:27.1.1'
     //compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.mcxiaoke.volley:library:1.0.19'
-    compile 'com.facebook.fresco:fresco:1.5.0'
+    implementation 'com.mcxiaoke.volley:library:1.0.19'
+    implementation 'com.facebook.fresco:fresco:1.8.1'
 
-    compile 'com.umeng.analytics:analytics:latest.integration'
+    implementation 'com.umeng.analytics:analytics:latest.integration'
 }
 
 android {
 
     useLibrary 'org.apache.http.legacy'
 
-    compileSdkVersion 25
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 27
+    //buildToolsVersion '25.0.0'
 
     signingConfigs {
         huotu {
@@ -55,7 +56,7 @@ android {
         }
 
         // Move the tests to tests/java, tests/res, etc...
-        instrumentTest.setRoot('tests')
+        //instrumentTest.setRoot('tests')
 
         // Move the build types to build-types/<type>
         // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
@@ -68,22 +69,24 @@ android {
     }
     defaultConfig {
         signingConfig signingConfigs.huotu
-        minSdkVersion 8
-        targetSdkVersion 25
+        minSdkVersion 14
+        targetSdkVersion 27
 
         ndk {
             abiFilters 'x86', 'armeabi-v7a', 'armeabi'
         }
+
     }
 
     productFlavors {
         fanmore {
             applicationId 'hz.huotu.wsl.aifenxiang'
             signingConfig signingConfigs.huotu
-            minSdkVersion 11
-            targetSdkVersion 25
+            minSdkVersion 14
+            targetSdkVersion 27
             versionCode 18
             versionName '1.1.8'
+            flavorDimensions "versionCode"
         }
     }
 

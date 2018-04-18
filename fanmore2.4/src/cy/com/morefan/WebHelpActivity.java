@@ -17,7 +17,7 @@ import android.widget.ProgressBar;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshWebView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cy.com.morefan.constant.BusinessStatic;
@@ -38,9 +38,9 @@ class WebHelpActivity extends BaseActivity implements  View.OnClickListener, Han
     public
     AssetManager am;
 
-    @Bind(R.id.webPage)
+    @BindView(R.id.webPage)
     PullToRefreshWebView webPage;
-    @Bind(R.id.progressBar)
+    @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
     @Override
@@ -57,7 +57,7 @@ class WebHelpActivity extends BaseActivity implements  View.OnClickListener, Han
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_web_help);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         resources = this.getResources();
         application = (MainApplication) this.getApplication();
         wManager = this.getWindowManager();
@@ -127,7 +127,7 @@ class WebHelpActivity extends BaseActivity implements  View.OnClickListener, Han
     protected void onDestroy() {
         super.onDestroy();
         VolleyUtil.cancelAllRequest();
-        ButterKnife.unbind(this);
+
     }
 
     @OnClick(R.id.btnBack)

@@ -3,6 +3,7 @@ package cy.com.morefan;
 
 import java.util.List;
 
+import butterknife.Unbinder;
 import cn.jpush.android.api.JPushInterface;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
@@ -52,6 +53,8 @@ public class BaseActivity extends SwipeBackActivity implements BusinessDataListe
 	private int screenWidth  ;
 	protected UserService userService;
 	private boolean isHomeReg;
+	protected Unbinder unbinder;
+
 	protected void onBack(){
 
 	};
@@ -105,6 +108,11 @@ public class BaseActivity extends SwipeBackActivity implements BusinessDataListe
 		if (mMediaPlayer != null)
 			mMediaPlayer.release();
 		unregisterReceiver(mHomeKeyEventReceiver);
+
+		if(unbinder!=null){
+			unbinder.unbind();
+		}
+
 		super.onDestroy();
 	}
 	@Override

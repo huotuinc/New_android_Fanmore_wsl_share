@@ -25,7 +25,7 @@ public class Constant {
 	/**
 	 * 开发url
 	 */
-	//public static final String IP_URL = "http://taskapi.fancat.cn";
+//	public static final String IP_URL = "http://192.168.1.210:8014";
 	//public static final String IP_URL = "http://api.fanmore.cn";
 	//public static final String IP_URL ="http://192.168.1.6:8050";
 	//public static final String IP_URL ="http://192.168.3.2:8050";

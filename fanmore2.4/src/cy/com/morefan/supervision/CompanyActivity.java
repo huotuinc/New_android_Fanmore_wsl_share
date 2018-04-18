@@ -20,7 +20,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cy.com.morefan.BaseActivity;
 
@@ -39,32 +40,32 @@ import cy.com.morefan.view.PullDownUpListView;
 public class CompanyActivity extends BaseActivity implements Handler.Callback ,AdapterView.OnItemClickListener,View.OnClickListener,PullDownUpListView.OnRefreshOrLoadListener  {
 
 
-    @Bind(R.id.lay_mr)
+    @BindView(R.id.lay_mr)
     LinearLayout layMr;
-    @Bind(R.id.txtmr)
+    @BindView(R.id.txtmr)
     TextView txtmr;
-    @Bind(R.id.mr_line)
+    @BindView(R.id.mr_line)
     ImageView mrLine;
-    @Bind(R.id.lay_zf)
+    @BindView(R.id.lay_zf)
     LinearLayout layZf;
-    @Bind(R.id.txtzf)
+    @BindView(R.id.txtzf)
     TextView txtzf;
-    @Bind(R.id.zf_bottom_line)
+    @BindView(R.id.zf_bottom_line)
     ImageView zfBottomLine;
-    @Bind(R.id.lay_ll)
+    @BindView(R.id.lay_ll)
     LinearLayout lay_ll;
-    @Bind(R.id.txtll) TextView txtll;
-    @Bind(R.id.ll_bottom_line)
+    @BindView(R.id.txtll) TextView txtll;
+    @BindView(R.id.ll_bottom_line)
     ImageView llBottomLine;
-    @Bind(R.id.listView)
+    @BindView(R.id.listView)
     PullDownUpListView listView;
-    @Bind(R.id.btnBack)
+    @BindView(R.id.btnBack)
     public Button btnBack;
-    @Bind(R.id.txtTitle)
+    @BindView(R.id.txtTitle)
     public TextView tvTitle;
-    @Bind(R.id.btnQuery)
+    @BindView(R.id.btnQuery)
     public CyButton btnQuery;
-    @Bind(R.id.layEmpty)
+    @BindView(R.id.layEmpty)
     EmptyView layEmpty;
     GroupPersonData groupPersonData;
     GroupData groupData;
@@ -81,7 +82,7 @@ public class CompanyActivity extends BaseActivity implements Handler.Callback ,A
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         lay_ll.setOnClickListener(this);
         layMr.setOnClickListener(this);
         layZf.setOnClickListener(this);
@@ -118,7 +119,7 @@ public class CompanyActivity extends BaseActivity implements Handler.Callback ,A
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+
     }
 
 

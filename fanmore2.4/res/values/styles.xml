@@ -22,7 +22,8 @@
         <!--<item name="android:windowAnimationStyle">@style/Animation.Activity.Translucent.Style</item>-->
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowDisablePreview">true</item>
         <item name="android:windowSoftInputMode">adjustPan|stateAlwaysHidden</item>
     </style>
 

@@ -3,7 +3,7 @@ package cy.com.morefan;
 import android.content.Intent;
 import android.os.Bundle;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import android.os.Handler;
@@ -39,12 +39,12 @@ import cy.com.morefan.view.PullDownUpListView.OnRefreshOrLoadListener;
 
 public class SearchActivity extends BaseActivity implements Handler.Callback ,BusinessDataListener, OnRefreshOrLoadListener,View.OnClickListener {
 
-    @Bind(R.id.btn_cancel) TextView btn_cancel;
-    @Bind(R.id.search_et_input)
+    @BindView(R.id.btn_cancel) TextView btn_cancel;
+    @BindView(R.id.search_et_input)
     EditText searchEtInput;
-    @Bind(R.id.listView)
+    @BindView(R.id.listView)
     PullDownUpListView listView;
-    @Bind(R.id.layEmpty) EmptyView layEmpty;
+    @BindView(R.id.layEmpty) EmptyView layEmpty;
     private int pageIndex;
     private TaskService taskService;
     private TaskAdapter adapter;
@@ -98,7 +98,7 @@ public class SearchActivity extends BaseActivity implements Handler.Callback ,Bu
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         bundle =getIntent().getExtras();
         listView.setOnRefreshOrLoadListener(this);
         listView.setOnItemClickListener(itemListener);
@@ -221,6 +221,6 @@ public class SearchActivity extends BaseActivity implements Handler.Callback ,Bu
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+
     }
 }

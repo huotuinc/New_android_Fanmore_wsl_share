@@ -11,7 +11,7 @@ import android.widget.Button;
 
 import com.huotu.android.library.libedittext.EditText;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
@@ -24,13 +24,13 @@ import cy.com.morefan.util.VolleyUtil;
 
 public class SetPassWordActivity extends BaseActivity implements View.OnClickListener , Handler.Callback {
 
-    @Bind(R.id.btnBack)
+    @BindView(R.id.btnBack)
     Button btnBack;
-    @Bind(R.id.edtPassword)
+    @BindView(R.id.edtPassword)
     EditText edtPassword;
-    @Bind(R.id.edtpsw)
+    @BindView(R.id.edtpsw)
     EditText edtpsw;
-    @Bind(R.id.edtinvitationCode)
+    @BindView(R.id.edtinvitationCode)
     EditText edtinvitationCode;
     Bundle bundle;
     private UserService userService;
@@ -59,7 +59,7 @@ public class SetPassWordActivity extends BaseActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_pass_word);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         userService=new UserService(this);
         Bundle bundle=getIntent().getExtras();
         isUpdate=bundle.getInt("isUpdate");
@@ -142,7 +142,7 @@ public class SetPassWordActivity extends BaseActivity implements View.OnClickLis
     }
     @Override
     protected void onDestroy() {
-        ButterKnife.unbind(this);
+
         VolleyUtil.cancelAllRequest();
         super.onDestroy();
     }

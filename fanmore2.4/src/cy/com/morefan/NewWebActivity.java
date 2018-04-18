@@ -14,7 +14,7 @@ import android.webkit.WebView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshWebView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
@@ -38,7 +38,7 @@ class NewWebActivity extends BaseActivity implements MyBroadcastReceiver.Broadca
     private MyBroadcastReceiver myBroadcastReceiver;
 
 
-    @Bind(R.id.viewPage)
+    @BindView(R.id.viewPage)
     PullToRefreshWebView refreshWebView;
     public static ValueCallback< Uri > mUploadMessage;
     public static final int FILECHOOSER_RESULTCODE = 1;
@@ -48,7 +48,7 @@ class NewWebActivity extends BaseActivity implements MyBroadcastReceiver.Broadca
     void onCreate ( Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newweb);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         application = ( MainApplication ) this.getApplication ( );
@@ -149,7 +149,7 @@ class NewWebActivity extends BaseActivity implements MyBroadcastReceiver.Broadca
     protected
     void onDestroy ( ) {
         super.onDestroy ( );
-        ButterKnife.unbind(this);
+
         if( null != myBroadcastReceiver)
         {
             myBroadcastReceiver.unregisterReceiver();

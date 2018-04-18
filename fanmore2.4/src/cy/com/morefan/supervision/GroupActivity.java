@@ -16,7 +16,8 @@ import com.huibin.androidsegmentcontrol.SegmentControl;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cy.com.morefan.BaseActivity;
 import cy.com.morefan.R;
@@ -36,9 +37,9 @@ import cy.com.morefan.view.PullDownUpListView;
  */
 public class GroupActivity extends BaseActivity implements View.OnClickListener, Handler.Callback, BusinessDataListener,AdapterView.OnItemClickListener,PullDownUpListView.OnRefreshOrLoadListener {
 
-    @Bind(R.id.listView)
+    @BindView(R.id.listView)
     PullDownUpListView listview;
-    @Bind(R.id.layEmpty)
+    @BindView(R.id.layEmpty)
     ImageView layEmpty;
     List<GroupData> datas;
     List<GroupPersonData> groupPersonDatas;
@@ -52,7 +53,7 @@ public class GroupActivity extends BaseActivity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tab_architecture);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         supervisionService = new SupervisionService(this);
         handler = new Handler(this);
         datas=new ArrayList<GroupData>();
@@ -158,7 +159,7 @@ public class GroupActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+        //ButterKnife.unbind(this);
     }
 
 

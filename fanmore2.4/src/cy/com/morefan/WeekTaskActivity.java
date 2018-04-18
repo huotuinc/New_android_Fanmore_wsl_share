@@ -13,7 +13,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cy.com.morefan.adapter.WeekTaskAdapter;
 import cy.com.morefan.bean.BaseData;
@@ -28,34 +29,34 @@ import cy.com.morefan.view.ImageLoad;
 
 public class WeekTaskActivity extends BaseActivity implements Handler.Callback {
 
-    @Bind(R.id.listView)
+    @BindView(R.id.listView)
     ListView listView;
 private List<WeekTaskData> datas;
     private WeekTaskAdapter adapter;
-    @Bind(R.id.btnBack)
+    @BindView(R.id.btnBack)
     Button btnBack;
-    @Bind(R.id.txtTitle)
+    @BindView(R.id.txtTitle)
     TextView txtTitle;
-    @Bind(R.id.mylevel)
+    @BindView(R.id.mylevel)
     TextView mylevel;
-    @Bind(R.id.myname)
+    @BindView(R.id.myname)
     TextView myname;
-    @Bind(R.id.imguser)
+    @BindView(R.id.imguser)
     CircleImageView imguser;
     UserData userData;
     private MyBroadcastReceiver myBroadcastReceiver;
     private Handler mHandler = new Handler(this);
 
-//    @Bind(R.id.txtBrowseCount) TextView txtBrowseCount;
-//    @Bind(R.id.BrowseCount) TextView browseCount;
-//    @Bind(R.id.BrowseCountProgress)
+//    @BindView(R.id.txtBrowseCount) TextView txtBrowseCount;
+//    @BindView(R.id.BrowseCount) TextView browseCount;
+//    @BindView(R.id.BrowseCountProgress)
 //    ProgressBar browseCountProgress;
-//    @Bind(R.id.txtTurnCount) TextView txtTurnCount;
-//    @Bind(R.id.TurnCount) TextView turnCount;
-//    @Bind(R.id.TurnCountProgress) ProgressBar turnCountProgress;
-//    @Bind(R.id.txtPartnerCount) TextView txtPartnerCount;
-//    @Bind(R.id.PartnerCount) TextView partnerCount;
-//    @Bind(R.id.PartnerCountProgress) ProgressBar partnerCountProgress;
+//    @BindView(R.id.txtTurnCount) TextView txtTurnCount;
+//    @BindView(R.id.TurnCount) TextView turnCount;
+//    @BindView(R.id.TurnCountProgress) ProgressBar turnCountProgress;
+//    @BindView(R.id.txtPartnerCount) TextView txtPartnerCount;
+//    @BindView(R.id.PartnerCount) TextView partnerCount;
+//    @BindView(R.id.PartnerCountProgress) ProgressBar partnerCountProgress;
 @Override
 public boolean handleMessage(Message msg) {
     if(msg.what == BusinessDataListener.DONE_GET_WEEKTASK){
@@ -81,7 +82,7 @@ public boolean handleMessage(Message msg) {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week_task);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         imguser.setBorderColor(getResources().getColor(R.color.white));
         imguser.setBorderWidth((int)getResources().getDimension(R.dimen.head_width));
         userService = new UserService(this);
@@ -129,7 +130,7 @@ public boolean handleMessage(Message msg) {
 
     @Override
     protected void onDestroy() {
-        ButterKnife.unbind(this);
+
         super.onDestroy();
     }
     @Override

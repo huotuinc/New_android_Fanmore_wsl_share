@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.Iterator;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cy.com.morefan.adapter.HomeViewPagerAdapter;
 import cy.com.morefan.bean.AdlistModel;
@@ -26,12 +26,12 @@ import cy.com.morefan.util.VolleyUtil;
 public class AdActivity extends BaseActivity {
 
 
-    @Bind(R.id.skipText)
+    @BindView(R.id.skipText)
     TextView skipText;
-    @Bind(R.id.homeViewPager)
+    @BindView(R.id.homeViewPager)
     ViewPager homeViewPager;
 
-    @Bind(R.id.dot)
+    @BindView(R.id.dot)
     LinearLayout dot;
     List<AdlistModel> adDataList = null;
     int recLen = BusinessStatic.getInstance().adTime;
@@ -82,7 +82,7 @@ public class AdActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad);
-        ButterKnife.bind(this);
+        unbinder= ButterKnife.bind(this);
         adDataList = (List<AdlistModel>) getIntent().getSerializableExtra("data");
         itemtime =adDataList.get(homeViewPager.getCurrentItem()).getItemShowTime();
         skipText.setOnClickListener(new View.OnClickListener() {
@@ -178,7 +178,7 @@ public class AdActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+        //ButterKnife.unbind(this);
         VolleyUtil.cancelAllRequest();
         handler.removeCallbacks(runnable);
         if (null != mHandler) {

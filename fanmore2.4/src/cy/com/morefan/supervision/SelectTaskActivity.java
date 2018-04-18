@@ -14,7 +14,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cy.com.morefan.BaseActivity;
@@ -30,13 +31,13 @@ import cy.com.morefan.util.ActivityUtils;
 
 public class    SelectTaskActivity extends BaseActivity implements Handler.Callback,BusinessDataListener,AdapterView.OnItemClickListener{
 
-    @Bind(R.id.ff1)
+    @BindView(R.id.ff1)
     FrameLayout ff1;
-    @Bind(R.id.txtTitle)
+    @BindView(R.id.txtTitle)
     TextView txtTitle;
-    @Bind(R.id.listview)
+    @BindView(R.id.listview)
     ListView listview;
-    @Bind(R.id.layEmpty)
+    @BindView(R.id.layEmpty)
     ImageView layEmpty;
     List<GroupData> datas;
     List<GroupPersonData> personDatas;
@@ -73,7 +74,7 @@ public class    SelectTaskActivity extends BaseActivity implements Handler.Callb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_task);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         supervisionService = new SupervisionService(this);
         handler = new Handler(this);
         datas=new ArrayList<GroupData>();

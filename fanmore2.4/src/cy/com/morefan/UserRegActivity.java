@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.huotu.android.library.libedittext.EditText;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cy.com.morefan.bean.BaseData;
 import cy.com.morefan.constant.BusinessStatic;
@@ -34,16 +34,16 @@ import cy.com.morefan.view.CyButton;
 
 public class UserRegActivity extends BaseActivity implements BusinessDataListener, Callback, BroadcastListener ,View.OnClickListener {
 
-	@Bind(R.id.btnBack)
+	@BindView(R.id.btnBack)
 	Button btnBack;
-	@Bind(R.id.txtTitle) TextView txtTitle;
-	@Bind(R.id.edtPhone) EditText edtPhone;
-	@Bind(R.id.btn_getcode) TextView btnGetcode;
-	@Bind(R.id.edtPassword) EditText edtPassword;
-	@Bind(R.id.edtCode) EditText edtCode;
-	@Bind(R.id.edtinvitationCode) EditText edtinvitationCode;
-	@Bind(R.id.btnReg)Button btnReg;
-	@Bind(R.id.linegone)
+	@BindView(R.id.txtTitle) TextView txtTitle;
+	@BindView(R.id.edtPhone) EditText edtPhone;
+	@BindView(R.id.btn_getcode) TextView btnGetcode;
+	@BindView(R.id.edtPassword) EditText edtPassword;
+	@BindView(R.id.edtCode) EditText edtCode;
+	@BindView(R.id.edtinvitationCode) EditText edtinvitationCode;
+	@BindView(R.id.btnReg)Button btnReg;
+	@BindView(R.id.linegone)
 	ImageView linegone;
 	private MyBroadcastReceiver myBroadcastReceiver;
 	private Handler mHandler = new Handler(this);
@@ -108,7 +108,7 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_reg);
-		ButterKnife.bind(this);
+		unbinder = ButterKnife.bind(this);
 
 		userService = new UserService(this);
 		Intent intent = getIntent();
@@ -244,7 +244,6 @@ public class UserRegActivity extends BaseActivity implements BusinessDataListene
 	}
 	@Override
 	protected void onDestroy() {
-		ButterKnife.unbind(this);
 		VolleyUtil.cancelAllRequest();
 		myBroadcastReceiver.unregisterReceiver();
 		handler.removeCallbacks(runnable);

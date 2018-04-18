@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cindy.android.test.synclistview.SyncImageLoaderHelper;
 import cy.com.morefan.adapter.TaskAdapter;
@@ -37,13 +37,13 @@ import cy.com.morefan.view.PullDownUpListView;
 public class TermActivity extends BaseActivity implements BusinessDataListener, Handler.Callback,PullDownUpListView.OnRefreshOrLoadListener,AdapterView.OnItemClickListener {
 
 
-    @Bind(R.id.btnBack)
+    @BindView(R.id.btnBack)
     Button btnBack;
-    @Bind(R.id.txtTitle)
+    @BindView(R.id.txtTitle)
     TextView txtTitle;
-    @Bind(R.id.listView)
+    @BindView(R.id.listView)
     PullDownUpListView listView;
-    @Bind(R.id.layEmpty)
+    @BindView(R.id.layEmpty)
     EmptyView layEmpty;
     private int pageIndex;
     private TaskAdapter adapter;
@@ -93,7 +93,7 @@ public class TermActivity extends BaseActivity implements BusinessDataListener, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         pageIndex = 0;
         taskService =new TaskService(this);
         Bundle bundle = getIntent().getExtras();

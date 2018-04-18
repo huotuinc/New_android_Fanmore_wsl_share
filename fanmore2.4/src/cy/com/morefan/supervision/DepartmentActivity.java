@@ -20,7 +20,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cy.com.morefan.BaseActivity;
 import cy.com.morefan.R;
@@ -40,28 +41,28 @@ import cy.com.morefan.view.PullDownUpListView;
 
 public class DepartmentActivity extends BaseActivity implements Handler.Callback,AdapterView.OnItemClickListener ,View.OnClickListener,PullDownUpListView.OnRefreshOrLoadListener{
 
-    @Bind(R.id.txtTitle)
+    @BindView(R.id.txtTitle)
     public TextView tvTitle;
-    @Bind(R.id.btnBack)
+    @BindView(R.id.btnBack)
     Button btnBack;
-    @Bind(R.id.btnQuery) CyButton btnQuery;
-    @Bind(R.id.lay_mr)
+    @BindView(R.id.btnQuery) CyButton btnQuery;
+    @BindView(R.id.lay_mr)
     LinearLayout layMr;
-    @Bind(R.id.txtmr) TextView txtmr;
-    @Bind(R.id.mr_line)
+    @BindView(R.id.txtmr) TextView txtmr;
+    @BindView(R.id.mr_line)
     ImageView mrLine;
-    @Bind(R.id.lay_zf) LinearLayout layZf;
-    @Bind(R.id.txtzf) TextView txtzf;
-    @Bind(R.id.zf_bottom_line) ImageView zfBottomLine;
-    @Bind(R.id.lay_ll) LinearLayout layLl;
-    @Bind(R.id.txtll) TextView txtll;
-    @Bind(R.id.ll_bottom_line) ImageView llBottomLine;
-    @Bind(R.id.lay_hb) LinearLayout layHb;
-    @Bind(R.id.txthb) TextView txthb;
-    @Bind(R.id.hb_line) ImageView hbLine;
-    @Bind(R.id.listView)
+    @BindView(R.id.lay_zf) LinearLayout layZf;
+    @BindView(R.id.txtzf) TextView txtzf;
+    @BindView(R.id.zf_bottom_line) ImageView zfBottomLine;
+    @BindView(R.id.lay_ll) LinearLayout layLl;
+    @BindView(R.id.txtll) TextView txtll;
+    @BindView(R.id.ll_bottom_line) ImageView llBottomLine;
+    @BindView(R.id.lay_hb) LinearLayout layHb;
+    @BindView(R.id.txthb) TextView txthb;
+    @BindView(R.id.hb_line) ImageView hbLine;
+    @BindView(R.id.listView)
     PullDownUpListView listView;
-    @Bind(R.id.layEmpty) EmptyView layEmpty;
+    @BindView(R.id.layEmpty) EmptyView layEmpty;
     private int pageIndex;
     private int sort;
     private int tag=0;
@@ -77,7 +78,7 @@ public class DepartmentActivity extends BaseActivity implements Handler.Callback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_department);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         layHb.setOnClickListener(this);
         layLl.setOnClickListener(this);
         layMr.setOnClickListener(this);
@@ -104,7 +105,7 @@ public class DepartmentActivity extends BaseActivity implements Handler.Callback
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+
     }
     @Override
     public boolean handleMessage(Message msg) {

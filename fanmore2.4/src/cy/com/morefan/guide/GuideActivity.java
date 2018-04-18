@@ -20,7 +20,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cy.com.morefan.BaseActivity;
 import cy.com.morefan.HomeActivity;
@@ -41,9 +42,9 @@ public
 class GuideActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, Handler.Callback {
 
 
-    @Bind(R.id.vp_activity)
+    @BindView(R.id.vp_activity)
     ViewPager mVPActivity;
-    @Bind(R.id.guideL)
+    @BindView(R.id.guideL)
     LinearLayout guideL;
     Button btn_tohome;
     private ViewPagerAdapter vpAdapter;
@@ -75,7 +76,7 @@ class GuideActivity extends BaseActivity implements View.OnClickListener, ViewPa
         // TODO Auto-generated method stub
         super.onCreate ( arg0 );
         setContentView(R.layout.guide_ui);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         application = (MainApplication) this.getApplication();
         resources = this.getResources ();
         mHandler = new Handler( this );
@@ -197,7 +198,7 @@ class GuideActivity extends BaseActivity implements View.OnClickListener, ViewPa
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+
         VolleyUtil.cancelAllRequest();
     }
 }

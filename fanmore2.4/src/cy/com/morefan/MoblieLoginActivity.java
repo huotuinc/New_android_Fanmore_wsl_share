@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.huotu.android.library.libedittext.EditText;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cy.com.morefan.bean.BaseData;
@@ -28,17 +28,17 @@ import cy.com.morefan.util.Util;
 public class MoblieLoginActivity extends BaseActivity implements Handler.Callback {
 
 
-    @Bind(R.id.edtCode)
+    @BindView(R.id.edtCode)
     EditText edtCode;
-    @Bind(R.id.edtPhone)
+    @BindView(R.id.edtPhone)
     EditText edtPhone;
-    @Bind(R.id.btnLogin)
+    @BindView(R.id.btnLogin)
     Button btnLogin;
-    @Bind(R.id.Txt_forget_psw)
+    @BindView(R.id.Txt_forget_psw)
     TextView Txt_forget_psw;
-    @Bind(R.id.Txt_reg)
+    @BindView(R.id.Txt_reg)
     TextView Txt_reg;
-    @Bind(R.id.txtInformation)
+    @BindView(R.id.txtInformation)
     TextView txtInformation;
     private UserService userService;
     private Handler mHandler = new Handler(this);
@@ -47,7 +47,7 @@ public class MoblieLoginActivity extends BaseActivity implements Handler.Callbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_moblie_login);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         userService = new UserService(this);
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null){
@@ -98,7 +98,7 @@ public class MoblieLoginActivity extends BaseActivity implements Handler.Callbac
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+
         //VolleyUtil.cancelAllRequest();
     }
 

@@ -8,7 +8,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cy.com.morefan.BaseActivity;
@@ -23,21 +24,21 @@ import cy.com.morefan.view.ImageLoad;
 
 public class VipActivity extends BaseActivity implements Handler.Callback{
 
-    @Bind(R.id.btnBack)
+    @BindView(R.id.btnBack)
     Button btnBack;
-    @Bind(R.id.txtTitle)
+    @BindView(R.id.txtTitle)
     TextView txtTitle;
-    @Bind(R.id.imglogo)
+    @BindView(R.id.imglogo)
     CircleImageView imglogo;
-    @Bind(R.id.tv_name)
+    @BindView(R.id.tv_name)
     TextView tv_name;
-    @Bind(R.id.TurnAmount)
+    @BindView(R.id.TurnAmount)
     TextView TurnAmount;
-    @Bind(R.id.BrowseAmount)
+    @BindView(R.id.BrowseAmount)
     TextView BrowseAmount;
-    @Bind(R.id.taskLL)
+    @BindView(R.id.taskLL)
     LinearLayout taskLL;
-    @Bind(R.id.groupLL)
+    @BindView(R.id.groupLL)
     LinearLayout groupLL;
     SupervisionService supervisionService;
     Handler handler;
@@ -45,7 +46,7 @@ public class VipActivity extends BaseActivity implements Handler.Callback{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vip);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         supervisionService = new SupervisionService(this);
         handler = new Handler(this);
         txtTitle.setText("监督管理");
@@ -72,7 +73,7 @@ public class VipActivity extends BaseActivity implements Handler.Callback{
     }
     @Override
     protected void onDestroy() {
-        ButterKnife.unbind(this);
+
         if(handler!=null) {
             handler.removeCallbacksAndMessages(null);
         }

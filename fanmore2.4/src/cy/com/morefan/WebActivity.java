@@ -26,7 +26,7 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshWebView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cy.com.morefan.constant.Constant;
@@ -57,16 +57,16 @@ class WebActivity extends BaseActivity implements Handler.Callback, MyBroadcastR
     private MyBroadcastReceiver myBroadcastReceiver;
 
     //tilte组件
-    @Bind(R.id.ff1)
+    @BindView(R.id.ff1)
     FrameLayout newtitleLayout;
     //标题栏左侧图标
-    @Bind(R.id.btnBack)
+    @BindView(R.id.btnBack)
     Button titleLeftImage;
     //标题栏标题文字
-    @Bind(R.id.txtTitle)
+    @BindView(R.id.txtTitle)
     TextView titleText;
     //标题栏右侧图标
-    @Bind(R.id.viewPage)
+    @BindView(R.id.viewPage)
     PullToRefreshWebView refreshWebView;
     public static ValueCallback< Uri > mUploadMessage;
     public static final int FILECHOOSER_RESULTCODE = 1;
@@ -80,7 +80,7 @@ class WebActivity extends BaseActivity implements Handler.Callback, MyBroadcastR
         application = ( MainApplication ) this.getApplication ( );
         resources = this.getResources ( );
         this.setContentView(R.layout.new_load_page);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         //setImmerseLayout(newtitleLayout);
         mHandler = new Handler( this );
        // share = new SharePopupWindow ( WebActivity.this, WebActivity.this, application );
@@ -404,7 +404,7 @@ class WebActivity extends BaseActivity implements Handler.Callback, MyBroadcastR
     protected
     void onDestroy ( ) {
         super.onDestroy ( );
-        ButterKnife.unbind(this);
+
         if( null != myBroadcastReceiver)
         {
             myBroadcastReceiver.unregisterReceiver();

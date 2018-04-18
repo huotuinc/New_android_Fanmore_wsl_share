@@ -5,14 +5,14 @@
     android:versionCode="9"
     android:versionName="1.0.9">
 
-    <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="17" />
+    <!--<uses-sdk-->
+        <!--android:minSdkVersion="8"-->
+        <!--android:targetSdkVersion="17" />-->
 
-    <supports-screens
-        android:largeScreens="true"
-        android:normalScreens="true"
-        android:smallScreens="true" />
+    <!--<supports-screens-->
+        <!--android:largeScreens="true"-->
+        <!--android:normalScreens="true"-->
+        <!--android:smallScreens="true" />-->
 
     <permission
         android:name="${applicationId}.permission.JPUSH_MESSAGE"

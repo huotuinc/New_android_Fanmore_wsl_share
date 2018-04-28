@@ -5,14 +5,15 @@
     android:versionCode="9"
     android:versionName="1.0.9">
 
-    <!--<uses-sdk-->
-        <!--android:minSdkVersion="8"-->
-        <!--android:targetSdkVersion="17" />-->
+    <!-- <uses-sdk -->
+    <!-- android:minSdkVersion="8" -->
+    <!-- android:targetSdkVersion="17" /> -->
 
-    <!--<supports-screens-->
-        <!--android:largeScreens="true"-->
-        <!--android:normalScreens="true"-->
-        <!--android:smallScreens="true" />-->
+
+    <!-- <supports-screens -->
+    <!-- android:largeScreens="true" -->
+    <!-- android:normalScreens="true" -->
+    <!-- android:smallScreens="true" /> -->
 
     <permission
         android:name="${applicationId}.permission.JPUSH_MESSAGE"
@@ -25,11 +26,11 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!--<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />-->
-    <!--<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />-->
+    <!-- <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> -->
+    <!-- <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> -->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <!-- V1.2.3新增的权限, GET_TASKS用于检测APP是否处于前台、是否活着；REORDER_TASKS用于将APP切换到前台 -->
     <uses-permission android:name="android.permission.REORDER_TASKS" />
@@ -39,8 +40,8 @@
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".MainApplication"
@@ -63,6 +64,7 @@
 
         <activity
             android:name=".LoadingActivity"
+            android:theme="@style/SplashTheme"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
 
@@ -199,10 +201,12 @@
             android:value="88d262e559be8cd7d6bec30c" />
         <!-- jpushend -->
 
-
-        <meta-data android:value="58cb84d0a40fa325370014b0" android:name="UMENG_APPKEY"/>
-        <meta-data android:value="huotu_lexiang" android:name="UMENG_CHANNEL"/>
-
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="58cb84d0a40fa325370014b0" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="huotu_lexiang" />
 
         <!-- ShareSDK分享 -->
         <activity
@@ -221,6 +225,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:theme="@style/ThemeActivity"
             android:name=".TestActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
@@ -318,8 +323,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/ThemeActivity" />
         <activity
-            android:hardwareAccelerated="true"
             android:name=".TaskDetailActivity"
+            android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeActivity" />
         <activity
@@ -409,37 +414,47 @@
         <!-- &lt;!&ndash; Qzone end &ndash;&gt; -->
 
         <activity
+            android:theme="@style/ThemeActivity"
             android:name=".UserExchangeActivity"
             android:label="@string/title_activity_user_exchange" />
-        <activity android:name=".WebShopActivity" />
-        <activity android:name=".PaySucceedActivity" />
-        <activity android:name=".supervision.GroupActivity" />
-        <activity android:name=".supervision.CompanyActivity" />
-        <activity android:name=".supervision.DepartmentActivity" />
-        <activity android:name=".supervision.MasterActivity" />
-        <activity android:name=".MoblieLoginActivity" />
+        <activity android:name=".WebShopActivity" android:theme="@style/ThemeActivity"/>
+        <activity android:name=".PaySucceedActivity" android:theme="@style/ThemeActivity"/>
+        <activity android:name=".supervision.GroupActivity" android:theme="@style/ThemeActivity"/>
+        <activity android:name=".supervision.CompanyActivity" android:theme="@style/ThemeActivity"/>
+        <activity android:name=".supervision.DepartmentActivity" android:theme="@style/ThemeActivity"/>
+        <activity android:name=".supervision.MasterActivity" android:theme="@style/ThemeActivity"/>
+        <activity android:name=".MoblieLoginActivity" android:theme="@style/ThemeActivity"/>
         <activity
+            android:theme="@style/ThemeActivity"
             android:name=".SearchActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".AdActivity" />
-        <activity android:name=".NewWebActivity" />
-        <activity android:name=".SetPassWordActivity" />
-        <activity android:name=".WeekTaskActivity" />
-        <activity android:name=".TermActivity" />
-        <activity android:name=".supervision.SelectTaskActivity" />
-        <activity android:name=".WebHelpActivity" />
-        <activity android:name=".supervision.VipActivity" />
-        <activity android:name=".supervision.ByTaskActivity"/>
+        <activity android:name=".AdActivity" android:theme="@style/ThemeActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".NewWebActivity" android:theme="@style/ThemeActivity"/>
+        <activity android:name=".SetPassWordActivity" android:theme="@style/ThemeActivity"/>
+        <activity android:name=".WeekTaskActivity" android:theme="@style/ThemeActivity"/>
+        <activity android:name=".TermActivity" android:theme="@style/ThemeActivity" />
+        <activity android:name=".supervision.SelectTaskActivity" android:theme="@style/ThemeActivity"/>
+        <activity android:name=".WebHelpActivity" android:theme="@style/ThemeActivity"/>
+        <activity android:name=".supervision.VipActivity" android:theme="@style/ThemeActivity"/>
+        <activity android:name=".supervision.ByTaskActivity" android:theme="@style/ThemeActivity"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
-            <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
         </provider>
 
+        <activity
+            android:name=".FavoriteActivity" android:theme="@style/ThemeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".SignActivity"  android:screenOrientation="portrait" android:theme="@style/ThemeActivity"/>
+        <activity android:name=".ScoreActivity"  android:screenOrientation="portrait" android:theme="@style/ThemeActivity"/>
+        <activity android:name=".PartnerActivity"  android:screenOrientation="portrait" android:theme="@style/ThemeActivity" />
+        <activity android:name=".SelectionActivity" android:theme="@style/ThemeActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

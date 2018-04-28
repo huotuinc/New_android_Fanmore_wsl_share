@@ -20,20 +20,20 @@ public class Constant {
 	/**
 	 * 测试url
 	 */
-	//public static final String IP_URL = "http://192.168.0.208:99";
+	public static final String IP_URL = "http://taskapidev.fhsilk.com";
 	//public static final String IP_URL = "http://192.168.0.150:8095";
 	/**
 	 * 开发url
 	 */
 //	public static final String IP_URL = "http://192.168.1.210:8014";
-	//public static final String IP_URL = "http://api.fanmore.cn";
-	//public static final String IP_URL ="http://192.168.1.6:8050";
-	//public static final String IP_URL ="http://192.168.3.2:8050";
+//	public static final String IP_URL = "http://api.fanmore.cn";
+//	public static final String IP_URL ="http://192.168.1.6:8050";
+//	public static final String IP_URL ="http://192.168.3.2:8050";
 
 	/**
 	 * 正式url
 	 */
-	public static final String IP_URL ="http://taskapi.fhsilk.com";
+//	public static final String IP_URL ="http://taskapi.fhsilk.com";
 	public static final String APP_SECRET = "2a5577a6792d46eb984580e5591467f7";
 	public static final String SMS_SECRET = "0ad8abe244331aacf89c9231848c9f49";
 	//测试

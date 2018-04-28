@@ -7,7 +7,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.1'
+        classpath 'com.android.tools.build:gradle:3.1.2'
     }
 
 }
@@ -16,6 +16,7 @@ allprojects {
         maven{
             url="http://repo.51flashmall.com:8081/nexus/content/groups/public/"
         }
+        maven { url 'https://jitpack.io' }
         jcenter()
         google()
     }

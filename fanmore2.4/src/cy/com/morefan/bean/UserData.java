@@ -166,7 +166,19 @@ public class UserData implements BaseData, Serializable{
 	 * 积分汇率
 	 */
 	public double scorerate;
+	/**
+	 * 签名
+	 */
+	public String sign;
 
+	/**
+	 * 邀请码
+	 */
+	public String inviteCode;
+	/**
+	 * 照片墙
+	 */
+	public String photoWall;
 
 	private static UserData userData;
 	public static UserData getUserData(){

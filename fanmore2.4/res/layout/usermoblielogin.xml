@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_e"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".AllScoreActivity" >
@@ -26,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/title_reg"
-            android:textColor="@color/white"
+            android:textColor="@color/theme_back"
             android:textIsSelectable="false"
             android:textSize="18dp" />
     </FrameLayout>

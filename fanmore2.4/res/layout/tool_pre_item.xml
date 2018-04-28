@@ -24,7 +24,7 @@
 
             <!-- 任务描述 -->
 
-            <include layout="@layout/include_task_des" />
+            <include layout="@layout/include_task_des2" />
             <!-- 返利描述 -->
 
             <LinearLayout

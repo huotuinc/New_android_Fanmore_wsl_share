@@ -90,15 +90,30 @@ public class MyJSONObject extends JSONObject {
 				return null;
 			}
 
-			for(int i = 0; i < jArray.length(); i ++){
-				JSONObject jo = jArray.getJSONObject(i);
-				jArray.put(i, convertJSONObject2My(jo));
+
+			try {
+
+				for (int i = 0; i < jArray.length(); i++) {
+					JSONObject jo = jArray.getJSONObject(i);
+					jArray.put(i, convertJSONObject2My(jo));
+				}
+				return jArray;
+				
+			}catch (Exception ex){
+
+				for (int i = 0; i < jArray.length(); i++) {
+					String jo = jArray.getString(i);
+					jArray.put(i, jo);
+				}
+				return jArray;
+
 			}
-			return jArray;
 		}else{
 			return null;
 		}
 	}
+
+
 
 	@Override
 	public Object get(String name) throws JSONException {

@@ -60,7 +60,7 @@ public class CompanyActivity extends BaseActivity implements Handler.Callback ,A
     @BindView(R.id.listView)
     PullDownUpListView listView;
     @BindView(R.id.btnBack)
-    public Button btnBack;
+    public ImageView btnBack;
     @BindView(R.id.txtTitle)
     public TextView tvTitle;
     @BindView(R.id.btnQuery)

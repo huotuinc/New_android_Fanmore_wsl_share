@@ -18,13 +18,27 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
-    <style name="ThemeActivity" parent="AppBaseTheme">
+    <style name="ThemeActivity" parent="Theme.AppCompat.Light">
         <!--<item name="android:windowAnimationStyle">@style/Animation.Activity.Translucent.Style</item>-->
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--<item name="android:windowBackground">@android:color/transparent</item>-->
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowDisablePreview">true</item>
         <item name="android:windowSoftInputMode">adjustPan|stateAlwaysHidden</item>
+    </style>
+
+    <style name="HomeTheme" parent="Theme.AppCompat.Light">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="windowNoTitle">true</item>
+        <!--<item name="android:windowFullscreen">true</item>-->
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <!--
@@ -95,7 +109,7 @@
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:background">#00000000</item>
-        <item name="android:windowBackground">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
     <style name="PopDialogTranslucent" parent="@android:style/Theme.Dialog">
@@ -129,6 +143,15 @@
     </style>
 
     <style name="CyEditTextStyle" parent="android:Theme.Light"> <!-- parent="android:Theme.Light"解决自定义style，光标变白问题 -->
+    </style>
+
+
+    <style name="JxdAppTheme" parent="Base.Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
 </resources>

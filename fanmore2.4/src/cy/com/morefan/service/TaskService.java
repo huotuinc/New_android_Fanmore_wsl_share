@@ -239,7 +239,7 @@ public class TaskService extends BaseService {
                                 taskData.awardScan = myJSONObject.getString("awardScan");
                                 taskData.awardLink = myJSONObject.getString("awardLink");
                                 taskData.sendstatus = myJSONObject.getInt("sendStatus");
-
+                                taskData.ShowTurnButton = myJSONObject.getInt("ShowTurnButton");
 
                                 taskData.store = myJSONObject.getString("storeName");
                                 taskData.storeImgUrl = myJSONObject.getString("storeLargeImgUrl");
@@ -455,6 +455,7 @@ public class TaskService extends BaseService {
                                 BusinessStatic.getInstance().adTime = myJSONObject.getInt("adTime");
                                 BusinessStatic.getInstance().weixinKey = myJSONObject.getString("weixinKey");
                                 BusinessStatic.getInstance().weixinAppSecret = myJSONObject.getString("weixinAppSecret");
+                                BusinessStatic.getInstance().appQrCodeUrl = myJSONObject.getString("appQrCodeUrl");
                                 /**
                                  *3用户信息
                                  */
@@ -634,6 +635,151 @@ public class TaskService extends BaseService {
                 }
             }
         });
+    }
+
+
+    /**
+     * 获取资讯列表
+     *
+     * @param loginCode
+     * @param date
+     */
+    public void getInfoList(final String loginCode, final String  date ) {
+        ThreadPoolManager.getInstance().addTask(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String url = Constant.IP_URL + "/Api.ashx?req=INFOLIST" + CONSTANT_URL();
+                    JSONObject jsonUrl = new JSONObject();
+                    jsonUrl.put("loginCode", loginCode == null ? "" : loginCode);
+                    jsonUrl.put("date", date);
+                    jsonUrl.put("timestamp", timestamp);
+                    AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+                    Map< String, String > paramMap = new HashMap< String, String >( );
+                    paramMap.put("loginCode", loginCode == null ? "" : loginCode);
+                    paramMap.put("date", date);
+                    paramMap.put("timestamp",String.valueOf(timestamp));
+                    String url2 = authParamUtils.getMapSign1(paramMap);
+                    jsonUrl.put("sign",url2);
+                    try {
+                        url = url + URLEncoder.encode(jsonUrl.toString(), "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    L.i("getInfoList:" + url);
+                    MyJSONObject data = getDataFromSer(url);
+                    if (data != null) {
+//                        int pageIndex = data.getInt("pageIndex");
+                        int resultCode = data.getInt("resultCode");
+                        if (resultCode == 1) {
+                            int status = data.getInt("status");
+                            if (status == 1) {
+                                //MyJSONObject myJSONObject = data.getJSONObject("resultData");
+                                //BusinessStatic.getInstance().TODAY_TOTAL_SCORE = myJSONObject.getInt("todayTotalScore");
+                                //String[] topIds = myJSONObject.getString("topIds").split(",");
+                                //List<String> tops = Arrays.asList(topIds);
+                                JSONArray jArray = data.getJSONArray("resultData");
+                                int length = jArray.length();
+                                TaskData[] results = new TaskData[length];
+                                for (int i = 0; i < length; i++) {
+                                    MyJSONObject tip = (MyJSONObject) jArray.get(i);
+                                    TaskData taskData = setTaskData(tip);
+                                    //taskData.pageIndex = pageIndex;
+                                    //标记top任务
+//                                    if (tops.contains(taskData.id + ""))
+//                                        taskData.isTop = 1;
+                                    results[i] = taskData;
+                                }
+                                listener.onDataFinish(BusinessDataListener.DONE_GET_INFO_LIST, null, results, null);
+                            } else {
+                                listener.onDataFailed(BusinessDataListener.ERROR_GET_INFO_LIST, data.getString("tip"), null);
+                            }
+                        } else {
+                            String description = data.getString("description");
+                            listener.onDataFailed(BusinessDataListener.ERROR_GET_INFO_LIST, description, null);
+                        }
+                    } else
+                        listener.onDataFailed(BusinessDataListener.ERROR_GET_INFO_LIST, ERROR_NET, null);
+
+                } catch (JSONException e) {
+                    listener.onDataFailed(BusinessDataListener.ERROR_GET_INFO_LIST, ERROR_DATA, null);
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+    }
+
+
+    /**
+     * 获取公告列表
+     *
+     * @param loginCode
+     */
+    public void getNoticeList(final String loginCode ) {
+        ThreadPoolManager.getInstance().addTask(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String url = Constant.IP_URL + "/Api.ashx?req=GetNotifyList" + CONSTANT_URL();
+                    JSONObject jsonUrl = new JSONObject();
+                    jsonUrl.put("loginCode", loginCode == null ? "" : loginCode);
+                    jsonUrl.put("timestamp", timestamp);
+                    AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+                    Map< String, String > paramMap = new HashMap< String, String >( );
+                    paramMap.put("loginCode", loginCode == null ? "" : loginCode);
+                    paramMap.put("timestamp",String.valueOf(timestamp));
+                    String url2 = authParamUtils.getMapSign1(paramMap);
+                    jsonUrl.put("sign",url2);
+                    try {
+                        url = url + URLEncoder.encode(jsonUrl.toString(), "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    L.i("GetNotifyList:" + url);
+                    MyJSONObject data = getDataFromSer(url);
+                    if (data != null) {
+//                        int pageIndex = data.getInt("pageIndex");
+                        int resultCode = data.getInt("resultCode");
+                        if (resultCode == 1) {
+                            int status = data.getInt("status");
+                            if (status == 1) {
+                                //MyJSONObject myJSONObject = data.getJSONObject("resultData");
+                                //BusinessStatic.getInstance().TODAY_TOTAL_SCORE = myJSONObject.getInt("todayTotalScore");
+                                //String[] topIds = myJSONObject.getString("topIds").split(",");
+                                //List<String> tops = Arrays.asList(topIds);
+                                JSONArray jArray = data.getJSONArray("resultData");
+                                int length = jArray.length();
+                                TaskData[] results = new TaskData[length];
+                                for (int i = 0; i < length; i++) {
+                                    MyJSONObject tip = (MyJSONObject) jArray.get(i);
+                                    TaskData taskData = setTaskData(tip);
+                                    //taskData.pageIndex = pageIndex;
+                                    //标记top任务
+//                                    if (tops.contains(taskData.id + ""))
+//                                        taskData.isTop = 1;
+                                    results[i] = taskData;
+                                }
+                                listener.onDataFinish(BusinessDataListener.DONE_GET_NOTICE_LIST, null, results, null);
+                            } else {
+                                listener.onDataFailed(BusinessDataListener.ERROR_GET_NOTICE_LIST, data.getString("tip"), null);
+                            }
+                        } else {
+                            String description = data.getString("description");
+                            listener.onDataFailed(BusinessDataListener.ERROR_GET_NOTICE_LIST, description, null);
+                        }
+                    } else
+                        listener.onDataFailed(BusinessDataListener.ERROR_GET_NOTICE_LIST, ERROR_NET, null);
+
+                } catch (JSONException e) {
+                    listener.onDataFailed(BusinessDataListener.ERROR_GET_NOTICE_LIST, ERROR_DATA, null);
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
     }
 
 }

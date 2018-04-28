@@ -34,7 +34,7 @@ public class WeekTaskActivity extends BaseActivity implements Handler.Callback {
 private List<WeekTaskData> datas;
     private WeekTaskAdapter adapter;
     @BindView(R.id.btnBack)
-    Button btnBack;
+    ImageView btnBack;
     @BindView(R.id.txtTitle)
     TextView txtTitle;
     @BindView(R.id.mylevel)

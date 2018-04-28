@@ -30,7 +30,7 @@ import android.widget.Toast;
 @SuppressLint("SimpleDateFormat")
 public class PhotoSelectView {
 	public enum SelectType{
-		Camera, File
+		Camera, File , DoorFile,DoorCamera
 	}
 	public interface OnPhotoSelectBackListener{
 		void onPhotoSelectBack(SelectType type);
@@ -94,6 +94,27 @@ public class PhotoSelectView {
 				dialog.dismiss();
 			}
 		});
+
+
+		mainView.findViewById(R.id.btnCamera2).setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if(listener != null)
+					listener.onPhotoSelectBack(SelectType.DoorCamera);
+				dialog.dismiss();
+			}
+		});
+		mainView.findViewById(R.id.btnFile2).setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if(listener != null)
+					listener.onPhotoSelectBack(SelectType.DoorFile);
+				dialog.dismiss();
+			}
+		});
+
 		mainView.findViewById(R.id.btnCancel).setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -121,4 +142,16 @@ public class PhotoSelectView {
 	}
 
 
+	public void setShow(){
+		mainView.findViewById(R.id.btnFile).setVisibility(View.GONE);
+		mainView.findViewById(R.id.btnCamera).setVisibility(View.GONE);
+		mainView.findViewById(R.id.btnFile2).setVisibility(View.VISIBLE);
+		mainView.findViewById(R.id.btnCamera2).setVisibility(View.VISIBLE);
+	}
+	public void setHide(){
+		mainView.findViewById(R.id.btnFile).setVisibility(View.VISIBLE);
+		mainView.findViewById(R.id.btnCamera).setVisibility(View.VISIBLE);
+		mainView.findViewById(R.id.btnFile2).setVisibility(View.GONE);
+		mainView.findViewById(R.id.btnCamera2).setVisibility(View.GONE);
+	}
 }

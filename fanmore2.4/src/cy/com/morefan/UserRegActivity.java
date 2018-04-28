@@ -35,7 +35,7 @@ import cy.com.morefan.view.CyButton;
 public class UserRegActivity extends BaseActivity implements BusinessDataListener, Callback, BroadcastListener ,View.OnClickListener {
 
 	@BindView(R.id.btnBack)
-	Button btnBack;
+	ImageView btnBack;
 	@BindView(R.id.txtTitle) TextView txtTitle;
 	@BindView(R.id.edtPhone) EditText edtPhone;
 	@BindView(R.id.btn_getcode) TextView btnGetcode;

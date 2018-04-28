@@ -7,8 +7,6 @@
         android:id="@+id/layMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.8"
-        android:background="@android:color/black"
         android:orientation="vertical"
         android:padding="10dp" />
 
@@ -16,41 +14,72 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@android:color/white"
+
         android:orientation="vertical"
-        android:padding="10dp" >
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
 
         <TextView
             android:id="@+id/btnCamera"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_green_sel"
+            android:background="@drawable/btn_white_sel"
             android:gravity="center"
             android:padding="10dp"
             android:text="拍照"
-            android:textColor="@android:color/white" />
+            android:textSize="16sp"
+            android:textColor="#E99319" />
 
         <TextView
             android:id="@+id/btnFile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/btn_green_sel"
+            android:background="@drawable/btn_white_sel"
             android:gravity="center"
             android:padding="10dp"
             android:text="从手机相册选择"
-            android:textColor="@android:color/white" />
+            android:textSize="16sp"
+            android:textColor="#E99319" />
+
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/btnCamera2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_white_sel"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="拍照"
+            android:textSize="16sp"
+            android:textColor="#E99319" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/btnFile2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_white_sel"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="从手机相册选择"
+            android:textSize="16sp"
+            android:textColor="#E99319" />
 
         <TextView
             android:id="@+id/btnCancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/btn_red_sel"
+            android:background="@drawable/btn_white_sel"
             android:gravity="center"
             android:padding="10dp"
             android:text="取消"
-            android:textColor="@android:color/white" />
+            android:textSize="16sp"
+            android:textColor="#D3D3D2" />
     </LinearLayout>
 
 

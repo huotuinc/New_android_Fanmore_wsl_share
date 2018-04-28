@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -65,7 +67,8 @@ public class HomeViewPagerAdapter extends PagerAdapter {
         //ImageView image = (ImageView) view.findViewById(R.id.image);
         SimpleDraweeView image = (SimpleDraweeView)view.findViewById(R.id.image);
         //BitmapLoader.create().displayUrlBanner(mContext, image, String, R.drawable.bg_empty1);
-        image.setImageURI(Uri.parse( String ));
+        //image.setImageURI(Uri.parse( String ));
+        setAutoAmi(image, String);
 
         container.addView(view);
         image.setOnClickListener(new View.OnClickListener() {
@@ -79,5 +82,18 @@ public class HomeViewPagerAdapter extends PagerAdapter {
             }
         });
         return view;
+    }
+
+
+    protected void setAutoAmi(SimpleDraweeView simpleDraweeView , String url ){
+        DraweeController draweeController = Fresco
+                .newDraweeControllerBuilder()
+                .setAutoPlayAnimations(true)
+                .setTapToRetryEnabled(true)
+                .setUri( url )
+                .setOldController(simpleDraweeView.getController())
+                //.setControllerListener( listener )
+                .build();
+        simpleDraweeView.setController( draweeController);
     }
 }

@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:gravity="center_horizontal"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
     android:orientation="vertical"
     tools:context=".AllScoreActivity" >
 
@@ -24,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@color/white"
+            android:textColor="@color/theme_back"
             android:textSize="18dp"
             android:textIsSelectable="false" />
 
@@ -38,7 +40,7 @@
             android:background="@drawable/title_right_sel"
             android:onClick="onClickButton"
             android:text="@string/btn_reg"
-            android:textColor="@color/white" />
+            android:textColor="@color/theme_back" />
     </FrameLayout>
 
     <cy.com.morefan.view.NinePointLineView

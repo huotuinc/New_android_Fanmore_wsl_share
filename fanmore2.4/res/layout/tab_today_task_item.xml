@@ -23,7 +23,7 @@
 
             <!-- 任务描述 -->
 
-            <include layout="@layout/include_task_des" />
+            <include layout="@layout/include_task_des2" />
 
             <!-- 总浏览量 -->
 

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:background="@drawable/shape_white2"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvMan"
+            android:gravity="center"
+            android:text="男"
+            android:background="@drawable/style_sex_man"
+            android:textSize="16sp"
+            android:textColor="@drawable/style_sex_man"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:background="#D2D2D2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <TextView
+            android:id="@+id/tvWoman"
+            android:gravity="center"
+            android:background="@drawable/style_sex_woman"
+            android:text="女"
+            android:textColor="@drawable/style_sex_woman"
+            android:padding="10dp"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvCancel"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_white2"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:textColor="#D6D6D5"
+        android:text="取消"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
+
+
+</FrameLayout>
+
+

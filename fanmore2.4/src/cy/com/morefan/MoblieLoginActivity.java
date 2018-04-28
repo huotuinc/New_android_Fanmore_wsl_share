@@ -21,6 +21,7 @@ import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.ActivityUtils;
 import cy.com.morefan.util.EncryptUtil;
+import cy.com.morefan.util.KeyWordUtil;
 import cy.com.morefan.util.Util;
 
 
@@ -53,6 +54,9 @@ public class MoblieLoginActivity extends BaseActivity implements Handler.Callbac
         if(bundle!=null){
             ActivityUtils.getInstance().showActivity(MoblieLoginActivity.this,NewWebActivity.class,bundle);
         }
+
+        //KeyWordUtil.openKeybord(edtPhone,this);
+
     }
     @OnClick(R.id.Txt_reg)
     void reg(){

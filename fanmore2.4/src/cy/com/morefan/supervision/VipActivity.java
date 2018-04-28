@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,7 +26,7 @@ import cy.com.morefan.view.ImageLoad;
 public class VipActivity extends BaseActivity implements Handler.Callback{
 
     @BindView(R.id.btnBack)
-    Button btnBack;
+    ImageView btnBack;
     @BindView(R.id.txtTitle)
     TextView txtTitle;
     @BindView(R.id.imglogo)

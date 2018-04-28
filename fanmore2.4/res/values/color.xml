@@ -36,4 +36,10 @@
     <color name="theme_back">#e99319</color>
     <color name="company_icon">#f4a61f</color>
 
+    <color name="date_color">#A7A7A7</color>
+    <color name="date_bg">#EEEEEE</color>
+    <color name="notice_color">#ACADAE</color>
+    <color name="favorite_bg">#F8F8F8</color>
+    <color name="fontcolor">#A1A1A1</color>
+
 </resources>

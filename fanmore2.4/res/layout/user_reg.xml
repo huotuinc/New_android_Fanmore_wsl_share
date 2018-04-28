@@ -4,17 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".HomeActivity">
 
     <FrameLayout style="@style/TitleStyle">
 
-        <Button
+        <ImageView
             android:id="@+id/btnBack"
-            android:background="@color/theme_back"
+            android:background="@color/white"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="25dp"
             android:textSize="15sp"
             android:onClick="onClickButton"
             android:layout_gravity="center_vertical"
@@ -22,7 +24,7 @@
             android:text="返回"
             android:gravity="center"
             android:textColor="@color/white"
-            android:drawableLeft="@drawable/title_back_normal" />
+            android:src="@drawable/arrow_left" />
 
         <TextView
             android:id="@+id/txtTitle"
@@ -30,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="用户注册"
-            android:textColor="@color/white"
+            android:textColor="@color/theme_back"
             android:textIsSelectable="false"
             android:textSize="18dp" />
     </FrameLayout>

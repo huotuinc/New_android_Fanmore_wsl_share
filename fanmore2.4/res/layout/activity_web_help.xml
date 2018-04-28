@@ -2,22 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ptr="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <FrameLayout android:id="@+id/ff1" style="@style/TitleStyle" >
 
         <Button
             android:id="@+id/btnBack"
-            android:background="@color/theme_back"
+            android:background="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:textSize="15sp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:text="返回"
+            android:text=""
             android:gravity="center"
             android:textColor="@color/white"
-            android:drawableLeft="@drawable/title_back_normal" />
+            android:drawableLeft="@drawable/arrow_left" />
 
         <TextView
             android:id="@+id/txtTitle"
@@ -25,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@color/white"
+            android:textColor="@color/theme_back"
             android:textIsSelectable="false"
             android:textSize="18dp" />
 

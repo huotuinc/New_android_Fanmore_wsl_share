@@ -1,26 +1,47 @@
 package cy.com.morefan.adapter;
 
+import android.app.Activity;
+import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.generic.RoundingParams;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
+
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.List;
 
 import cindy.android.test.synclistview.SyncImageLoaderHelper;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+import cy.com.morefan.MainApplication;
+import cy.com.morefan.MoblieLoginActivity;
 import cy.com.morefan.R;
 import cy.com.morefan.bean.TaskData;
+import cy.com.morefan.bean.UserData;
+import cy.com.morefan.constant.BusinessStatic;
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.frag.TaskFrag.TabType;
+import cy.com.morefan.util.DensityUtil;
 import cy.com.morefan.util.ShareUtil;
+import cy.com.morefan.util.ToastUtil;
 import cy.com.morefan.util.ViewHolderUtil;
+import cy.com.morefan.view.TipDialog;
 
 public class SuperTaskAdapter extends BaseAdapter{
 	private Context mContext;
@@ -206,6 +227,8 @@ public class SuperTaskAdapter extends BaseAdapter{
 //			}
 			imgLine2.setVisibility(layScore.getVisibility() == View.GONE ? View.GONE : View.VISIBLE);
 
+
+
 		return convertView;
 	}
 	private void setStatus(ImageView imgStatusTag, TaskData data) {
@@ -221,6 +244,126 @@ public class SuperTaskAdapter extends BaseAdapter{
 
 
 
+	protected void setAutoAmi(SimpleDraweeView simpleDraweeView , String url ){
+		DraweeController draweeController = Fresco
+				.newDraweeControllerBuilder()
+				.setAutoPlayAnimations(true)
+				//.setTapToRetryEnabled(true)
+				.setUri( url )
+				.setOldController(simpleDraweeView.getController())
+				//.setControllerListener( listener )
 
+				.build();
+
+		simpleDraweeView.setController( draweeController);
+
+		float rradie = DensityUtil.dip2px(mContext, 5);
+		RoundingParams roundingParams=RoundingParams.fromCornersRadius(rradie);
+
+		//roundingParams.setCornersRadii( rradie , rradie , rradie , rradie );
+
+		GenericDraweeHierarchyBuilder builder = new GenericDraweeHierarchyBuilder(mContext.getResources());
+		GenericDraweeHierarchy hierarchy = builder
+				//.setFadeDuration(300)
+				//.setPlaceholderImage(new MyCustomDrawable())
+				//.setBackgrounds(backgroundList)
+				//.setOverlays(overlaysList)
+				.setRoundingParams(roundingParams)
+				.setFailureImage(R.drawable.gray_corner_bg)
+				.setPlaceholderImage(R.drawable.gray_corner_bg)
+				.setDesiredAspectRatio(2)
+				.build();
+		simpleDraweeView.setHierarchy(hierarchy);
+
+	}
+
+
+	protected void share( TaskData taskData ){
+		if(!UserData.getUserData().isLogin){
+			Intent intentlogin = new Intent(mContext , MoblieLoginActivity.class);
+			((Activity)mContext).startActivity(intentlogin);
+		}else{
+			if( !UserData.getUserData().ignoreJudgeEmulator && BusinessStatic.getInstance().ISEMULATOR){
+				ToastUtil.show( mContext , "模拟器不支持该操作!");
+				return;
+			}
+			if(BusinessStatic.getInstance().disasterFlag==1){
+				copy(taskData.content);
+			}else {
+				//share();
+				popAskInfo(taskData);
+			}
+
+		}
+	}
+
+	private void copy(String content) {
+		// 得到剪贴板管理器
+		android.content.ClipboardManager cmb = (android.content.ClipboardManager)mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+		ClipData clipData = ClipData.newPlainText( content , content );
+		cmb.setPrimaryClip(clipData);
+		ToastUtil.show( mContext , "复制链接 转发到朋友圈/好友");
+
+	}
+
+	/***
+	 *  分享前先弹出提示框
+	 */
+	private void popAskInfo(final TaskData taskData){
+		boolean showPop = MainApplication.single.readShareTipDialog();
+		if(!showPop){
+			share(taskData);
+			return;
+		}
+
+
+		String content="转发给好友需点击返回App才能计入转发。\r\n已转发文章再次分享不计入转发。";
+
+		TipDialog.show(mContext , "提示", content, "知道了", new DialogInterface.OnClickListener(){
+			@Override
+			public void onClick(DialogInterface dialogInterface, int i) {
+				shareInfo(taskData);
+			}
+		}, new CompoundButton.OnCheckedChangeListener(){
+			@Override
+			public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+				MainApplication.single.writeShareTipDialog(!b);
+			}
+		});
+	}
+
+
+	private void shareInfo(TaskData taskData){
+
+		String imgUrl = taskData.smallImgUrl;
+		String shareDes =taskData.taskName;
+		String shareUrl =taskData.content;
+		String fullPath1 = Constant.IMAGE_PATH_TASK + File.separator + taskData.smallImgUrl.substring(taskData.smallImgUrl.lastIndexOf("/") + 1);
+		OnekeyShare oks = new OnekeyShare();
+
+		//关闭sso授权
+		oks.disableSSOWhenAuthorize();
+
+
+		// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+		oks.setTitle(shareDes);
+		// titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+		oks.setTitleUrl(shareUrl);
+		// text是分享文本，所有平台都需要这个字段
+		oks.setText(shareDes);
+		// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+		oks.setImageUrl(imgUrl);//确保SDcard下面存在此张图片
+		// url仅在微信（包括好友和朋友圈）中使用
+		oks.setUrl(shareUrl);
+		// comment是我对这条分享的评论，仅在人人网和QQ空间使用
+		oks.setComment("");
+		// site是分享此内容的网站名称，仅在QQ空间使用
+		oks.setSite( mContext.getString(R.string.app_name));
+		// siteUrl是分享此内容的网站地址，仅在QQ空间使用
+		oks.setSiteUrl(shareUrl);
+
+		// 启动分享GUIfem
+		oks.show(mContext );
+	}
 
 }

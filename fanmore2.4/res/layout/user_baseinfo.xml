@@ -3,51 +3,52 @@
     android:id="@+id/layAll"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:background="#F8F8F8"
     android:orientation="vertical" >
 
     <FrameLayout style="@style/TitleStyle" >
 
-        <Button
+        <ImageView
             android:id="@+id/btnBack"
-            android:background="@color/theme_back"
+            android:src="@drawable/arrow_left"
+            android:background="@color/white"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="25dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:text="返回"
+            android:layout_marginLeft="0dp"
+            android:onClick="onClick"
+            android:text=""
             android:gravity="center"
             android:textSize="18sp"
-            android:textColor="@color/white"
-            android:drawableLeft="@drawable/title_back_normal" />
+            android:textColor="@color/white" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="用户基本信息"
-            android:textColor="@color/white"
-            android:textSize="18dp" />
+            android:text="我的设置"
+            android:textColor="#E99319"
+            android:textSize="18sp" />
     </FrameLayout>
 
-    <cy.com.morefan.view.BounceScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
 
-        <LinearLayout
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    <LinearLayout
+            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:orientation="vertical" >
 
             <!-- 头像 -->
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/line_gray_bg_h" />
-
             <LinearLayout
+                android:background="@color/white"
                 android:id="@+id/layImg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -87,16 +88,128 @@
                     android:background="@drawable/arrows_right" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@drawable/line_gray_bg_h" />
+            <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1px"-->
+                <!--android:background="@drawable/line_gray_bg_h" />-->
             <!-- 头像end -->
 
+            <!-- 我的背景墙 -->
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:id="@+id/layDoor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="我的背景墙"
+                    android:textColor="@color/gray_my" />
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/ivDoor"
+                    android:layout_width="80dp"
+                    android:background="@drawable/shape_leftmenu_top_bg"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="right" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/arrows_right" />
+            </LinearLayout>
+            <!-- 我的背景墙end-->
+
+            <!-- 我的个签 -->
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:id="@+id/laySign"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="个签"
+                    android:textColor="@color/gray_my" />
+
+                <TextView
+                    android:id="@+id/txtSign"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text=""
+                    android:textColor="#939191"
+                    android:textSize="14dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/arrows_right" />
+            </LinearLayout>
+            <!-- 我的个签end-->
+
+            <!-- 昵称 -->
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:id="@+id/layNickName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="昵称"
+                    android:textColor="@color/gray_my" />
+
+                <TextView
+                    android:id="@+id/txtNickName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="未知"
+                    android:textColor="#939191"
+                    android:textSize="14dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/arrows_right" />
+            </LinearLayout>
+            <!-- 昵称end-->
 
             <!-- 姓名 -->
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/layName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -121,7 +234,7 @@
                     android:gravity="right"
                     android:maxLength="6"
                     android:text="未知"
-                    android:textColor="@color/gray_my"
+                    android:textColor="#939191"
                     android:textSize="14dp" />
 
                 <ImageView
@@ -131,16 +244,18 @@
                     android:background="@drawable/arrows_right" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@drawable/line_gray_bg_h" />
+            <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1px"-->
+                <!--android:background="@drawable/line_gray_bg_h" />-->
             <!-- 姓名end -->
 
 
             <!-- 性别 -->
 
             <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
                 android:id="@+id/laySex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -159,8 +274,10 @@
 
                 <TextView
                     android:id="@+id/txtSex"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#939191"
+                    android:text="男"
                      />
 
                 <ImageView
@@ -170,16 +287,17 @@
                     android:background="@drawable/arrows_right" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@drawable/line_gray_bg_h" />
+            <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1px"-->
+                <!--android:background="@drawable/line_gray_bg_h" />-->
             <!-- 性别end -->
 
 
             <!-- 生日 -->
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/layAge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -213,16 +331,17 @@
                     android:background="@drawable/arrows_right" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@drawable/line_gray_bg_h" />
+            <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1px"-->
+                <!--android:background="@drawable/line_gray_bg_h" />-->
             <!-- 生日end -->
 
 
             <!-- 职业 -->
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/layJob"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -256,16 +375,17 @@
                     android:background="@drawable/arrows_right" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@drawable/line_gray_bg_h" />
+            <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1px"-->
+                <!--android:background="@drawable/line_gray_bg_h" />-->
             <!-- 职业end -->
 
 
             <!-- 收入 -->
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/layIncome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -299,16 +419,17 @@
                     android:background="@drawable/arrows_right" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@drawable/line_gray_bg_h" />
+            <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1px"-->
+                <!--android:background="@drawable/line_gray_bg_h" />-->
             <!-- 收入end -->
 
 
             <!-- 爱好 -->
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/layFav"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -342,10 +463,10 @@
                     android:background="@drawable/arrows_right" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@drawable/line_gray_bg_h" />
+            <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1px"-->
+                <!--android:background="@drawable/line_gray_bg_h" />-->
             <!-- 爱好end -->
 
 
@@ -392,9 +513,154 @@
             <!-- 所在区域end -->
 
 
+            <!-- 转发量 -->
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:id="@+id/layTransfor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="转发量"
+                    android:textColor="@color/gray_my" />
+
+                <TextView
+                    android:id="@+id/txtTransfor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#939191"
+                    android:layout_marginRight="10dp"
+                    android:text="0"
+                    />
+
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:background="@drawable/arrows_right" />-->
+            </LinearLayout>
+            <!-- 转发量end-->
+
+            <!-- 浏览量 -->
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:id="@+id/layRead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="浏览量"
+                    android:textColor="@color/gray_my" />
+
+                <TextView
+                    android:id="@+id/txtRead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#939191"
+                    android:text="0"
+                    android:layout_marginRight="10dp"
+                    />
+
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:background="@drawable/arrows_right" />-->
+            </LinearLayout>
+            <!-- 浏览量end-->
+
+            <!-- 我的积分 -->
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:id="@+id/layScore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="我的积分"
+                    android:textColor="@color/gray_my" />
+
+                <TextView
+                    android:id="@+id/txtScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#E99319"
+                    android:text="0"
+                    android:layout_marginRight="10dp"
+                    />
+
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:background="@drawable/arrows_right" />-->
+            </LinearLayout>
+            <!-- 我的积分end-->
+
+            <!-- 我的伙伴 -->
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:id="@+id/layPartner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="我的伙伴数"
+                    android:textColor="@color/gray_my" />
+
+                <TextView
+                    android:id="@+id/txtPartner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="#939191"
+                    android:layout_marginRight="10dp"
+                    />
+
+            </LinearLayout>
+            <!-- 我的伙伴end-->
+
             <!-- 注册时间 -->
 
             <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -415,34 +681,36 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="未知"
-                    android:textColor="@color/gray_my"
+                    android:textColor="#939191"
                     android:textSize="14dp" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/arrows_right"
-                    android:visibility="invisible" />
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:background="@drawable/arrows_right"-->
+                    <!--android:visibility="invisible" />-->
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@drawable/line_gray_bg_h" />
+            <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1px"-->
+                <!--android:background="@drawable/line_gray_bg_h" />-->
             <!-- 注册时间end -->
-            <Button
-                android:onClick="onClick"
-                android:id="@+id/btnLogOut"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:layout_marginTop="100dp"
-                android:background="@drawable/btn_red_sel"
-                android:text="@string/txt_logout"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
+
         </LinearLayout>
-    </cy.com.morefan.view.BounceScrollView>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <Button
+        android:onClick="onClick"
+        android:id="@+id/btnLogOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#BFBFBF"
+        android:text="@string/txt_logout"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
 </LinearLayout>

@@ -549,6 +549,7 @@ public class Util {
 		return -1;
 	}
 	public static String getDayDisDes(String time2) {
+		if(TextUtils.isEmpty(time2)) return "未知";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.CHINA);
 		try {
 			Date otherDay = sdf.parse(time2);

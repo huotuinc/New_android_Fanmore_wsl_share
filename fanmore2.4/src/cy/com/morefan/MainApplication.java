@@ -27,10 +27,17 @@ import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.widget.ImageView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 //import com.orm.SugarContext;
 import com.umeng.analytics.MobclickAgent;
+import com.yhao.floatwindow.FloatWindow;
+import com.yhao.floatwindow.MoveType;
+import com.yhao.floatwindow.Screen;
 
 public class MainApplication extends Application implements BroadcastListener{
 	private static ActivityManager activityManager;
@@ -39,11 +46,13 @@ public class MainApplication extends Application implements BroadcastListener{
 	public Platform plat;
 	public Typeface font;
 	public  AssetManager am;
-	public FragManager fragManager;
+	//public FragManager fragManager;
+	public static MainApplication single;
 
 	    @Override
 	    public void onCreate() {
 	    	super.onCreate();
+	    	single = this;
 			Fresco.initialize(getApplicationContext());
 			ShareSDK.initSDK(getApplicationContext());
 			VolleyUtil.init(getApplicationContext());
@@ -55,7 +64,30 @@ public class MainApplication extends Application implements BroadcastListener{
 			//SugarContext.init(getApplicationContext());
 
 			MobclickAgent.setScenarioType(getApplicationContext(), MobclickAgent.EScenarioType.E_UM_NORMAL);
+
+			initLeftFloatMenu();
 	    }
+
+
+	/**
+	 *
+	 */
+	private void initLeftFloatMenu(){
+		View floatView = LayoutInflater.from(this).inflate(R.layout.layout_left_float_menu,null);
+
+		FloatWindow
+				.with(getApplicationContext())
+				.setView(floatView)
+				.setMoveType(MoveType.slide)
+				.setMoveStyle(300 , new AccelerateInterpolator())
+				.setX(Screen.width ,0f)
+				.setY(Screen.height,0.4f)
+				.setFilter(true , HomeActivity.class)
+				.build();
+
+
+
+	}
 
 
 	@Override

@@ -86,7 +86,10 @@ public class BusinessStatic implements Serializable {
 	//微信用户信息
 	public AccountModel accountModel;
 
-
+	/**
+	 * app下载二维码地址
+	 */
+	public String  appQrCodeUrl;
 
 
 

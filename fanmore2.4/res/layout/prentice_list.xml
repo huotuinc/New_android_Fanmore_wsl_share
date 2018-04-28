@@ -2,24 +2,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
     android:background="@color/white"
     android:orientation="vertical"
     tools:context=".AllScoreActivity" >
     <FrameLayout style="@style/TitleStyle" >
 
-        <Button
+        <ImageView
             android:id="@+id/btnBack"
-            android:background="@color/theme_back"
+            android:background="@color/white"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:text="返回"
+            android:text=""
             android:onClick="onClickButton"
             android:gravity="center"
             android:textSize="15sp"
             android:textColor="@color/white"
-            android:drawableLeft="@drawable/title_back_normal" />
+            android:src="@drawable/arrow_left" />
 
             <TextView
                 android:id="@+id/txtTitle"
@@ -30,8 +32,8 @@
                 android:maxWidth="300dp"
                 android:singleLine="true"
                 android:text="伙伴列表"
-                android:textColor="@color/white"
-                android:textSize="18dp" />
+                android:textColor="@color/theme_back"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/btnPreView"
@@ -43,8 +45,8 @@
                 android:gravity="center"
                 android:onClick="onClickButton"
                 android:text="预览"
-                android:textColor="@color/white"
-                android:textSize="16dp"
+                android:textColor="@color/theme_back"
+                android:textSize="16sp"
                 android:visibility="gone" />
         </FrameLayout>
 

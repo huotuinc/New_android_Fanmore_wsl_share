@@ -9,7 +9,7 @@
         <Button
             android:id="@+id/btnBack"
             android:visibility="gone"
-            android:background="@color/theme_back"
+            android:background="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_gravity="center_vertical"
@@ -21,6 +21,7 @@
             android:textColor="@color/white"
             android:drawableLeft="@drawable/title_back_normal" />
         <ImageView
+            android:visibility="gone"
             android:id="@+id/btnLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +39,7 @@
             android:layout_marginLeft="95dp"
             android:layout_marginRight="95dp"
             android:orientation="horizontal"
-          android:background="@color/theme_back">
+          android:background="@color/white">
 
             <TextView
                 android:id="@+id/txtTask"
@@ -47,9 +48,10 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:onClick="onClick"
-                android:text="乐享资讯"
-                android:textSize="18sp"
-                android:textColor="@color/white" />
+                android:text="头条资讯"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/theme_back" />
 
 
         </LinearLayout>
@@ -81,16 +83,37 @@
                 android:background="@drawable/title_middle_arrows" />
         </LinearLayout>
 
+
+        <LinearLayout
+            android:layout_gravity="right|center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <cy.com.morefan.view.CyButton
+                android:visibility="visible"
+                android:id="@+id/btnAr"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/ar"
+                android:clickable="true"
+                android:onClick="onClick" />
+
         <cy.com.morefan.view.CyButton
             android:visibility="visible"
             android:id="@+id/btnRight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="right|center_vertical"
             android:layout_marginRight="10dp"
-            android:background="@drawable/title_query_normal"
+            android:background="@drawable/search"
             android:clickable="true"
             android:onClick="onClick" />
+
+        </LinearLayout>
+
           <TextView
             android:id="@+id/txtRight"
             android:layout_width="wrap_content"
@@ -118,12 +141,27 @@
             android:visibility="gone" />
     </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/layContent"
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/white"
-        android:orientation="vertical" />
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/layContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F8F8F8"
+            android:orientation="vertical" />
+
+
+        <!--<include layout="@layout/layout_left_float_menu"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_gravity="left|center" />-->
+
+
+
+    </FrameLayout>
 
 </LinearLayout>

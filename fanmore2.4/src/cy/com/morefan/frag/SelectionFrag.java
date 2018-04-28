@@ -17,6 +17,7 @@ import android.widget.GridView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 
+import cy.com.morefan.BaseActivity;
 import cy.com.morefan.HomeActivity;
 import cy.com.morefan.R;
 import cy.com.morefan.TermActivity;
@@ -189,17 +190,17 @@ public class SelectionFrag extends BaseFragment implements View.OnClickListener,
 
     private void showProgress() {
         if (getActivity() != null)
-            ((HomeActivity) getActivity()).showProgress();
+            ((BaseActivity) getActivity()).showProgress();
     }
 
     private void dismissProgress() {
         if (getActivity() != null)
-            ((HomeActivity) getActivity()).dismissProgress();
+            ((BaseActivity) getActivity()).dismissProgress();
     }
 
     private void toast(String msg) {
         if (getActivity() != null)
-            ((HomeActivity) getActivity()).toast(msg);
+            ((BaseActivity) getActivity()).toast(msg);
     }
 
 

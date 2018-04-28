@@ -23,6 +23,8 @@ import com.mob.commons.SHARESDK;
 
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cy.com.morefan.BaseActivity;
+import cy.com.morefan.PartnerActivity;
 import cy.com.morefan.bean.UserData;
 import cy.com.morefan.HomeActivity;
 import cy.com.morefan.DataListActivity;
@@ -262,21 +264,21 @@ public class PrenticeFrag extends BaseFragment implements OnClickListener, Busin
 
     private void showProgress(){
     	if(getActivity() != null)
-    		((HomeActivity)getActivity()).showProgress();
+    		((BaseActivity)getActivity()).showProgress();
     }
     private void dismissProgress(){
     	if(getActivity() != null)
-    		((HomeActivity)getActivity()).dismissProgress();
+    		((BaseActivity)getActivity()).dismissProgress();
     }
     private void toast(String msg){
     	if(getActivity() != null)
-    		((HomeActivity)getActivity()).toast(msg);
+    		((BaseActivity)getActivity()).toast(msg);
     }
 	@Override
 	public void onDataFinish(int type, String des, BaseData[] datas,
 			Bundle extra) {
 		if( null != getActivity())
-			((HomeActivity)getActivity()).onDataFinish(type, des, datas, extra);
+			((PartnerActivity)getActivity()).onDataFinish(type, des, datas, extra);
 		if(type == BusinessDataListener.DONE_GET_PRENTICE && extra != null){
 			topData.invitationCode = extra.getString("invitationCode");
 			topData.prenticeDes = extra.getString("prenticeDes");
@@ -297,7 +299,7 @@ public class PrenticeFrag extends BaseFragment implements OnClickListener, Busin
 	@Override
 	public void onDataFailed(int type, String des, Bundle extra) {
 		if( null != getActivity())
-			((HomeActivity)getActivity()).onDataFailed(type, des, extra);
+			((PartnerActivity)getActivity()).onDataFailed(type, des, extra);
 		mHandler.obtainMessage(type, des).sendToTarget();
 
 	}

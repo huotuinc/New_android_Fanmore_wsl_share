@@ -1,5 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="10dp">
+
+        <FrameLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/imgTaskPic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:roundedCornerRadius="5dp"
+            app:viewAspectRatio="2"
+            app:backgroundImage="@drawable/gray_corner_bg"
+            app:failureImage="@drawable/gray_corner_bg"
+            app:placeholderImage="@drawable/gray_corner_bg"
+            />
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:background="@drawable/shape_transparent_coner" />-->
+        </FrameLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/favorite"
+                android:id="@+id/task_item_favarte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:src="@drawable/share"
+                android:id="@+id/task_item_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -12,22 +75,23 @@
         android:layout_height="wrap_content" >
 
         <FrameLayout
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp" >
 
             <ImageView
                 android:id="@+id/imgTask"
-                android:layout_width="69dp"
-                android:layout_height="69dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:contentDescription="@string/img" />
 
             <ProgressBar
                 android:id="@+id/load_pb"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="69dp"
-                android:layout_height="69dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:background="@drawable/picreviewre_fresh_bg"
                 android:max="100"
@@ -35,18 +99,27 @@
                 android:progressDrawable="@drawable/loading_pb_drawable" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:background="@drawable/task_bg_boundary"
                 android:contentDescription="@string/img"
                 android:scaleType="fitXY" />
         </FrameLayout>
 
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/taskSmallImg"
+            android:padding="10dp"
+            app:failureImage="@drawable/user_icon"
+            app:placeholderImage="@drawable/user_icon"
+            app:roundAsCircle="true"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
 
     </FrameLayout>
 
     <LinearLayout
+        android:layout_gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
@@ -75,15 +148,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-
-            android:maxLines="2"
+            android:layout_marginTop="0dp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="des\ndes\ndes\ndes"
-            android:textColor="@color/blue"
+            android:textColor="#CACACA"
             android:textIsSelectable="false"
-            android:textSize="14dp"
+            android:textSize="16dp"
             android:textStyle="bold" />
         <TextView
+            android:visibility="gone"
             android:id="@+id/txtStore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -93,6 +167,7 @@
             android:textColor="@color/gray4"
             android:textIsSelectable="false"/>
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/lay_turn_browse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -131,5 +206,9 @@
                 <!--android:text=""/>-->
         </LinearLayout>
     </LinearLayout>
+
+</LinearLayout>
+
+
 
 </LinearLayout>

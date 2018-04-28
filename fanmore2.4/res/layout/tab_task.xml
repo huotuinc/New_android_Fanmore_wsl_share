@@ -2,9 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".AllScoreActivity" >
+    tools:context=".AllScoreActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -71,6 +72,91 @@
                 android:visibility="gone" >
             </TextView>
         </LinearLayout>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:background="#EEEEEE"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/task_date_top"
+            android:padding="8dp"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/task_date_value"
+                android:text=""
+                android:textSize="16sp"
+                android:textColor="#2B2C2F"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/task_date_corner"
+                android:layout_marginLeft="8dp"
+                android:paddingBottom="2dp"
+                android:layout_gravity="bottom"
+                android:src="@drawable/corner"
+                android:layout_width="10dp"
+                android:layout_height="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/task_date_select"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.weigan.loopview.LoopView
+                android:layout_marginTop="0dp"
+                android:id="@+id/loopView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                app:awv_textsize="16"
+                app:awv_isLoop="true"
+                app:awv_itemsVisibleCount="3"
+                app:awv_dividerTextColor="@color/date_bg"
+                app:awv_centerTextColor="@color/date_color"
+                android:layout_marginBottom="3dp"
+                />
+            <View
+                android:background="#D5D5D5"
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
+            <TextView
+                android:padding="4dp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#A7A7A7"
+                android:text="选择日期"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/task_notice_container"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/style_notice_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <cy.com.morefan.view.SwitcherView
+            android:padding="8dp"
+            android:id="@+id/switcherView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_notice_bg"
+            app:switcherRollingTime="4000"
+            app:switcherTextColor="@color/notice_color"
+           />
     </LinearLayout>
 
     <FrameLayout

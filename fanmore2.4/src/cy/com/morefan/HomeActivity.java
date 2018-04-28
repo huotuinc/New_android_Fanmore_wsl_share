@@ -22,6 +22,7 @@ import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
 import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
+import cy.com.morefan.service.ScoreService;
 import cy.com.morefan.service.UserService;
 import cy.com.morefan.supervision.GroupActivity;
 import cy.com.morefan.supervision.VipActivity;
@@ -30,9 +31,13 @@ import cy.com.morefan.util.AuthParamUtils;
 import cy.com.morefan.util.L;
 
 import cy.com.morefan.util.SPUtil;
+import cy.com.morefan.util.ToastUtil;
 import cy.com.morefan.view.CircleImageView;
 import cy.com.morefan.view.CyButton;
 import cy.com.morefan.view.ImageLoad;
+
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -43,13 +48,23 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.yhao.floatwindow.FloatWindow;
+import com.yhao.floatwindow.MoveType;
+import com.yhao.floatwindow.Screen;
+import com.yhao.floatwindow.TouchCallbackListener;
+
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 
@@ -61,7 +76,7 @@ import java.util.HashMap;
 public class HomeActivity extends BaseActivity implements BroadcastListener, Callback {
 	private MyBroadcastReceiver myBroadcastReceiver;
 	private DrawerLayout mDragLayout;
-	private FragManager fragManager;
+//	private FragManager fragManager;
 	private UserService userService;
 	//private TextView txtMine;
 	private TextView txtName;
@@ -91,11 +106,18 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	private ImageView btnLeft;
 	private Button btnBack;
 	private RelativeLayout layTask;
-
+	private TextView left_menu_userName;
+	private TextView left_menu_sign;
+	private SimpleDraweeView left_menu_avator;
+	private SimpleDraweeView left_menu_qrcode;
+	private TextView left_menu_invite_code;
+	private SimpleDraweeView left_menu_top_bg;
+	private TextView left_menu_score;
 
 	//private PopCheckIn popCheckIn;
 	private SyncImageLoaderHelper helper;
 
+	private TaskNewFrag taskNewFrag;
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
@@ -122,17 +144,26 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		handler = new Handler(this);
 		helper = new SyncImageLoaderHelper(this);
 		initView();
+
 		operationPushMsg();
 		operationAlarm();
 		setScores();
 		userService = new UserService(this);
 
 
-		if(null == arg0){
-			fragManager = new FragManager(this, R.id.layContent);
-			fragManager.setCurrentFrag(FragType.Task);
-			((MainApplication)this.getApplication()).fragManager = fragManager;
-		}
+//		if(null == arg0){
+//			fragManager = new FragManager(this, R.id.layContent);
+//			fragManager.setCurrentFrag(FragType.Task);
+//			//((MainApplication)this.getApplication()).fragManager = fragManager;
+//		}
+
+		taskNewFrag = TaskNewFrag.newInstance();
+
+		getSupportFragmentManager()
+				.beginTransaction()
+				.replace(R.id.layContent , taskNewFrag )
+				.commit();
+
 
 		myBroadcastReceiver = new MyBroadcastReceiver(this, this, MyBroadcastReceiver.ACTION_USER_LOGIN, MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE,MyBroadcastReceiver.ACTION_REFRESH_USEDATA);
 		//showUserGuide(R.drawable.user_guide_task_list);
@@ -146,42 +177,47 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		}
 
 
-	}
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		L.i("<<<<<<<<<<<<<<<<<<onSaveInstanceState");
-		outState.putInt("test", 2);
+		initFloatMemu();
 
-		if(fragManager!=null) {
-			FragType fragType = fragManager.getCurrentFragType();
-			outState.putSerializable("curFragType", fragType);
-		}
-
-		super.onSaveInstanceState(outState);
-	}
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		L.i("<<<<<<<<<<<<<<<<<<onSaveInstanceState");
-		super.onRestoreInstanceState(savedInstanceState);
-
-		FragType fragType = FragType.Task;
-		if( savedInstanceState.containsKey("curFragType") ){
-			fragType = (FragType) savedInstanceState.getSerializable("curFragType");
-		}
-
-		setCurrentFrag(fragType);
 	}
 
-	private void setCurrentFrag( FragType fragType ){
-		if( fragManager == null ){
-			fragManager = new FragManager(this , R.id.layContent);
-			fragManager.setCurrentFrag(fragType);
-			((MainApplication)this.getApplication()).fragManager = fragManager;
-		}else {
-			fragManager.setCurrentFrag(fragType);
-		}
-		//return fragManager;
-	}
+
+//	@Override
+//	protected void onSaveInstanceState(Bundle outState) {
+//		L.i("<<<<<<<<<<<<<<<<<<onSaveInstanceState");
+//		outState.putInt("test", 2);
+//
+//		if(fragManager!=null) {
+//			FragType fragType = fragManager.getCurrentFragType();
+//			outState.putSerializable("curFragType", fragType);
+//		}
+//
+//		super.onSaveInstanceState(outState);
+//	}
+
+//	@Override
+//	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//		L.i("<<<<<<<<<<<<<<<<<<onSaveInstanceState");
+//		super.onRestoreInstanceState(savedInstanceState);
+//
+//		FragType fragType = FragType.Task;
+//		if( savedInstanceState.containsKey("curFragType") ){
+//			fragType = (FragType) savedInstanceState.getSerializable("curFragType");
+//		}
+//
+//		setCurrentFrag(fragType);
+//	}
+
+//	private void setCurrentFrag( FragType fragType ){
+//		if( fragManager == null ){
+//			fragManager = new FragManager(this , R.id.layContent);
+//			fragManager.setCurrentFrag(fragType);
+//			//((MainApplication)this.getApplication()).fragManager = fragManager;
+//		}else {
+//			fragManager.setCurrentFrag(fragType);
+//		}
+//		//return fragManager;
+//	}
 
 	@Override
 	protected void onResume() {
@@ -225,6 +261,13 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 //		txtTodayScan = (TextView) findViewById(R.id.txtTodayScan);
 //		txtYesScore	 = (TextView) findViewById(R.id.txtYesScore);
 		//userLogin();
+		left_menu_userName = (TextView) findViewById(R.id.left_menu_userName);
+		left_menu_sign = (TextView)findViewById(R.id.left_menu_sign);
+		left_menu_avator = (SimpleDraweeView)findViewById(R.id.left_menu_avator);
+		left_menu_qrcode = (SimpleDraweeView)findViewById(R.id.left_menu_qrcode);
+		left_menu_invite_code = (TextView)findViewById(R.id.left_menu_invite_code);
+		left_menu_top_bg = (SimpleDraweeView)findViewById(R.id.left_menu_top_bg);
+		left_menu_score = (TextView)findViewById(R.id.left_menu_score);
 
 		mDragLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
 			@Override
@@ -234,12 +277,14 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 
 			@Override
 			public void onDrawerOpened(View drawerView) {
+				FloatWindow.get().hide();
+
 				userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
 			}
 
 			@Override
 			public void onDrawerClosed(View drawerView) {
-
+				FloatWindow.get().show();
 			}
 
 			@Override
@@ -325,7 +370,10 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 						showMyFrag();
 					}
 					//任务列表
-					((TaskNewFrag)fragManager.getFragmentByType(FragType.Task)).initData();
+					//((TaskNewFrag)fragManager.getFragmentByType(FragType.Task)).initData();
+						if(taskNewFrag!=null) {
+							taskNewFrag.initData();
+						}
 					//refreshMyData();
 					}
 				});
@@ -343,7 +391,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	}
 
 	public void onClick(View v){
-		if(fragManager==null)return;
+		//if(fragManager==null)return;
 
 		if (Utils.isFastClick()) {
 			return ;
@@ -352,17 +400,18 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			case R.id.btnBack:
 				//userService.getScanCount();
 				userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
-				fragManager.setCurrentFrag(FragType.Task);
+				//fragManager.setCurrentFrag(FragType.Task);
 				setTitleButton(FragType.Task);
 			break;
 		case R.id.btnLeft:
 			//userService.getScanCount();
 			//userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
-			openOrCloseMenu();
+
+			//openOrCloseMenu();
 			setScores();
 			break;
 		case R.id.layHome://领取任务
-			fragManager.setCurrentFrag(FragType.Task);
+			//fragManager.setCurrentFrag(FragType.Task);
 			setTitleButton(FragType.Task);
 			openOrCloseMenu();
 			break;
@@ -385,7 +434,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 					toast("模拟器不支持该操作!");
 					return;
 				}
-				fragManager.setCurrentFrag(FragType.My);
+				//fragManager.setCurrentFrag(FragType.My);
 				setTitleButton(FragType.My);
 				openOrCloseMenu();
 			}else{
@@ -399,14 +448,20 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 
 			break;
 		case R.id.layPrentice:
+		case R.id.layPartener:
 			if (UserData.getUserData().isLogin) {
 				//是否为模拟器
 				if( !UserData.getUserData().ignoreJudgeEmulator && BusinessStatic.getInstance().ISEMULATOR){
 					toast("模拟器不支持该操作!");
 					return;
 				}
-				fragManager.setCurrentFrag(FragType.Prentice);
-				setTitleButton(FragType.Prentice);
+				//fragManager.setCurrentFrag(FragType.Prentice);
+				//setTitleButton(FragType.Prentice);
+
+
+				Intent intent = new Intent(this , PartnerActivity.class);
+				startActivity(intent);
+
 			
 				openOrCloseMenu();
 			} else {
@@ -421,7 +476,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 //			openOrCloseMenu();
 //			break;
 		case R.id.layMore://更多选项
-			fragManager.setCurrentFrag(FragType.More);
+			//fragManager.setCurrentFrag(FragType.More);
 			setTitleButton(FragType.More);
 			openOrCloseMenu();
 			break;
@@ -513,11 +568,39 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 				Intent intent = new Intent(this, VipActivity.class);
 				startActivity(intent);
 				break;
+            case R.id.layFavarite://我的收藏
+                openOrCloseMenu();
+                Intent intentFavorite = new Intent(this , FavoriteActivity.class);
+                startActivity(intentFavorite);
+                break;
+			case R.id.layMySet:
+			case R.id.left_menu_header://我的设置
+                openOrCloseMenu();
+				Intent intentSet = new Intent(this , MyBaseInfoActivity.class);
+				startActivity(intentSet);
+			 	break;
+			case R.id.layMyScore://积分
+				openOrCloseMenu();
+				Intent intentGoods = new Intent( this , ScoreActivity.class);
+				startActivity(intentGoods);
+				break;
+			case R.id.left_menu_aq://点击复制
+				ClipboardManager cm = (ClipboardManager) getSystemService(this.CLIPBOARD_SERVICE);
+				// 将文本内容放到系统剪贴板里。
+				ClipData clipData= ClipData.newPlainText( UserData.getUserData().inviteCode, UserData.getUserData().inviteCode );
+				cm.setPrimaryClip(clipData);
+				ToastUtil.show( "复制成功，可以发给朋友们了。", Gravity.BOTTOM, R.drawable.shape_toast_bg , R.color.fontcolor);
+				break;
+
 		default:
 			break;
 		}
-		if( null != fragManager && null != fragManager.getCurrentFrag())
-			fragManager.getCurrentFrag().onClick(v);
+
+		if(taskNewFrag!=null){
+			taskNewFrag.onClick(v);
+		}
+//		if( null != fragManager && null != fragManager.getCurrentFrag())
+//			fragManager.getCurrentFrag().onClick(v);
 	}
 
 	protected void inMall(){
@@ -546,7 +629,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		//mDragLayout.openOrClose();
 		}
 	public FragType getCurrentFragType(){
-		return fragManager.getCurrentFragType();
+		//return fragManager.getCurrentFragType();
+		return null;
 	}
 	public void setTitleButton(FragType type){
 		layMiddle.setVisibility(View.VISIBLE);
@@ -559,12 +643,12 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			layMiddle.setVisibility(View.GONE);
 			layTab.setVisibility(View.VISIBLE);
 			txtRight.setVisibility(View.GONE);
-			BaseFragment frag = fragManager.getCurrentFrag();
-			String title = getResources().getString(R.string.app_title_name);
-			if(frag instanceof TaskNewFrag){
-				title = ((TaskNewFrag)frag).getTitleText();
-
-			}
+//			BaseFragment frag = fragManager.getCurrentFrag();
+//			String title = getResources().getString(R.string.app_title_name);
+//			if(frag instanceof TaskNewFrag){
+//				title = ((TaskNewFrag)frag).getTitleText();
+//
+//			}
 			txtTitle.setText("乐享资讯");
 			btnBack.setVisibility(View.GONE);
 			btnLeft.setVisibility(View.VISIBLE);
@@ -619,7 +703,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 //	    * 点击“我的帐号”进行登录或注册后，自动切至“我的帐号”
 //	    */
 	   public void showMyFrag(){
-		   fragManager.setCurrentFrag(FragType.My);
+		   //fragManager.setCurrentFrag(FragType.My);
 			setTitleButton(FragType.My);
 			//mDragLayout.openOrClose();
 		   openOrCloseMenu();
@@ -685,9 +769,12 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 	    */
 	   public void userLoginOut2ShowTaskFrag(){
 		   setScores();
-		   ((TaskNewFrag)fragManager.getFragmentByType(FragType.Task)).initData();
+		   //((TaskNewFrag)fragManager.getFragmentByType(FragType.Task)).initData();
+		   if(taskNewFrag!=null){
+		   	taskNewFrag.initData();
+		   }
 
-		   fragManager.setCurrentFrag(FragType.Task);
+		   //fragManager.setCurrentFrag(FragType.Task);
 			setTitleButton(FragType.Task);
 	   }
 	   /**
@@ -736,6 +823,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			Log.e("error",ex.getMessage());
 		}
 		txtName.setText(userName);
+		left_menu_userName.setText(userName);
+		left_menu_sign.setText( userData.getUserData().sign==null? "" : UserData.getUserData().sign );
 		txtScore.setVisibility(View.GONE);
 		//txtScore.setText("可用分红." + total);
 		txttodayScanCount.setText("今日转发量:" + todayScanCount);
@@ -749,6 +838,15 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			ImageLoad.loadLogo(userData.picUrl, img, this);
 
 		}
+
+		left_menu_avator.setImageURI( userData.picUrl );
+
+		left_menu_invite_code.setText("邀请码:"+ userData.inviteCode);
+		left_menu_qrcode.setImageURI(BusinessStatic.getInstance().appQrCodeUrl);
+
+
+		left_menu_top_bg.setImageURI(UserData.getUserData().photoWall);
+		left_menu_score.setText(UserData.getUserData().score+"积分");
 
 	}
 	   public boolean isOpened(){
@@ -848,7 +946,10 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 						showMyFrag();
 						}
 						//任务列表
-						((TaskNewFrag)fragManager.getFragmentByType(FragType.Task)).initData();
+						//((TaskNewFrag)fragManager.getFragmentByType(FragType.Task)).initData();
+						if(taskNewFrag!=null){
+							taskNewFrag.initData();
+						}
 						//刷新道具中心
 						setScores();
 					}
@@ -908,4 +1009,76 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		}
 		return false;
 	}
+
+
+	private void initFloatMemu(){
+
+		View floatView = FloatWindow.get().getView();
+
+		final ImageView my = floatView.findViewById(R.id.left_menu_my);
+//		my.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				FloatWindow.get().hide();
+//				openOrCloseMenu();
+//			}
+//		});
+		final ImageView company = floatView.findViewById(R.id.left_menu_company);
+//		company.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				FloatWindow.get().hide();
+//				Intent intent = new Intent( HomeActivity.this, SelectionActivity.class);
+//				startActivity( intent );
+//				//openOrCloseMenu();
+//			}
+//		});
+		final ImageView mall = floatView.findViewById(R.id.left_menu_mall);
+//		mall.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				FloatWindow.get().hide();
+//				openOrCloseMenu();
+//			}
+//		});
+
+
+		FloatWindow.get().setTouchCallbak(new TouchCallbackListener() {
+			@Override
+			public void onTouchCallback(float x, float y) {
+				if(isClickChildView( my , x , y )){
+					FloatWindow.get().hide();
+					openOrCloseMenu();
+				}else if(isClickChildView( company , x , y )){
+					FloatWindow.get().hide();
+					Intent intent = new Intent( HomeActivity.this, SelectionActivity.class);
+					startActivity( intent );
+				}else if(isClickChildView(mall , x , y)){
+					FloatWindow.get().hide();
+					openOrCloseMenu();
+				}
+			}
+		});
+
+	}
+
+	/**
+	 * 检测是否点击在某个子控件内
+	 * @param view
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	private boolean isClickChildView( View view, float x , float y ){
+		int[]p = new int[2];
+		view.getLocationOnScreen(p);
+		int tx = p[0];
+		int ty = p[1];
+		if(x < tx || x > (tx + view.getWidth()) ||y < ty || y > (ty +view.getHeight())){
+			return false;
+		}else {
+			return true;
+		}
+	}
+
 }

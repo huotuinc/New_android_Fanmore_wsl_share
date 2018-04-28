@@ -40,7 +40,7 @@ import android.widget.TextView;
 
 public class UserInfoView {
 	public enum Type{
-		Name, Sex, Age, Job, Income, Fav,malluser
+		Name, Sex, Age, Job, Income, Fav,malluser,Sign
 	}
 	public HashMap<Type, String> titleNames = new HashMap<UserInfoView.Type, String>();
 	public interface OnUserInfoBackListener{

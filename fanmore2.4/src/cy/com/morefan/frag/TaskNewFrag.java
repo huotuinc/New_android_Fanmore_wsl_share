@@ -228,14 +228,14 @@ public class TaskNewFrag extends BaseFragment  {
 //        zfrs.setArguments(zfrsextra);
 //        Fragment syjf = new TaskFrag();
 //        syjf.setArguments(syjfextra);
-        Fragment sx   = new SelectionFrag();
+        //Fragment sx   = new SelectionFrag();
 
         ArrayList<Fragment> fragments = new ArrayList<Fragment>();
         fragments.add(mr);
         //fragments.add(jljf);
         //fragments.add(zfrs);
         //fragments.add(syjf);
-        fragments.add(sx);
+        //fragments.add(sx);
         //fragments.add(mallFrag);
         adapter = new FragAdapter(this.getChildFragmentManager() , fragments);
         mViewPager.setAdapter(adapter);

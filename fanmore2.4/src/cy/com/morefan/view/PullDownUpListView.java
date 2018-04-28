@@ -68,6 +68,10 @@ public class PullDownUpListView extends NetImageListView implements OnScrollList
 	private boolean pullUpToLoad;
 	private int totalCount;
 
+	public interface OnScrollCallBackListener{
+		void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount);
+	}
+	private OnScrollCallBackListener onScrollCallBackListener;
 
 	public interface OnRefreshOrLoadListener{
 		void onRefresh();
@@ -86,6 +90,10 @@ public class PullDownUpListView extends NetImageListView implements OnScrollList
 	public PullDownUpListView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		initView(context);
+	}
+
+	public void setOnScrollCallBackListener(OnScrollCallBackListener onScrollCallBackListener) {
+		this.onScrollCallBackListener = onScrollCallBackListener;
 	}
 
 	/**
@@ -425,11 +433,16 @@ public class PullDownUpListView extends NetImageListView implements OnScrollList
 			currentStatus = STATUS_NORMAL;
 		}
 
+
+		if(onScrollCallBackListener!=null){
+			onScrollCallBackListener.onScroll(view , firstVisibleItem , visibleItemCount , totalItemCount);
+		}
 	}
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 
 	}
+
 
 
 

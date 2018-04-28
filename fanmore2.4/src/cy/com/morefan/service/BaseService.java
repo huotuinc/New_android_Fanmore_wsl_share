@@ -97,7 +97,7 @@ public class BaseService {
 		userData.toCrashPwd = myUserData.getString("withdrawalPassword");
 		userData.regTime = Util.DateFormatFull(myUserData.getString("regTime"));
 		//userData.yesScore = Util.opeDouble(myUserData.getDouble("yesScore"));//myUserData.getInt("yesScore");
-		//userData.score = Util.opeDouble(myUserData.getDouble("score"));//myUserData.getInt("score");
+		userData.score = Util.opeDouble(myUserData.getDouble("score"));//myUserData.getInt("score");
 		//userData.favCount = myUserData.getInt("favoriteAmount");
 		userData.sendCount = myUserData.getInt("turnAmount");
 		//userData.crashCount = myUserData.getString("crashCount");
@@ -106,6 +106,11 @@ public class BaseService {
 		//judgeEmulator是否进行模拟器判断，0进行;1不进行
 		userData.ignoreJudgeEmulator = myUserData.getInt("judgeEmulator") == 1;
 		userData.isSuper =myUserData.getBoolean("isSuper");
+		userData.inviteCode = myUserData.getString("inviteCode");
+		userData.sign = myUserData.getString("signDesc");
+		userData.photoWall= myUserData.getString("photoWall");
+
+//		userData.mallUserId = myUserData.getString("mallUserId");
 //		try {
 //			JSONArray msg = myUserData.getJSONArray("msg");
 //			if (msg != null)
@@ -179,9 +184,18 @@ public class BaseService {
 		//预告闹钟时间
 		item.alarmTime = TimeUtil.FormatterTimeToMinute2(item.startTime);
 		item.alarmTimePre = TimeUtil.FormatterTimeToMinute2(item.advTime);
+
+		item.taskSmallImgUrl = tip.getString("taskSmallImgUrl");
+		item.taskMainImgUrl = tip.getString("taskMainImgUrl");
+		item.taskId = item.id;
+		item.taskDate = tip.getString("taskDate");
+		item.taskInfo = tip.getString("taskInfo");
+		item.taskPreview = tip.getString("taskPreview");
+
+
 		return item;
 
-	};
+	}
 
 
 

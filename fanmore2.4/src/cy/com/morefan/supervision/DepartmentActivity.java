@@ -44,7 +44,7 @@ public class DepartmentActivity extends BaseActivity implements Handler.Callback
     @BindView(R.id.txtTitle)
     public TextView tvTitle;
     @BindView(R.id.btnBack)
-    Button btnBack;
+    ImageView btnBack;
     @BindView(R.id.btnQuery) CyButton btnQuery;
     @BindView(R.id.lay_mr)
     LinearLayout layMr;

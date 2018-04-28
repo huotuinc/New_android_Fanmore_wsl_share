@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/gray_list_bg"
+    android:background="#FCFCFC"
     tools:context=".AllScoreActivity" >
     <TextView
         android:visibility="gone"
@@ -222,8 +222,7 @@
         android:layout_marginTop="5dp"
         android:background="@drawable/task_send_tag"
         android:contentDescription="@string/img" />
-    <!-- 状态标记end -->
->
+
 
     <ImageView
         android:visibility="gone"

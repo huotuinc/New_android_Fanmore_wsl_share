@@ -227,4 +227,11 @@ public class TaskData implements BaseData, Serializable {
 	}
 
 
+	public String taskSmallImgUrl;
+	public String taskMainImgUrl;
+	public String taskDate;
+	/**
+	 * 任务转发出去的地址
+	 */
+	public String taskInfo;
 }

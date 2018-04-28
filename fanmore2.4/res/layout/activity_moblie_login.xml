@@ -1,17 +1,17 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:cy="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
     android:orientation="vertical"
     tools:context="cy.com.morefan.MoblieLoginActivity">
     <LinearLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:orientation="vertical">
-
-
 
     <FrameLayout android:id="@+id/ff1" style="@style/TitleStyle">
     <TextView
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:text="登录"
         android:layout_gravity="center"
-        android:textColor="@color/white"
+        android:textColor="@color/theme_back"
         android:textIsSelectable="false"
         android:textSize="18dp" />
     </FrameLayout>
@@ -121,4 +121,4 @@
             android:textSize="15sp"
             android:textColor="@color/red" />
     </LinearLayout>
-</merge>
+</LinearLayout>

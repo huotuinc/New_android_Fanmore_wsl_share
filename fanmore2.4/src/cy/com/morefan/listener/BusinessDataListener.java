@@ -145,5 +145,19 @@ public interface BusinessDataListener {
 	public static final int DONE_GET_ORGANIZESUM = 9000;
 	public static final int ERROR_GET_ORGANIZESUM = -9000;
 
+	public static final int DONE_GET_FAVORITE_DATE= 8800;//获得我的收藏的日期列表
+	public static final int ERROR_GET_FAVORITE_DATE = -8800;
+	public static final int DONE_GET_FAVORITE_LIST= 8801;//获得我的收藏
+	public static final int ERROR_GET_FAVORITE_LIST = -8801;
+	public static final int DONE_GET_INFO_LIST = 8805;//获得资讯首页列表
+	public static final int ERROR_GET_INFO_LIST = -8805;
+	public static final int DONE_GET_NOTICE_LIST = 8810;//获得通知
+	public static final int ERROR_GET_NOTICE_LIST=-8810;
+	public static final int DONE_COLLECTION=8811;//收藏接口
+	public static final int ERROR_COLLECTION=-8811;
+	public static final int DONE_SCORE=8812;//获得积分
+	public static final int ERROR_SCORE=-8812;
+	public static final int DONE_RECHARGE=8813;//积分兑换
+	public static final int ERROR_RECHARGE=-8813;
 }
 

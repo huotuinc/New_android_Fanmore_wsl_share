@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:background="#EEEEEE"
+    android:layout_height="match_parent"
+    tools:context="cy.com.morefan.SignActivity">
+
+    <FrameLayout style="@style/TitleStyle" >
+
+        <!--<Button-->
+            <!--android:id="@+id/btnBack"-->
+            <!--android:background="@color/white"-->
+            <!--android:layout_width="60dp"-->
+            <!--android:layout_height="25dp"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:text=""-->
+            <!--android:gravity="center"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:drawableLeft="@drawable/arrow_left" />-->
+        <ImageView
+            android:paddingLeft="0dp"
+            android:src="@drawable/arrow_left"
+            android:id="@+id/btnback"
+            android:layout_gravity="center|left"
+            android:layout_width="50dp"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:id="@+id/txttitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="我的个签"
+            android:textColor="#E99319"
+            android:textSize="20dp" />
+    </FrameLayout>
+
+
+
+    <EditText
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_white3"
+        android:id="@+id/sign_text"
+        android:minHeight="100dp"
+        android:padding="10dp"
+        android:textSize="14sp"
+        android:gravity="left|top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/sign_btn"
+        android:text="确定"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:layout_margin="20dp"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_green_sel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

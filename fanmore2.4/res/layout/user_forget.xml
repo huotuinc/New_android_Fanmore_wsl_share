@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:background="@color/gray_e"
     android:gravity="center_horizontal"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
     android:orientation="vertical"
     tools:context=".AllScoreActivity" >
 
@@ -26,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="忘记密码"
-            android:textColor="@color/white"
+            android:textColor="@color/theme_back"
             android:textIsSelectable="false"
             android:textSize="18dp" />
     </FrameLayout>

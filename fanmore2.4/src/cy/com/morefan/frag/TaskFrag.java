@@ -1,13 +1,16 @@
 package cy.com.morefan.frag;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import cy.com.morefan.BaseActivity;
 import cy.com.morefan.HomeActivity;
-
 import cy.com.morefan.R;
 import cy.com.morefan.TaskDetailActivity;
 import cy.com.morefan.adapter.TaskAdapter;
@@ -24,9 +27,15 @@ import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.TaskService;
 import cy.com.morefan.util.DensityUtil;
 import cy.com.morefan.util.L;
+import cy.com.morefan.util.TimeUtil;
+import cy.com.morefan.util.ToastUtil;
+import cy.com.morefan.util.Util;
 import cy.com.morefan.view.EmptyView;
 import cy.com.morefan.view.PullDownUpListView;
 import cy.com.morefan.view.PullDownUpListView.OnRefreshOrLoadListener;
+import cy.com.morefan.view.SwipeView;
+import cy.com.morefan.view.SwitcherView;
+
 import android.R.integer;
 import android.content.Intent;
 import android.graphics.Color;
@@ -38,21 +47,31 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.PopupWindow.OnDismissListener;
+import android.widget.Toast;
 
-public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRefreshOrLoadListener, Callback, OnClickListener, BroadcastListener{
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.weigan.loopview.LoopView;
+import com.weigan.loopview.OnItemSelectedListener;
+
+public class TaskFrag extends BaseFragment
+		implements BusinessDataListener, OnRefreshOrLoadListener,
+		Callback, OnClickListener, BroadcastListener,PullDownUpListView.OnScrollCallBackListener{
 
 	public enum TabType{
 		mr,jljf,zfrs,syjf
@@ -73,6 +92,15 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 	private int taskType;
 	private int taskStaus=1;
 	private int userId=0;
+	private ImageView ivTaskDataConer;
+	private boolean dataShow=false;
+	private LinearLayout task_date_select;
+	private LoopView loopView;
+	private TextView task_date_value;
+	private SwitcherView switcherView;
+	private List<String> dateList =new ArrayList<>();
+	private TaskData[] notices;
+	private LinearLayout task_notice_container;
 
 	public void setTaskStatus(int taskStatus){
 		this.taskStaus = taskStatus;
@@ -96,7 +124,7 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 	private Handler mHandler = new Handler(this);
 	@Override
 	public boolean handleMessage(Message msg){
-		if (msg.what == BusinessDataListener.DONE_GET_TASK_LIST) {
+		if (msg.what == BusinessDataListener.DONE_GET_INFO_LIST ) {
 			dismissProgress();
 			TaskData[] results = (TaskData[]) msg.obj;
 			int length = results.length;
@@ -129,13 +157,23 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 			listView.onFinishLoad();
 			listView.onFinishRefresh();
 
-		}else if(msg.what == BusinessDataListener.ERROR_GET_TASK_LIST){
+		}else if(msg.what == BusinessDataListener.ERROR_GET_INFO_LIST){
+			layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
+			dismissProgress();
+			toast(msg.obj.toString());
+			listView.onFinishLoad();
+			listView.onFinishRefresh();
+		}else if(msg.what== BusinessDataListener.DONE_GET_NOTICE_LIST){
+			notices = (TaskData[]) msg.obj;
+			initNotice(notices);
+		}else if(msg.what == BusinessDataListener.ERROR_GET_NOTICE_LIST){
 			layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
 			dismissProgress();
 			toast(msg.obj.toString());
 			listView.onFinishLoad();
 			listView.onFinishRefresh();
 		}
+
 		return false;
 		}
 		@Override
@@ -176,6 +214,10 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 		listView = (PullDownUpListView) mRootView.findViewById(R.id.listView);
 		listView.setOnRefreshOrLoadListener(this);
 		listView.setOnItemClickListener(itemListener);
+		//listView.setOnScrollListener(this);
+		//listView.setPullUpToLoadEnable(false);
+		listView.setOnScrollCallBackListener(this);
+
 		imgTag = (ImageView) getActivity().findViewById(R.id.imgTag);
 		txtTitle = (TextView) getActivity().findViewById(R.id.txtTitle);
 		layEmpty = (ImageView) mRootView.findViewById(R.id.layEmpty);
@@ -185,12 +227,21 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 //		((TextView) mRootView.findViewById(R.id.txtLink)).setText(String.format("￥%.1f/次", BusinessStatic.getInstance().AWARD_LINK/10.0));;
 
 
+		ivTaskDataConer = mRootView.findViewById(R.id.task_date_corner);
+		LinearLayout task_date_top = mRootView.findViewById(R.id.task_date_top);
+		task_date_top.setOnClickListener(this);
+		task_date_select = mRootView.findViewById(R.id.task_date_select);
+		task_date_select.setVisibility(dataShow?View.VISIBLE:View.GONE);
+		loopView = mRootView.findViewById(R.id.loopView);
+		task_date_value= mRootView.findViewById(R.id.task_date_value);
+		initDateData();
+
 
 		datas = new ArrayList<TaskData>();
 		adapter = new TaskAdapter(listView.getImageLoader(), getActivity(), datas, TaskAdapterType.Normal);
 		adapter.setTabType(tabType);
 		listView.setAdapter(adapter);
-			initData();
+		initData();
 		return mRootView;
 	}
 	@Override
@@ -268,6 +319,9 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 
 		}
 	};
+
+
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(resultCode == Constant.RESULT_CODE_TASK_STATUS_CHANGE){
@@ -303,7 +357,13 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 		adapter.notifyDataSetChanged();
 		pageIndex = 0;
 		L.i("initData:" + datas.size());
+
+		String current = dateList.get(dateList.size()-1);
+		task_date_value.setText(current);
+
 		getDataFromSer();
+
+
 	}
 	private void setPopBg(int id) {
 		for(int i = 0, length = layGroup.getChildCount(); i < length; i++){
@@ -320,10 +380,32 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 	public void getDataFromSer(){
 		adapter.notifyDataSetChanged();
 		int taskType = 0;
-		taskService.getTaskList("",UserData.getUserData().loginCode,1,pageIndex+1, taskType,userId,taskStaus);
+		//taskService.getTaskList("",UserData.getUserData().loginCode,1,pageIndex+1, taskType,userId,taskStaus);
+
+		String date = task_date_value.getText().toString();
+		date = date.split(" ")[0];
+
+		taskService.getInfoList( UserData.getUserData().loginCode , date  );
+
 
 		showProgress();
 	}
+
+
+	private void getDataFromSer(String date){
+		//adapter.notifyDataSetChanged();
+		//int taskType = 0;
+		//taskService.getTaskList("",UserData.getUserData().loginCode,1,pageIndex+1, taskType,userId,taskStaus);
+
+		//String date = task_date_value.getText().toString();
+		date = date.split(" ")[0];
+
+		taskService.getInfoList( UserData.getUserData().loginCode , date  );
+
+		showProgress();
+	}
+
+
 	@Override
 	public void onDataFinish(int type, String des, BaseData[] datas,
 			Bundle extra) {
@@ -347,12 +429,34 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 	@Override
 	public void onRefresh() {
 		initData();
-
+		taskService.getNoticeList(UserData.getUserData().loginCode );
 	}
 	@Override
 	public void onLoad() {
-		reLoadData();
+		String lastDateStr = datas.get( datas.size()-1 ).taskDate;
 
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+
+		try {
+			Date lastDate = sf.parse(lastDateStr); //new Date( TimeUtil.getLongTime(lastDateStr));
+
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(lastDate);
+			calendar.add(Calendar.DAY_OF_MONTH, -1);
+
+//			String week = TimeUtil.getWeek(calendar);
+//			String dateweek = lastDateStr + " " + week;
+//			task_date_value.setText(dateweek);
+//			if (!dateList.contains(dateweek)) {
+//				dateList.add(dateweek);
+//			}
+
+			String selDate = sf.format( calendar.getTime());
+
+			getDataFromSer( selDate );
+		}catch (Exception ex){
+			ex.printStackTrace();
+		}
 	}
 	private void toast(String msg){
 		if(getActivity() != null)
@@ -391,6 +495,25 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 		case R.id.listView:
 			if(getActivity() != null && ((HomeActivity)getActivity()).isOpened())
 				((HomeActivity)getActivity()).closeMenu();
+			break;
+		case R.id.task_date_top:
+			dataShow=!dataShow;
+			ivTaskDataConer.setImageResource( dataShow ? R.drawable.corner2:R.drawable.corner );
+			task_date_select.setVisibility(dataShow?View.VISIBLE:View.GONE);
+			break;
+		case R.id.switcherView:
+			//ToastUtil.show( getContext() ,switcherView.getCurrentItem() );
+			Intent intentDetail = new Intent(getActivity(),TaskDetailActivity.class);
+			TaskData taskData = null;
+			for(int i=0;i<notices.length;i++){
+				if(notices[i].taskName.equals( switcherView.getCurrentItem() )){
+					taskData = notices[i];
+				}
+			}
+
+			intentDetail.putExtra("taskData", taskData);
+			startActivityForResult(intentDetail, 0);
+
 			break;
 //		case R.id.layHot:
 //			currentTitle = "热门";
@@ -437,6 +560,9 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 	public void onDestroy() {
 		myBroadcastReceiver.unregisterReceiver();
 		super.onDestroy();
+
+		switcherView.destroySwitcher();
+
 	}
 	@Override
 	public void onFinishReceiver(ReceiverType type, Object msg) {
@@ -460,5 +586,90 @@ public class TaskFrag extends BaseFragment implements BusinessDataListener, OnRe
 
 	}
 
+	private void initDateData(){
+		Calendar calendar=Calendar.getInstance();
+		Date currentDate= calendar.getTime();
+		dateList.clear();
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		for(int i=-30;i<1;i++){
+			calendar.setTime(currentDate);
+			calendar.add(Calendar.DAY_OF_MONTH , i);
+			String fdate = simpleDateFormat.format(calendar.getTime()) +" "+ TimeUtil.getWeek(calendar);
+			dateList.add( fdate );
+		}
+
+
+		loopView.setItems(dateList);
+		loopView.setListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(int index) {
+				task_date_value.setText( dateList.get(index) );
+				datas.clear();
+				getDataFromSer();
+			}
+		});
+
+		int curentP = dateList.size()-1;
+		loopView.setCurrentPosition( dateList.size()-1 );
+		task_date_value.setText( dateList.get(curentP) );
+		String mon = dateList.get(curentP).split(" ")[0];
+
+		//taskService.getInfoList(UserData.getUserData().loginCode , mon );
+
+		task_notice_container=mRootView.findViewById(R.id.task_notice_container);
+
+        switcherView = mRootView.findViewById(R.id.switcherView);
+		switcherView.setOnClickListener(this);
+
+		taskService.getNoticeList(UserData.getUserData().loginCode );
+	}
+
+	private void initNotice(TaskData[] list ){
+
+		task_notice_container.setVisibility(list==null || list.length<1? View.GONE:View.VISIBLE);
+
+		int length = list.length;
+		if(length<1) return;
+
+		ArrayList<String> notices = new ArrayList<>();
+		for(int i=0;i<list.length;i++){
+			notices.add( list[i].taskName );
+		}
+		switcherView.setResource(notices);
+		switcherView.setTimePeriod( 1500 * notices.size() );
+		switcherView.startRolling();
+	}
+
+
+		@Override
+	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+			if (this.datas == null || this.datas.size() < 1) return;
+
+
+			final TaskData cur = this.datas.get(firstVisibleItem);
+
+			mHandler.post(new Runnable() {
+				@Override
+				public void run() {
+					try {
+
+						String time = cur.taskDate;
+						Calendar calendar = Calendar.getInstance();
+						SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+						Date b1 = sf.parse(time);
+						calendar.setTime(b1);
+						String w = TimeUtil.getWeek(calendar);
+
+
+						String week = TimeUtil.getWeek(calendar);
+						String temp = time + " " + week;
+						task_date_value.setText(temp);
+
+					} catch (Exception ex) {
+					}
+				}
+			});
+	}
 
 }

@@ -8,7 +8,6 @@ import cy.com.morefan.BuildConfig;
 import cy.com.morefan.HomeActivity;
 import cy.com.morefan.MainApplication;
 import cy.com.morefan.MoblieLoginActivity;
-import cy.com.morefan.MyBaseInfoActivity;
 import cy.com.morefan.R;
 import cy.com.morefan.WebShopActivity;
 import cy.com.morefan.bean.BaseData;
@@ -376,7 +375,7 @@ public class MyFrag extends BaseFragment implements OnUserInfoBackListener,OnCli
 
 	}
 	private void commitPhoto(){
-		userService.commitPhoto(UserData.getUserData().loginCode, Base64.encode(Util.bitmap2Bytes(cropBitmap)));
+		userService.commitPhoto(UserData.getUserData().loginCode, Base64.encode(Util.bitmap2Bytes(cropBitmap)) , 0 );
 		showProgress();
 	}
 	private void commit(UserInfoView.Type type, UserSelectData data){
@@ -387,7 +386,7 @@ public class MyFrag extends BaseFragment implements OnUserInfoBackListener,OnCli
 				)//无修改，不提交
 			return;
 
-		userService.modifyUserInfo(type, data,UserData.getUserData().loginCode, name, sex, "","", "","");
+		userService.modifyUserInfo(type, data,UserData.getUserData().loginCode, name, sex, "","", "","","");
 		showProgress();
 	}
 	@Override
@@ -409,7 +408,7 @@ public class MyFrag extends BaseFragment implements OnUserInfoBackListener,OnCli
 				return;
 			}
 			if (null == cropperView)
-				cropperView = new CropperView(getActivity(), this);
+				cropperView = new CropperView(getActivity(), this , 0 );
 			cropperView.cropper(bitmap);
 		} else if (requestCode == 1) {// file back
 			if (data != null) {
@@ -450,7 +449,7 @@ public class MyFrag extends BaseFragment implements OnUserInfoBackListener,OnCli
 
 				}
 				if (null == cropperView)
-					cropperView = new CropperView(getActivity(), this);
+					cropperView = new CropperView(getActivity(), this , 0 );
 				cropperView.cropper(bitmap);
 			}
 
@@ -460,7 +459,7 @@ public class MyFrag extends BaseFragment implements OnUserInfoBackListener,OnCli
 
 	private Bitmap cropBitmap;
 	@Override
-	public void OnCropperBack(Bitmap bitmap) {
+	public void OnCropperBack(Bitmap bitmap , int busType) {
 		if(null == bitmap)
 			return;
 		cropBitmap = bitmap;

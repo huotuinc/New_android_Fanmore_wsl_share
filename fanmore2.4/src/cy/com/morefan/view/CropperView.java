@@ -19,7 +19,7 @@ import android.view.ViewGroup.LayoutParams;
 public class CropperView {
 	 private static final int ROTATE_NINETY_DEGREES = 90;
 	public interface OnCropperBackListener{
-		void OnCropperBack(Bitmap bitmap);
+		void OnCropperBack(Bitmap bitmap , int busType);
 	}
 	private OnCropperBackListener listener;
 	private WindowManager mWindowManager;
@@ -29,10 +29,16 @@ public class CropperView {
 	private int mOutWidth;
 	private int mOutHeight;
 	private boolean changSize;
+	private int busType=0;
 
-	public CropperView(Context context, OnCropperBackListener listener){
+	public void setBusType(int busType){
+		this.busType=busType;
+	}
+
+	public CropperView(Context context, OnCropperBackListener listener , int busType){
 		this.mContext = context;
 		this.listener = listener;
+		this.busType=busType;
 		//initView(context);
 	}
 	private void dismiss() {
@@ -52,8 +58,8 @@ public class CropperView {
 			return;
 		changSize = false;
 		L.i(">>>>>>>>0:" + source.getWidth() + "," + source.getHeight());
-		int widthMul = source.getWidth()/640;
-		int heightMul = source.getHeight()/640;
+		int widthMul = source.getWidth()/960;
+		int heightMul = source.getHeight()/960;
 		int mul = Math.min(widthMul, heightMul);
 		mul = mul == 0 ? 1 : mul;
 		this.mOutWidth = source.getWidth()	/ mul;
@@ -74,7 +80,7 @@ public class CropperView {
 				 			public void onClick(View v) {
 				 				dismiss();
 				 				 if(listener != null){
-				 					listener.OnCropperBack(createNewSize(cropImageView.getCroppedImage()));
+				 					listener.OnCropperBack(createNewSize(cropImageView.getCroppedImage()) , busType);
 //				 					 if(mOutWidth == 0 && mOutHeight == 0){
 //				 						listener.OnCropperBack(cropImageView.getCroppedImage());
 //				 					 }else{
@@ -90,7 +96,7 @@ public class CropperView {
 				 			public void onClick(View v) {
 				 				dismiss();
 				 				 if(listener != null)
-				 					 listener.OnCropperBack(null);
+				 					 listener.OnCropperBack(null , busType);
 
 				 			}
 				 		});
@@ -111,7 +117,7 @@ public class CropperView {
 							System.out.println(">>>>>>KEYCODE_BACK");
 							dismiss();
 							 if(listener != null)
-								 listener.OnCropperBack(null);
+								 listener.OnCropperBack(null , busType );
 							// return true;
 						}
 						return false;

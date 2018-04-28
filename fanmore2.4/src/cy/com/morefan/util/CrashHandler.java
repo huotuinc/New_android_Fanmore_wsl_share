@@ -32,7 +32,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
     // 用于格式化日期,作为日志文件名的一部分
     private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-    private String nameString="乐享头条";
+    private String nameString="头条";
     //系统默认的UncaughtException处理类
     private Thread.UncaughtExceptionHandler mDefaultHandler;
     private static class Holder

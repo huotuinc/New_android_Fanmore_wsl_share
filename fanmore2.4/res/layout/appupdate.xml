@@ -4,6 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
     android:id="@+id/lay"
     android:background="#000000"
     android:orientation="vertical" >

@@ -32,6 +32,7 @@ import cy.com.morefan.bean.UserSelectData;
 import cy.com.morefan.bean.WeekTaskData;
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.listener.BusinessDataListener;
+import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.util.AuthParamUtils;
 import cy.com.morefan.util.L;
 import cy.com.morefan.util.SPUtil;
@@ -45,7 +46,7 @@ public class UserService extends BaseService{
 	public UserService(BusinessDataListener listener) {
 		super(listener);
 	}
-	public void commitPhoto(final String loginCode, final String imgs){
+	public void commitPhoto(final String loginCode, final String imgs , final int type ){
 
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
 			@Override
@@ -56,6 +57,7 @@ public class UserService extends BaseService{
 					//System.out.println(loginCode);
 					jsonUrl.put("loginCode",loginCode );
 					jsonUrl.put("pic", imgs);
+					jsonUrl.put("type",type);
 //					jsonUrl.put("timestamp", timestamp);
 //					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
 //					Map< String, String > paramMap = new HashMap< String, String >( );
@@ -79,8 +81,15 @@ public class UserService extends BaseService{
 				    	 if(resultCode == 1){
 							int status = data.getInt("status");
 							if (status == 1) {
-								UserData.getUserData().picUrl=data.getJSONObject("resultData").getString("picUrl");
-								listener.onDataFinish(BusinessDataListener.DONE_COMMIT_PHOTO,null, null, null);
+								if(type==0) {
+									UserData.getUserData().picUrl = data.getJSONObject("resultData").getString("picUrl");
+								}else if(type==1){
+									UserData.getUserData().photoWall = data.getJSONObject("resultData").getString("picUrl");
+								}
+								Bundle bd = new Bundle();
+								bd.putInt("type", type);
+
+								listener.onDataFinish(BusinessDataListener.DONE_COMMIT_PHOTO,null, null, bd);
 							} else {
 								listener.onDataFailed(BusinessDataListener.ERROR_COMMIT_PHOTO,data.getString("tip"), null);
 							}
@@ -1122,6 +1131,9 @@ public class UserService extends BaseService{
 								extra.putString("income", myData.getString("income"));
 								extra.putString("incomeId", myData.getString("incomeId"));
 								extra.putString("area", myData.getString("area"));
+								extra.putString("inviteCode",myData.getString("inviteCode "));
+								extra.putString("signDesc", myData.getString("signDesc"));
+								extra.putString("photoWall",myData.getString("photoWall"));
 
 
 								UserBaseInfoList baseInfoList = new UserBaseInfoList();
@@ -1187,7 +1199,10 @@ public class UserService extends BaseService{
 	 * @param fav 爱好
 	 * @param income 收入范围
 	 */
-	public void modifyUserInfo(final Type type, final UserSelectData selectData, final String loginCode, final String name, final String sex, final String age, final String job, final String fav, final String income){
+	public void modifyUserInfo(final Type type, final UserSelectData selectData,
+							   final String loginCode, final String name, final String sex,
+							   final String age, final String job,
+							   final String fav, final String income , final  String sign ){
 		ThreadPoolManager.getInstance().addTask(new Runnable() {
 
 			@Override
@@ -1200,12 +1215,14 @@ public class UserService extends BaseService{
 					jsonUrl.put("loginCode", loginCode);
 					jsonUrl.put("name", name);
 					jsonUrl.put("sex", sex);
+					jsonUrl.put("signdesc" , sign);
 					jsonUrl.put("timestamp", timestamp);
 					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
 					Map< String, String > paramMap = new HashMap< String, String >( );
 					paramMap.put("loginCode", loginCode);
 					paramMap.put("name", name);
 					paramMap.put("sex", sex);
+					paramMap.put("signdesc",sign);
 					paramMap.put("timestamp",String.valueOf(timestamp));
 					String url2 = authParamUtils.getMapSign1(paramMap);
 					jsonUrl.put("sign",url2);

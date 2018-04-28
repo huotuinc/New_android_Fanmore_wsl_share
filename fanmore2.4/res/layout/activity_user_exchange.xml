@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/lay"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/white"
@@ -11,11 +13,11 @@
 
         <cy.com.morefan.view.CyButton
             android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
-            android:background="@drawable/title_back_normal"
+            android:background="@drawable/arrow_left"
             android:contentDescription="@string/img"
             android:onClick="onClickButton" />
 
@@ -23,8 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="积分兑换"
-            android:textColor="@color/white"
+            android:text="我的积分"
+            android:textColor="#E9931A"
             android:textSize="18dp" />
         <!--<TextView-->
             <!--android:id="@+id/history"-->
@@ -42,7 +44,6 @@
         android:layout_height="wrap_content" >
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" >
@@ -141,12 +142,14 @@
             </LinearLayout>
 
             <ImageView
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/line_gray_bg_h" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/txtDes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -159,7 +162,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible" >
+                android:visibility="gone" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -207,6 +210,7 @@
             </LinearLayout>
 
             <ImageView
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@drawable/line_gray_bg_h" />

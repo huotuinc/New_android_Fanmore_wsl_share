@@ -29,7 +29,7 @@ import cy.com.morefan.view.ImageLoad;
 
 public class MasterActivity extends BaseActivity implements View.OnClickListener, MyBroadcastReceiver.BroadcastListener {
     @BindView(R.id.btnBack)
-    public Button btnBack;
+    public ImageView btnBack;
     @BindView(R.id.imguser)
     public CircleImageView imguser;
     TextView txt_partner;

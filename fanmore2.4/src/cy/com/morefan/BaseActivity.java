@@ -5,6 +5,8 @@ import java.util.List;
 
 import butterknife.Unbinder;
 import cn.jpush.android.api.JPushInterface;
+import cy.com.morefan.util.RandomColor;
+import cy.com.morefan.util.StatusBarUtil;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 
@@ -32,15 +34,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.CalendarContract;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.umeng.analytics.MobclickAgent;
 
@@ -61,6 +67,9 @@ public class BaseActivity extends SwipeBackActivity implements BusinessDataListe
 
 	@Override
 	protected void onCreate(Bundle arg0) {
+
+		//StatusBarUtil.setColor(this , R.color.white );
+
 		MainApplication.getActivityManager().pushActivity(this);
 		userService = new UserService(this);
 		 mGestureDetector = new GestureDetector(this, new MyOnGestureListener());
@@ -75,24 +84,54 @@ public class BaseActivity extends SwipeBackActivity implements BusinessDataListe
 						Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
 		 }
 		super.onCreate(arg0);
-	}
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		if(outState != null){
-			BusinessStatic.save(outState);
-			UserData.save(outState);
-		}
-		super.onSaveInstanceState(outState);
-	}
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		if(savedInstanceState != null){
-			BusinessStatic.restore(savedInstanceState);
-			UserData.restore(savedInstanceState);
 
-		}
-		super.onRestoreInstanceState(savedInstanceState);
+		setStatusBarTextBlackColor();
+
+
 	}
+
+
+	/**
+	 *  此功能在 android 6.0以上系统适用
+	 *设置白底黑字的状态栏
+	 */
+	private boolean setStatusBarTextBlackColor(){
+		if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			int newUiVisibility = this.getWindow().getDecorView().getSystemUiVisibility();
+            newUiVisibility |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+			newUiVisibility |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+//			newUiVisibility |= View.SYSTEM_UI_FLAG_VISIBLE;
+			this.getWindow().getDecorView().setSystemUiVisibility(newUiVisibility);
+			getWindow().setStatusBarColor( Color.WHITE );
+
+			//StatusBarUtil.setColor(this, Color.WHITE);
+
+			//this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+			return true;
+		}
+		return false;
+	}
+
+
+//	@Override
+//	protected void onSaveInstanceState(Bundle outState) {
+//		if(outState != null){
+//			BusinessStatic.save(outState);
+//			UserData.save(outState);
+//		}
+//		super.onSaveInstanceState(outState);
+//	}
+
+//	@Override
+//	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//		if(savedInstanceState != null){
+//			BusinessStatic.restore(savedInstanceState);
+//			UserData.restore(savedInstanceState);
+//
+//		}
+//		super.onRestoreInstanceState(savedInstanceState);
+//	}
 
 
 	@Override

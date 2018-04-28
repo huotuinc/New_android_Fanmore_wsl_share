@@ -58,6 +58,23 @@ public class TimeUtil {
 		}
 		return 0;
 	}
+
+	public static long getLongTime2(String time){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd HH:mm");
+		Date date;
+		try {
+			date = sdf.parse(time);
+			Calendar c = Calendar.getInstance();
+			c.setTime(date);
+
+			return c.getTimeInMillis();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
 	/**
 	 *
 	 * @param date yyyy-MM-dd hh-mm-ss
@@ -129,7 +146,7 @@ public class TimeUtil {
 
 	/**
 	 *
-	 * @param date yyyy-MM-dd hh-mm-ss
+	 *
 	 * @return long
 	 */
 	public static long FormatterTimeToLong(String format, String time) {
@@ -178,6 +195,30 @@ public class TimeUtil {
 			return "未知";
 		}
 
+	}
+
+
+	public static String getWeek(Calendar calendar){
+		//Calendar cal = Calendar.getInstance();
+		int i = calendar.get(Calendar.DAY_OF_WEEK);
+		switch (i) {
+			case 1:
+				return "星期日";
+			case 2:
+				return "星期一";
+			case 3:
+				return "星期二";
+			case 4:
+				return "星期三";
+			case 5:
+				return "星期四";
+			case 6:
+				return "星期五";
+			case 7:
+				return "星期六";
+			default:
+				return "";
+		}
 	}
 
 }

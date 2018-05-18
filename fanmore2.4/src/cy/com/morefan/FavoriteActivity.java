@@ -13,8 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.weigan.loopview.LoopView;
-import com.weigan.loopview.OnItemSelectedListener;
+import cy.com.morefan.view.loopview.LoopView;
+import cy.com.morefan.view.loopview.OnItemSelectedListener;
 
 import java.lang.invoke.MethodHandle;
 import java.text.SimpleDateFormat;

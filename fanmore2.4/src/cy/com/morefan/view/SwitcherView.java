@@ -28,7 +28,7 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
     private Handler handler = new Handler();
     private Timer timer;   //计时器
 
-    private ArrayList<String> dataSource = new ArrayList<>();  //数据源
+    private ArrayList<CharSequence> dataSource = new ArrayList<>();  //数据源
     private int currentIndex = 0;   //滚动的位置
     private int textSize = 0;    //文字大小
     private static final int defaultTextSize = 16;    //默认文字大小
@@ -72,7 +72,7 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
         return tView;
     }
 
-    public void setResource(ArrayList<String> dataSource) {
+    public void setResource(ArrayList<CharSequence> dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -113,7 +113,7 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
         }
     }
 
-    public String getCurrentItem() {
+    public CharSequence getCurrentItem() {
         if (dataSource != null && dataSource.size() > 0) {
             return dataSource.get(getCurrentIndex());
         } else {

@@ -115,11 +115,11 @@ public class MyBroadcastReceiver extends BroadcastReceiver{
 		} else if (intent.getAction().equals(ACTION_USER_LOGOUT)) {
 			listener.onFinishReceiver(ReceiverType.Logout, null);
 		} else if (intent.getAction().equals(ACTION_SHARE_TO_WEIXIN_SUCCESS)) {
-			listener.onFinishReceiver(ReceiverType.ShareToWeixinSuccess, null);
+			listener.onFinishReceiver(ReceiverType.ShareToWeixinSuccess, intent.getExtras() );
 		} else if (intent.getAction().equals(ACTION_SHARE_TO_SINA_SUCCESS)) {
-			listener.onFinishReceiver(ReceiverType.ShareToSinaSuccess, null);
+			listener.onFinishReceiver(ReceiverType.ShareToSinaSuccess, intent.getExtras());
 		}else if (intent.getAction().equals(ACTION_SHARE_TO_QZONE_SUCCESS)) {
-			listener.onFinishReceiver(ReceiverType.ShareToQzoneSuccess, null);
+			listener.onFinishReceiver(ReceiverType.ShareToQzoneSuccess, intent.getExtras());
 		}else if( intent.getAction().equals(ACTION_BACKGROUD_BACK_TO_UPDATE)){
 			listener.onFinishReceiver(ReceiverType.BackgroundBackToUpdate, null);
 		}else if(intent.getAction().equals(Intent.ACTION_BATTERY_CHANGED)){

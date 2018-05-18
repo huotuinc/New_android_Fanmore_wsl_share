@@ -259,7 +259,12 @@ public class TaskDetailActivity extends BaseActivity implements BusinessDataList
 //			taskService.checkTaskStatus(taskData.id);
         if (!layProgress.isShowing())
             showProgress();
-        myBroadcastReceiver = new MyBroadcastReceiver(this, this, MyBroadcastReceiver.ACTION_USER_LOGIN, MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS, MyBroadcastReceiver.ACTION_SHARE_TO_QZONE_SUCCESS, MyBroadcastReceiver.ACTION_SHARE_TO_SINA_SUCCESS, MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE, MyBroadcastReceiver.ACTION_WX_NOT_BACK);
+        myBroadcastReceiver = new MyBroadcastReceiver(this, this, MyBroadcastReceiver.ACTION_USER_LOGIN,
+				MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS,
+				MyBroadcastReceiver.ACTION_SHARE_TO_QZONE_SUCCESS,
+				MyBroadcastReceiver.ACTION_SHARE_TO_SINA_SUCCESS,
+				MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE,
+				MyBroadcastReceiver.ACTION_WX_NOT_BACK);
         //showUserGuide(R.drawable.user_guide_task_detail);
         fromOncreate = true;
 

@@ -29,12 +29,14 @@
         android:layout_height="30dp" />
 
     <ImageView
+        android:layout_marginTop="10dp"
         android:id="@+id/left_menu_company"
         android:src="@drawable/style_menu_company_sel"
         android:layout_width="30dp"
         android:layout_height="30dp" />
 
     <ImageView
+        android:layout_marginTop="10dp"
         android:id="@+id/left_menu_mall"
         android:src="@drawable/style_menu_mall_sel"
         android:layout_width="30dp"

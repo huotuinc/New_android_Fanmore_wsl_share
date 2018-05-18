@@ -4,7 +4,7 @@
          Customize dimensions originally defined in res/values/dimens.xml (such as
          screen margins) for sw600dp devices (e.g. 7" tablets) here.
     -->
-    <dimen name="menu_icon_size">30dp</dimen>
+    <dimen name="menu_icon_size">25dp</dimen>
     <dimen name="menu_txt_size">14sp</dimen>
 
     <dimen name="shadow_left">235dp</dimen>

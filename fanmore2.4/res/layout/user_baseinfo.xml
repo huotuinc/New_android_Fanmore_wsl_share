@@ -515,8 +515,7 @@
 
             <!-- 转发量 -->
             <LinearLayout
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
+                android:layout_marginTop="0dp"
                 android:id="@+id/layTransfor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -552,8 +551,8 @@
 
             <!-- 浏览量 -->
             <LinearLayout
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
+                android:layout_marginTop="0dp"
+
                 android:id="@+id/layRead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -589,8 +588,8 @@
 
             <!-- 我的积分 -->
             <LinearLayout
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
+                android:layout_marginTop="0dp"
+
                 android:id="@+id/layScore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -626,8 +625,8 @@
 
             <!-- 我的伙伴 -->
             <LinearLayout
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
+                android:layout_marginTop="0dp"
+
                 android:id="@+id/layPartner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -659,8 +658,7 @@
             <!-- 注册时间 -->
 
             <LinearLayout
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
+                android:layout_marginTop="0dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"

@@ -360,7 +360,7 @@ public class TaskAdapter extends BaseAdapter{
 	private void popAskInfo(final TaskData taskData){
 		boolean showPop = MainApplication.single.readShareTipDialog();
 		if(!showPop){
-			share(taskData);
+			shareInfo(taskData);
 			return;
 		}
 
@@ -409,6 +409,8 @@ public class TaskAdapter extends BaseAdapter{
 		oks.setSite( mContext.getString(R.string.app_name));
 		// siteUrl是分享此内容的网站地址，仅在QQ空间使用
 		oks.setSiteUrl(shareUrl);
+		//
+        oks.setTaskId(taskData.taskId);
 
 		// 启动分享GUIfem
 		oks.show(mContext );

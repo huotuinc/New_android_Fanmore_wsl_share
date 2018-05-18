@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.os.Bundle;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.text.TextUtils;
@@ -377,8 +378,14 @@ public abstract class OnekeyShareThemeImpl implements PlatformActionListener, Ca
 				// 成功
 				int resId = R.getStringRes(context, "ssdk_oks_share_completed");
 				if (resId > 0) {
+
+					Bundle bd = new Bundle();
+					if( this.shareParamsMap.containsKey("taskId")){
+						bd.putInt("taskId", Integer.valueOf( shareParamsMap.get("taskId").toString() ));
+					}
+
 					//toast(context.getString(resId));
-					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS);
+					MyBroadcastReceiver.sendBroadcast( context , MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS , bd );
 				}
 			} break;
 			case 2: {

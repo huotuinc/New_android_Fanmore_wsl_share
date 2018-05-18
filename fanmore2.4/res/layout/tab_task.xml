@@ -79,6 +79,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:id="@+id/task_date_top"
             android:padding="8dp"
@@ -89,8 +90,8 @@
             <TextView
                 android:id="@+id/task_date_value"
                 android:text=""
-                android:textSize="16sp"
-                android:textColor="#2B2C2F"
+                android:textSize="14sp"
+                android:textColor="#434343"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <ImageView
@@ -108,16 +109,17 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <com.weigan.loopview.LoopView
+            <cy.com.morefan.view.loopview.LoopView
                 android:layout_marginTop="0dp"
                 android:id="@+id/loopView"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                app:awv_textsize="16"
+                android:layout_height="26dp"
+                app:awv_textsize="14"
                 app:awv_isLoop="true"
                 app:awv_itemsVisibleCount="3"
                 app:awv_dividerTextColor="@color/date_bg"
                 app:awv_centerTextColor="@color/date_color"
+                android:paddingBottom="2dp"
                 android:layout_marginBottom="3dp"
                 />
             <View
@@ -137,32 +139,36 @@
         
     </LinearLayout>
 
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/task_notice_container"
-        android:orientation="vertical"
-        android:paddingTop="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:background="@drawable/style_notice_bg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <cy.com.morefan.view.SwitcherView
-            android:padding="8dp"
-            android:id="@+id/switcherView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_notice_bg"
-            app:switcherRollingTime="4000"
-            app:switcherTextColor="@color/notice_color"
-           />
-    </LinearLayout>
+    <!--<LinearLayout-->
+        <!--android:visibility="visible"-->
+        <!--android:id="@+id/task_notice_container"-->
+        <!--android:orientation="vertical"-->
+        <!--android:paddingTop="10dp"-->
+        <!--android:paddingLeft="10dp"-->
+        <!--android:paddingRight="10dp"-->
+        <!--android:paddingBottom="10dp"-->
+        <!--android:background="@drawable/style_notice_bg"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+        <!--<cy.com.morefan.view.SwitcherView-->
+            <!--android:paddingTop="6dp"-->
+            <!--android:paddingBottom="6dp"-->
+            <!--android:paddingLeft="8dp"-->
+            <!--android:paddingRight="8dp"-->
+            <!--android:id="@+id/switcherView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/shape_notice_bg"-->
+            <!--app:switcherRollingTime="4000"-->
+            <!--app:switcherTextColor="@color/notice_color"-->
+            <!--app:switcherTextSize="14sp"-->
+           <!--/>-->
+    <!--</LinearLayout>-->
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray_list_bg" >
+        android:background="#f8f8f8" >
 
         <cy.com.morefan.view.PullDownUpListView
             android:id="@+id/listView"
@@ -170,8 +176,11 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:footerDividersEnabled="false"
-            android:divider="@null"
+            android:divider="#F8F8F8"
+            android:dividerHeight="15dp"
             android:fadingEdge="none"
+            android:background="#f8f8f8"
+            android:paddingLeft="0dp"
              />
 
         <cy.com.morefan.view.EmptyView
@@ -181,6 +190,16 @@
             android:scaleType="center"
             android:src="@anim/anim_empty"
             android:visibility="gone" />
+
+
+        <View
+            android:visibility="gone"
+            android:alpha="0.3"
+            android:background="@color/black"
+            android:id="@+id/layMast"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </FrameLayout>
 
     <!--

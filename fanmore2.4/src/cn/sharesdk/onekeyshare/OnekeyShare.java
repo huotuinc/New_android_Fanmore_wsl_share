@@ -256,4 +256,8 @@ public class OnekeyShare {
 		themeImpl.show(context.getApplicationContext());
 	}
 
+	public void setTaskId(int taskId){
+		params.put("taskId", taskId);
+	}
+
 }

@@ -25,11 +25,14 @@ import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
 import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.TaskService;
+import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.DensityUtil;
 import cy.com.morefan.util.L;
+import cy.com.morefan.util.ShareUtil;
 import cy.com.morefan.util.TimeUtil;
 import cy.com.morefan.util.ToastUtil;
 import cy.com.morefan.util.Util;
+import cy.com.morefan.view.CustomDialog;
 import cy.com.morefan.view.EmptyView;
 import cy.com.morefan.view.PullDownUpListView;
 import cy.com.morefan.view.PullDownUpListView.OnRefreshOrLoadListener;
@@ -37,6 +40,7 @@ import cy.com.morefan.view.SwipeView;
 import cy.com.morefan.view.SwitcherView;
 
 import android.R.integer;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -44,6 +48,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -66,8 +72,8 @@ import android.widget.PopupWindow.OnDismissListener;
 import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.weigan.loopview.LoopView;
-import com.weigan.loopview.OnItemSelectedListener;
+import cy.com.morefan.view.loopview.LoopView;
+import cy.com.morefan.view.loopview.OnItemSelectedListener;
 
 public class TaskFrag extends BaseFragment
 		implements BusinessDataListener, OnRefreshOrLoadListener,
@@ -88,6 +94,7 @@ public class TaskFrag extends BaseFragment
 	private ImageView imgTag;
 	private TextView txtTitle;
 	private ImageView layEmpty;
+	private View layMast;
 	private MyBroadcastReceiver myBroadcastReceiver;
 	private int taskType;
 	private int taskStaus=1;
@@ -101,6 +108,7 @@ public class TaskFrag extends BaseFragment
 	private List<String> dateList =new ArrayList<>();
 	private TaskData[] notices;
 	private LinearLayout task_notice_container;
+	private UserService userService;
 
 	public void setTaskStatus(int taskStatus){
 		this.taskStaus = taskStatus;
@@ -172,6 +180,25 @@ public class TaskFrag extends BaseFragment
 			toast(msg.obj.toString());
 			listView.onFinishLoad();
 			listView.onFinishRefresh();
+		}else if(msg.what == BusinessDataListener.DONE_COMMIT_SEND){
+			toast("分享成功");
+			//statusType = TaskDetailActivity.StatusType.Commit;
+			//taskData.sendCount=taskData.sendCount+1;
+			//taskData.isSend=true;
+			dismissProgress();
+
+			//refreshView();
+		}else if (msg.what == BusinessDataListener.ERROR_COMMIT_SEND
+				|| msg.what == BusinessDataListener.ERROR_USER_LOGIN) {
+			dismissProgress();
+			toast(msg.obj.toString());
+//			if(msg.what == BusinessDataListener.ERROR_COMMIT_SEND)
+//				reCommit(msg.obj.toString());
+		}
+		else if (msg.what == BusinessDataListener.ERROR_RE_COMMIT_SEND) {
+			dismissProgress();
+			//reCommit(msg.obj.toString());
+			toast("转发失败");
 		}
 
 		return false;
@@ -190,7 +217,16 @@ public class TaskFrag extends BaseFragment
 		pageIndex = 0;
 		taskService = new TaskService(this);
 		currentTaskType = TaskType.mr;
-		myBroadcastReceiver = new MyBroadcastReceiver(getActivity(), this, MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE, MyBroadcastReceiver.ACTION_REFRESH_TASK_LIST);
+		myBroadcastReceiver = new MyBroadcastReceiver(getActivity(), this,
+				MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE,
+				MyBroadcastReceiver.ACTION_REFRESH_TASK_LIST,
+				MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS,
+				MyBroadcastReceiver.ACTION_SHARE_TO_QZONE_SUCCESS,
+				MyBroadcastReceiver.ACTION_SHARE_TO_SINA_SUCCESS,
+				MyBroadcastReceiver.ACTION_WX_NOT_BACK
+				);
+
+		userService = new UserService(this);
 	}
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
@@ -234,6 +270,8 @@ public class TaskFrag extends BaseFragment
 		task_date_select.setVisibility(dataShow?View.VISIBLE:View.GONE);
 		loopView = mRootView.findViewById(R.id.loopView);
 		task_date_value= mRootView.findViewById(R.id.task_date_value);
+		layMast = mRootView.findViewById(R.id.layMast);
+		layMast.setOnClickListener(this);
 		initDateData();
 
 
@@ -241,9 +279,24 @@ public class TaskFrag extends BaseFragment
 		adapter = new TaskAdapter(listView.getImageLoader(), getActivity(), datas, TaskAdapterType.Normal);
 		adapter.setTabType(tabType);
 		listView.setAdapter(adapter);
+
+		initNoticeView();
+
 		initData();
 		return mRootView;
 	}
+
+	private void initNoticeView(){
+		View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_notice,null);
+		listView.addHeaderView(view);
+
+		task_notice_container=view.findViewById(R.id.task_notice_container);
+		switcherView = view.findViewById(R.id.switcherView);
+		switcherView.setOnClickListener(this);
+
+		taskService.getNoticeList(UserData.getUserData().loginCode );
+	}
+
 	@Override
 	public void onReshow() {
 		//initData();
@@ -497,16 +550,18 @@ public class TaskFrag extends BaseFragment
 				((HomeActivity)getActivity()).closeMenu();
 			break;
 		case R.id.task_date_top:
+		case R.id.layMast:
 			dataShow=!dataShow;
 			ivTaskDataConer.setImageResource( dataShow ? R.drawable.corner2:R.drawable.corner );
 			task_date_select.setVisibility(dataShow?View.VISIBLE:View.GONE);
+			layMast.setVisibility(dataShow?View.VISIBLE:View.GONE);
 			break;
 		case R.id.switcherView:
 			//ToastUtil.show( getContext() ,switcherView.getCurrentItem() );
 			Intent intentDetail = new Intent(getActivity(),TaskDetailActivity.class);
 			TaskData taskData = null;
 			for(int i=0;i<notices.length;i++){
-				if(notices[i].taskName.equals( switcherView.getCurrentItem() )){
+				if(notices[i].taskName.equals( switcherView.getCurrentItem().toString() )){
 					taskData = notices[i];
 				}
 			}
@@ -570,9 +625,45 @@ public class TaskFrag extends BaseFragment
 			L.i("onFinishReceiver");
 			initData();
 
+		}else if(type == ReceiverType.ShareToWeixinSuccess){
+			int channleType = ShareUtil.CHANNEL_WEIXIN;
+			int taskid = ((Bundle)msg).getInt("taskId",0);
+			commit( taskid , channleType );
+		}else if(type == ReceiverType.ShareToSinaSuccess){
+			int channleType = ShareUtil.CHANNEL_SINA;
+			int taskid = ((Bundle)msg).getInt("taskId",0);
+			commit(taskid , channleType );
+//			userService.commitSend(taskData.id,UserData.getUserData().loginCode, ShareUtil.CHANNEL_SINA);
+//			showProgress();
+		}else if(type == ReceiverType.ShareToQzoneSuccess){
+			int channleType = ShareUtil.CHANNEL_QZONE;
+			int taskid = ((Bundle)msg).getInt("taskId",0);
+			commit(taskid , channleType );
+//			userService.commitSend(taskData.id,UserData.getUserData().loginCode, ShareUtil.CHANNEL_QZONE);
+//			showProgress();
 		}
 
 	}
+
+	private void commit(int taskid , int channleType ) {
+		//TaskDetailActivity.StatusType statusType = TaskDetailActivity.StatusType.Share;
+		userService.commitSend(taskid,UserData.getUserData().loginCode, channleType);
+		showProgress();
+
+	}
+
+	private void reCommit(String msg ,final int taskid , final int channelType){
+		CustomDialog.showChooiceDialg(this.getActivity() , "提交失败", msg, "重试", "取消", null,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+
+						commit( taskid , channelType );
+					}
+				}, null);
+	}
+
+
 	private String currentTitle;
 	public String getTitleText() {
 		if(null != getActivity() && TextUtils.isEmpty(currentTitle))
@@ -613,16 +704,16 @@ public class TaskFrag extends BaseFragment
 		int curentP = dateList.size()-1;
 		loopView.setCurrentPosition( dateList.size()-1 );
 		task_date_value.setText( dateList.get(curentP) );
-		String mon = dateList.get(curentP).split(" ")[0];
+		//String mon = dateList.get(curentP).split(" ")[0];
 
 		//taskService.getInfoList(UserData.getUserData().loginCode , mon );
 
-		task_notice_container=mRootView.findViewById(R.id.task_notice_container);
-
-        switcherView = mRootView.findViewById(R.id.switcherView);
-		switcherView.setOnClickListener(this);
-
-		taskService.getNoticeList(UserData.getUserData().loginCode );
+//		task_notice_container=mRootView.findViewById(R.id.task_notice_container);
+//
+//        switcherView = mRootView.findViewById(R.id.switcherView);
+//		switcherView.setOnClickListener(this);
+//
+//		taskService.getNoticeList(UserData.getUserData().loginCode );
 	}
 
 	private void initNotice(TaskData[] list ){
@@ -632,12 +723,19 @@ public class TaskFrag extends BaseFragment
 		int length = list.length;
 		if(length<1) return;
 
-		ArrayList<String> notices = new ArrayList<>();
+		ArrayList<CharSequence> notices = new ArrayList<>();
 		for(int i=0;i<list.length;i++){
-			notices.add( list[i].taskName );
+
+			String text = list[i].taskName;
+			text = text.replaceFirst("置顶","<font color='blue'>置顶</font>");
+			CharSequence charSequence = Html.fromHtml(text);
+
+			notices.add( charSequence );
 		}
+
+
 		switcherView.setResource(notices);
-		switcherView.setTimePeriod( 1500 * notices.size() );
+		switcherView.setTimePeriod( 2500 );
 		switcherView.startRolling();
 	}
 

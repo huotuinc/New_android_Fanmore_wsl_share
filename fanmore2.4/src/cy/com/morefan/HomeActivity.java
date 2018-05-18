@@ -165,7 +165,10 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 				.commit();
 
 
-		myBroadcastReceiver = new MyBroadcastReceiver(this, this, MyBroadcastReceiver.ACTION_USER_LOGIN, MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE,MyBroadcastReceiver.ACTION_REFRESH_USEDATA);
+		myBroadcastReceiver = new MyBroadcastReceiver(this, this,
+				MyBroadcastReceiver.ACTION_USER_LOGIN,
+				MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE,
+				MyBroadcastReceiver.ACTION_REFRESH_USEDATA);
 		//showUserGuide(R.drawable.user_guide_task_list);
 
 		//userReg();
@@ -800,16 +803,21 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			}else {
 				laySupervision.setVisibility(View.GONE);
 			}
-			if (BusinessStatic.getInstance().AppEnableWeekTask==1){
-				layTask.setVisibility(View.VISIBLE);
-			}else {
-				layTask.setVisibility(View.GONE);
-			}
-			if (BusinessStatic.getInstance().AppEnableRank==1){
-				layRank.setVisibility(View.VISIBLE);
-			}else {
-				layRank.setVisibility(View.GONE);
-			}
+
+//			if (BusinessStatic.getInstance().AppEnableWeekTask==1){
+//				layTask.setVisibility(View.VISIBLE);
+//			}else {
+//				layTask.setVisibility(View.GONE);
+//			}
+
+
+//			if (BusinessStatic.getInstance().AppEnableRank==1){
+//				layRank.setVisibility(View.VISIBLE);
+//			}else {
+//				layRank.setVisibility(View.GONE);
+//			}
+
+
 			if (TextUtils.isEmpty(userName))
 				userName = userData.UserNickName;
 			else if (TextUtils.isEmpty(userName)){
@@ -1055,7 +1063,8 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 					startActivity( intent );
 				}else if(isClickChildView(mall , x , y)){
 					FloatWindow.get().hide();
-					openOrCloseMenu();
+					//openOrCloseMenu();
+					inMall();
 				}
 			}
 		});

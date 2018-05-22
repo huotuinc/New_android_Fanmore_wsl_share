@@ -20,6 +20,7 @@ public class FavoriteAdapter extends BaseQuickAdapter<FavoriteData, BaseViewHold
     @Override
     protected void convert(BaseViewHolder helper, FavoriteData item) {
 
+        helper.setText(R.id.favorite_item_name , item.UserNickName);
         helper.setText(R.id.favorite_item_text , item.TaskName);
 
         SimpleDraweeView simpleDraweeView = helper.getView(R.id.favorite_item_avator);

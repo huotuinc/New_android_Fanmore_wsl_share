@@ -6,6 +6,7 @@
     android:layout_width="wrap_content"
     android:background="@color/white"
     android:layout_gravity="start"
+    android:clickable="true"
     android:layout_height="match_parent"
     tools:context=".AllScoreActivity">
 
@@ -202,10 +203,10 @@
         android:layout_width="match_parent">
 
         <ScrollView android:layout_width="match_parent"
-                android:scrollbars="none"
-                android:layout_height="0dp"
+            android:scrollbars="none"
+            android:layout_height="0dp"
             android:layout_weight="1"
-                android:background="@color/white">
+            android:background="@color/white">
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -217,7 +218,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:onClick="onClick"
-                        android:background="@color/white"
+                        android:background="@drawable/style_left_menu"
                         android:padding="5dp"
                         android:orientation="horizontal" >
 
@@ -259,7 +260,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:onClick="onClick"
-                    android:background="@color/white"
+                    android:background="@drawable/style_left_menu"
                 android:layout_marginTop="10dp"
                     android:padding="5dp"
                     android:orientation="horizontal" >
@@ -303,7 +304,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:onClick="onClick"
-                android:background="@color/white"
+                android:background="@drawable/style_left_menu"
                 android:padding="5dp"
                 android:orientation="horizontal" >
 
@@ -353,7 +354,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:onClick="onClick"
-                android:background="@color/white"
+                android:background="@drawable/style_left_menu"
                 android:padding="5dp"
                 android:orientation="horizontal" >
 
@@ -403,7 +404,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:onClick="onClick"
-                        android:background="@color/white"
+                        android:background="@drawable/style_left_menu"
                         android:padding="5dp"
                         android:orientation="horizontal" >
 
@@ -454,7 +455,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:onClick="onClick"
-                android:background="@color/white"
+                android:background="@drawable/style_left_menu"
                 android:padding="5dp"
                 android:orientation="horizontal" >
 
@@ -504,7 +505,7 @@
                 android:padding="10dp"
                 android:gravity="center_horizontal"
                 android:onClick="onClick"
-                android:background="@color/white"
+                android:background="@drawable/style_left_menu"
                 android:orientation="horizontal" >
 
                 <ImageView
@@ -557,7 +558,7 @@
                 android:padding="5dp"
                 android:gravity="center_horizontal"
                 android:onClick="onClick"
-                android:background="@color/white"
+                android:background="@drawable/style_left_menu"
                 android:orientation="horizontal" >
 
                 <ImageView
@@ -600,7 +601,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:onClick="onClick"
-                        android:background="@color/white"
+                        android:background="@drawable/style_left_menu"
                 android:layout_marginTop="10dp"
                         android:padding="5dp"
                         android:orientation="horizontal" >
@@ -638,6 +639,8 @@
                      
 
                     </RelativeLayout>
+
+
             <RelativeLayout
                 android:visibility="gone"
                         android:id="@+id/layhelp"
@@ -645,7 +648,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:onClick="onClick"
-                        android:background="@color/white"
+                        android:background="@drawable/style_left_menu"
                         android:padding="5dp"
                         android:orientation="horizontal" >
 
@@ -693,7 +696,7 @@
                         android:padding="5dp"
                         android:gravity="center_horizontal"
                         android:onClick="onClick"
-                        android:background="@color/white"
+                        android:background="@drawable/style_left_menu"
                         android:orientation="horizontal" >
 
                         <ImageView
@@ -735,7 +738,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:onClick="onClick"
-                    android:background="@color/white"
+                    android:background="@drawable/style_left_menu"
                     android:layout_marginTop="10dp"
                     android:padding="5dp"
                     android:orientation="horizontal" >
@@ -771,6 +774,52 @@
 
                 </RelativeLayout>
 
+
+            <RelativeLayout
+                    android:id="@+id/layCompany"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:onClick="onClick"
+                    android:background="@drawable/style_left_menu"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:id="@+id/layCompany_icon"
+                        android:layout_width="@dimen/menu_icon_size"
+                        android:layout_height="@dimen/menu_icon_size"
+                        android:background="@drawable/company_big"
+                        android:layout_marginLeft="10dp"
+                        android:height="@dimen/menu_icon_size"
+                        android:width="@dimen/menu_icon_size" />
+
+                    <TextView
+                        android:layout_toLeftOf="@+id/layCompany_arrow"
+                        android:layout_toRightOf="@+id/layCompany_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="企业专区"
+                        android:textColor="#A2A2A2"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="15dp"
+                        android:layout_centerVertical="true"
+                        android:textStyle="bold"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/layCompany_arrow"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/info_arrow"
+                        android:layout_marginRight="5dp"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+
             <RelativeLayout
                         android:id="@+id/laySupervision"
                         android:layout_width="wrap_content"
@@ -778,7 +827,7 @@
                         android:padding="5dp"
                         android:gravity="center_horizontal"
                         android:onClick="onClick"
-                        android:background="@color/white"
+                        android:background="@drawable/style_left_menu"
                         android:orientation="horizontal"
                 android:layout_marginTop="10dp"
                         android:visibility="visible">
@@ -825,28 +874,35 @@
             android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <LinearLayout
-                android:onClick="onClick"
+
+            <RelativeLayout
                 android:layout_alignBottom="@+id/left_menu_qrcode"
                 android:layout_toLeftOf="@+id/left_menu_qrcode"
-                android:id="@+id/left_menu_aq"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <TextView
+
+                <LinearLayout
+                    android:visibility="visible"
+                    android:onClick="onClick"
+                    android:id="@+id/left_menu_aq"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+                    <TextView
                 android:id="@+id/left_menu_invite_code"
                 android:background="@drawable/shape_invite_bg"
                 android:layout_marginLeft="10dp"
                 android:padding="10dp"
                 android:textColor="#A0A0A0"
                 android:textStyle="bold"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:layout_alignBottom="@id/left_menu_qrcode"
                 android:layout_gravity="bottom"
                 android:text="邀请码:XED45546"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <TextView
+                    <TextView
                 android:layout_marginLeft="0dp"
                 android:layout_toRightOf="@id/left_menu_invite_code"
                 android:layout_toLeftOf="@id/left_menu_qrcode"
@@ -858,7 +914,23 @@
                 android:layout_width="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_height="wrap_content" />
-            </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:visibility="gone"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="10dp"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:textColor="#a0a0a0"
+                    android:id="@+id/left_menu_tip_text"
+                    android:background="@drawable/shape_invite_bg"
+                    android:text="客官~~已经复制好了哟"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp" />
+
+            </RelativeLayout>
+
             <com.facebook.drawee.view.SimpleDraweeView
                 android:layout_alignParentRight="true"
                 android:id="@+id/left_menu_qrcode"

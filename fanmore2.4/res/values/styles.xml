@@ -10,6 +10,15 @@
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         -->
+        <item name="android:windowAnimationStyle">@style/anim_activity</item>
+
+    </style>
+
+    <style name="anim_activity" parent="@android:style/Animation">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
     </style>
 
     <!-- Application theme. -->
@@ -25,6 +34,7 @@
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowDisablePreview">true</item>
         <item name="android:windowSoftInputMode">adjustPan|stateAlwaysHidden</item>
+        <item name="android:windowAnimationStyle">@style/anim_activity</item>
     </style>
 
     <style name="HomeTheme" parent="Theme.AppCompat.Light">
@@ -50,21 +60,9 @@
 
     <style name="Transparent">
         <item name="android:windowNoTitle">true</item>
-
-
-
-　　                             <item name="android:windowBackground">@color/transparent</item>
-
-
-
-　　                             <item name="android:windowIsTranslucent">true</item>
-
-
-
-　　                              <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
-
-
-
+　　     <item name="android:windowBackground">@color/transparent</item>
+　　     <item name="android:windowIsTranslucent">true</item>
+　　     <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
 　　</style>
 
     <style name="Animation.Activity.Translucent.Style" parent="@android:style/Animation.Translucent">
@@ -110,6 +108,8 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:background">#00000000</item>
         <item name="android:windowBackground">@android:color/transparent</item>
+        <!--用来控制灰度的值，当为1时，界面除了我们的dialog内容是高亮显示的，dialog以外的区域是黑色的，完全看不到其他内容，系统的默认值是0.5，而已根据自己的需要调整 -->
+        <item name="android:backgroundDimAmount">0.2</item>
     </style>
 
     <style name="PopDialogTranslucent" parent="@android:style/Theme.Dialog">
@@ -150,8 +150,9 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">@color/white</item>
+        <item name="colorAccent">#E99319</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@style/anim_activity</item>
     </style>
 
 </resources>

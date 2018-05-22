@@ -30,6 +30,7 @@ public class IFloatWindowImpl extends IFloatWindow {
     private TimeInterpolator mDecelerateInterpolator;
     private TouchCallbackListener touchCallbackListener;
     private int mTouchSlop;
+    private IDragListener iDragListener;
 
     private IFloatWindowImpl() {
 
@@ -179,6 +180,9 @@ public class IFloatWindowImpl extends IFloatWindow {
                                 sX = event.getX();
                                 sY = event.getY();
                                 cancelAnimator();
+
+                                drag(event , 1 );
+
                                 break;
                             case MotionEvent.ACTION_MOVE:
                                 changeX = event.getRawX() - lastX;
@@ -188,6 +192,8 @@ public class IFloatWindowImpl extends IFloatWindow {
                                 mFloatView.updateXY(newX, newY);
                                 lastX = event.getRawX();
                                 lastY = event.getRawY();
+
+                                drag(event , 2 );
                                 break;
                             case MotionEvent.ACTION_UP:
                                 switch (mB.mMoveType) {
@@ -219,6 +225,9 @@ public class IFloatWindowImpl extends IFloatWindow {
                                             }
                                         });
                                         startAnimator();
+
+                                        drag(event,3);
+
                                         break;
                                 }
 
@@ -274,4 +283,23 @@ public class IFloatWindowImpl extends IFloatWindow {
             }
         }
     }
+
+
+    @Override
+    public void setDragListener(IDragListener iDragListener) {
+        this.iDragListener = iDragListener;
+    }
+
+    private void drag( MotionEvent event , int type ){
+        if(this.iDragListener==null) return;
+
+        if(type==1){
+            this.iDragListener.startDrag(event );
+        }else if(type ==2){
+            this.iDragListener.draging( event );
+        }else if(type ==3){
+            this.iDragListener.endDrag( event  );
+        }
+    }
+
 }

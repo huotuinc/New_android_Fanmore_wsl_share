@@ -451,10 +451,10 @@
         <activity
             android:name=".FavoriteActivity" android:theme="@style/ThemeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".SignActivity"  android:screenOrientation="portrait" android:theme="@style/ThemeActivity"/>
-        <activity android:name=".ScoreActivity"  android:screenOrientation="portrait" android:theme="@style/ThemeActivity"/>
+        <activity android:name=".SignActivity"  android:screenOrientation="portrait" android:theme="@style/JxdAppTheme"/>
+        <activity android:name=".ScoreActivity"  android:screenOrientation="portrait" android:theme="@style/JxdAppTheme"/>
         <activity android:name=".PartnerActivity"  android:screenOrientation="portrait" android:theme="@style/ThemeActivity" />
-        <activity android:name=".SelectionActivity" android:theme="@style/ThemeActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".SelectionActivity" android:theme="@style/ThemeActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

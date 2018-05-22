@@ -49,8 +49,11 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -60,6 +63,7 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yhao.floatwindow.FloatWindow;
+import com.yhao.floatwindow.IDragListener;
 import com.yhao.floatwindow.MoveType;
 import com.yhao.floatwindow.Screen;
 import com.yhao.floatwindow.TouchCallbackListener;
@@ -275,14 +279,17 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		mDragLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
 			@Override
 			public void onDrawerSlide(View drawerView, float slideOffset) {
-
+				Log.d("homeActivity", "offset=" + slideOffset);
+				if(slideOffset>=0.5) {
+					FloatWindow.get().hide();
+				}
 			}
 
 			@Override
 			public void onDrawerOpened(View drawerView) {
 				FloatWindow.get().hide();
 
-				userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
+				//userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
 			}
 
 			@Override
@@ -292,7 +299,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 
 			@Override
 			public void onDrawerStateChanged(int newState) {
-
+				Log.d("ssss", "onDrawerStateChanged="+newState);
 			}
 		});
 
@@ -562,6 +569,11 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 				openOrCloseMenu();//进入商城
 				inMall();
 				break;
+			case R.id.layCompany://企业专区
+				openOrCloseMenu();
+				Intent intentCompany = new Intent( this, SelectionActivity.class);
+				startActivity( intentCompany );
+				break;
 //			case R.id.laySorceExchange://积分兑换
 //				Intent intentGoods = new Intent( this , UserExchangeActivity.class);
 //				startActivity(intentGoods);
@@ -588,11 +600,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 				startActivity(intentGoods);
 				break;
 			case R.id.left_menu_aq://点击复制
-				ClipboardManager cm = (ClipboardManager) getSystemService(this.CLIPBOARD_SERVICE);
-				// 将文本内容放到系统剪贴板里。
-				ClipData clipData= ClipData.newPlainText( UserData.getUserData().inviteCode, UserData.getUserData().inviteCode );
-				cm.setPrimaryClip(clipData);
-				ToastUtil.show( "复制成功，可以发给朋友们了。", Gravity.BOTTOM, R.drawable.shape_toast_bg , R.color.fontcolor);
+				copyAq();
 				break;
 
 		default:
@@ -605,6 +613,44 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 //		if( null != fragManager && null != fragManager.getCurrentFrag())
 //			fragManager.getCurrentFrag().onClick(v);
 	}
+
+	protected void copyAq(){
+		ClipboardManager cm = (ClipboardManager) getSystemService(this.CLIPBOARD_SERVICE);
+		// 将文本内容放到系统剪贴板里。
+		ClipData clipData= ClipData.newPlainText( UserData.getUserData().inviteCode, UserData.getUserData().inviteCode );
+		cm.setPrimaryClip(clipData);
+		final TextView tip = (TextView) findViewById(R.id.left_menu_tip_text);
+		final LinearLayout layAq =(LinearLayout) findViewById(R.id.left_menu_aq);
+		//layAq.setVisibility(View.GONE);
+		tip.setVisibility(View.VISIBLE);
+		Animation animation = AnimationUtils.loadAnimation(this , R.anim.anim_transparent);
+		//tip.setAnimation(animation);
+		//animation.setFillAfter(true);
+		animation.setAnimationListener(new Animation.AnimationListener() {
+			@Override
+			public void onAnimationStart(Animation animation) {
+				//tip.setVisibility(View.VISIBLE);
+				//layAq.setVisibility(View.GONE);
+			}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+
+				tip.setVisibility(View.GONE);
+				//layAq.setVisibility(View.VISIBLE);
+				//layAq.startAnimation(animation);
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+
+			}
+		});
+		tip.startAnimation(animation);
+
+
+		//ToastUtil.show( "复制成功，可以发给朋友们了。", Gravity.BOTTOM, R.drawable.shape_toast_bg , R.color.fontcolor);
+    }
 
 	protected void inMall(){
 		showProgress();
@@ -1056,7 +1102,9 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 			public void onTouchCallback(float x, float y) {
 				if(isClickChildView( my , x , y )){
 					FloatWindow.get().hide();
-					openOrCloseMenu();
+					//openOrCloseMenu();
+					mDragLayout.closeDrawer(Gravity.LEFT);
+
 				}else if(isClickChildView( company , x , y )){
 					FloatWindow.get().hide();
 					Intent intent = new Intent( HomeActivity.this, SelectionActivity.class);
@@ -1066,6 +1114,25 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 					//openOrCloseMenu();
 					inMall();
 				}
+			}
+		});
+
+
+		FloatWindow.get().setDragListener(new IDragListener() {
+			@Override
+			public void startDrag(MotionEvent event) {
+
+			}
+
+			@Override
+			public void draging(MotionEvent event) {
+
+			}
+
+			@Override
+			public void endDrag(MotionEvent event) {
+				mDragLayout.openDrawer(Gravity.LEFT);
+				FloatWindow.get().hide();
 			}
 		});
 

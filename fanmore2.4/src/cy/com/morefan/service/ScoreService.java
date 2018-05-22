@@ -240,6 +240,8 @@ public class ScoreService extends BaseService {
         item.TaskPicUrl=tip.getString("TaskPicUrl");
         item.TurnUserId=tip.getInt("TurnUserId");
         item.time = tip.getString("time");
+        item.UserNickName = tip.getString("UserNickName");
+        item.Logo = tip.getString("Logo");
         return item;
     }
 

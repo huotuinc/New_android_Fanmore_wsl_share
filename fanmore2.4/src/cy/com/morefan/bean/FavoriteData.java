@@ -8,6 +8,8 @@ public class FavoriteData implements BaseData{
     public  String TaskName;
     public String TaskPicUrl;
     public String time;
+    public String UserNickName;
+    public String Logo;
 
     @Override
     public String getPageTag() {

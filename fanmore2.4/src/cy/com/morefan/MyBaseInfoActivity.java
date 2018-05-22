@@ -22,6 +22,7 @@ import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
 import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.Base64;
+import cy.com.morefan.util.DensityUtil;
 import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.util.ToastUtil;
 import cy.com.morefan.util.Util;
@@ -362,6 +363,8 @@ public class MyBaseInfoActivity extends BaseActivity
             Intent intent = new Intent(this , SignActivity.class);
             intent.putExtra("title", "昵称");
             intent.putExtra("content" , txtNickName.getText().toString());
+            intent.putExtra("height", DensityUtil.dip2px(this,40));
+            intent.putExtra("sigleLine",true);
             startActivityForResult(intent,4001);
             break;
         case R.id.laySign://我的个签

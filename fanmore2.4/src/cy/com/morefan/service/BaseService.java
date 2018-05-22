@@ -191,7 +191,7 @@ public class BaseService {
 		item.taskDate = tip.getString("taskDate");
 		item.taskInfo = tip.getString("taskInfo");
 		item.taskPreview = tip.getString("taskPreview");
-
+		item.tagTitle = tip.getString("tagTitle");
 
 		return item;
 

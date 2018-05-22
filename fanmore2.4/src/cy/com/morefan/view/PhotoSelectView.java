@@ -1,31 +1,16 @@
 package cy.com.morefan.view;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 import cy.com.morefan.R;
 import cy.com.morefan.util.DensityUtil;
-import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.TextView;
-import android.widget.Toast;
 
 @SuppressLint("SimpleDateFormat")
 public class PhotoSelectView {
@@ -144,14 +129,18 @@ public class PhotoSelectView {
 
 	public void setShow(){
 		mainView.findViewById(R.id.btnFile).setVisibility(View.GONE);
+		mainView.findViewById(R.id.vline).setVisibility(View.GONE);
 		mainView.findViewById(R.id.btnCamera).setVisibility(View.GONE);
 		mainView.findViewById(R.id.btnFile2).setVisibility(View.VISIBLE);
+		mainView.findViewById(R.id.vline2).setVisibility(View.VISIBLE);
 		mainView.findViewById(R.id.btnCamera2).setVisibility(View.VISIBLE);
 	}
 	public void setHide(){
 		mainView.findViewById(R.id.btnFile).setVisibility(View.VISIBLE);
+		mainView.findViewById(R.id.vline).setVisibility(View.VISIBLE);
 		mainView.findViewById(R.id.btnCamera).setVisibility(View.VISIBLE);
 		mainView.findViewById(R.id.btnFile2).setVisibility(View.GONE);
+		mainView.findViewById(R.id.vline2).setVisibility(View.GONE);
 		mainView.findViewById(R.id.btnCamera2).setVisibility(View.GONE);
 	}
 }

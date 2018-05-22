@@ -8,7 +8,7 @@
         android:paddingTop="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingBottom="10dp"
+        android:paddingBottom="1dp"
         android:background="@drawable/style_notice_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -23,6 +23,6 @@
             android:background="@drawable/shape_notice_bg"
             app:switcherRollingTime="4000"
             app:switcherTextColor="@color/notice_color"
-            app:switcherTextSize="14sp" />
+            app:switcherTextSize="15sp" />
 
 </LinearLayout>

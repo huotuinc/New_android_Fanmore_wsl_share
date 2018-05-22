@@ -30,8 +30,8 @@
             android:src="@drawable/arrow_left"
             android:id="@+id/btnback"
             android:layout_gravity="center|left"
-            android:layout_width="50dp"
-            android:layout_height="30dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="25dp" />
 
         <TextView
             android:id="@+id/txttitle"
@@ -40,7 +40,7 @@
             android:layout_gravity="center"
             android:text="我的个签"
             android:textColor="#E99319"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
     </FrameLayout>
 
 

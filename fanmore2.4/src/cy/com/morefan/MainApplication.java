@@ -78,7 +78,7 @@ public class MainApplication extends Application implements BroadcastListener{
 		FloatWindow
 				.with(getApplicationContext())
 				.setView(floatView)
-				.setMoveType(MoveType.slide)
+				.setMoveType(MoveType.back)
 				.setMoveStyle(300 , new AccelerateInterpolator())
 				.setX(Screen.width ,0f)
 				.setY(Screen.height,0.4f)

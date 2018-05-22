@@ -343,16 +343,21 @@ public class CropImageView extends FrameLayout {
         final float scaleFactorHeight = actualImageHeight / displayedImageHeight;
 
         // Get crop window position relative to the displayed image.
-        final float cropWindowX = Edge.LEFT.getCoordinate() - displayedImageRect.left;
-        final float cropWindowY = Edge.TOP.getCoordinate() - displayedImageRect.top;
+        float cropWindowX = Edge.LEFT.getCoordinate() - displayedImageRect.left;
+        cropWindowX = cropWindowX<0?0:cropWindowX;
+        float cropWindowY = Edge.TOP.getCoordinate() - displayedImageRect.top;
+        cropWindowY = cropWindowY<0? 0: cropWindowY;
         final float cropWindowWidth = Edge.getWidth();
         final float cropWindowHeight = Edge.getHeight();
 
         // Scale the crop window position to the actual size of the Bitmap.
         final float actualCropX = cropWindowX * scaleFactorWidth;
         final float actualCropY = cropWindowY * scaleFactorHeight;
-        final float actualCropWidth = cropWindowWidth * scaleFactorWidth;
-        final float actualCropHeight = cropWindowHeight * scaleFactorHeight;
+        float actualCropWidth = cropWindowWidth * scaleFactorWidth;
+        actualCropWidth = actualCropWidth > actualImageWidth? actualImageWidth : actualCropWidth;
+        float actualCropHeight = cropWindowHeight * scaleFactorHeight;
+        actualCropHeight = actualCropHeight > actualImageHeight? actualImageHeight: actualCropHeight;
+
 
         // Crop the subset from the original Bitmap.
         final Bitmap croppedBitmap = Bitmap.createBitmap(mBitmap,

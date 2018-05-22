@@ -1,48 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v7.widget.CardView android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardUseCompatPadding="true"
-    app:cardBackgroundColor="#FDFDFD"
-    app:cardPreventCornerOverlap="false"
-    app:cardCornerRadius="5dp"
-    app:contentPaddingLeft="5dp"
-    app:contentPaddingRight="5dp"
-    app:contentPaddingBottom="5dp"
-    app:cardElevation="2dp">
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:paddingTop="5dp"
-    android:paddingLeft="2dp"
-    android:paddingRight="2dp"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="#FDFDFD"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true"
+    app:contentPaddingBottom="5dp"
+    app:contentPaddingLeft="1dp"
+    app:contentPaddingRight="1dp">
 
-    <ImageView
-        android:id="@+id/left_menu_my"
-        android:src="@drawable/style_menu_my_sel"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:paddingTop="5dp">
 
-    <ImageView
-        android:layout_marginTop="10dp"
-        android:id="@+id/left_menu_company"
-        android:src="@drawable/style_menu_company_sel"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
+        <ImageView
+            android:id="@+id/left_menu_my"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/style_menu_my_sel" />
 
-    <ImageView
-        android:layout_marginTop="10dp"
-        android:id="@+id/left_menu_mall"
-        android:src="@drawable/style_menu_mall_sel"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
+        <ImageView
+            android:id="@+id/left_menu_company"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/style_menu_company_sel" />
+
+        <ImageView
+            android:id="@+id/left_menu_mall"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/style_menu_mall_sel" />
 
 
-</LinearLayout>
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

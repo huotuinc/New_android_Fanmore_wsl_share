@@ -3,6 +3,7 @@ package cy.com.morefan;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,7 +34,6 @@ public class SignActivity extends BaseActivity {
                 intent.putExtra("content" , etContent.getText().toString());
                 SignActivity.this.setResult(RESULT_OK, intent);
                 SignActivity.this.finish();
-
             }
         });
         ivback = (ImageView)findViewById(R.id.btnback);
@@ -50,7 +50,18 @@ public class SignActivity extends BaseActivity {
         if(getIntent().hasExtra("content")){
             etContent.setText( getIntent().getStringExtra("content") );
         }
+        if(getIntent().hasExtra("height")){
+            etContent.setMinHeight( getIntent().getIntExtra("height",100) );
+            ViewGroup.LayoutParams layoutParams = etContent.getLayoutParams();
+            layoutParams.height = getIntent().getIntExtra("height",100);
+            etContent.setLayoutParams(layoutParams);
+        }
+        if(getIntent().hasExtra("sigleLine")){
+            etContent.setSingleLine(getIntent().getBooleanExtra("sigleLine",false));
+        }
 
+        etContent.setSelection(etContent.getText().length());
+        etContent.requestFocus();
         KeyWordUtil.openKeybord(etContent ,this);
     }
 

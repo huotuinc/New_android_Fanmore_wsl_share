@@ -130,8 +130,7 @@ public class LoadingActivity extends BaseActivity implements
 	}
 
 
-	private void choiceToUpdate(final UpdateType type, final String md5,
-			final String url, final String tips) {
+	private void choiceToUpdate(final UpdateType type, final String md5, final String url, final String tips) {
 		CustomDialog.setOnKeyBackListener(LoadingActivity.this);
 		CustomDialog.showChooiceDialg(LoadingActivity.this, "温馨提示",
 				"发现新版本，马上更新?\n" + tips, "马上更新", "跳过该版本", null,
@@ -149,8 +148,7 @@ public class LoadingActivity extends BaseActivity implements
 
 	}
 
-	private void toUpdate(UpdateType type, String md5, String url, String tips,
-			boolean isForce) {
+	private void toUpdate(UpdateType type, String md5, String url, String tips, boolean isForce) {
 		Intent intent = new Intent(LoadingActivity.this,
 				AppUpdateActivity.class);
 		intent.putExtra("isForce", isForce);

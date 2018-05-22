@@ -6,42 +6,50 @@
     <LinearLayout
         android:id="@+id/layMain"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="bottom"
+        android:padding="0dp" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-
-        android:orientation="vertical"
-        android:paddingBottom="10dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:background="@drawable/shape_white2"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/btnCamera"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_white_sel"
+            android:background="@drawable/style_sex_man"
             android:gravity="center"
             android:padding="10dp"
             android:text="拍照"
             android:textSize="16sp"
-            android:textColor="#E99319" />
+            android:textColor="@drawable/style_sex_man" />
+
+        <View
+            android:id="@+id/vline"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:background="#D2D2D2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
 
         <TextView
             android:id="@+id/btnFile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btn_white_sel"
+            android:layout_marginTop="0dp"
+            android:background="@drawable/style_sex_woman"
             android:gravity="center"
             android:padding="10dp"
             android:text="从手机相册选择"
             android:textSize="16sp"
-            android:textColor="#E99319" />
+            android:textColor="@drawable/style_sex_woman" />
 
 
         <TextView
@@ -49,37 +57,51 @@
             android:id="@+id/btnCamera2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_white_sel"
+            android:background="@drawable/style_sex_man"
             android:gravity="center"
             android:padding="10dp"
             android:text="拍照"
             android:textSize="16sp"
-            android:textColor="#E99319" />
+            android:textColor="@drawable/style_sex_man" />
+
+        <View
+            android:visibility="gone"
+            android:id="@+id/vline2"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:background="#D2D2D2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
 
         <TextView
             android:visibility="gone"
             android:id="@+id/btnFile2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btn_white_sel"
+            android:layout_marginTop="0dp"
+            android:background="@drawable/style_sex_woman"
             android:gravity="center"
             android:padding="10dp"
             android:text="从手机相册选择"
             android:textSize="16sp"
-            android:textColor="#E99319" />
+            android:textColor="@drawable/style_sex_woman" />
 
-        <TextView
-            android:id="@+id/btnCancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btn_white_sel"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="取消"
-            android:textSize="16sp"
-            android:textColor="#D3D3D2" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btnCancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_white2"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="取消"
+        android:textSize="16sp"
+        android:textColor="#D3D3D2" />
+
+
     </LinearLayout>
 
 

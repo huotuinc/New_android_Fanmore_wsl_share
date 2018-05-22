@@ -30,11 +30,12 @@
             android:layout_gravity="center"
             android:text="我的设置"
             android:textColor="#E99319"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
     </FrameLayout>
 
 
     <android.support.v4.widget.NestedScrollView
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
@@ -62,6 +63,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textSize="16sp"
                     android:text="头像"
                     android:textColor="@color/gray_my" />
 
@@ -112,6 +114,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="我的背景墙"
+                    android:textSize="16sp"
                     android:textColor="@color/gray_my" />
 
                 <com.facebook.drawee.view.SimpleDraweeView
@@ -147,6 +150,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="个签"
+                    android:textSize="16sp"
                     android:textColor="@color/gray_my" />
 
                 <TextView
@@ -185,6 +189,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="昵称"
+                    android:textSize="16sp"
                     android:textColor="@color/gray_my" />
 
                 <TextView
@@ -223,6 +228,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="姓名"
+                    android:textSize="16sp"
                     android:textColor="@color/gray_my" />
 
                 <TextView
@@ -270,6 +276,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="性别"
+                    android:textSize="16sp"
                     android:textColor="@color/gray_my" />
 
                 <TextView
@@ -311,6 +318,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="生日"
+                    android:textSize="16sp"
                     android:textColor="@color/gray_my" />
 
                 <TextView
@@ -355,6 +363,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="职业"
+                    android:textSize="16sp"
                     android:textColor="@color/gray_my" />
 
                 <TextView
@@ -552,7 +561,6 @@
             <!-- 浏览量 -->
             <LinearLayout
                 android:layout_marginTop="0dp"
-
                 android:id="@+id/layRead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -626,7 +634,6 @@
             <!-- 我的伙伴 -->
             <LinearLayout
                 android:layout_marginTop="0dp"
-
                 android:id="@+id/layPartner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

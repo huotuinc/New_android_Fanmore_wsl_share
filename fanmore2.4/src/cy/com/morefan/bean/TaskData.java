@@ -234,4 +234,7 @@ public class TaskData implements BaseData, Serializable {
 	 * 任务转发出去的地址
 	 */
 	public String taskInfo;
+
+	public String tagTitle;
+
 }

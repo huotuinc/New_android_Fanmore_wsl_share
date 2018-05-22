@@ -68,8 +68,8 @@ public class WindowProgress {
 		}
 		if(layAll == null){
 			layAll = new LinearLayout(mActivity);
-			layAll.setBackgroundColor(Color.GRAY);
-			layAll.getBackground().setAlpha(150);
+			//layAll.setBackgroundColor(Color.GRAY);
+			//layAll.getBackground().setAlpha(150);
 			//layAll.setBackgroundResource(R.drawable.loading_bg);
 			//layAll.setBackgroundColor(0x90545D66);
 			//layAll.getBackground().setAlpha(150);

@@ -29,4 +29,6 @@ public abstract class IFloatWindow {
     abstract void dismiss();
 
     public abstract void setTouchCallbak(TouchCallbackListener touchCallbak);
+
+    public abstract void setDragListener(IDragListener iDragListener);
 }

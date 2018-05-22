@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import cy.com.morefan.constant.BusinessStatic;
 import android.content.Context;
+import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
@@ -16,6 +17,8 @@ public class IMEIUtil {
 	private static String sID = null;
     private static final String INSTALLATION = "INSTALLATION";
     public static String getIMEI(Context context){
+
+
     	String id = null;
     	TelephonyManager telMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		id = telMgr.getDeviceId();

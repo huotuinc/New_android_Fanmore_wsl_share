@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     android:clipToPadding="true"
-    android:background="@color/white"
+    android:background="#F8F8F8"
     android:layout_height="match_parent"
     tools:context="cy.com.morefan.FavoriteActivity">
 
@@ -21,12 +21,14 @@
             android:id="@+id/favorite_back"
             android:paddingRight="10dp"
             android:src="@drawable/arrow_left"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
             android:layout_width="40dp"
             android:layout_height="30dp" />
 
         <TextView
             android:textColor="#EA9A28"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:text="我的收藏"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
@@ -51,7 +53,7 @@
             <TextView
                 android:id="@+id/favorite_date_value"
                 android:text=""
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textColor="#2B2C2F"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -70,12 +72,12 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <com.weigan.loopview.LoopView
+            <cy.com.morefan.view.loopview.LoopView
                 android:layout_marginTop="0dp"
                 android:id="@+id/loopView"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                app:awv_textsize="16"
+                app:awv_textsize="14"
                 app:awv_isLoop="true"
                 app:awv_itemsVisibleCount="3"
                 app:awv_dividerTextColor="@color/date_bg"

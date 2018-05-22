@@ -24,10 +24,12 @@ import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.listener.MyBroadcastReceiver;
 import cy.com.morefan.listener.MyBroadcastReceiver.BroadcastListener;
 import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
+import cy.com.morefan.service.ScoreService;
 import cy.com.morefan.service.TaskService;
 import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.DensityUtil;
 import cy.com.morefan.util.L;
+import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.util.ShareUtil;
 import cy.com.morefan.util.TimeUtil;
 import cy.com.morefan.util.ToastUtil;
@@ -109,6 +111,7 @@ public class TaskFrag extends BaseFragment
 	private TaskData[] notices;
 	private LinearLayout task_notice_container;
 	private UserService userService;
+	private ScoreService scoreService;
 
 	public void setTaskStatus(int taskStatus){
 		this.taskStaus = taskStatus;
@@ -131,12 +134,12 @@ public class TaskFrag extends BaseFragment
 	}
 	private Handler mHandler = new Handler(this);
 	@Override
-	public boolean handleMessage(Message msg){
-		if (msg.what == BusinessDataListener.DONE_GET_INFO_LIST ) {
+	public boolean handleMessage(Message msg) {
+		if (msg.what == BusinessDataListener.DONE_GET_INFO_LIST) {
 			dismissProgress();
 			TaskData[] results = (TaskData[]) msg.obj;
 			int length = results.length;
-			if (length>0) {
+			if (length > 0) {
 				if (results[0].pageIndex == 1) {
 					datas.clear();
 					if (getActivity() != null)
@@ -145,11 +148,10 @@ public class TaskFrag extends BaseFragment
 			}
 
 
-
 			for (int i = 0; i < length; i++) {
-				if(!datas.contains(results[i]))
+				if (!datas.contains(results[i]))
 					datas.add(results[i]);
-				pageIndex=results[i].pageIndex;
+				pageIndex = results[i].pageIndex;
 			}
 			layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
 
@@ -165,44 +167,50 @@ public class TaskFrag extends BaseFragment
 			listView.onFinishLoad();
 			listView.onFinishRefresh();
 
-		}else if(msg.what == BusinessDataListener.ERROR_GET_INFO_LIST){
+		} else if (msg.what == BusinessDataListener.ERROR_GET_INFO_LIST) {
 			layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
 			dismissProgress();
 			toast(msg.obj.toString());
 			listView.onFinishLoad();
 			listView.onFinishRefresh();
-		}else if(msg.what== BusinessDataListener.DONE_GET_NOTICE_LIST){
+		} else if (msg.what == BusinessDataListener.DONE_GET_NOTICE_LIST) {
 			notices = (TaskData[]) msg.obj;
 			initNotice(notices);
-		}else if(msg.what == BusinessDataListener.ERROR_GET_NOTICE_LIST){
+		} else if (msg.what == BusinessDataListener.ERROR_GET_NOTICE_LIST) {
 			layEmpty.setVisibility(datas.size() == 0 ? View.VISIBLE : View.GONE);
 			dismissProgress();
 			toast(msg.obj.toString());
 			listView.onFinishLoad();
 			listView.onFinishRefresh();
-		}else if(msg.what == BusinessDataListener.DONE_COMMIT_SEND){
+		} else if (msg.what == BusinessDataListener.DONE_COMMIT_SEND) {
 			toast("分享成功");
-			//statusType = TaskDetailActivity.StatusType.Commit;
-			//taskData.sendCount=taskData.sendCount+1;
-			//taskData.isSend=true;
 			dismissProgress();
+			String mallUserId = SPUtil.getStringToSpByName( getContext(), Constant.SP_NAME_NORMAL, Constant.SP_NAME_BuserId);
+			if (TextUtils.isEmpty(mallUserId )) return false;
+
+			scoreService.getScoreInfo(getContext() , UserData.getUserData().loginCode , Integer.valueOf( mallUserId ));
 
 			//refreshView();
-		}else if (msg.what == BusinessDataListener.ERROR_COMMIT_SEND
+		} else if (msg.what == BusinessDataListener.ERROR_COMMIT_SEND
 				|| msg.what == BusinessDataListener.ERROR_USER_LOGIN) {
 			dismissProgress();
 			toast(msg.obj.toString());
 //			if(msg.what == BusinessDataListener.ERROR_COMMIT_SEND)
 //				reCommit(msg.obj.toString());
-		}
-		else if (msg.what == BusinessDataListener.ERROR_RE_COMMIT_SEND) {
+		} else if (msg.what == BusinessDataListener.ERROR_RE_COMMIT_SEND) {
 			dismissProgress();
 			//reCommit(msg.obj.toString());
 			toast("转发失败");
+		} else if (msg.what == BusinessDataListener.DONE_SCORE) {//刷新积分
+			String appScore = ((Bundle)msg.obj).getString("appScore","0");
+			UserData.getUserData().score =appScore;
+			MyBroadcastReceiver.sendBroadcast(getContext() , MyBroadcastReceiver.ACTION_REFRESH_USEDATA);
+		} else if (msg.what == BusinessDataListener.ERROR_SCORE) {
+			//ToastUtil.show(this, msg.obj.toString());
 		}
-
 		return false;
-		}
+	}
+
 		@Override
 		public void setArguments(Bundle args) {
 			if(args != null){
@@ -227,6 +235,7 @@ public class TaskFrag extends BaseFragment
 				);
 
 		userService = new UserService(this);
+		scoreService = new ScoreService(this);
 	}
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
@@ -411,8 +420,9 @@ public class TaskFrag extends BaseFragment
 		pageIndex = 0;
 		L.i("initData:" + datas.size());
 
-		String current = dateList.get(dateList.size()-1);
+		String current =dateList.get(0); // dateList.get(dateList.size()-1);
 		task_date_value.setText(current);
+		loopView.setCurrentPosition(0);
 
 		getDataFromSer();
 
@@ -464,7 +474,12 @@ public class TaskFrag extends BaseFragment
 			Bundle extra) {
 		if( null != getActivity())
 			((HomeActivity)getActivity()).onDataFinish(type, des, datas, extra);
-		mHandler.obtainMessage(type, datas).sendToTarget();
+
+		if(type == BusinessDataListener.DONE_SCORE){
+			mHandler.obtainMessage(type , extra).sendToTarget();
+		}else {
+			mHandler.obtainMessage(type, datas).sendToTarget();
+		}
 
 	}
 	@Override
@@ -476,7 +491,7 @@ public class TaskFrag extends BaseFragment
 
 	@Override
 	public void onDataFail(int type, String des, Bundle extra) {
-
+		mHandler.obtainMessage(type, des).sendToTarget();
 	}
 
 	@Override
@@ -517,8 +532,8 @@ public class TaskFrag extends BaseFragment
 
 	}
 	private void showProgress(){
-		if(getActivity() != null)
-			((BaseActivity)getActivity()).showProgress();
+//		if(getActivity() != null)
+//			((BaseActivity)getActivity()).showProgress();
 	}
 	private void dismissProgress(){
 		if(getActivity() != null)
@@ -683,7 +698,7 @@ public class TaskFrag extends BaseFragment
 		dateList.clear();
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		for(int i=-30;i<1;i++){
+		for(int i=0;i>=-30;i--){
 			calendar.setTime(currentDate);
 			calendar.add(Calendar.DAY_OF_MONTH , i);
 			String fdate = simpleDateFormat.format(calendar.getTime()) +" "+ TimeUtil.getWeek(calendar);
@@ -701,8 +716,8 @@ public class TaskFrag extends BaseFragment
 			}
 		});
 
-		int curentP = dateList.size()-1;
-		loopView.setCurrentPosition( dateList.size()-1 );
+		int curentP = 0; // dateList.size()-1;
+		loopView.setCurrentPosition( curentP );
 		task_date_value.setText( dateList.get(curentP) );
 		//String mon = dateList.get(curentP).split(" ")[0];
 
@@ -725,11 +740,12 @@ public class TaskFrag extends BaseFragment
 
 		ArrayList<CharSequence> notices = new ArrayList<>();
 		for(int i=0;i<list.length;i++){
-
 			String text = list[i].taskName;
-			text = text.replaceFirst("置顶","<font color='blue'>置顶</font>");
-			CharSequence charSequence = Html.fromHtml(text);
+			String tag = list[i].tagTitle;
+			if(TextUtils.isEmpty(tag)) continue;
 
+			text = "<font color='#E99319'>"+ tag +"</font>|" + text;
+			CharSequence charSequence = Html.fromHtml(text);
 			notices.add( charSequence );
 		}
 

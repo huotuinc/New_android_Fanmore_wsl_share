@@ -240,13 +240,13 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="15dp"
                             android:textStyle="bold"
-                            android:textSize="16sp" />
+                            android:textSize="15sp" />
 
                         <ImageView
                             android:id="@+id/layFavarite_arrow"
                             android:layout_alignParentRight="true"
                             android:layout_marginRight="5dp"
-                            android:src="@drawable/info_arrow"
+                            android:src="@drawable/arrows_right_g"
                             android:layout_centerVertical="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
@@ -283,13 +283,13 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="15dp"
                         android:textStyle="bold"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
 
                     <ImageView
                         android:id="@+id/layPartener_arrow"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="5dp"
-                        android:src="@drawable/info_arrow"
+                        android:src="@drawable/arrows_right_g"
                         android:layout_centerVertical="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -326,13 +326,13 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="15dp"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:id="@+id/layHome_arrow"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="5dp"
-                    android:src="@drawable/info_arrow"
+                    android:src="@drawable/arrows_right_g"
                     android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -376,12 +376,12 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="15dp"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:id="@+id/layHistoryReturn_arrow"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/info_arrow"
+                    android:src="@drawable/arrows_right_g"
                     android:layout_marginRight="5dp"
                     android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
@@ -428,12 +428,12 @@
                             android:layout_marginLeft="15dp"
                             android:textStyle="bold"
                             android:layout_centerVertical="true"
-                            android:textSize="16sp" />
+                            android:textSize="15sp" />
 
                         <ImageView
                             android:id="@+id/layRank_arrow"
                             android:layout_alignParentRight="true"
-                            android:src="@drawable/info_arrow"
+                            android:src="@drawable/arrows_right_g"
                             android:layout_marginRight="5dp"
                             android:layout_centerVertical="true"
                             android:layout_width="wrap_content"
@@ -479,12 +479,12 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="15dp"
                     android:layout_centerVertical="true"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:id="@+id/layTask_arrow"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/info_arrow"
+                    android:src="@drawable/arrows_right_g"
                     android:layout_marginRight="5dp"
                     android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
@@ -523,7 +523,7 @@
                     android:text="最新预告"
                     android:layout_marginLeft="10dp"
                     android:layout_centerVertical="true"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:id="@+id/textView" />
 
                 <TextView
@@ -542,7 +542,7 @@
                 <ImageView
                     android:id="@+id/layPre_arrow"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/info_arrow"
+                    android:src="@drawable/arrows_right_g"
                     android:layout_marginRight="5dp"
                     android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
@@ -577,11 +577,11 @@
                     android:layout_marginLeft="15dp"
                     android:text="我要推荐"
                     android:layout_centerVertical="true"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
                 <ImageView
                     android:id="@+id/layPrentice_arrow"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/info_arrow"
+                    android:src="@drawable/arrows_right_g"
                     android:layout_marginRight="5dp"
                     android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
@@ -626,12 +626,12 @@
                             android:layout_marginLeft="15dp"
                             android:layout_centerVertical="true"
                             android:textStyle="bold"
-                            android:textSize="16sp" />
+                            android:textSize="15sp" />
 
                         <ImageView
                             android:id="@+id/layMall_arrow"
                             android:layout_alignParentRight="true"
-                            android:src="@drawable/info_arrow"
+                            android:src="@drawable/arrows_right_g"
                             android:layout_marginRight="5dp"
                             android:layout_centerVertical="true"
                             android:layout_width="wrap_content"
@@ -670,12 +670,12 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="15dp"
                             android:layout_centerVertical="true"
-                            android:textSize="16sp" />
+                            android:textSize="15sp" />
 
                         <ImageView
                             android:id="@+id/layhelp_arrow"
                             android:layout_alignParentRight="true"
-                            android:src="@drawable/info_arrow"
+                            android:src="@drawable/arrows_right_g"
                             android:layout_marginRight="5dp"
                             android:layout_centerVertical="true"
                             android:layout_width="wrap_content"
@@ -715,11 +715,11 @@
                             android:layout_marginLeft="15dp"
                             android:text="更多选项"
                             android:layout_centerVertical="true"
-                            android:textSize="16sp" />
+                            android:textSize="15sp" />
                         <ImageView
                             android:id="@+id/layMore_arrow"
                             android:layout_alignParentRight="true"
-                            android:src="@drawable/info_arrow"
+                            android:src="@drawable/arrows_right_g"
                             android:layout_marginRight="5dp"
                             android:layout_centerVertical="true"
                             android:layout_width="wrap_content"
@@ -761,13 +761,13 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="15dp"
                         android:textStyle="bold"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
 
                     <ImageView
                         android:id="@+id/layMySet_arrow"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="5dp"
-                        android:src="@drawable/info_arrow"
+                        android:src="@drawable/arrows_right_g"
                         android:layout_centerVertical="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -806,12 +806,12 @@
                         android:layout_marginLeft="15dp"
                         android:layout_centerVertical="true"
                         android:textStyle="bold"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
 
                     <ImageView
                         android:id="@+id/layCompany_arrow"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/info_arrow"
+                        android:src="@drawable/arrows_right_g"
                         android:layout_marginRight="5dp"
                         android:layout_centerVertical="true"
                         android:layout_width="wrap_content"
@@ -850,11 +850,11 @@
                             android:textStyle="bold"
                             android:text="监督管理"
                             android:layout_centerVertical="true"
-                            android:textSize="16sp" />
+                            android:textSize="15sp" />
                         <ImageView
                             android:id="@+id/laySupervision_arrow"
                             android:layout_alignParentRight="true"
-                            android:src="@drawable/info_arrow"
+                            android:src="@drawable/arrows_right_g"
                             android:layout_marginRight="5dp"
                             android:layout_centerVertical="true"
                             android:layout_width="wrap_content"
@@ -920,6 +920,7 @@
                     android:visibility="gone"
                     android:textSize="15sp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
                     android:padding="10dp"
                     android:gravity="center"
                     android:textColor="#a0a0a0"

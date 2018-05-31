@@ -58,8 +58,8 @@ public class CropperView {
 			return;
 		changSize = false;
 		L.i(">>>>>>>>0:" + source.getWidth() + "," + source.getHeight());
-		int widthMul = source.getWidth()/960;
-		int heightMul = source.getHeight()/960;
+		int widthMul = source.getWidth()/640;
+		int heightMul = source.getHeight()/640;
 		int mul = Math.min(widthMul, heightMul);
 		mul = mul == 0 ? 1 : mul;
 		this.mOutWidth = source.getWidth()	/ mul;

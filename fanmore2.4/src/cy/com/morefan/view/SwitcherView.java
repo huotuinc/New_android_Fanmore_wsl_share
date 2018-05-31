@@ -2,6 +2,7 @@ package cy.com.morefan.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -16,6 +17,8 @@ import android.widget.ViewSwitcher;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import cy.com.morefan.BuildConfig;
 import cy.com.morefan.R;
 /**
  * Created by maning on 16/7/17.
@@ -66,6 +69,11 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
         tView = new TextView(getContext());
         tView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
         tView.setTextColor(textColor);
+        tView.setTextScaleX(1f);
+        if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.LOLLIPOP) {
+            tView.setLetterSpacing(0.1f);
+        }
+
         tView.setSingleLine();
         tView.setPadding(10, 5, 10, 5);
         tView.setEllipsize(TextUtils.TruncateAt.END);
@@ -112,6 +120,7 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
             timer.schedule(timerTask, 0, timePeriod);
         }
     }
+
 
     public CharSequence getCurrentItem() {
         if (dataSource != null && dataSource.size() > 0) {

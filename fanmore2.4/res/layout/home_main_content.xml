@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AllScoreActivity" >
 
     <FrameLayout style="@style/TitleStyle" >
@@ -48,7 +49,9 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:onClick="onClick"
+                android:letterSpacing="0.1"
                 android:text="头条资讯"
+                android:textScaleX="1"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:textColor="@color/theme_back" />

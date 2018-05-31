@@ -23,6 +23,7 @@ import cy.com.morefan.listener.MyBroadcastReceiver.ReceiverType;
 import cy.com.morefan.service.UserService;
 import cy.com.morefan.util.Base64;
 import cy.com.morefan.util.DensityUtil;
+import cy.com.morefan.util.NDateUtils;
 import cy.com.morefan.util.SPUtil;
 import cy.com.morefan.util.ToastUtil;
 import cy.com.morefan.util.Util;
@@ -228,7 +229,9 @@ public class MyBaseInfoActivity extends BaseActivity
 		txtIncome.setText(extra.getString("income"));
 		txtIncome.setTag(extra.getString("incomeId"));
 		txtArea.setText(extra.getString("area"));
-		txtTime.setText(UserData.getUserData().regTime);
+		try {
+			txtTime.setText(UserData.getUserData().regTime.substring(0,10));
+		}catch (Exception ex){}
 		txtSign.setText(extra.getString("signDesc"));
 
 		txtRead.setText(UserData.getUserData().TotalBrowseAmount);

@@ -3,13 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
         android:visibility="visible"
-        android:id="@+id/task_notice_container"
+        android:id="@+id/task_notice_container2"
         android:orientation="vertical"
-        android:paddingTop="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="1dp"
-        android:background="@drawable/style_notice_bg"
+        android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <cy.com.morefan.view.SwitcherView

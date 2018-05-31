@@ -2,9 +2,11 @@ package cy.com.morefan.view;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -88,6 +90,29 @@ public class SexView {
                 if(listener != null)
                     listener.onSexSelectBack(null);
                 dialog.dismiss();
+            }
+        });
+
+        mainView.findViewById(R.id.tvMan).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN || event.getAction()==MotionEvent.ACTION_MOVE){
+                    mainView.findViewById(R.id.line).setBackgroundResource(R.color.bg2);
+                }else{
+                    mainView.findViewById(R.id.line).setBackgroundResource(R.color.dialog_press_bg);
+                }
+                return false;
+            }
+        });
+        mainView.findViewById(R.id.tvWoman).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN||event.getAction()==MotionEvent.ACTION_MOVE){
+                    mainView.findViewById(R.id.line).setBackgroundResource(R.color.bg2);
+                }else{
+                    mainView.findViewById(R.id.line).setBackgroundResource(R.color.dialog_press_bg);
+                }
+                return false;
             }
         });
 

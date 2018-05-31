@@ -181,7 +181,7 @@ public class IFloatWindowImpl extends IFloatWindow {
                                 sY = event.getY();
                                 cancelAnimator();
 
-                                drag(event , 1 );
+                                drag(event , 1 ,0 );
 
                                 break;
                             case MotionEvent.ACTION_MOVE:
@@ -193,7 +193,7 @@ public class IFloatWindowImpl extends IFloatWindow {
                                 lastX = event.getRawX();
                                 lastY = event.getRawY();
 
-                                drag(event , 2 );
+                                drag(event , 2 , 0 );
                                 break;
                             case MotionEvent.ACTION_UP:
                                 switch (mB.mMoveType) {
@@ -226,7 +226,7 @@ public class IFloatWindowImpl extends IFloatWindow {
                                         });
                                         startAnimator();
 
-                                        drag(event,3);
+                                        drag(event,3 , sX );
 
                                         break;
                                 }
@@ -290,14 +290,17 @@ public class IFloatWindowImpl extends IFloatWindow {
         this.iDragListener = iDragListener;
     }
 
-    private void drag( MotionEvent event , int type ){
+    private void drag( MotionEvent event , int type  , float tx ){
         if(this.iDragListener==null) return;
+
+
 
         if(type==1){
             this.iDragListener.startDrag(event );
         }else if(type ==2){
             this.iDragListener.draging( event );
         }else if(type ==3){
+            if( Math.abs(event.getX() - tx) < mTouchSlop) return;
             this.iDragListener.endDrag( event  );
         }
     }

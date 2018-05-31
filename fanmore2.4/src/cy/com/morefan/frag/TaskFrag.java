@@ -281,6 +281,9 @@ public class TaskFrag extends BaseFragment
 		task_date_value= mRootView.findViewById(R.id.task_date_value);
 		layMast = mRootView.findViewById(R.id.layMast);
 		layMast.setOnClickListener(this);
+
+		task_notice_container=mRootView.findViewById(R.id.task_notice_container);
+
 		initDateData();
 
 
@@ -299,7 +302,7 @@ public class TaskFrag extends BaseFragment
 		View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_notice,null);
 		listView.addHeaderView(view);
 
-		task_notice_container=view.findViewById(R.id.task_notice_container);
+
 		switcherView = view.findViewById(R.id.switcherView);
 		switcherView.setOnClickListener(this);
 
@@ -569,6 +572,7 @@ public class TaskFrag extends BaseFragment
 			dataShow=!dataShow;
 			ivTaskDataConer.setImageResource( dataShow ? R.drawable.corner2:R.drawable.corner );
 			task_date_select.setVisibility(dataShow?View.VISIBLE:View.GONE);
+			task_notice_container.setVisibility(!dataShow?View.VISIBLE:View.GONE);
 			layMast.setVisibility(dataShow?View.VISIBLE:View.GONE);
 			break;
 		case R.id.switcherView:
@@ -701,7 +705,7 @@ public class TaskFrag extends BaseFragment
 		for(int i=0;i>=-30;i--){
 			calendar.setTime(currentDate);
 			calendar.add(Calendar.DAY_OF_MONTH , i);
-			String fdate = simpleDateFormat.format(calendar.getTime()) +" "+ TimeUtil.getWeek(calendar);
+			String fdate = simpleDateFormat.format(calendar.getTime()) +"  "+ TimeUtil.getWeek(calendar);
 			dateList.add( fdate );
 		}
 
@@ -710,6 +714,7 @@ public class TaskFrag extends BaseFragment
 		loopView.setListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(int index) {
+				if(index>= dateList.size()|| index<0) return;
 				task_date_value.setText( dateList.get(index) );
 				datas.clear();
 				getDataFromSer();
@@ -733,7 +738,7 @@ public class TaskFrag extends BaseFragment
 
 	private void initNotice(TaskData[] list ){
 
-		task_notice_container.setVisibility(list==null || list.length<1? View.GONE:View.VISIBLE);
+		//task_notice_container.setVisibility(list==null || list.length<1? View.GONE:View.VISIBLE);
 
 		int length = list.length;
 		if(length<1) return;
@@ -749,9 +754,14 @@ public class TaskFrag extends BaseFragment
 			notices.add( charSequence );
 		}
 
-
 		switcherView.setResource(notices);
-		switcherView.setTimePeriod( 2500 );
+
+		if(notices.size()<=1) {
+			switcherView.setTimePeriod(4000*10000);
+		}else {
+			switcherView.setTimePeriod(4000);
+		}
+
 		switcherView.startRolling();
 	}
 
@@ -777,7 +787,7 @@ public class TaskFrag extends BaseFragment
 
 
 						String week = TimeUtil.getWeek(calendar);
-						String temp = time + " " + week;
+						String temp = time + "  " + week;
 						task_date_value.setText(temp);
 
 					} catch (Exception ex) {

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -109,16 +110,56 @@ public class PhotoSelectView {
 				dialog.dismiss();
 			}
 		});
-//		mainView.findViewById(R.id.layMain).setOnClickListener(new View.OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				if(listener != null)
-//					listener.onPhotoSelectBack(null);
-//				dialog.dismiss();
-//			}
-//		});
 
+		mainView.findViewById(R.id.btnFile).setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if(event.getAction() == MotionEvent.ACTION_DOWN||event.getAction()==MotionEvent.ACTION_MOVE){
+					mainView.findViewById(R.id.vline).setBackgroundResource(R.color.bg2);
+				}else{
+					mainView.findViewById(R.id.vline).setBackgroundResource(R.color.dialog_press_bg);
+				}
+				return false;
+			}
+		});
+
+		mainView.findViewById(R.id.btnCamera).setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if(event.getAction() == MotionEvent.ACTION_DOWN||event.getAction()==MotionEvent.ACTION_MOVE){
+					mainView.findViewById(R.id.vline).setBackgroundResource(R.color.bg2);
+				}else{
+					mainView.findViewById(R.id.vline).setBackgroundResource(R.color.dialog_press_bg);
+				}
+				return false;
+			}
+		});
+
+
+		mainView.findViewById(R.id.btnFile2).setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if(event.getAction() == MotionEvent.ACTION_DOWN||event.getAction()==MotionEvent.ACTION_MOVE){
+					mainView.findViewById(R.id.vline2).setBackgroundResource(R.color.bg2);
+				}else{
+					mainView.findViewById(R.id.vline2).setBackgroundResource(R.color.dialog_press_bg);
+				}
+				return false;
+			}
+		});
+
+
+		mainView.findViewById(R.id.btnCamera2).setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if(event.getAction() == MotionEvent.ACTION_DOWN||event.getAction()==MotionEvent.ACTION_MOVE){
+					mainView.findViewById(R.id.vline2).setBackgroundResource(R.color.bg2);
+				}else{
+					mainView.findViewById(R.id.vline2).setBackgroundResource(R.color.dialog_press_bg);
+				}
+				return false;
+			}
+		});
 
 	}
 

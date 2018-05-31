@@ -4,7 +4,7 @@
     <item android:state_pressed="true"><shape android:shape="rectangle">
 
             <!-- 填充 -->
-            <solid android:color="#E99319" /> <!-- 填充的颜色 -->
+            <solid android:color="#ca5100" /> <!-- 填充的颜色 -->
             <!-- 圆角 -->
             <corners android:radius="5dp" /> <!-- 设置圆角半径 -->
 

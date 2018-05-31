@@ -115,15 +115,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 app:awv_textsize="14"
-                app:awv_isLoop="true"
+                app:awv_isLoop="false"
                 app:awv_itemsVisibleCount="3"
-                app:awv_lineSpace="1.5"
+                app:awv_lineSpace="1.6"
                 app:awv_dividerTextColor="@color/date_bg"
                 app:awv_centerTextColor="@color/date_color"
                 android:paddingBottom="1dp"
                 android:layout_marginBottom="3dp"
                 />
             <View
+                android:layout_marginTop="4dp"
                 android:background="#D5D5D5"
                 android:layout_width="match_parent"
                 android:layout_height="1px" />
@@ -140,17 +141,16 @@
         
     </LinearLayout>
 
-    <!--<LinearLayout-->
-        <!--android:visibility="visible"-->
-        <!--android:id="@+id/task_notice_container"-->
-        <!--android:orientation="vertical"-->
-        <!--android:paddingTop="10dp"-->
-        <!--android:paddingLeft="10dp"-->
-        <!--android:paddingRight="10dp"-->
-        <!--android:paddingBottom="10dp"-->
-        <!--android:background="@drawable/style_notice_bg"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
+    <LinearLayout
+        android:visibility="visible"
+        android:id="@+id/task_notice_container"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/style_notice_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <!--<cy.com.morefan.view.SwitcherView-->
             <!--android:paddingTop="6dp"-->
             <!--android:paddingBottom="6dp"-->
@@ -164,7 +164,7 @@
             <!--app:switcherTextColor="@color/notice_color"-->
             <!--app:switcherTextSize="14sp"-->
            <!--/>-->
-    <!--</LinearLayout>-->
+    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"

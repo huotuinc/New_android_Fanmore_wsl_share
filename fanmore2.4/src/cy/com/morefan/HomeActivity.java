@@ -43,6 +43,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
@@ -77,7 +78,9 @@ import java.util.HashMap;
  * @author edushi
  *666
  */
-public class HomeActivity extends BaseActivity implements BroadcastListener, Callback {
+public class HomeActivity extends BaseActivity
+		implements BroadcastListener, Callback ,
+		DrawerLayout.DrawerListener, IDragListener{
 	private MyBroadcastReceiver myBroadcastReceiver;
 	private DrawerLayout mDragLayout;
 //	private FragManager fragManager;
@@ -228,12 +231,12 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 
 	@Override
 	protected void onResume() {
-		L.i("<<<<<<<<<<<<<<<<<<onResume");
+		//L.i("<<<<<<<<<<<<<<<<<<onResume");
 		super.onResume();
 	}
 	@Override
 	protected void onDestroy() {
-		L.i("<<<<<<<<<<<<<<<<<<onDestroy");
+		//L.i("<<<<<<<<<<<<<<<<<<onDestroy");
 		myBroadcastReceiver.unregisterReceiver();
 		super.onDestroy();
 	}
@@ -275,33 +278,32 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		left_menu_invite_code = (TextView)findViewById(R.id.left_menu_invite_code);
 		left_menu_top_bg = (SimpleDraweeView)findViewById(R.id.left_menu_top_bg);
 		left_menu_score = (TextView)findViewById(R.id.left_menu_score);
+		mDragLayout.addDrawerListener(this);
 
-		mDragLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-			@Override
-			public void onDrawerSlide(View drawerView, float slideOffset) {
-				Log.d("homeActivity", "offset=" + slideOffset);
-				if(slideOffset>=0.5) {
-					FloatWindow.get().hide();
-				}
-			}
-
-			@Override
-			public void onDrawerOpened(View drawerView) {
-				FloatWindow.get().hide();
-
-				//userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
-			}
-
-			@Override
-			public void onDrawerClosed(View drawerView) {
-				FloatWindow.get().show();
-			}
-
-			@Override
-			public void onDrawerStateChanged(int newState) {
-				Log.d("ssss", "onDrawerStateChanged="+newState);
-			}
-		});
+//		mDragLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+//			@Override
+//			public void onDrawerSlide(View drawerView, float slideOffset) {
+//				//Log.d("homeActivity", "offset=" + slideOffset);
+//				if(slideOffset>=0.5) {
+//					FloatWindow.get().hide();
+//				}
+//			}
+//
+//			@Override
+//			public void onDrawerOpened(View drawerView) {
+//				FloatWindow.get().hide();
+//			}
+//
+//			@Override
+//			public void onDrawerClosed(View drawerView) {
+//				FloatWindow.get().show();
+//			}
+//
+//			@Override
+//			public void onDrawerStateChanged(int newState) {
+//				//Log.d("ssss", "onDrawerStateChanged="+newState);
+//			}
+//		});
 
 	}
 	
@@ -320,6 +322,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		intentDetail.putExtra("refreshList", true);
 		startActivity(intentDetail);
 	}
+
 	private void operationPushMsg() {
 		/**
 		 * 此处只处理app未在运行时接收到的推送消息;
@@ -368,6 +371,7 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		}
 
 	}
+
 	@Override
 	public void onFinishReceiver(ReceiverType type, Object msg) {
 		if(type == ReceiverType.Login){
@@ -1103,14 +1107,20 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 				if(isClickChildView( my , x , y )){
 					FloatWindow.get().hide();
 					//openOrCloseMenu();
-					mDragLayout.closeDrawer(Gravity.LEFT);
+					mDragLayout.removeDrawerListener(HomeActivity.this);
+					mDragLayout.openDrawer(Gravity.LEFT);
+					mDragLayout.addDrawerListener(HomeActivity.this);
 
 				}else if(isClickChildView( company , x , y )){
+					//FloatWindow.get().setDragListener(null);
 					FloatWindow.get().hide();
+					//FloatWindow.get().setDragListener(HomeActivity.this);
 					Intent intent = new Intent( HomeActivity.this, SelectionActivity.class);
 					startActivity( intent );
 				}else if(isClickChildView(mall , x , y)){
+					//FloatWindow.get().setDragListener(null);
 					FloatWindow.get().hide();
+					//FloatWindow.get().setDragListener(HomeActivity.this);
 					//openOrCloseMenu();
 					inMall();
 				}
@@ -1118,23 +1128,25 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		});
 
 
-		FloatWindow.get().setDragListener(new IDragListener() {
-			@Override
-			public void startDrag(MotionEvent event) {
+//		FloatWindow.get().setDragListener(new IDragListener() {
+//			@Override
+//			public void startDrag(MotionEvent event) {
+//
+//			}
+//
+//			@Override
+//			public void draging(MotionEvent event) {
+//
+//			}
+//
+//			@Override
+//			public void endDrag(MotionEvent event) {
+//				mDragLayout.openDrawer(Gravity.LEFT);
+//				FloatWindow.get().hide();
+//			}
+//		});
 
-			}
-
-			@Override
-			public void draging(MotionEvent event) {
-
-			}
-
-			@Override
-			public void endDrag(MotionEvent event) {
-				mDragLayout.openDrawer(Gravity.LEFT);
-				FloatWindow.get().hide();
-			}
-		});
+		FloatWindow.get().setDragListener(this);
 
 	}
 
@@ -1157,4 +1169,41 @@ public class HomeActivity extends BaseActivity implements BroadcastListener, Cal
 		}
 	}
 
+	@Override
+	public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+		if(slideOffset>=0.5) {
+			FloatWindow.get().hide();
+		}
+	}
+
+	@Override
+	public void onDrawerOpened(@NonNull View drawerView) {
+		FloatWindow.get().hide();
+	}
+
+	@Override
+	public void onDrawerClosed(@NonNull View drawerView) {
+		FloatWindow.get().show();
+	}
+
+	@Override
+	public void onDrawerStateChanged(int newState) {
+
+	}
+
+	@Override
+	public void startDrag(MotionEvent event) {
+
+	}
+
+	@Override
+	public void draging(MotionEvent event) {
+
+	}
+
+	@Override
+	public void endDrag(MotionEvent event) {
+		mDragLayout.openDrawer(Gravity.LEFT);
+		FloatWindow.get().hide();
+	}
 }

@@ -57,7 +57,10 @@
                 android:gravity="center_vertical"
                 android:onClick="onClick"
                 android:orientation="horizontal"
-                android:padding="10dp" >
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp" >
 
                 <TextView
                     android:layout_width="0dp"
@@ -98,7 +101,7 @@
 
             <!-- 我的背景墙 -->
             <LinearLayout
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="1dp"
                 android:background="@color/white"
                 android:id="@+id/layDoor"
                 android:layout_width="match_parent"
@@ -107,7 +110,10 @@
                 android:gravity="center_vertical"
                 android:onClick="onClick"
                 android:orientation="horizontal"
-                android:padding="10dp" >
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp" >
 
                 <TextView
                     android:layout_width="0dp"
@@ -135,7 +141,7 @@
 
             <!-- 我的个签 -->
             <LinearLayout
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="1dp"
                 android:background="@color/white"
                 android:id="@+id/laySign"
                 android:layout_width="match_parent"
@@ -144,7 +150,10 @@
                 android:gravity="center_vertical"
                 android:onClick="onClick"
                 android:orientation="horizontal"
-                android:padding="10dp" >
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -174,7 +183,7 @@
 
             <!-- 昵称 -->
             <LinearLayout
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="1dp"
                 android:background="@color/white"
                 android:id="@+id/layNickName"
                 android:layout_width="match_parent"
@@ -183,7 +192,10 @@
                 android:gravity="center_vertical"
                 android:onClick="onClick"
                 android:orientation="horizontal"
-                android:padding="10dp" >
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -260,7 +272,7 @@
             <!-- 性别 -->
 
             <LinearLayout
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="1dp"
                 android:background="@color/white"
                 android:id="@+id/laySex"
                 android:layout_width="match_parent"
@@ -269,7 +281,10 @@
                 android:gravity="center_vertical"
                 android:onClick="onClick"
                 android:orientation="horizontal"
-                android:padding="10dp" >
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp" >
 
                 <TextView
                     android:layout_width="0dp"
@@ -532,7 +547,10 @@
                 android:gravity="center_vertical"
                 android:onClick="onClick"
                 android:orientation="horizontal"
-                android:padding="10dp" >
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp" >
 
                 <TextView
                     android:layout_width="0dp"
@@ -568,7 +586,10 @@
                 android:gravity="center_vertical"
                 android:onClick="onClick"
                 android:orientation="horizontal"
-                android:padding="10dp" >
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp" >
 
                 <TextView
                     android:layout_width="0dp"
@@ -605,7 +626,10 @@
                 android:gravity="center_vertical"
                 android:onClick="onClick"
                 android:orientation="horizontal"
-                android:padding="10dp" >
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp" >
 
                 <TextView
                     android:layout_width="0dp"
@@ -641,7 +665,10 @@
                 android:gravity="center_vertical"
                 android:onClick="onClick"
                 android:orientation="horizontal"
-                android:padding="10dp" >
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp" >
 
                 <TextView
                     android:layout_width="0dp"
@@ -670,7 +697,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="10dp" >
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp" >
 
                 <TextView
                     android:layout_width="wrap_content"

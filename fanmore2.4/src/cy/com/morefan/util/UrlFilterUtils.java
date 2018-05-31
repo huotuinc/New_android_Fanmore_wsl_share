@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import org.json.JSONException;
@@ -182,6 +183,16 @@ class UrlFilterUtils {
             application.logout ();
             //跳转到登录界面
             //ActivityUtils.getInstance ().skipActivity ( aty, LoginActivity.class );
+        }else if(url.contains("tencent://message/?uin=")){
+            try {
+                String qq = Uri.parse(url).getQueryParameter("uin");
+                String qqurl ="mqqwpa://im/chat?chat_type=wpa&uin="+qq;
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(qqurl));
+                context.startActivity(intent);
+                return true;
+            }catch (Exception ex){
+                ToastUtil.show(context,"无法处理"+url);
+            }
         }
         else
         {

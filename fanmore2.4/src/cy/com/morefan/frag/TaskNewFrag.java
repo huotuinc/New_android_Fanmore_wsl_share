@@ -513,6 +513,11 @@ public class TaskNewFrag extends BaseFragment  {
 
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
     }

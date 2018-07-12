@@ -397,7 +397,7 @@ public class MyBaseInfoActivity extends BaseActivity
 		SPUtil.saveStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_BuserId, "");
 		SPUtil.saveStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_UnionId, "");
 		//清除微信授权信息
-		ShareSDK.getPlatform(Wechat.NAME).removeAccount();
+		ShareSDK.getPlatform(Wechat.NAME).removeAccount(true);
 
 
 

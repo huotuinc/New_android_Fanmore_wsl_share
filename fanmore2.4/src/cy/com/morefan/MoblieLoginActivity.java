@@ -55,11 +55,12 @@ public class MoblieLoginActivity extends BaseActivity implements Handler.Callbac
             ActivityUtils.getInstance().showActivity(MoblieLoginActivity.this,NewWebActivity.class,bundle);
         }
 
-        //KeyWordUtil.openKeybord(edtPhone,this);
+        KeyWordUtil.openKeybord(edtPhone,this);
 
     }
     @OnClick(R.id.Txt_reg)
     void reg(){
+        KeyWordUtil.closeKeybord(this);
         Bundle bundle=new Bundle();
         bundle.putString("title","用户注册");
         bundle.putInt("isUpdate",0);
@@ -67,6 +68,7 @@ public class MoblieLoginActivity extends BaseActivity implements Handler.Callbac
     }
     @OnClick(R.id.Txt_forget_psw)
     void forgetpsw(){
+        KeyWordUtil.closeKeybord(this);
         Bundle bundle=new Bundle();
         bundle.putString("title","设置密码");
         bundle.putInt("isUpdate",1);
@@ -93,6 +95,9 @@ public class MoblieLoginActivity extends BaseActivity implements Handler.Callbac
             edtCode.requestFocusFromTouch();
             return;
         }
+
+        KeyWordUtil.closeKeybord(this);
+
         String usephone = edtPhone.getText().toString();
         String usecode= EncryptUtil.getInstance().encryptMd532(edtCode.getText().toString().trim());
         userService.MobileLogin(MoblieLoginActivity.this,usecode,usephone);
@@ -143,6 +148,7 @@ public class MoblieLoginActivity extends BaseActivity implements Handler.Callbac
                     toast("再按一次返回键退出");
                     exitTime = System.currentTimeMillis();
                 } else {
+                    KeyWordUtil.closeKeybord(this);
                     MainApplication.finshApp();
                 }
 

@@ -23,20 +23,23 @@
             android:id="@+id/left_menu_my"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:padding="8dp"
             android:src="@drawable/style_menu_my_sel" />
 
         <ImageView
             android:id="@+id/left_menu_company"
+            android:padding="8dp"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:src="@drawable/style_menu_company_sel" />
 
         <ImageView
             android:id="@+id/left_menu_mall"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
+            android:padding="8dp"
             android:src="@drawable/style_menu_mall_sel" />
 
 

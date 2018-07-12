@@ -160,7 +160,7 @@ public class WebViewActivity extends BaseActivity implements BroadcastListener{
 			break;
 		case R.id.layWeiXin:
 			showProgress();
-			Platform platform1 = new WechatMoments(this);
+			Platform platform1 = new WechatMoments();
 			wx(this,  UserData.getUserData().shareDes, imgPath, UserData.getUserData().shareContent, platform1);
 			//ShareUtil.share2WeiXin(this, UserData.getUserData().shareDes, imgPath, UserData.getUserData().shareContent);
 			break;

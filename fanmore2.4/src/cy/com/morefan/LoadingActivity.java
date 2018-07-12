@@ -8,6 +8,7 @@ import java.util.List;
 import cindy.android.test.synclistview.SyncImageLoaderHelper;
 
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.lib.cylibimagedownload.ImageUtil;
 import com.lib.cyliblocation.LibLocation;
 import cn.jpush.android.api.JPushInterface;
@@ -65,6 +66,7 @@ public class LoadingActivity extends BaseActivity implements
 	int REQUEST_STORAGE_PERMISSION=11;
 	int REQUEST_STORAGE_PERMISSION2 = 12;
     int REQUEST_STORAGE_PERMISSION3 = 13;
+    //int REQUEST_SYSTEM_WINDOW = 14;
 
 
 	@Override
@@ -221,12 +223,16 @@ public class LoadingActivity extends BaseActivity implements
 		super.onCreate(arg0);
 		setContentView(R.layout.loading);
 
+		SimpleDraweeView d = (SimpleDraweeView) findViewById(R.id.loading_icon);
+		d.setImageURI("res://"+getPackageName(this)+"/"+ R.drawable.icon);
+
 //		if(null != getIntent().getExtras())
 //			alarmId = getIntent().getExtras().getInt("alarmId");
 		broadcastReceiver = new MyBroadcastReceiver(this, this,  Intent.ACTION_BATTERY_CHANGED);
 		//PhoneRequest();
-        SDRequest();
 
+		SDRequest();
+		//FloatWindowRequest();
 		// check file
 //		Bitmap bitmap = checkLoadingImage();
 //		if (bitmap != null) {
@@ -238,49 +244,62 @@ public class LoadingActivity extends BaseActivity implements
 
 	}
 
-
-public static String getDeviceInfo(Context context) {
-    try{
-      org.json.JSONObject json = new org.json.JSONObject();
-      android.telephony.TelephonyManager tm = (android.telephony.TelephonyManager) context
-          .getSystemService(Context.TELEPHONY_SERVICE);
-
-      String device_id = tm.getDeviceId();
-
-      android.net.wifi.WifiManager wifi = (android.net.wifi.WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-
-      String mac = wifi.getConnectionInfo().getMacAddress();
-      json.put("mac", mac);
-
-      if( TextUtils.isEmpty(device_id) ){
-        device_id = mac;
-      }
-
-      if( TextUtils.isEmpty(device_id) ){
-        device_id = android.provider.Settings.Secure.getString(context.getContentResolver(),android.provider.Settings.Secure.ANDROID_ID);
-      }
-
-      json.put("device_id", device_id);
-
-      return json.toString();
-    }catch(Exception e){
-      e.printStackTrace();
-    }
-  return null;
-}
+//	void FloatWindowRequest(){
+//		int checkSelfPremission = ContextCompat.checkSelfPermission(this , Manifest.permission.SYSTEM_ALERT_WINDOW );
+//		if( checkSelfPremission != PackageManager.PERMISSION_GRANTED ){
+//			if(ActivityCompat.shouldShowRequestPermissionRationale(this , Manifest.permission.SYSTEM_ALERT_WINDOW)){
+//				ToastUtil.show(getApplication(),"请授权应用使用显示浮动窗口权限。");
+//			}
+//			ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.SYSTEM_ALERT_WINDOW}, REQUEST_SYSTEM_WINDOW);
+//		}else{
+//			SDRequest();
+//		}
+//	}
 
 
-void SDRequest(){
-    int checkSelfPremission = ContextCompat.checkSelfPermission(this , Manifest.permission.WRITE_EXTERNAL_STORAGE);
-    if(  checkSelfPremission != PackageManager.PERMISSION_GRANTED ){
-        if(ActivityCompat.shouldShowRequestPermissionRationale(this , Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-            ToastUtil.show(getApplication(),"请授权应用使用存储权限，否则将无法使用应用。");
-        }
-        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION3);
-    }else{
-        PhoneRequest();
-    }
-}
+	public static String getDeviceInfo(Context context) {
+		try{
+		  org.json.JSONObject json = new org.json.JSONObject();
+		  android.telephony.TelephonyManager tm = (android.telephony.TelephonyManager) context
+			  .getSystemService(Context.TELEPHONY_SERVICE);
+
+		  String device_id = tm.getDeviceId();
+
+		  android.net.wifi.WifiManager wifi = (android.net.wifi.WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+
+		  String mac = wifi.getConnectionInfo().getMacAddress();
+		  json.put("mac", mac);
+
+		  if( TextUtils.isEmpty(device_id) ){
+			device_id = mac;
+		  }
+
+		  if( TextUtils.isEmpty(device_id) ){
+			device_id = android.provider.Settings.Secure.getString(context.getContentResolver(),android.provider.Settings.Secure.ANDROID_ID);
+		  }
+
+		  json.put("device_id", device_id);
+
+		  return json.toString();
+		}catch(Exception e){
+		  e.printStackTrace();
+		}
+	  return null;
+	}
+
+
+	void SDRequest(){
+
+		int checkSelfPremission = ContextCompat.checkSelfPermission(this , Manifest.permission.WRITE_EXTERNAL_STORAGE);
+		if(  checkSelfPremission != PackageManager.PERMISSION_GRANTED ){
+			if(ActivityCompat.shouldShowRequestPermissionRationale(this , Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+				ToastUtil.show(getApplication(),"请授权应用使用存储权限，否则将无法使用应用。");
+			}
+			ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION3);
+		}else{
+			PhoneRequest();
+		}
+	}
 
 
 	void StorageRequest(){
@@ -309,6 +328,8 @@ void SDRequest(){
 			//TelephonyManager telMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
 			//BusinessStatic.getInstance().IMEI = telMgr.getDeviceId();
 			BusinessStatic.getInstance().IMEI = IMEIUtil.getIMEI(getApplicationContext());
+
+			//initData();
 		}
 	}
 
@@ -336,17 +357,21 @@ void SDRequest(){
                 toast("由于您没有授权应用使用存储权限，因此应用无法使用");
             }
         }
+//        else if( requestCode==REQUEST_SYSTEM_WINDOW){
+//			if ( grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+//				SDRequest();
+//			}else{
+//				toast("由于您没有授权应用显示浮动窗口权限，因此部分功能无法使用");
+//				//System.exit(0);
+//                SDRequest();
+//			}
+//		}
 	}
 
 	@Override
 	protected void onResume() {
 
 		BusinessStatic.getInstance().API_LEVEL = Integer.parseInt(VERSION.SDK);
-
-
-
-
-
 
 		if(TextUtils.isEmpty(BusinessStatic.getInstance().IMEI))
 			BusinessStatic.getInstance().IMEI = JPushInterface.getRegistrationID(this);
@@ -391,6 +416,7 @@ void SDRequest(){
 		//initData();
 
 		StorageRequest();
+		//FloatWindowRequest();
 
 		//LibLocation.startLocation(this, this);
 		super.onResume();

@@ -274,7 +274,7 @@ public class UserExchangeActivity extends BaseActivity implements UserInfoView.O
         UserData.clear();
 
         //清除微信授权信息
-        ShareSDK.getPlatform(Wechat.NAME).removeAccount();
+        ShareSDK.getPlatform(Wechat.NAME).removeAccount(true);
 
 
 

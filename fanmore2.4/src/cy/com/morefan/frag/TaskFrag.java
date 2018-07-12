@@ -112,6 +112,8 @@ public class TaskFrag extends BaseFragment
 	private LinearLayout task_notice_container;
 	private UserService userService;
 	private ScoreService scoreService;
+	private LinearLayout task_notice_container2;
+	private View headerNoticeView;
 
 	public void setTaskStatus(int taskStatus){
 		this.taskStaus = taskStatus;
@@ -299,11 +301,12 @@ public class TaskFrag extends BaseFragment
 	}
 
 	private void initNoticeView(){
-		View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_notice,null);
-		listView.addHeaderView(view);
+		headerNoticeView = LayoutInflater.from(getContext()).inflate(R.layout.layout_notice,null);
+		listView.addHeaderView(headerNoticeView);
 
+		task_notice_container2= headerNoticeView.findViewById(R.id.task_notice_container2);
 
-		switcherView = view.findViewById(R.id.switcherView);
+		switcherView = headerNoticeView.findViewById(R.id.switcherView);
 		switcherView.setOnClickListener(this);
 
 		taskService.getNoticeList(UserData.getUserData().loginCode );
@@ -741,7 +744,17 @@ public class TaskFrag extends BaseFragment
 		//task_notice_container.setVisibility(list==null || list.length<1? View.GONE:View.VISIBLE);
 
 		int length = list.length;
-		if(length<1) return;
+		if(length<1) {
+			listView.removeHeaderView(headerNoticeView);
+			//task_notice_container2.setVisibility(View.GONE);
+			return;
+		}
+
+		 if( headerNoticeView.getParent() !=null){
+			listView.removeHeaderView(headerNoticeView);
+		 }
+		 listView.addHeaderView(headerNoticeView);
+		//task_notice_container2.setVisibility(View.VISIBLE);
 
 		ArrayList<CharSequence> notices = new ArrayList<>();
 		for(int i=0;i<list.length;i++){

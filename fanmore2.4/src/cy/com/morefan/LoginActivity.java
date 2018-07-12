@@ -95,7 +95,7 @@ class LoginActivity extends BaseActivity implements View.OnClickListener, Handle
                    showProgress();
                    // ShareSDK.getPlatform(LoginActivity.this, Wechat.NAME);
                     login = new AutnLogin(LoginActivity.this, mHandler, loginL, application);
-                    login.authorize(new Wechat(LoginActivity.this));
+                    login.authorize(new Wechat());
 
                     loginL.setClickable(false);
 

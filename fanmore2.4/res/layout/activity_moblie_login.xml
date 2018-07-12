@@ -7,6 +7,7 @@
     android:fitsSystemWindows="true"
     android:clipToPadding="true"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context="cy.com.morefan.MoblieLoginActivity">
     <LinearLayout
         android:layout_height="match_parent"

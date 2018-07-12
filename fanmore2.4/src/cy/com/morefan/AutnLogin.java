@@ -38,7 +38,7 @@ class AutnLogin {
 
     public
     void authorize ( Platform plat ) {
-        if ( plat.isValid ( ) ) {
+        if ( plat.isAuthValid() ) {
             application.plat = plat;
             String userId = plat.getDb ( ).getUserId ( );
             if ( ! TextUtils.isEmpty ( userId ) ) {

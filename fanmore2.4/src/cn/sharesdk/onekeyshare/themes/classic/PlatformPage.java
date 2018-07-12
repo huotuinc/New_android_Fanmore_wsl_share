@@ -28,7 +28,7 @@ import cn.sharesdk.onekeyshare.OnekeySharePage;
 import cn.sharesdk.onekeyshare.OnekeyShareThemeImpl;
 
 import com.mob.tools.gui.MobViewPager;
-import com.mob.tools.utils.R;
+import com.mob.tools.utils.ResHelper;
 
 /** 九宫格的抽象类 */
 public abstract class PlatformPage extends OnekeySharePage {
@@ -44,7 +44,7 @@ public abstract class PlatformPage extends OnekeySharePage {
 
 	public PlatformPage(OnekeyShareThemeImpl impl) {
 		super(impl);
-		this.impl = R.forceCast(impl);
+		this.impl = ResHelper.forceCast(impl);
 	}
 
 	public void onCreate() {
@@ -128,7 +128,8 @@ public abstract class PlatformPage extends OnekeySharePage {
 					ShareParams sp = formateShareData(platform);
 					if (sp != null) {
 						// 编辑分享内容的统计
-						ShareSDK.logDemoEvent(3, null);
+						ShareSDK.logDemoEvent(3, platform);
+						sp.setOpenCustomEven(true);
 						if (getCustomizeCallback() != null) {
 							getCustomizeCallback().onShare(platform, sp);
 						}
@@ -198,5 +199,4 @@ public abstract class PlatformPage extends OnekeySharePage {
 		llPanel.setVisibility(View.GONE);
 		return true;
 	}
-
 }

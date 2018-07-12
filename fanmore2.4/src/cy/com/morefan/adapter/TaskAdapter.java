@@ -153,7 +153,7 @@ public class TaskAdapter extends BaseAdapter{
 		TextView txtLastScoreDes	= ViewHolderUtil.get(convertView, R.id.txtLastScoreDes);
 		TextView txtStore           = ViewHolderUtil.get(convertView,R.id.txtStore);
 		TextView browseCount        = ViewHolderUtil.get(convertView,R.id.browseCount);
-		//TextView sendCount        = ViewHolderUtil.get(convertView,R.id.sendCount);
+		TextView browseCount_1        = ViewHolderUtil.get(convertView,R.id.browseCount_1);
 		ImageView task_item_share   = ViewHolderUtil.get(convertView , R.id.task_item_share);
 
         	 final TaskData data = datas.get(position);
@@ -168,7 +168,7 @@ public class TaskAdapter extends BaseAdapter{
         		 }
         	 }
 				if (data.isSend){
-					imgStatusTag.setVisibility(View.VISIBLE);
+					//imgStatusTag.setVisibility(View.VISIBLE);
 				}else {
 					imgStatusTag.setVisibility(View.GONE);
 				}
@@ -188,8 +188,10 @@ public class TaskAdapter extends BaseAdapter{
         	imgTagQzone.setBackgroundResource(data.channelIds.contains(ShareUtil.CHANNEL_QZONE + "") ? R.drawable.share_ico_qzone : R.drawable.share_ico_qzone);
 			if(data.browseCount>=100000) {
 				browseCount.setText("10万+");
+				browseCount_1.setText("10万+");
 			}else {
 				browseCount.setText(String.valueOf(data.browseCount));
+				browseCount_1.setText(String.valueOf(data.browseCount));
 			}
 			//sendCount.setText(String.valueOf(data.sendCount));
         	//layScan.setVisibility(adapterType == TaskAdapterType.Normal ? View.GONE : View.VISIBLE);
@@ -252,11 +254,11 @@ public class TaskAdapter extends BaseAdapter{
 
 
 		 ImageView task_item_favarte =ViewHolderUtil.get(convertView , R.id.task_item_favarte);
-		 task_item_favarte.setImageResource( data.isFav ? R.drawable.favorite_selected : R.drawable.favorite );
+		 //task_item_favarte.setImageResource( data.isFav ? R.drawable.favorite_selected : R.drawable.favorite );
 		 task_item_favarte.setOnClickListener(new View.OnClickListener() {
 			 @Override
 			 public void onClick(View v) {
-				favoriate(data);
+				//favoriate(data);
 			 }
 		 });
 

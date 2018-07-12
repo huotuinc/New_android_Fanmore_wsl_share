@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.huotu.android.library.libedittext.EditText;
 
@@ -25,7 +26,7 @@ import cy.com.morefan.util.VolleyUtil;
 public class SetPassWordActivity extends BaseActivity implements View.OnClickListener , Handler.Callback {
 
     @BindView(R.id.btnBack)
-    Button btnBack;
+    ImageView btnBack;
     @BindView(R.id.edtPassword)
     EditText edtPassword;
     @BindView(R.id.edtpsw)
@@ -108,11 +109,11 @@ public class SetPassWordActivity extends BaseActivity implements View.OnClickLis
                 showProgress();
                 userService.userMoblieReg(SetPassWordActivity.this, moblie, code, EncryptUtil.getInstance().encryptMd532(password), isUpdate, "", token);
             } else {
-                if(TextUtils.isEmpty(invitationCode)){
-                    edtinvitationCode.requestFocus();
-                    edtinvitationCode.setError("邀请码不能为空");
-                    return;
-                }
+//                if(TextUtils.isEmpty(invitationCode)){
+//                    edtinvitationCode.requestFocus();
+//                    edtinvitationCode.setError("邀请码不能为空");
+//                    return;
+//                }
                 showProgress();
                 userService.userMoblieReg(SetPassWordActivity.this, moblie, code, EncryptUtil.getInstance().encryptMd532(password), isUpdate, invitationCode, token);
             }

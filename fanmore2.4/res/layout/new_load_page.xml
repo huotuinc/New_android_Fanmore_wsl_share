@@ -2,15 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#f8f8f8"
-    >
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+                android:background="#f8f8f8">
+
     <FrameLayout android:id="@+id/ff1" style="@style/TitleStyle" >
 
-        <Button
+        <ImageView
             android:id="@+id/btnBack"
-            android:background="@color/theme_back"
+            android:src="@drawable/arrow_left"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="25dp"
             android:textSize="15sp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
@@ -24,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@color/white"
+            android:textColor="@color/theme_back"
             android:textIsSelectable="false"
             android:textSize="18dp" />
         <!--<Button-->

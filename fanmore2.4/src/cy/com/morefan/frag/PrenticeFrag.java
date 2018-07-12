@@ -197,7 +197,7 @@ public class PrenticeFrag extends BaseFragment implements OnClickListener, Busin
 			 String shareDes =topData.prenticeShareDes;
 			 String shareUrl =topData.prenticeShareUrl;
 			 String sharetitle = topData.shareTitle;
-			ShareSDK.initSDK(getActivity());
+			//ShareSDK.initSDK(getActivity());
 			OnekeyShare oks = new OnekeyShare();
 			//关闭sso授权
 			oks.disableSSOWhenAuthorize();

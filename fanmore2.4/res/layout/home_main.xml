@@ -12,6 +12,6 @@
     <include layout="@layout/home_main_content" />
     <!--<include layout="@layout/home_main_menu" />-->
 
-    <include layout="@layout/home_main_menu2" />
+    <include layout="@layout/home_main_menu3" />
 
 </android.support.v4.widget.DrawerLayout>

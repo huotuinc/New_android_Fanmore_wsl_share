@@ -85,6 +85,7 @@ public class HomeActivity extends BaseActivity
 	private DrawerLayout mDragLayout;
 //	private FragManager fragManager;
 	private UserService userService;
+	private ScoreService scoreService;
 	//private TextView txtMine;
 	private TextView txtName;
 	private TextView txtScore;
@@ -120,6 +121,10 @@ public class HomeActivity extends BaseActivity
 	private TextView left_menu_invite_code;
 	private SimpleDraweeView left_menu_top_bg;
 	private TextView left_menu_score;
+	private SimpleDraweeView left_menu_avator_1;
+	private TextView left_menu_username_1;
+	private TextView left_menu_todaycount;
+	private TextView left_menu_score_1;
 
 	//private PopCheckIn popCheckIn;
 	private SyncImageLoaderHelper helper;
@@ -156,6 +161,7 @@ public class HomeActivity extends BaseActivity
 		operationAlarm();
 		setScores();
 		userService = new UserService(this);
+		scoreService = new ScoreService(this);
 
 
 //		if(null == arg0){
@@ -279,6 +285,11 @@ public class HomeActivity extends BaseActivity
 		left_menu_top_bg = (SimpleDraweeView)findViewById(R.id.left_menu_top_bg);
 		left_menu_score = (TextView)findViewById(R.id.left_menu_score);
 		mDragLayout.addDrawerListener(this);
+
+		left_menu_avator_1 =(SimpleDraweeView)findViewById(R.id.left_menu_avator_1);
+		left_menu_username_1 = (TextView)findViewById(R.id.left_menu_username_1);
+		left_menu_todaycount = (TextView)findViewById(R.id.left_menu_todaycount);
+		left_menu_score_1 = (TextView)findViewById(R.id.left_menu_score_1);
 
 //		mDragLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
 //			@Override
@@ -593,6 +604,7 @@ public class HomeActivity extends BaseActivity
                 startActivity(intentFavorite);
                 break;
 			case R.id.layMySet:
+			case R.id.left_menu_avator_1:
 			case R.id.left_menu_header://我的设置
                 openOrCloseMenu();
 				Intent intentSet = new Intent(this , MyBaseInfoActivity.class);
@@ -605,6 +617,11 @@ public class HomeActivity extends BaseActivity
 				break;
 			case R.id.left_menu_aq://点击复制
 				copyAq();
+				break;
+			case R.id.left_menu_lay_score://我的积分
+				openOrCloseMenu();
+				Intent intentScore = new Intent(this, ScoreActivity.class);
+				startActivity(intentScore);
 				break;
 
 		default:
@@ -882,10 +899,14 @@ public class HomeActivity extends BaseActivity
 		}
 		txtName.setText(userName);
 		left_menu_userName.setText(userName);
+		left_menu_username_1.setText(userName);
 		left_menu_sign.setText( userData.getUserData().sign==null? "" : UserData.getUserData().sign );
 		txtScore.setVisibility(View.GONE);
 		//txtScore.setText("可用分红." + total);
 		txttodayScanCount.setText("今日转发量:" + todayScanCount);
+
+		left_menu_todaycount.setText( String.valueOf( userData.todayScanCount));
+		left_menu_score_1.setText( userData.score );
 		//txtTodayScan.setText(scanCount);
 		//txtYesScore.setText(yes);
 		L.i(">>>>>>>>>picUrl:" + userData.picUrl);
@@ -895,6 +916,7 @@ public class HomeActivity extends BaseActivity
 			//helper.loadImage(-1, img, null, userData.picUrl, Constant.BASE_IMAGE_PATH);
 			ImageLoad.loadLogo(userData.picUrl, img, this);
 
+			left_menu_avator_1.setImageURI(userData.picUrl);
 		}
 
 		left_menu_avator.setImageURI( userData.picUrl );
@@ -1017,6 +1039,8 @@ public class HomeActivity extends BaseActivity
 			handler.obtainMessage(type).sendToTarget();
 		}else if( type == BusinessDataListener.DONE_GET_SCANCOUNT){
 			handler.obtainMessage(type).sendToTarget();
+		}else if(type== BusinessDataListener.DONE_SCORE){
+			handler.obtainMessage(type).sendToTarget();
 		}
 	}
 	@Override
@@ -1063,6 +1087,8 @@ public class HomeActivity extends BaseActivity
 			//dismissProgress();
 			toast(msg.obj.toString());
 		}else if( msg.what == BusinessDataListener.DONE_GET_SCANCOUNT){
+			setScores();
+		}else if(msg.what == BusinessDataListener.DONE_SCORE){
 			setScores();
 		}
 		return false;
@@ -1179,6 +1205,11 @@ public class HomeActivity extends BaseActivity
 	@Override
 	public void onDrawerOpened(@NonNull View drawerView) {
 		FloatWindow.get().hide();
+
+		userService.GetUserTodayBrowseCount(UserData.getUserData().loginCode);
+
+		scoreService.getScoreInfo(this , UserData.getUserData().loginCode , 0 );
+
 	}
 
 	@Override

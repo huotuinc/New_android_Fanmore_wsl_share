@@ -44,7 +44,7 @@
 
     <style name="SplashTheme" parent="AppTheme">
         <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowIsTranslucent">false</item>
         <item name="windowNoTitle">true</item>
         <!--<item name="android:windowFullscreen">true</item>-->
         <item name="android:windowFullscreen">true</item>

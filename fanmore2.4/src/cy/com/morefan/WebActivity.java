@@ -61,7 +61,7 @@ class WebActivity extends BaseActivity implements Handler.Callback, MyBroadcastR
     FrameLayout newtitleLayout;
     //标题栏左侧图标
     @BindView(R.id.btnBack)
-    Button titleLeftImage;
+    ImageView titleLeftImage;
     //标题栏标题文字
     @BindView(R.id.txtTitle)
     TextView titleText;
@@ -94,9 +94,9 @@ class WebActivity extends BaseActivity implements Handler.Callback, MyBroadcastR
     protected
     void initView ( ) {
 
-        Drawable drawable = resources.getDrawable(R.color.theme_back);
+        //Drawable drawable = resources.getDrawable(R.color.theme_back);
         //设置title背景
-        SystemTools.loadBackground(newtitleLayout, drawable);
+        //SystemTools.loadBackground(newtitleLayout, drawable);
         //设置左侧图标
 //        Drawable leftDraw = resources.getDrawable ( R.drawable.main_title_left_back );
 //        SystemTools.loadBackground(titleLeftImage, leftDraw);

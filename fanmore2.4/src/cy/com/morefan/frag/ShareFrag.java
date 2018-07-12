@@ -181,7 +181,7 @@ public class ShareFrag extends BaseFragment implements OnClickListener{
 			break;
 		case R.id.layWeiXin:
 			showProgress();
-			Platform platform1 = new WechatMoments(getActivity());
+			Platform platform1 = new WechatMoments();
 			wx( getActivity(), UserData.getUserData().shareDes, imgUrl,UserData.getUserData().shareContent,platform1);
 			break;
 		case R.id.layQQ:

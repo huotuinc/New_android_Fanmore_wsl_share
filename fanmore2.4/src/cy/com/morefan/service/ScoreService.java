@@ -18,6 +18,7 @@ import java.util.Map;
 import cy.com.morefan.bean.FavoriteData;
 import cy.com.morefan.bean.MyJSONObject;
 import cy.com.morefan.bean.TaskData;
+import cy.com.morefan.bean.UserData;
 import cy.com.morefan.constant.Constant;
 import cy.com.morefan.listener.BusinessDataListener;
 import cy.com.morefan.util.AuthParamUtils;
@@ -289,6 +290,7 @@ public class ScoreService extends BaseService {
                                 bd.putString("mallScore",myJSONObject.getString("mallScore"));
                                 bd.putString("scoreRate", myJSONObject.getString("scoreRate"));
 
+                                UserData.getUserData().score = myJSONObject.getString("appScore");
 
                                 listener.onDataFinish(BusinessDataListener.DONE_SCORE, null, null, bd);
                             }else{

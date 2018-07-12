@@ -34,6 +34,7 @@ import android.widget.ImageView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 //import com.orm.SugarContext;
+import com.mob.MobSDK;
 import com.umeng.analytics.MobclickAgent;
 import com.yhao.floatwindow.FloatWindow;
 import com.yhao.floatwindow.MoveType;
@@ -54,7 +55,8 @@ public class MainApplication extends Application implements BroadcastListener{
 	    	super.onCreate();
 	    	single = this;
 			Fresco.initialize(getApplicationContext());
-			ShareSDK.initSDK(getApplicationContext());
+			MobSDK.init(this);
+			//ShareSDK.initSDK(getApplicationContext());
 			VolleyUtil.init(getApplicationContext());
 			CrashHandler crashHandler = CrashHandler.getInstance ();
 			crashHandler.init(getApplicationContext());
@@ -325,7 +327,7 @@ public class MainApplication extends Application implements BroadcastListener{
 		//取消授权
 		if(null != plat)
 		{
-			plat.removeAccount ();
+			plat.removeAccount (true);
 		}
 		PreferenceHelper.clean(getApplicationContext(), Constant.MEMBER_INFO);
 	}

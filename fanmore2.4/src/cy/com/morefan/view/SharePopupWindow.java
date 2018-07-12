@@ -117,7 +117,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
             case R.id.sharewechat:
                 //微信好友
                 Platform plat1 = null;
-                plat1 = ShareSDK.getPlatform ( context, Wechat.NAME );
+                plat1 = ShareSDK.getPlatform (  Wechat.NAME );
                 if (platformActionListener != null) {
                     plat1.setPlatformActionListener ( platformActionListener );
                 }
@@ -126,7 +126,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
                 break;
             case R.id.sharewechatmoments:
                 Platform plat = null;
-                plat = ShareSDK.getPlatform ( context, WechatMoments.NAME );
+                plat = ShareSDK.getPlatform (  WechatMoments.NAME );
                 if (platformActionListener != null) {
                     plat.setPlatformActionListener ( platformActionListener );
                 }
@@ -242,7 +242,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
         sp.setTitleUrl ( shareParams.getUrl ( ) ); // 标题的超链接
         sp.setText ( shareParams.getText ( ) );
         sp.setImageUrl ( shareParams.getImageUrl ( ) );
-        Platform qzone = ShareSDK.getPlatform(context, QZone.NAME);
+        Platform qzone = ShareSDK.getPlatform( QZone.NAME);
         qzone.setPlatformActionListener(platformActionListener); // 设置分享事件回调 //
         // 执行图文分享
         qzone.share(sp);

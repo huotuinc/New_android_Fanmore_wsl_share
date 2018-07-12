@@ -52,12 +52,12 @@ public class ShareActivity extends BaseActivity{
 
 		case R.id.layWX:
 			showProgress();
-			Platform platform1 = new WechatMoments(this);
+			Platform platform1 = new WechatMoments();
 			wx(this, shareDes, imgUrl, shareUrl, platform1);
 			break;
 		case R.id.layWechat:
 			showProgress();
-			Platform platform = new Wechat(this);
+			Platform platform = new Wechat();
 			wx(this, shareDes, imgUrl, shareUrl,platform);
 			break;
 

@@ -220,7 +220,6 @@
 
     <ImageView
         android:layout_below="@+id/txtDate"
-
         android:visibility="gone"
         android:id="@+id/imgStatusTag"
         android:layout_width="wrap_content"

@@ -17,9 +17,9 @@ import java.lang.reflect.Method;
  * https://github.com/yhaolpz
  */
 
-class PermissionUtil {
+public class PermissionUtil {
 
-    static boolean hasPermission(Context context) {
+    public static boolean hasPermission(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return Settings.canDrawOverlays(context);
         } else {

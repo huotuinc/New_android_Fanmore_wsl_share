@@ -168,7 +168,7 @@ public class TaskAdapter extends BaseAdapter{
         		 }
         	 }
 				if (data.isSend){
-					//imgStatusTag.setVisibility(View.VISIBLE);
+					imgStatusTag.setVisibility(View.VISIBLE);
 				}else {
 					imgStatusTag.setVisibility(View.GONE);
 				}

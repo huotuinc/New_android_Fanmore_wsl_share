@@ -8,6 +8,8 @@ import android.os.Environment;
 import android.os.Looper;
 import android.util.Log;
 
+import com.umeng.analytics.MobclickAgent;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
@@ -135,6 +137,8 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         L.d( result);
         sb.append(result);
         try {
+            MobclickAgent.reportError(mContext , sb.toString());
+
             long timestamp = System.currentTimeMillis();
             String time = formatter.format(new Date());
             String fileName = nameString + "-" + time + "-" + timestamp
@@ -154,6 +158,8 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         } catch (Exception e) {
             Log.e(TAG, "an error occured while writing file...", e);
         }
+
+
         return null;
     }
     /**

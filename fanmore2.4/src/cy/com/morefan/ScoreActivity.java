@@ -147,7 +147,7 @@ public class ScoreActivity extends BaseActivity
 
     protected void getScore(){
         String mallUserId = SPUtil.getStringToSpByName( this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_BuserId);
-        if (TextUtils.isEmpty(mallUserId )) {
+        if (TextUtils.isEmpty(mallUserId ) || mallUserId.equals("0") ) {
             showProgress();
             userService.GetUserList(this , UserData.getUserData().loginCode,
                     SPUtil.getStringToSpByName(this , Constant.SP_NAME_NORMAL, Constant.SP_NAME_UnionId));

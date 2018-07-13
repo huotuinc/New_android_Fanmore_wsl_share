@@ -11,6 +11,9 @@ import cindy.android.test.synclistview.SyncImageLoaderHelper;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.lib.cylibimagedownload.ImageUtil;
 import com.lib.cyliblocation.LibLocation;
+import com.yhao.floatwindow.PermissionUtil;
+import com.yhao.floatwindow.TipAlertDialog;
+
 import cn.jpush.android.api.JPushInterface;
 import cy.com.morefan.AppUpdateActivity.UpdateType;
 import cy.com.morefan.bean.AdlistModel;
@@ -53,6 +56,7 @@ import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.text.AndroidCharacter;
 import android.text.TextUtils;
+import android.view.View;
 
 public class LoadingActivity extends BaseActivity implements
 		BusinessDataListener, OnkeyBackListener, Callback, BroadcastListener{
@@ -84,7 +88,8 @@ public class LoadingActivity extends BaseActivity implements
 			isCompleteUserInfo = bundle.getInt("isCompleteUserInfo") == 1;
 			switch (updateType) {
 			case 0:// 无更新
-				toHome();
+				//toHome();
+				checkSystemWindow();
 				break;
 			case 1:// 1.增量更新
 				choiceToUpdate(UpdateType.DiffUpdate, updateMd5, updateUrl,
@@ -144,7 +149,9 @@ public class LoadingActivity extends BaseActivity implements
 				}, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						toHome();
+
+						checkSystemWindow();
+						//toHome();
 					}
 				});
 
@@ -172,7 +179,8 @@ public class LoadingActivity extends BaseActivity implements
 				if (isForce) {
 					finish();
 				} else {
-					toHome();
+					//toHome();
+					checkSystemWindow();
 				}
 
 			}
@@ -182,6 +190,10 @@ public class LoadingActivity extends BaseActivity implements
 	}
 
 	private void toHome() {
+
+
+
+
 		if (!SPUtil.getBooleanFromSpByName(this, Constant.SP_NAME_NORMAL,
 				Constant.SP_NAME_NOT_SHOW_USER_GUIDE, false)) {
 			Intent intentGuide = new Intent(LoadingActivity.this, GuideActivity.class);
@@ -231,30 +243,33 @@ public class LoadingActivity extends BaseActivity implements
 		broadcastReceiver = new MyBroadcastReceiver(this, this,  Intent.ACTION_BATTERY_CHANGED);
 		//PhoneRequest();
 
-		SDRequest();
-		//FloatWindowRequest();
-		// check file
-//		Bitmap bitmap = checkLoadingImage();
-//		if (bitmap != null) {
-//			BitmapDrawable drawable = new BitmapDrawable(getResources(), bitmap);
-//			findViewById(R.id.lay).setBackgroundDrawable(drawable);
-//			L.i(">>>>>setBitmap:"+ bitmap );
-//		}
 		time = System.currentTimeMillis();
 
+		//checkSystemWindow();
+        SDRequest();
 	}
 
-//	void FloatWindowRequest(){
-//		int checkSelfPremission = ContextCompat.checkSelfPermission(this , Manifest.permission.SYSTEM_ALERT_WINDOW );
-//		if( checkSelfPremission != PackageManager.PERMISSION_GRANTED ){
-//			if(ActivityCompat.shouldShowRequestPermissionRationale(this , Manifest.permission.SYSTEM_ALERT_WINDOW)){
-//				ToastUtil.show(getApplication(),"请授权应用使用显示浮动窗口权限。");
-//			}
-//			ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.SYSTEM_ALERT_WINDOW}, REQUEST_SYSTEM_WINDOW);
-//		}else{
-//			SDRequest();
-//		}
-//	}
+	/**
+	 *
+	 */
+	void checkSystemWindow(){
+		if (PermissionUtil.hasPermission(this)) {
+			toHome();
+			return;
+		}
+
+		final TipAlertDialog dialog = new TipAlertDialog(this);
+
+		dialog.show("申请权限","请允许App使用\"显示悬浮窗\"权限！","", false ,true ,null, new View.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+
+				toHome();
+			}
+		});
+
+	}
 
 
 	public static String getDeviceInfo(Context context) {
@@ -498,7 +513,8 @@ public class LoadingActivity extends BaseActivity implements
 		if (isFinish)
 			finish();
 		else
-			toHome();
+			checkSystemWindow();
+			//toHome();
 	}
 
 	@Override
@@ -509,46 +525,9 @@ public class LoadingActivity extends BaseActivity implements
 		super.onDestroy();
 	}
 
-//	@Override
-//	public void onReceiveLocation(BDLocation location) {
-//		if (location != null) {
-//			String cityCode = location.getCityCode();
-//			System.out.println(">>>>>district:" + location.getDistrict());
-//			if (!TextUtils.isEmpty(cityCode)) {
-//				BusinessStatic.getInstance().CITY_CODE = cityCode;
-//				SPUtil.saveStringToSpByName(LoadingActivity.this,
-//						Constant.SP_NAME_NORMAL, Constant.SP_NAME_CITY_CODE,
-//						cityCode);
-//				LibLocation.stopLocation();
-//
-//				BusinessStatic.getInstance().USER_LAT = location.getLatitude();
-//				BusinessStatic.getInstance().USER_LNG = location.getLongitude();
-//				if(BusinessStatic.getInstance().USER_LAT == 0 && BusinessStatic.getInstance().USER_LNG == 0);
-//				else{
-//					SPUtil.saveIntToSpByName(LoadingActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_LOCATION_COUNT, 0);
-//					SPUtil.saveLongToSpByName(LoadingActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_LAT, (long) BusinessStatic.getInstance().USER_LAT);
-//					SPUtil.saveLongToSpByName(LoadingActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_LNG, (long) BusinessStatic.getInstance().USER_LNG);
-//
-//				}
-//
-//				L.i(">>>>>>>>>>stop baidu");
-//			}
-//		}
-//
-//	}
-//
-//	@Override
-//	public void onReceivePoi(BDLocation arg0) {
-//		// TODO Auto-generated method stub
-//
-//	}
-
 	@Override
 	public void onFinishReceiver(ReceiverType type, Object msg) {
 		// TODO Auto-generated method stub
 
 	}
-
-
-	
 }

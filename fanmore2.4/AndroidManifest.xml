@@ -314,7 +314,6 @@
             android:theme="@style/ThemeActivity" />
         <activity
             android:name=".AppUpdateActivity"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
         <activity
             android:name=".HomeActivity"

@@ -229,11 +229,12 @@ public class TaskFrag extends BaseFragment
 		currentTaskType = TaskType.mr;
 		myBroadcastReceiver = new MyBroadcastReceiver(getActivity(), this,
 				MyBroadcastReceiver.ACTION_BACKGROUD_BACK_TO_UPDATE,
-				MyBroadcastReceiver.ACTION_REFRESH_TASK_LIST,
-				MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS,
-				MyBroadcastReceiver.ACTION_SHARE_TO_QZONE_SUCCESS,
-				MyBroadcastReceiver.ACTION_SHARE_TO_SINA_SUCCESS,
-				MyBroadcastReceiver.ACTION_WX_NOT_BACK
+				MyBroadcastReceiver.ACTION_REFRESH_TASK_LIST
+				//,
+				//MyBroadcastReceiver.ACTION_SHARE_TO_WEIXIN_SUCCESS,
+				//MyBroadcastReceiver.ACTION_SHARE_TO_QZONE_SUCCESS,
+				//MyBroadcastReceiver.ACTION_SHARE_TO_SINA_SUCCESS,
+				//MyBroadcastReceiver.ACTION_WX_NOT_BACK
 				);
 
 		userService = new UserService(this);
@@ -377,11 +378,18 @@ public class TaskFrag extends BaseFragment
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			//head不能点击
-			if(position < 1 || datas.size() == 0)
+
+			int prefix = listView.getHeaderViewsCount();
+
+			if(position < prefix || datas.size() == 0)
 				return;
 			Intent intentDetail = new Intent(getActivity(),TaskDetailActivity.class);
-			TaskData taskData = datas.get(position - 1);
-			taskData.position = position - 1;
+
+			int idx = position - prefix;
+			if( idx <0 || idx >= datas.size() ) return;
+
+			TaskData taskData = datas.get( idx );
+			taskData.position = idx ;
 			intentDetail.putExtra("taskData", taskData);
 			startActivityForResult(intentDetail, 0);
 

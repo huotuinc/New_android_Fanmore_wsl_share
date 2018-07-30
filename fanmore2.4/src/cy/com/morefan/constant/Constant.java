@@ -92,6 +92,8 @@ public class Constant {
 	public final static String SP_NAME_TOKEN_VALUE = "MFSP_TOKEN_VALUE";//sp内容不会被清理
 	public final static String SP_NAME_NOT_SHOW_USER_GUIDE = "MFSP_NOTSHOWUSERGUIDE";
 
+	public final static String SP_NAME_TIP_PERMISSION_DIALOG="TIP_PERMISSION_DIALOG";//是否提示权限提示框
+
 	public final static int REQUEST_CODE_CLIENT_DOWNLOAD = 8000;
 	public final static int RESULT_CODE_CLIENT_DOWNLOAD_FAILED = -8000;
 	public final static int RESULT_CODE_CANCEL_FAV = 8001;

@@ -100,7 +100,7 @@
 		SortId="4"
 		AppId="wxc7e8edd6f30cf286"
 		AppSecret="64b4cb4663304a818b156c8375dfb0cd"
-		Enable="true" />
+		Enable="false" />
 	<QZone
 		Id="7"
 		SortId="7"

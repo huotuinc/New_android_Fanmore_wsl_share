@@ -8,10 +8,8 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
-
-import com.huotu.android.library.libedittext.EditText;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -27,7 +25,6 @@ import cy.com.morefan.util.Util;
 
 
 public class MoblieLoginActivity extends BaseActivity implements Handler.Callback {
-
 
     @BindView(R.id.edtCode)
     EditText edtCode;
@@ -58,6 +55,7 @@ public class MoblieLoginActivity extends BaseActivity implements Handler.Callbac
         KeyWordUtil.openKeybord(edtPhone,this);
 
     }
+
     @OnClick(R.id.Txt_reg)
     void reg(){
         KeyWordUtil.closeKeybord(this);
@@ -66,6 +64,7 @@ public class MoblieLoginActivity extends BaseActivity implements Handler.Callbac
         bundle.putInt("isUpdate",0);
         ActivityUtils.getInstance().showActivity(this,UserRegActivity.class,bundle);
     }
+
     @OnClick(R.id.Txt_forget_psw)
     void forgetpsw(){
         KeyWordUtil.closeKeybord(this);
@@ -74,12 +73,14 @@ public class MoblieLoginActivity extends BaseActivity implements Handler.Callbac
         bundle.putInt("isUpdate",1);
         ActivityUtils.getInstance().showActivity(this,UserRegActivity.class,bundle);
     }
+
     @OnClick(R.id.txtInformation)
     void phone(){
          String callphone = txtInformation.getText().toString();
         Intent intent =new Intent("android.intent.action.CALL", Uri.parse("tel:"+callphone));
         startActivity(intent);
     }
+
     @OnClick(R.id.btnLogin)
     void login() {
         String phone = edtPhone.getText().toString();
@@ -104,12 +105,10 @@ public class MoblieLoginActivity extends BaseActivity implements Handler.Callbac
         showProgress();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        //VolleyUtil.cancelAllRequest();
-    }
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//    }
 
     @Override
     public boolean handleMessage(Message msg) {
@@ -127,9 +126,9 @@ public class MoblieLoginActivity extends BaseActivity implements Handler.Callbac
         }
         return false;
     }
+
     @Override
-    public void onDataFinish(int type, String des, BaseData[] datas,
-                             Bundle extra) {
+    public void onDataFinish(int type, String des, BaseData[] datas, Bundle extra) {
         super.onDataFinish(type, des, datas, extra);
         mHandler.obtainMessage(type, des).sendToTarget();
 
@@ -140,6 +139,7 @@ public class MoblieLoginActivity extends BaseActivity implements Handler.Callbac
         mHandler.obtainMessage(type,des).sendToTarget();
 
     }
+
     private long exitTime = 0 ;
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

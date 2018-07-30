@@ -591,7 +591,8 @@ public class TaskFrag extends BaseFragment
 			Intent intentDetail = new Intent(getActivity(),TaskDetailActivity.class);
 			TaskData taskData = null;
 			for(int i=0;i<notices.length;i++){
-				if(notices[i].taskName.equals( switcherView.getCurrentItem().toString() )){
+				String taskname = notices[i].tagTitle +"|" + notices[i].taskName;
+				if( taskname.equals( switcherView.getCurrentItem().toString() )){
 					taskData = notices[i];
 				}
 			}

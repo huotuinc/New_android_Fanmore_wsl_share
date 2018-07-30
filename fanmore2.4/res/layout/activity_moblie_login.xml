@@ -9,6 +9,7 @@
     android:orientation="vertical"
     android:background="@color/white"
     tools:context="cy.com.morefan.MoblieLoginActivity">
+
     <LinearLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
@@ -30,10 +31,9 @@
         android:layout_height="1px"
         android:layout_marginTop="30dp"
         android:background="@color/gray"/>
-    <com.huotu.android.library.libedittext.EditText
+    <EditText
         android:id="@+id/edtPhone"
-        style="@style/CyEditTextStyle"
-        cy:style="transparent"
+        android:background="@drawable/shape_white3"
         android:drawableLeft="@drawable/ic_login_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,10 +47,9 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/gray"/>
-    <com.huotu.android.library.libedittext.EditText
+    <EditText
         android:id="@+id/edtCode"
-        style="@style/CyEditTextStyle"
-        cy:style="transparent"
+        android:background="@drawable/shape_white3"
         android:drawableLeft="@drawable/ic_login_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -74,7 +73,6 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/btn_red_sel"
         android:clickable="true"
-        android:onClick="onClickButton"
         android:text="立即登录"
         android:textColor="@color/white"
         android:textSize="18dp" />

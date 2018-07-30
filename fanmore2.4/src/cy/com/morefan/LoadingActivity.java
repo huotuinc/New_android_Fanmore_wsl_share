@@ -2,6 +2,7 @@ package cy.com.morefan;
 
 import java.io.File;
 import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.util.List;
 
 
@@ -45,17 +46,20 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.text.AndroidCharacter;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 public class LoadingActivity extends BaseActivity implements
@@ -253,22 +257,34 @@ public class LoadingActivity extends BaseActivity implements
 	 *
 	 */
 	void checkSystemWindow(){
-		if (PermissionUtil.hasPermission(this)) {
-			toHome();
-			return;
-		}
 
-		final TipAlertDialog dialog = new TipAlertDialog(this);
+		try {
 
-		dialog.show("申请权限","请允许App使用\"显示悬浮窗\"权限！","", false ,true ,null, new View.OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
+			if (PermissionUtil.hasPermission(this)) {
+				toHome();
+				return;
+			}
 
+			Boolean isShow = SPUtil.getBooleanFromSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_TIP_PERMISSION_DIALOG, true);
+
+			if (isShow) {
+				final TipAlertDialog dialog = new TipAlertDialog(this);
+
+				dialog.show("申请权限", "请允许App使用\"显示悬浮窗\"权限！", "", false, true, null, new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						dialog.dismiss();
+						SPUtil.saveBooleanToSpByName(LoadingActivity.this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_TIP_PERMISSION_DIALOG, false);
+						toHome();
+					}
+				});
+			} else {
 				toHome();
 			}
-		});
-
+		}catch (Exception ex){
+			ex.printStackTrace();
+			toHome();
+		}
 	}
 
 

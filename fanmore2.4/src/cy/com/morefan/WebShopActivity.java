@@ -314,7 +314,7 @@ public class WebShopActivity extends BaseActivity implements Handler.Callback  {
             {
                 PayModel payModel = ( PayModel ) msg.obj;
                 //调用JS
-                webView.loadUrl("javascript:utils.Go2Payment(" + payModel.getCustomId() + "," + payModel.getTradeNo() + "," + payModel.getPaymentType() + ", "
+                webView.loadUrl("javascript:utils.Go2Payment(" + payModel.getCustomId() + ",'" + payModel.getTradeNo() + "'," + payModel.getPaymentType() + ", "
                         + "false);\n");
             }
             break;

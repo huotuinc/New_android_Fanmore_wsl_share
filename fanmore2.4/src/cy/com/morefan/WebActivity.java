@@ -390,7 +390,7 @@ class WebActivity extends BaseActivity implements Handler.Callback, MyBroadcastR
             {
                 PayModel payModel = ( PayModel ) msg.obj;
                 //调用JS
-                viewPage.loadUrl ( "javascript:utils.Go2Payment("+payModel.getCustomId ()+","+ payModel.getTradeNo ()+","+ payModel.getPaymentType ()+", "
+                viewPage.loadUrl ( "javascript:utils.Go2Payment("+payModel.getCustomId ()+",'"+ payModel.getTradeNo ()+"',"+ payModel.getPaymentType ()+", "
                                    + "false);\n" );
             }
             default:

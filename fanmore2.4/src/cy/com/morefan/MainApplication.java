@@ -60,8 +60,10 @@ public class MainApplication extends Application implements BroadcastListener{
 			VolleyUtil.init(getApplicationContext());
 			CrashHandler crashHandler = CrashHandler.getInstance ();
 			crashHandler.init(getApplicationContext());
+
 			JPushInterface.setDebugMode(false); 	// 设置开启日志,发布时请关闭日志
 			JPushInterface.init(this);
+
 			myBroadcastReceiver = new MyBroadcastReceiver(this.getApplicationContext(), this, MyBroadcastReceiver.ACTION_ALARM_UP);
 			//SugarContext.init(getApplicationContext());
 

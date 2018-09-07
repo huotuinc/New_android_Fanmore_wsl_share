@@ -56,6 +56,15 @@ public class MoblieLoginActivity extends BaseActivity implements Handler.Callbac
 
     }
 
+    @OnClick(R.id.txt_guestlogin)
+    void guestLogin(){
+        KeyWordUtil.closeKeybord(this);
+
+        userService.GuestLogin( MoblieLoginActivity.this );
+        showProgress();
+
+    }
+
     @OnClick(R.id.Txt_reg)
     void reg(){
         KeyWordUtil.closeKeybord(this);

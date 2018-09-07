@@ -195,4 +195,15 @@ public class UserData implements BaseData, Serializable{
 		return null;
 	}
 
+	/**
+	 * 判断是否游客
+	 * @return
+	 */
+	public static boolean isGuest(){
+		if( getUserData().userName==null) return true;
+        else {
+            return getUserData().userName.startsWith("guest_");
+        }
+	}
+
 }

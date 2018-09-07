@@ -13,11 +13,12 @@ buildscript {
 }
 allprojects {
     repositories {
-        maven{
-            url="http://repo.51flashmall.com:8081/nexus/content/groups/public/"
-        }
+//        maven{
+//            url="http://repo.51flashmall.com:8081/nexus/content/groups/public/"
+//        }
         maven { url 'https://jitpack.io' }
         jcenter()
         google()
+        flatDir{ dirs 'libs'}
     }
 }

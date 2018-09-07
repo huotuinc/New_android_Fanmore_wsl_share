@@ -15,9 +15,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.Settings;
+import android.provider.Telephony;
 import android.text.TextUtils;
 
+import cy.com.morefan.MainApplication;
 import cy.com.morefan.bean.AllScoreData;
 import cy.com.morefan.bean.AwardData;
 import cy.com.morefan.bean.MyJSONObject;
@@ -1690,6 +1695,84 @@ public class UserService extends BaseService{
 			}
 		});
 	}
+
+
+	public void GuestLogin(final Context mContext ){
+
+		final String android_id = Settings.System.getString(MainApplication.single.getContentResolver()
+				, Settings.Secure.ANDROID_ID);  //Build.ID;
+
+		ThreadPoolManager.getInstance().addTask(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					String url = Constant.IP_URL + "/Api.ashx?req=GUESTLOGIN" + CONSTANT_URL();
+					JSONObject jsonUrl = new JSONObject();
+					jsonUrl.put("code", android_id );
+					//jsonUrl.put("timestamp", timestamp);
+					AuthParamUtils authParamUtils =new AuthParamUtils(null,0,"",null);
+					Map< String, String > paramMap = new HashMap< String, String >( );
+					paramMap.put("code", android_id );
+					//paramMap.put("timestamp",String.valueOf(timestamp));
+					String url2 = authParamUtils.getMapSign1(paramMap);
+					jsonUrl.put("sign",url2);
+					try {
+						url = url+ URLEncoder.encode(jsonUrl.toString(),"UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}
+					L.i(">>>>>>>GUESTLOGIN:" + url);
+					MyJSONObject data = getDataFromSer(url);
+					if(data != null){
+						int resultCode = data.getInt("resultCode");
+						if (resultCode == 1) {
+							int status = data.getInt("status");
+							if (status == 1) {
+								String loginCode= data.getJSONObject("resultData").getString("loginCode");
+								loginCode = loginCode.split("\\^")[1];
+								setUserData( android_id , loginCode, data.getJSONObject("resultData"));
+								String mallUserId=String.valueOf(data.getJSONObject("resultData").getString("mallUserId"));
+								String unionId=data.getJSONObject("resultData").getString("unionId");
+								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME, UserData.getUserData().userName );
+								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, loginCode);
+								SPUtil.saveStringToSpByName(mContext,Constant.SP_NAME_NORMAL,Constant.SP_NAME_BuserId,mallUserId);
+								SPUtil.saveStringToSpByName(mContext,Constant.SP_NAME_NORMAL,Constant.SP_NAME_UnionId,unionId);
+								listener.onDataFinish(BusinessDataListener.DONE_TO_MOBLIELOGIN, null, null, null);
+							}
+							else if (status == 90003) {
+								String loginCode= data.getJSONObject("resultData").getString("loginCode");
+								loginCode = loginCode.split("\\^")[1];
+								setUserData(android_id, loginCode, data.getJSONObject("resultData"));
+								String mallUserId=String.valueOf(data.getJSONObject("resultData").getString("mallUserId"));
+								String unionId=data.getJSONObject("resultData").getString("unionId");
+								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERNAME, UserData.getUserData().userName);
+								SPUtil.saveStringToSpByName(mContext, Constant.SP_NAME_NORMAL, Constant.SP_NAME_USERPWD, loginCode);
+								SPUtil.saveStringToSpByName(mContext,Constant.SP_NAME_NORMAL,Constant.SP_NAME_BuserId,mallUserId);
+								SPUtil.saveStringToSpByName(mContext,Constant.SP_NAME_NORMAL,Constant.SP_NAME_UnionId,unionId);
+								listener.onDataFinish(BusinessDataListener.DONE_TO_MOBLIELOGIN, null, null, null);
+							}
+							else if (status==54003){
+								listener.onDataFinish(BusinessDataListener.NULL_USER,data.getString("tip"),null,null);
+							}
+							else{
+								listener.onDataFailed(BusinessDataListener.ERROR_TO_MOBLIELOGIN, data.getString("tip"), null);
+							}
+						}else{
+							listener.onDataFailed(BusinessDataListener.ERROR_TO_MOBLIELOGIN, data.getString("description"), null);
+						}
+
+					}else{
+						listener.onDataFailed(BusinessDataListener.ERROR_TO_MOBLIELOGIN, ERROR_NET, null);
+					}
+				} catch (Exception e) {
+					listener.onDataFailed(BusinessDataListener.ERROR_TO_MOBLIELOGIN, ERROR_DATA, null);
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
 
 
 

@@ -83,7 +83,7 @@ public class BaseService {
 		userData.isLogin = true;
 		userData.loginCode = myUserData.getString("loginCode");
 		userData.phone = myUserData.getString("mobile");
-		userData.userName = userName;
+		userData.userName = myUserData.getString("userName");
 		userData.pwd = pwd;
 //		userData.totalScore = Util.opeDouble(myUserData.getDouble("totalScore"));//myUserData.getInt("totalScore");
 		userData.shareDes = myUserData.getString("shareDes");

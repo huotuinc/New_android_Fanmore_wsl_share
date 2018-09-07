@@ -558,8 +558,14 @@ public class HomeActivity extends BaseActivity
             case R.id.left_menu_avator_1:
             case R.id.left_menu_header://我的设置
                 openOrCloseMenu();
-                Intent intentSet = new Intent(this, MyBaseInfoActivity.class);
-                startActivity(intentSet);
+
+                if (!UserData.getUserData().isLogin) {
+                    Intent intentLogin = new Intent(HomeActivity.this, MoblieLoginActivity.class);
+                    startActivity(intentLogin);
+                }else {
+                    Intent intentSet = new Intent(this, MyBaseInfoActivity.class);
+                    startActivity(intentSet);
+                }
                 break;
             case R.id.layMyScore://积分
                 openOrCloseMenu();
@@ -571,6 +577,12 @@ public class HomeActivity extends BaseActivity
                 break;
             case R.id.left_menu_lay_score://我的积分
                 openOrCloseMenu();
+
+                if(UserData.isGuest()){
+                    toast("游客无法使用积分");
+                    return;
+                }
+
                 Intent intentScore = new Intent(this, ScoreActivity.class);
                 startActivity(intentScore);
                 break;
@@ -625,6 +637,12 @@ public class HomeActivity extends BaseActivity
     }
 
     protected void inMall() {
+        if(UserData.isGuest()){
+            toast("游客无法浏览商城");
+            return;
+        }
+
+
         showProgress();
         if (TextUtils.isEmpty(SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_BuserId))) {
             userService.GetUserList(this, UserData.getUserData().loginCode, SPUtil.getStringToSpByName(this, Constant.SP_NAME_NORMAL, Constant.SP_NAME_UnionId));
@@ -964,6 +982,12 @@ public class HomeActivity extends BaseActivity
                     Intent intent = new Intent(HomeActivity.this, SelectionActivity.class);
                     startActivity(intent);
                 } else if (isClickChildView(mall, x, y)) {
+
+                    if(UserData.isGuest()){
+                        toast("游客无法浏览商城");
+                        return;
+                    }
+
                     //FloatWindow.get().setDragListener(null);
                     FloatWindow.get().hide();
                     //FloatWindow.get().setDragListener(HomeActivity.this);

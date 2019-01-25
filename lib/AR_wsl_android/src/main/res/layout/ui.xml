@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/ui_container"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ui_ar"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent"></LinearLayout>
+
+    <TextView
+        android:id="@+id/btback"
+        android:layout_width="80dp"
+        android:layout_height="45dp" />
+</FrameLayout>

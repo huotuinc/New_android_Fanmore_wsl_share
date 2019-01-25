@@ -10,6 +10,8 @@ dependencies {
     implementation project(':lib:CyLibHttpClient')
     implementation project(':lib:main')
     implementation project(':lib:floatwindow')
+    implementation project(':lib:AR_wsl_android')
+    implementation(name: 'VuforiaWrapper', ext:'aar')
     //compile files('libs/gson-2.2.4.jar')
     //compile files('libs/jpush-android-2.1.5.jar')
 //    compile('com.github.satyan:sugar:1.5') {
@@ -96,8 +98,8 @@ android {
             signingConfig signingConfigs.huotu
             minSdkVersion 19
             targetSdkVersion 27
-            versionCode 30
-            versionName '1.4.0'
+            versionCode 31
+            versionName '1.4.1'
             flavorDimensions "versionCode"
         }
     }

@@ -94,7 +94,7 @@
             android:layout_height="wrap_content">
 
             <cy.com.morefan.view.CyButton
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/btnAr"
                 android:layout_width="35dp"
                 android:layout_height="35dp"

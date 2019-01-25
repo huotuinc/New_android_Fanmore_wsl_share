@@ -28,6 +28,7 @@ import cy.com.morefan.supervision.GroupActivity;
 import cy.com.morefan.supervision.VipActivity;
 import cy.com.morefan.util.ActivityUtils;
 import cy.com.morefan.util.AuthParamUtils;
+import cy.com.morefan.util.IMEIUtil;
 import cy.com.morefan.util.L;
 
 import cy.com.morefan.util.SPUtil;
@@ -36,14 +37,18 @@ import cy.com.morefan.view.CircleImageView;
 import cy.com.morefan.view.CyButton;
 import cy.com.morefan.view.ImageLoad;
 
+import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
@@ -62,6 +67,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ar.wsl.UnityPlayerActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yhao.floatwindow.FloatWindow;
 import com.yhao.floatwindow.IDragListener;
@@ -128,10 +134,13 @@ public class HomeActivity extends BaseActivity
     private TextView left_menu_todaycount;
     private TextView left_menu_score_1;
     private SyncImageLoaderHelper helper;
+    //private TextView btnAr;
 
     private TaskNewFrag taskNewFrag;
 
     private TipAlertDialog tipAlertDialog;
+
+    private Integer REQUEST_CAMARA_PERMISSION3=98;
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -268,6 +277,8 @@ public class HomeActivity extends BaseActivity
         left_menu_todaycount = (TextView) findViewById(R.id.left_menu_todaycount);
         left_menu_score_1 = (TextView) findViewById(R.id.left_menu_score_1);
 
+        //btnAr = (TextView)findViewById(R.id.btnAr);
+        //btnAr
     }
 
     private void operationAlarm() {
@@ -585,6 +596,11 @@ public class HomeActivity extends BaseActivity
 
                 Intent intentScore = new Intent(this, ScoreActivity.class);
                 startActivity(intentScore);
+                break;
+            case R.id.btnAr://AR
+
+                requestCamara();
+
                 break;
 
             default:
@@ -1064,6 +1080,37 @@ public class HomeActivity extends BaseActivity
     public void endDrag(MotionEvent event) {
         mDragLayout.openDrawer(Gravity.LEFT);
         FloatWindow.get().hide();
+    }
+
+
+    public void requestCamara() {
+
+        int checkSelfPremission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+        if (checkSelfPremission != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+                ToastUtil.show(getApplication(), "请授权应用使用摄像头拍照功能，否则将无法使用AR功能。");
+            }
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, REQUEST_CAMARA_PERMISSION3 );
+        } else {
+
+            Intent intentAr=  new Intent(this , UnityPlayerActivity.class);
+            startActivity(intentAr);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode==REQUEST_CAMARA_PERMISSION3 ){
+            if ( grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                Intent intentAr=  new Intent(this , UnityPlayerActivity.class);
+                startActivity(intentAr);
+            }else {
+                toast("您没有授权使用摄像头权限，无法使用AR功能。");
+            }
+        }
+
     }
 
 
